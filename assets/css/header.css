@@ -1,0 +1,124 @@
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+    height: 100%;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: 'Gliker';
+    src: url('../font/Gliker-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Bobby';
+    src: url('../font/Bobby-Rough-Soft.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.header {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+}
+
+.header--background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(../img/coffee-background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    filter: blur(5px);
+    z-index: -1;
+}
+
+.header--background__text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-95%, -50%);
+    color: white;
+    font-family: 'Bobby', sans-serif;
+    font-size: 50px;
+    text-align: left;
+}
+
+.header--background__title, .header--background__description {
+    margin: 10px 0;
+}
+
+.navbar {
+    position: fixed;
+    font-family: 'Gliker', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    /*background-color: transparent;*/
+    background-color: rgba(44, 44, 44, 0.4);
+    height: 130px;
+    width: 100%;
+}
+
+.navbar__logo {
+    width: auto;
+    height: 100px;
+    margin-left: 20px;
+    margin-top: 15px;
+}
+
+.container--right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.navbar__links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 20px;
+    gap: 15px;
+}
+
+.navbar__link {
+    color: white;
+    text-decoration: none;
+    font-size: 22px;
+    padding: 10px 15px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar__link:hover {
+    color: white;
+    background-color: #4A4A4A;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 22px;
+}
+
+.navbar__button {
+    font-family: 'Gliker', sans-serif;
+    background-color: #B9812A;
+    color: white;
+    font-size: 22px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar__button:hover {
+    background-color: #E0A63A;
+}
