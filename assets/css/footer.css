@@ -1,0 +1,11 @@
+.footer {
+    background-color: rgba(44, 44, 44);
+    height: 150px;
+}
+
+.footer__copyright {
+    color: white;
+    font-size: 18px;
+    text-align: center;
+    padding-top: 125px;
+}
