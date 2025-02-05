@@ -60,7 +60,7 @@ body {
 }
 
 .navbar {
-    position: fixed;
+    position: absolute;
     font-family: 'Gliker', sans-serif;
     display: flex;
     justify-content: space-between;
@@ -108,7 +108,7 @@ body {
 
 .navbar__button {
     font-family: 'Gliker', sans-serif;
-    background-color: #ff0000;
+    background-color: #ff5100;
     color: white;
     font-size: 22px;
     padding: 10px 15px;
