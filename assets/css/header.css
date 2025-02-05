@@ -40,7 +40,6 @@ body {
     background-image: url(../img/coffee-background.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    background-attachment: fixed;
     filter: blur(5px);
     z-index: -1;
 }
