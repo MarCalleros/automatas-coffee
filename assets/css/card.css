@@ -1,3 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Lato:wght@400&family=Poppins:wght@600&display=swap');
+
+.card-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.card-description {
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.card-button {
+    font-family: 'Poppins', sans-serif;
+}
+
+
 h2 {
     font-size: 32px;
     font-weight: 600;
@@ -33,7 +56,6 @@ h2 {
 }
 
 .card:hover {
-    cursor: pointer;
     transform: scale(1.05);
 }
 
@@ -43,14 +65,67 @@ h2 {
 }
 
 .card--title {
+    font-family: 'Montserrat', sans-serif;
     font-size: 24px;
     font-weight: 600;
     margin: 20px 20px 0 20px;
 }
 
 .card--description {
+    font-family: 'Lato', sans-serif;
     font-size: 16px;
+    margin: 10px 20px 5px 20px;
+}
+
+.card--footer {
+    display: flex;
+    justify-content: space-between;
     margin: 10px 20px 20px 20px;
+    gap: 10px;
+    align-items: center;
+}
+
+.card--footer button {
+    border: none;
+    background-color: #f1f1f1;
+    padding: 7px;
+    border-radius: 25px;
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s ease;
+}
+
+.card--footer button:hover {
+    cursor: pointer;
+    background-color: #e1e1e1;
+}
+
+.card--footer__like {
+    background-color: #f1f1f1;
+    border-radius: 50%;
+    padding: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.card--footer__like:hover {
+    background-color: #e1e1e1;
+    cursor: pointer;
+}
+
+.heart-icon {
+    fill: #f1f1f1;
+    stroke: black;
+    stroke-width: 2;
+    transition: fill 0.3s ease;
+    transition: stroke 0.3s ease;
+}
+
+.card--footer__like:hover .heart-icon {
+    fill: red;
+    stroke: red;
 }
 
 @keyframes slideInFromRight {
