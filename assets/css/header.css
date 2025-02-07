@@ -64,7 +64,6 @@ body {
     font-family: 'Gliker', sans-serif;
     display: flex;
     justify-content: space-between;
-    /*background-color: transparent;*/
     background-color: rgba(44, 44, 44, 0.4);
     height: 130px;
     width: 100%;
