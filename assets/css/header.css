@@ -60,13 +60,14 @@ body {
 }
 
 .navbar {
-    position: absolute;
+    position: fixed;
     font-family: 'Gliker', sans-serif;
     display: flex;
     justify-content: space-between;
     background-color: rgba(44, 44, 44, 0.4);
     height: 130px;
     width: 100%;
+    z-index: 1000;
 }
 
 .navbar__logo {
