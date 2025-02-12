@@ -119,8 +119,6 @@
     color: #FFFFFF;
 }
 
-
-
 @media (min-width: 768px) {
     .categories {
         grid-template-columns: 1fr 1fr;
