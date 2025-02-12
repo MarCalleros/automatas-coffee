@@ -1,4 +1,18 @@
 @import url(header.css);
 @import url(footer.css);
+@import url(navbar.css);
 @import url(card.css);
 @import url(category.css);
+
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+    height: 100%;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+body {
+    margin: 0;
+    padding: 0;
+}
