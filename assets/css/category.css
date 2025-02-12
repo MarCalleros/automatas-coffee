@@ -1,15 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Lato:wght@400&family=Poppins:wght@600&display=swap');
 
 .categories {
-    display: flex;
-    justify-content: center;
-    gap: 80px;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 40px;
 }
 
 .category {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     width: 300px;
     border-radius: 10px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
@@ -26,34 +28,34 @@
     height: max-content;
 }
 
-.category__cafe-caliente {
+.category--cafe-caliente {
     background: linear-gradient(to bottom, #D5BFA3, #F7F3ED);
 }
 
-.category__cafe-frio {
+.category--cafe-frio {
     background: linear-gradient(to bottom, #96D3DB, #F0FAFB);
 }
 
-.category__frapuccino {
+.category--frapuccino {
     background: linear-gradient(to bottom, #A5E1C9, #ECF8F9);
 }
 
-.category__postre {
+.category--postre {
     background: linear-gradient(to bottom, #F9D1D2, #FEF4F5);
 }
 
-.category--image {
+.category__image {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
 }
 
-.category--information {
+.category__information {
     padding: 15px;
 }
 
-.category--information__title {
+.information__title {
     font-family: 'Montserrat', sans-serif;
     font-size: 22px;
     font-weight: bold;
@@ -63,13 +65,13 @@
     text-align: center;
 }
 
-.category--information__description {
+.information__description {
     font-family: 'Lato', sans-serif;
     font-size: 16px;
     margin-bottom: 15px;
 }
 
-.category--information__button {
+.information__button {
     font-family: 'Poppins', sans-serif;
     color: black;
     border: none;
@@ -81,38 +83,65 @@
     transition: background 0.3s ease-in-out;
 }
 
-.category__cafe-caliente .category--information__button {
+.category--cafe-caliente .information__button {
     background-color: #D5BFA3;
 }
 
-.category__cafe-caliente .category--information__button:hover {
+.category--cafe-caliente .information__button:hover {
     background-color: #B08E5E;
     color: #FFFFFF;
 }
 
-.category__cafe-frio .category--information__button {
+.category--cafe-frio .information__button {
     background-color: #96D3DB;
 }
 
-.category__cafe-frio .category--information__button:hover {
+.category--cafe-frio .information__button:hover {
     background-color: #6BA4B4; 
     color: #FFFFFF;
 }
 
-.category__frapuccino .category--information__button {
+.category--frapuccino .information__button {
     background-color: #A5E1C9;
 }
 
-.category__frapuccino .category--information__button:hover {
+.category--frapuccino .information__button:hover {
     background-color: #8CC6A1; 
     color: #FFFFFF;
 }
 
-.category__postre .category--information__button {
+.category--postre .information__button {
     background-color: #F9D1D2;
 }
 
-.category__postre .category--information__button:hover {
+.category--postre .information__button:hover {
     background-color: #F1A7A8; 
     color: #FFFFFF;
+}
+
+
+
+@media (min-width: 768px) {
+    .categories {
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        justify-content: center;
+        margin: 0 50%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .categories {
+        gap: 80px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .categories {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: normal;
+        margin: 0 40px;
+    }
 }
