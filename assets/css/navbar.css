@@ -11,10 +11,18 @@
     overflow: hidden;
 }
 
+.navbar__header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 20px;
+    margin: 10px 0;
+}
+
 .navbar__logo {
     display: flex;
-    height: 100px;
-    margin: 15px auto 0 auto;
+    height: 60px;
+    margin-left: 18px;
 }
 
 .hamburguer-menu-icon {
@@ -27,11 +35,20 @@
     border-radius: 5px;
 }
 
+.user-icon {
+    height: 50px;
+    cursor: pointer;
+}
+
+.user-icon:hover {
+    background-color: #4A4A4A;
+    border-radius: 5px;
+}
+
 .navbar__links {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 15px;
     gap: 15px;
 }
 
@@ -44,12 +61,12 @@
 }
 
 .navbar__link {
+    text-align: center;
     color: white;
     text-decoration: none;
     font-size: 22px;
     padding: 10px 15px;
     transition: background-color 0.3s, color 0.3s;
-
     display: none;
 }
 
@@ -66,21 +83,7 @@
 }
 
 .navbar__button {
-    font-family: 'Gliker', sans-serif;
-    background-color: #ff5100;
-    color: white;
-    font-size: 22px;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-
     display: none;
-}
-
-.navbar__button--active {
-    display: flex;
 }
 
 .navbar__button:hover {
@@ -88,35 +91,33 @@
 }
 
 @media (min-width: 768px) {
-
+    .navbar__header {
+        justify-content: space-between;
+        margin: 10px 20px;
+    }
 }
 
 @media (min-width: 1024px) {
     .navbar {
-        position: fixed;
-        font-family: 'Gliker', sans-serif;
         display: flex;
-        justify-content: space-between;
-        background-color: rgba(44, 44, 44, 0.4);
         height: 130px;
-        width: 100%;
-        z-index: 1000;
+    }
+
+    .navbar__header {
+        padding: 0;
+        margin: 0 0 0 20px;
     }
 
     .navbar__logo {
         width: auto;
         height: 100px;
-        margin-left: 20px;
-        margin-top: 15px;
+        margin: 0;
     }
 
     .navbar__links {
-        display: flex;
         flex-direction: row;
         justify-content: space-between;
-        align-items: center;
         margin-right: 20px;
-        gap: 15px;
     }
 
     .navbar__link {
@@ -130,24 +131,41 @@
     .hamburguer-menu-icon {
         display: none;
     }
+
+    .user-icon {
+        display: none;
+    }
+
+    .navbar__button {
+        font-family: 'Gliker', sans-serif;
+        background-color: #ff5100;
+        color: white;
+        font-size: 22px;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+        display: flex;
+    }
 }
 
 @keyframes heightIncrease {
     from {
-        height: 180px;
+        height: 100px;
     }
 
     to {
-        height: 424px;
+        height: 308px;
     }
 }
 
 @keyframes heightDecrease {
     from {
-        height: 424px;
+        height: 308px;
     }
 
     to {
-        height: 180px;
+        height: 100px;
     }
 }

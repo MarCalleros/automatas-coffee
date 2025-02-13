@@ -2,7 +2,6 @@
     const hamburguerMenuIcon = document.querySelector('.hamburguer-menu-icon');
     const navbar = document.querySelector('.navbar');
     const links = document.querySelectorAll('.navbar__link');
-    const button = document.querySelector('.navbar__button');
 
     hamburguerMenuIcon.addEventListener('click', function() {
         if (navbar.classList.contains('increase-height')) {
@@ -16,7 +15,5 @@
         links.forEach(link => {
             link.classList.toggle('navbar__link--active')
         });
-
-        button.classList.toggle('navbar__button--active');
     });
 })();
