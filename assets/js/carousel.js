@@ -8,8 +8,8 @@
     const EXTRA_CARDS_EACH_SIDE = 2;
     const REAL_CARDS = len - (EXTRA_CARDS_EACH_SIDE * 2);
 
-    var len = cards.length;
-    var i = EXTRA_CARDS_EACH_SIDE + 1;
+    let len = cards.length;
+    let i = EXTRA_CARDS_EACH_SIDE + 1;
 
     next.addEventListener('click', function() {
         if (i === len - EXTRA_CARDS_EACH_SIDE) {
