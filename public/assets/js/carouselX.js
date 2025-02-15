@@ -73,7 +73,7 @@
 })();
 
 function setCardsShowed(screenWidth) {
-    if (screenWidth < 1024) {
+    if (screenWidth < 768) {
         return 1;
     } else if (screenWidth < 1440) {
         return 2;

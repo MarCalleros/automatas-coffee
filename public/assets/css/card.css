@@ -4,7 +4,7 @@
     display: none;
     flex-direction: column;
     height: auto;
-    width: 350px;
+    width: 250px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -21,61 +21,65 @@
 }
 
 .card__information {
-    display: grid;
-    grid-template-columns: auto min-content;
+    display: block;
 }
 
 .card__image {
-    width: 350px;
-    height: 205px;
+    width: 250px;
+    height: 146px;
 }
 
 .card__title {
     font-family: 'Montserrat', sans-serif;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 600;
-    margin: 20px 10px 0 20px;
+    margin: 10px 10px 0 10px;
 }
 
 .card__description {
     font-family: 'Lato', sans-serif;
     font-size: 16px;
-    margin: 10px 20px 5px 20px;
+    margin: 10px 10px 5px 10px;
     grid-column-start: 1;
     grid-column-end: 3;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    display: none;
 }
 
 .card__price {
     font-size: 20px;
     font-weight: 700;
-    text-align: right;
     color: black;
-    margin: 20px 20px 0 10px;
+    margin: 10px 10px 0 10px;
     font-family: 'Lato', sans-serif;
 }
 
 .card__footer {
     display: flex;
     justify-content: space-between;
-    margin: 10px 20px 20px 20px;
+    margin: 10px 10px 20px 10px;
     gap: 10px;
     align-items: center;
 }
 
-.card__footer button {
+.card__footer-button {
     border: none;
     background-color: #f1f1f1;
     padding: 7px;
     border-radius: 25px;
     width: 100%;
     height: 100%;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     font-family: 'Poppins', sans-serif;
     transition: background-color 0.3s ease;
 }
 
-.card__footer button:hover {
+.card__footer-button:hover {
     cursor: pointer;
     background-color: #e1e1e1;
 }
@@ -134,14 +138,15 @@
 }
 
 @media (min-width: 768px) {
-
+    
 }
 
 @media (min-width: 1024px) {
+    .card__information {
+        display: grid;
+        grid-template-columns: auto min-content;
+    }
 
-}
-
-@media (min-width: 1440px) {
     .card {
         width: 350px;
     }
@@ -150,4 +155,31 @@
         width: 350px;
         height: 205px;
     }
+
+    .card__title {
+        font-size: 24px;
+        margin: 20px 10px 0 20px;
+    }
+    
+    .card__description {
+        margin: 10px 20px 5px 20px;
+        display: flex;
+    }
+    
+    .card__price {
+        text-align: right;
+        margin: 20px 20px 0 10px;
+    }
+    
+    .card__footer {
+        margin: 10px 20px 20px 20px;
+    }
+    
+    .card__footer-button {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 1440px) {
+
 }
