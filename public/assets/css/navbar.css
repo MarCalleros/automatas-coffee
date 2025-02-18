@@ -31,7 +31,7 @@
 }
 
 .hamburguer-menu-icon:hover {
-    background-color: #4A4A4A;
+    background-color: var(--darker-gray);
     border-radius: 5px;
 }
 
@@ -41,7 +41,7 @@
 }
 
 .user-icon:hover {
-    background-color: #4A4A4A;
+    background-color: var(--darker-gray);
     border-radius: 5px;
 }
 
@@ -62,7 +62,7 @@
 
 .navbar__link {
     text-align: center;
-    color: white;
+    color: var(--white);
     text-decoration: none;
     font-size: 22px;
     padding: 10px 15px;
@@ -75,8 +75,7 @@
 }
 
 .navbar__link:hover {
-    color: white;
-    background-color: #4A4A4A;
+    background-color: var(--darker-gray);
     border-radius: 5px;
     text-decoration: none;
     font-size: 22px;
@@ -139,7 +138,7 @@
     .navbar__button {
         font-family: 'Gliker', sans-serif;
         background-color: #ff5100;
-        color: white;
+        color: var(--white);
         font-size: 22px;
         padding: 10px 15px;
         border: none;

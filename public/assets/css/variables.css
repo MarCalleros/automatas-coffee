@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Lato:wght@400&family=Poppins:wght@600&display=swap');
+
+@font-face {
+    font-family: 'Gliker';
+    src: url('../font/Gliker-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Bobby';
+    src: url('../font/Bobby-Rough-Soft.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --white-background-color: #F4F3F2;
+    --black-background-color: #2C2C2C;
+
+    --white: #FAFAFA;
+
+    --black: #333333;
+    --dark-black: #222222;
+
+    --gray: #f1f1f1;
+    --dark-gray: #e1e1e1;
+    --darker-gray: #4A4A4A;
+
+    --red: #E63946;
+
+    --brown: #D5BFA3;
+    --dark-brown: #B08E5E;
+    --light-brown: #F7F3ED;
+
+    --blue: #96D3DB;
+    --dark-blue: #6BA4B4;
+    --light-blue: #F0FAFB;
+
+    --green: #A5E1C9;
+    --dark-green: #8CC6A1;
+    --light-green: #ECF8F9;
+
+    --pink: #F9D1D2;
+    --dark-pink: #F1A7A8;
+    --light-pink: #FEF4F5;
+}

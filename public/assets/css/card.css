@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Lato:wght@400&family=Poppins:wght@600&display=swap');
-
 .card {
     display: none;
     flex-direction: column;
@@ -10,6 +8,7 @@
     overflow: hidden;
     transition: transform 0.3s;
     position: relative;
+    background-color: var(--white);
 }
 
 .card--active {
@@ -31,6 +30,7 @@
 
 .card__title {
     font-family: 'Montserrat', sans-serif;
+    color: var(--black);
     font-size: 20px;
     font-weight: 600;
     margin: 10px 10px 0 10px;
@@ -38,6 +38,7 @@
 
 .card__description {
     font-family: 'Lato', sans-serif;
+    color: var(--black);
     font-size: 16px;
     margin: 10px 10px 5px 10px;
     grid-column-start: 1;
@@ -53,7 +54,7 @@
 .card__price {
     font-size: 20px;
     font-weight: 700;
-    color: black;
+    color: var(--black);
     margin: 10px 10px 0 10px;
     font-family: 'Lato', sans-serif;
 }
@@ -67,44 +68,45 @@
 }
 
 .card__footer-button {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    color: var(--dark-black);
     border: none;
-    background-color: #f1f1f1;
+    background-color: var(--gray);
     padding: 7px;
     border-radius: 25px;
     width: 100%;
     height: 100%;
     font-size: 14px;
-    font-weight: bold;
-    font-family: 'Poppins', sans-serif;
     transition: background-color 0.3s ease;
 }
 
 .card__footer-button:hover {
     cursor: pointer;
-    background-color: #e1e1e1;
+    background-color: var(--dark-gray);
 }
 
 .card__footer-like {
-    background-color: #f1f1f1;
+    background-color: var(--gray);
     border-radius: 50%;
     padding: 5px;
     transition: background-color 0.3s ease;
 }
 
 .card__footer-like:hover {
-    background-color: #e1e1e1;
+    background-color: var(--dark-gray);
     cursor: pointer;
 }
 
 .heart-icon {
-    fill: #f1f1f1;
-    stroke: black;
+    fill: var(--gray);
+    stroke: var(--black);
     stroke-width: 2;
 }
 
 .card__footer-like:hover .heart-icon {
-    fill: red;
-    stroke: red;
+    fill: var(--red);
+    stroke: var(--red);
 }
 
 @keyframes slideInFromRight {

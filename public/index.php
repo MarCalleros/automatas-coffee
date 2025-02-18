@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/variables.css">
     <link rel="stylesheet" href="/assets/css/styles.css">
     <title>Document</title>
 </head>
@@ -10,12 +11,12 @@
     <?php include_once __Dir__ . "/../views/templates/header.php"; ?>
     
     <div>
-        <h2>Nuestros Productos</h2>
+        <h2>Nuestros Productos más Populares</h2>
 
         <?php include_once __Dir__ . "/../views/carousel.php"; ?>
     </div>
 
-    <h2>Categorias mas Populares</h2>
+    <h2>Categorias</h2>
 
     <div class="categories">
         <div class="category category--cafe-caliente">

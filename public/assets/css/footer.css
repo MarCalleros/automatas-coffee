@@ -1,12 +1,12 @@
 .footer {
-    background-color: rgba(44, 44, 44);
+    background-color: var(--black-background-color);
     height: 150px;
     width: 100%;
 }
 
 .footer__copyright {
-    color: white;
+    color: var(--white);
     font-size: 18px;
     text-align: center;
-    padding-top: 125px;
+    padding-top: 100px;
 }
