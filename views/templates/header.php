@@ -18,7 +18,7 @@
                     </g>
                 </svg>
 
-                <a href="">
+                <a href="/">
                     <img src="assets/img/logo_white.png" alt="Automatas Coffee Logo" class="navbar__logo">
                 </a>
 
@@ -33,7 +33,7 @@
             </div>
             
             <div class="navbar__links">
-                <a class="navbar__link" href="">Productos</a>
+                <a class="navbar__link" href="/products">Productos</a>
                 <a class="navbar__link" href="">Sobre Nosotros</a>
                 <a class="navbar__link" href="">Encuentranos</a>
                 <button class="navbar__button">Iniciar Sesión</button>

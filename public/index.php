@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/assets/css/variables.css">
     <link rel="stylesheet" href="/assets/css/styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-    <title>Document</title>
+    <title>Automatas Coffee</title>
 </head>
 <body>
     <?php include_once __Dir__ . "/../views/templates/header.php"; ?>
