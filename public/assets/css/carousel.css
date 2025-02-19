@@ -1,15 +1,28 @@
 .carousel {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 290px;
 }
 
-.carousel__prev-icon:hover, .carousel__next-icon:hover {
-    cursor: pointer;
+@media (max-width: 767px) {
+    .swiper-button-next,
+    .swiper-button-prev {
+        display: none !important;
+    }
 }
 
 @media (min-width: 768px) {
     .carousel {
-        gap: 60px;
+        width: 725px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .carousel {
+        width: 950px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .carousel {
+        width: 1360px;
     }
 }

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/css/variables.css">
     <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <title>Document</title>
 </head>
 <body>
@@ -70,7 +71,8 @@
 
     <?php include_once __DIR__ . "/../views/templates/footer.php"; ?>
 
-    <script src="assets/js/carouselX.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="assets/js/carousel.js"></script>
     <script src="assets/js/navbar.js"></script>
     <script src="assets/js/hamburguer.js"></script>
 </body>
