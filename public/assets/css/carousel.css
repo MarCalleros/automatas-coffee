@@ -2,6 +2,15 @@
     width: 290px;
 }
 
+.swiper-button-next, .swiper-button-prev {
+    color: var(--black-background-color) !important;
+}
+
+.swiper-pagination-bullet-active {
+    background: var(--black-background-color) !important;
+    opacity: 1;
+}
+
 @media (max-width: 767px) {
     .swiper-button-next,
     .swiper-button-prev {
