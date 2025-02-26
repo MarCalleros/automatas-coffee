@@ -1,15 +1,24 @@
 <?php 
 
-class Router {
-    public function route() {
-        $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
+$uri = parse_url($_SERVER['REQUEST_URI'])['path'];
 
-        if ($uri === '/') {
-            include_once __DIR__ . '/../views/home.php';
-        } else if ($uri === '/products') {
-            include_once __DIR__ . '/../views/products.php';
-        } else {
-            include_once __DIR__ . '/../views/404.php';
-        }
+$routes = [
+    '/' => __DIR__ . '/views/pages/home.php',
+    '/products' => __DIR__ . '/views/pages/products.php'
+];
+
+routeView($uri, $routes);
+
+function routeView($uri, $routes) {
+    if (array_key_exists($uri, $routes)) {
+        require $routes[$uri];
+    } else {
+        notFound();
     }
+}
+
+function notFound() {
+    http_response_code(404);
+    require __DIR__ . '/views/pages/404.php';
+    die();
 }
