@@ -1,8 +1,10 @@
 @import url(header.css);
 @import url(footer.css);
 @import url(navbar.css);
+@import url(sidebar.css);
 @import url(carousel.css);
 @import url(card.css);
+@import url(product.css);
 @import url(category.css);
 
 html {
@@ -14,8 +16,9 @@ html {
 }
 body {
     margin: 0;
-    padding: 0;
+    padding: 115px 0 0 0;
     background-color: var(--white-background-color);
+    height: 100vh;
 }
 h2 {
     font-family: 'Montserrat', sans-serif;
@@ -24,4 +27,17 @@ h2 {
     font-weight: 600;
     margin: 40px 0 40px 0;
     text-align: center;
+}
+@media (min-width: 1024px) {
+    body {
+        padding-top: 145px;
+    }
+}
+
+.test {
+    margin-top: 0px;
+}
+
+.flex-container {
+    display: flex;
 }

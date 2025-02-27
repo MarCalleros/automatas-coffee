@@ -1,0 +1,20 @@
+.sidebar {
+    width: 250px;
+    background-color: var(--black-background-color);
+    top: 0;
+    left: 0;
+}
+
+.sidebar__header {
+    margin-top: 20px;
+}
+
+.sidebar__logo {
+    display: flex;
+    height: 60px;
+    margin-left: 18px;
+}
+
+.admin-panel {
+    display: flex;
+}

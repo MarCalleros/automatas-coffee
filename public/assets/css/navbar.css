@@ -9,6 +9,7 @@
     width: 100%;
     z-index: 1000;
     overflow: hidden;
+    top: 0;
 }
 
 .navbar__header {
