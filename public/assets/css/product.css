@@ -1,3 +1,13 @@
+.product-list {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.product-list--grid {
+    grid-template-columns: 1fr 1fr;
+}
+
+
 .product {
     display: flex;
     padding: 10px;
@@ -108,7 +118,7 @@
     margin-left: 20px;
     margin-bottom: 20px;
     /*background-color: var(--black-background-color);*/
-    border-right: 2px solid var(--black);
+    border-right: 2px solid var(--black-background-color);
 }
 
 .filter__title {
@@ -148,6 +158,25 @@
 }
 
 .search-icon {
+    height: 25px;
+    width: 25px;
+}
+
+.view__button {
+    margin-left: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #FF5100;
+    padding: 0 15px;
+    transition: background-color 0.3s;
+}
+
+.view__button:hover {
+    cursor: pointer;
+    background-color: #E0A63A;
+}
+
+.view-icon {
     height: 25px;
     width: 25px;
 }
