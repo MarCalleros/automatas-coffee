@@ -122,6 +122,11 @@
 
     .navbar__link {
         display: flex;
+        font-size: 2rem;
+    }
+
+    .navbar__link:hover {
+        font-size: 2rem;
     }
 
     .navbar__button {

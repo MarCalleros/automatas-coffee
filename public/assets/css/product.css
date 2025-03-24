@@ -113,22 +113,6 @@
     stroke: var(--red);
 }
 
-.filter-container {
-    width: 200px;
-    margin-left: 20px;
-    margin-bottom: 20px;
-    /*background-color: var(--black-background-color);*/
-    border-right: 2px solid var(--black-background-color);
-}
-
-.filter__title {
-    font-family: 'Montserrat', sans-serif;
-    color: var(--black);
-    font-size: 28px;
-    font-weight: 600;
-    margin: 10px 0 0 0;
-}
-
 .search {
     margin: 10px 20px 20px 20px;
     display: flex;

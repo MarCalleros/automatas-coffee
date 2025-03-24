@@ -13,9 +13,7 @@
     <h2 class="test">PRODUCTOS TEST</h2>
 
     <div class="flex-container">
-        <div class="filter-container">
-            <h2 class="filter__title">Filtros</h2>
-        </div>
+        <?php include_once __DIR__ . "/../components/filters-list.php"; ?>
 
         <div class="product-container">
             <div class="search">
