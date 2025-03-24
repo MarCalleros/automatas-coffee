@@ -100,7 +100,7 @@
 @media (min-width: 1024px) {
     .navbar {
         display: flex;
-        height: 130px;
+        height: auto;
     }
 
     .navbar__header {
@@ -110,8 +110,8 @@
 
     .navbar__logo {
         width: auto;
-        height: 100px;
-        margin: 0;
+        height: 80px;
+        margin: 10px;
     }
 
     .navbar__links {
