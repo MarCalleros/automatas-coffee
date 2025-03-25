@@ -32,12 +32,18 @@ h2, h3 {
 h3 {
     text-align: left;
 }
-@media (min-width: 1024px) {
-    body {
-        padding-top: 145px;
-    }
-}
 
 .flex-container {
     display: flex;
+}
+
+.title--page {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+@media (min-width: 1024px) {
+    body {
+        padding-top: 115px;
+    }
 }
