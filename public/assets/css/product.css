@@ -138,7 +138,7 @@
 
 .search__button:hover {
     cursor: pointer;
-    background-color: #E0A63A;
+    background-color: var(--primary-hover);
 }
 
 .search-icon {
@@ -157,7 +157,7 @@
 
 .view__button:hover {
     cursor: pointer;
-    background-color: #E0A63A;
+    background-color: var(--primary-hover);
 }
 
 .view-icon {

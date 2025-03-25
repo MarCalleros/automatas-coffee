@@ -29,6 +29,9 @@ h2, h3 {
     margin: 40px 0 40px 0;
     text-align: center;
 }
+h3 {
+    text-align: left;
+}
 @media (min-width: 1024px) {
     body {
         padding-top: 145px;

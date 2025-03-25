@@ -87,7 +87,7 @@
 }
 
 .navbar__button:hover {
-    background-color: #E0A63A;
+    background-color: var(--primary-hover);
 }
 
 @media (min-width: 768px) {
