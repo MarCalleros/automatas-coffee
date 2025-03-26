@@ -7,6 +7,7 @@
 @import url(product.css);
 @import url(filter.css);
 @import url(category.css);
+@import url(search.css);
 
 html {
     font-size: 62.5%;

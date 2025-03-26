@@ -1,10 +1,30 @@
 (function() {
     const viewButton = document.querySelector('.view__button');
     const productList = document.querySelector('.product-list');
+    const product = document.querySelectorAll('.product');
+    const productImageContainer = document.querySelectorAll('.product__image-container');
+    const productImage = document.querySelectorAll('.product__image');
+    const productFooter = document.querySelectorAll('.product__footer');
 
     viewButton.addEventListener('click', function() {
         viewButton.classList.toggle('view__button--grid');
         productList.classList.toggle('product-list--grid');
+
+        product.forEach(function(product) {
+            product.classList.toggle('product--grid');
+        });
+
+        productImageContainer.forEach(function(container) {
+            container.classList.toggle('product__image-container--grid');
+        });
+
+        productImage.forEach(function(image) {
+            image.classList.toggle('product__image--grid');
+        });
+
+        productFooter.forEach(function(footer) {
+            footer.classList.toggle('product__footer--grid');
+        });
         changeSVG();
     });
 })();
