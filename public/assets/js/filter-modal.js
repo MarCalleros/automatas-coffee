@@ -1,8 +1,8 @@
 (function() {
     const filterButton = document.querySelector('.filter__button');
     const filterModal = document.querySelector('.filter-modal');
-    const closeModalButton = document.querySelector('.modal__close');
-    const backgroundShadow = document.querySelector('.background__shadow');
+    const closeModalButton = document.querySelector('#filter-close');
+    const backgroundShadow = document.querySelector('#background-filter');
     let scrollY = 0;
 
     filterButton.addEventListener('click', function() {

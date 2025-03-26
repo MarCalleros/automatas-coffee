@@ -1,8 +1,8 @@
 (function() {
     const loginButton = document.querySelector('.navbar__button');
     const loginModal = document.querySelector('.login-modal');
-    const closeModalButton = document.querySelector('.modal__close');
-    const backgroundShadow = document.querySelector('.background__shadow');
+    const closeModalButton = document.querySelector('#login-close');
+    const backgroundShadow = document.querySelector('#background-login');
     let scrollY = 0;
 
     loginButton.addEventListener('click', function() {
