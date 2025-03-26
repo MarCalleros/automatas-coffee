@@ -18,7 +18,6 @@
     width: 25px;
 }
 
-/* Estilos base del modal */
 .filter-modal {
     position: fixed;
     bottom: -100%;
@@ -32,7 +31,6 @@
     z-index: 999;
 }
 
-/* Mostrar modal */
 .filter-modal--active {
     bottom: 0;
 
@@ -46,7 +44,6 @@
     }
 }
 
-/* Contenedor del contenido */
 .filter-modal__content {
     padding: 20px;
     text-align: center;
@@ -54,7 +51,6 @@
     overflow-y:scroll;
 }
 
-/* Botón para cerrar */
 .filter-modal__close {
     position: absolute;
     display: flex;
