@@ -43,6 +43,24 @@ h3 {
     margin-bottom: 20px;
 }
 
+.background__shadow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 35%);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    z-index: 998;
+}
+
+.background__shadow--active {
+    opacity: 1;
+    visibility: visible;
+}
+
 @media (min-width: 1024px) {
     body {
         padding-top: 115px;
