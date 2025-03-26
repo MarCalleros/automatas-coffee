@@ -31,3 +31,5 @@
         <button class="navbar__button">Iniciar Sesión</button>
     </div>
 </nav>
+
+<?php include_once __DIR__ . "/login.php"; ?>

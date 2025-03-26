@@ -1,14 +1,15 @@
 (function() {
-    const filterButton = document.querySelector('.filter__button');
-    const filterModal = document.querySelector('.filter-modal');
+    const loginButton = document.querySelector('.navbar__button');
+    const loginModal = document.querySelector('.login-modal');
     const closeModalButton = document.querySelector('.modal__close');
     const backgroundShadow = document.querySelector('.background__shadow');
     let scrollY = 0;
 
-    filterButton.addEventListener('click', function() {
+    loginButton.addEventListener('click', function() {
         scrollY = window.scrollY;
-        filterModal.classList.add('filter-modal--active');
+        loginModal.classList.add('login-modal--active');
         backgroundShadow.classList.add('background__shadow--active');
+        backgroundShadow.classList.add('background__blur--active');
 
         document.body.style.position = 'fixed';
         document.body.style.top = `-${scrollY}px`;
@@ -16,8 +17,9 @@
     });
 
     closeModalButton.addEventListener('click', function() {
-        filterModal.classList.remove('filter-modal--active');
+        loginModal.classList.remove('login-modal--active');
         backgroundShadow.classList.remove('background__shadow--active');
+        backgroundShadow.classList.remove('background__blur--active');
 
         document.body.style.position = '';
         document.body.style.top = '';
