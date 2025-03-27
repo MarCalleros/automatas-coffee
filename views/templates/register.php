@@ -13,33 +13,33 @@
 
     <form class="register-modal__form" id="register-form">
         <div class="register-modal__input-container">
-            <label for="name" class="register-modal__label">Nombre</label>
-            <input type="text" name="name" class="register-modal__input" id="register-name">
+            <label for="register-name" class="register-modal__label">Nombre</label>
+            <input type="text" name="register-name" class="register-modal__input" id="register-name">
             <span class="register-modal__error">Solo letras y espacios</span>
         </div>
 
         <div class="register-modal__input-container">
-            <label for="age" class="register-modal__label">Edad</label>
-            <input type="text" name="age" class="register-modal__input" id="register-age">
+            <label for="register-age" class="register-modal__label">Edad</label>
+            <input type="text" name="register-age" class="register-modal__input" id="register-age">
             <span class="register-modal__error">Solo números entre 1 y 99</span>
         </div>
         
         <div class="register-modal__input-container">
-            <label for="email" class="register-modal__label">Correo</label>
-            <input type="text" name="email" class="register-modal__input" id="register-email">
+            <label for="register-email" class="register-modal__label">Correo</label>
+            <input type="text" name="register-email" class="register-modal__input" id="register-email">
             <span class="register-modal__error">Formato válido (ejemplo@dominio.com)</span>
         </div>
 
         <div class="register-modal__input-container">
-            <label for="user" class="register-modal__label">Usuario</label>
-            <input type="text" name="user" class="register-modal__input" id="register-username">
+            <label for="register-username" class="register-modal__label">Usuario</label>
+            <input type="text" name="register-username" class="register-modal__input" id="register-username">
             <span class="register-modal__error">Solo letras y números, mínimo 5 caracteres, sin espacios</span>
         </div>
 
         <div class="register-modal__input-container">
-            <label for="password" class="register-modal__label">Contraseña</label>
+            <label for="register-password" class="register-modal__label">Contraseña</label>
             <div class="register-modal__password-container">
-                <input type="password" name="password" id="register-password" class="register-modal__input">
+                <input type="password" name="register-password" id="register-password" class="register-modal__input">
                 <div class="register-modal__eye-container" id="register-eye-container-password">
                     <svg class="eye-icon" id="register-eye-password" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -64,9 +64,9 @@
         </div>
 
         <div class="register-modal__input-container">
-            <label for="confirm" class="register-modal__label">Confirmar Contraseña</label>
+            <label for="register-confirm" class="register-modal__label">Confirmar Contraseña</label>
             <div class="register-modal__password-container">
-                <input type="password" name="confirm" id="register-confirm" class="register-modal__input">
+                <input type="password" name="register-confirm" id="register-confirm" class="register-modal__input">
                 <div class="register-modal__eye-container" id="register-eye-container-confirm">
                     <svg class="eye-icon" id="register-eye-confirm" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>

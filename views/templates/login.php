@@ -15,13 +15,13 @@
 
     <form class="login-modal__form" id="login-form">
         <div class="login-modal__input-container">
-            <label for="user" class="login-modal__label">Usuario</label>
-            <input type="user" class="login-modal__input" id="login-username">
+            <label for="login-username" class="login-modal__label">Usuario</label>
+            <input class="login-modal__input" id="login-username" name="login-username">
         </div>
 
         <div class="login-modal__input-container">
-            <label for="password" class="login-modal__label">Contraseña</label>
-            <input type="password" class="login-modal__input" id="login-password">
+            <label for="login-password" class="login-modal__label">Contraseña</label>
+            <input type="password" class="login-modal__input" id="login-password" name="login-password">
         </div>
 
         <div class="login-modal__button-container">
