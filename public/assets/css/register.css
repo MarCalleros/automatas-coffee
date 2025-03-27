@@ -1,4 +1,4 @@
-.login-modal {
+.register-modal {
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -10,41 +10,55 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1000;
+    box-sizing: border-box;
     padding: 20px 30px;
     border-radius: 20px;
     display: none;
+
+    max-height: 75vh;
+    overflow-y: auto;
+    scrollbar-width: none;
 }
 
-.login-modal--active {
-    display: flex;
+.register-modal::-webkit-scrollbar { 
+    display: none;
 }
 
-.login-modal__logo {
+.register-modal--active {
+    display: block;
+}
+
+.register-modal__logo-container {
     width: 390px;
     height: 117px;
 }
 
-.login-modal__title {
+.register-modal__logo {
+    width: 390px;
+    height: 117px;
+}
+
+.register-modal__title {
     margin: 10px 0;
 }
 
-.login-modal__form {
+.register-modal__form {
     width: 100%;
 }
 
-.login-modal__input-container {
+.register-modal__input-container {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
 }
 
-.login-modal__label {
+.register-modal__label {
     font-family: 'Lato', sans-serif;
     font-size: 1.6rem;
     margin-bottom: 10px;
 }
 
-.login-modal__input {
+.register-modal__input {
     width: 100%;
     padding: 10px;
     border: 1px solid var(--dark-gray);
@@ -55,13 +69,14 @@
     outline: none;
 }
 
-.login-modal__button-container {
+.register-modal__button-container {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-top: 20px;
 }
 
-.login-modal__button {
+.register-modal__button {
     width: 100%;
     border-radius: 10px;
     border: none;
@@ -71,55 +86,62 @@
     cursor: pointer;
 }
 
-.login-modal__button--login {
+.register-modal__button--register {
     background-color: var(--primary-color);
     color: var(--white);
 }
 
-.login-modal__button--login:hover {
+.register-modal__button--register:hover {
     background-color: var(--primary-hover);
 }
 
-.login-modal__button--reset {
+.register-modal__button--reset {
     background-color: var(--white);
     color: var(--black);
     border: 1px solid var(--black);
 }
 
-.login-modal__footer {
+.register-modal__footer {
     display: flex;
     flex-direction: column;
     gap: 20px;
     margin-top: 10px;
 }
 
-.login-modal__link {
+.register-modal__register {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.register-modal__link {
     font-family: 'Lato', sans-serif;
     font-weight: bold;
     font-size: 1.6rem;
     color: var(--primary-color);
     text-decoration: underline;
     margin: 0;
+    text-align: center;
 }
 
-.login-modal__link:hover {
+.register-modal__link:hover {
     color: var(--primary-hover);
     cursor: pointer;
 }
 
-.login-modal__register {
+.register-modal__login {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.login-modal__text {
+.register-modal__text {
     font-family: 'Lato', sans-serif;
     font-size: 1.6rem;
     font-weight: bold;
     color: var(--black);
 }
 
-.login-modal__link--italic {
+.register-modal__link--italic {
     font-style: italic;
 }

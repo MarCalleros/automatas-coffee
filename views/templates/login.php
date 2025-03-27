@@ -35,9 +35,7 @@
 
         <div class="login-modal__register">
             <span class="login-modal__text">¿No estras registrado?</span>
-            <a class="login-modal__link login-modal__link--italic" href="#">Registrarse</a>
+            <p class="login-modal__link login-modal__link--italic" id="login-register">Registrarse</p>
         </div>
     </div>
 </div>
-
-<script src="/assets/js/login-modal.js"></script>

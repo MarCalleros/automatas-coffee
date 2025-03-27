@@ -1,8 +1,17 @@
 (function() {
     const loginButton = document.querySelector('.navbar__button');
+
     const loginModal = document.querySelector('.login-modal');
-    const closeModalButton = document.querySelector('#login-close');
+    const registerModal = document.querySelector('.register-modal');
+
+    const closeLoginButton = document.querySelector('#login-close');
+    const closeRegisterButton = document.querySelector('#register-close');
+
     const backgroundShadow = document.querySelector('#background-login');
+
+    const registerLink = document.querySelector('#login-register');
+    const loginLink = document.querySelector('#register-login');
+
     let scrollY = 0;
 
     loginButton.addEventListener('click', function() {
@@ -16,7 +25,28 @@
         document.body.style.width = '100%';
     });
 
-    closeModalButton.addEventListener('click', function() {
+    registerLink.addEventListener('click', function() {
+        loginModal.classList.remove('login-modal--active');
+        registerModal.classList.add('register-modal--active');
+    });
+
+    loginLink.addEventListener('click', function() {
+        registerModal.classList.remove('register-modal--active');
+        loginModal.classList.add('login-modal--active');
+    });
+
+    closeRegisterButton.addEventListener('click', function() {
+        registerModal.classList.remove('register-modal--active');
+        loginModal.classList.remove('login-modal--active');
+        backgroundShadow.classList.remove('background__shadow--active');
+        backgroundShadow.classList.remove('background__blur--active');
+
+        document.body.style.position = '';
+        document.body.style.top = '';
+        window.scrollTo(0, scrollY);
+    });
+
+    closeLoginButton.addEventListener('click', function() {
         loginModal.classList.remove('login-modal--active');
         backgroundShadow.classList.remove('background__shadow--active');
         backgroundShadow.classList.remove('background__blur--active');

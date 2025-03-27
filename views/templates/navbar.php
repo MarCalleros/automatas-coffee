@@ -33,3 +33,5 @@
 </nav>
 
 <?php include_once __DIR__ . "/login.php"; ?>
+<?php include_once __DIR__ . "/register.php"; ?>
+<script src="/assets/js/login-modal.js"></script>

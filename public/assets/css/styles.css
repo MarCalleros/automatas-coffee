@@ -9,6 +9,7 @@
 @import url(category.css);
 @import url(search.css);
 @import url(login.css);
+@import url(register.css);
 
 html {
     font-size: 62.5%;
