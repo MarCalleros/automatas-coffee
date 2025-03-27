@@ -129,6 +129,10 @@
         font-size: 2rem;
     }
 
+    .navbar__link--disabled {
+        display: none;
+    }
+
     .navbar__button {
         display: flex;
     }
@@ -161,13 +165,13 @@
     }
 
     to {
-        height: 308px;
+        height: 369px;
     }
 }
 
 @keyframes heightDecrease {
     from {
-        height: 308px;
+        height: 369px;
     }
 
     to {

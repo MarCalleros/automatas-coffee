@@ -110,4 +110,4 @@
     </div>
 </div>
 
-<script src="/assets/js/cookie-login.js"></script>
+<script src="/assets/js/cookie.js"></script>

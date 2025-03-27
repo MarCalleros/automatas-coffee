@@ -28,17 +28,13 @@
     display: block;
 }
 
-.register-modal__logo-container {
-    width: 390px;
-    height: 117px;
-}
-
 .register-modal__logo {
-    width: 390px;
-    height: 117px;
+    width: 250px;
+    height: 75px;
 }
 
 .register-modal__title {
+    font-size: 2.4rem;
     margin: 10px 0;
 }
 
@@ -144,4 +140,39 @@
 
 .register-modal__link--italic {
     font-style: italic;
+}
+
+.register-modal__password-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.register-modal__eye-container {
+    cursor: pointer;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.eye-icon {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.eye-icon-slash {
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .register-modal__logo {
+        width: 390px;
+        height: 117px;
+    }
 }

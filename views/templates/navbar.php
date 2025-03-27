@@ -28,6 +28,7 @@
         <a class="navbar__link" href="/products">Productos</a>
         <a class="navbar__link" href="">Sobre Nosotros</a>
         <a class="navbar__link" href="">Contactanos</a>
+        <a class="navbar__link navbar__link--disabled" href="">Mi Carrito</a>
         <button class="navbar__button">Iniciar Sesión</button>
     </div>
 </nav>

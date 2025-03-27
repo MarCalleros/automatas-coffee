@@ -20,11 +20,12 @@
 }
 
 .login-modal__logo {
-    width: 390px;
-    height: 117px;
+    width: 250px;
+    height: 75px;
 }
 
 .login-modal__title {
+    font-size: 2.4rem;
     margin: 10px 0;
 }
 
@@ -122,4 +123,11 @@
 
 .login-modal__link--italic {
     font-style: italic;
+}
+
+@media (min-width: 768px) {
+    .login-modal__logo {
+        width: 390px;
+        height: 117px;
+    }
 }
