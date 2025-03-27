@@ -21,6 +21,9 @@
     const eyeIconConfirm = document.querySelector('#register-eye-confirm');
     const slashIconConfirm = document.querySelector('#register-slash-confirm');
 
+    const loginForm = document.querySelector("#login-form");
+    const registerForm = document.querySelector("#register-form");
+
     let scrollY = 0;
 
     loginButton.addEventListener('click', function() {
@@ -56,6 +59,14 @@
     });
 
     closeRegisterButton.addEventListener('click', function() {
+        loginForm.reset();
+        registerForm.reset();
+
+        const errorMessages = document.querySelectorAll(".register-modal__error");
+        errorMessages.forEach((errorMessage) => {
+            errorMessage.classList.remove("register-modal__error--active");
+        });
+
         registerModal.classList.remove('register-modal--active');
         loginModal.classList.remove('login-modal--active');
         backgroundShadow.classList.remove('background__shadow--active');
@@ -67,6 +78,14 @@
     });
 
     closeLoginButton.addEventListener('click', function() {
+        loginForm.reset();
+        registerForm.reset();
+
+        const errorMessages = document.querySelectorAll(".register-modal__error");
+        errorMessages.forEach((errorMessage) => {
+            errorMessage.classList.remove("register-modal__error--active");
+        });
+        
         loginModal.classList.remove('login-modal--active');
         backgroundShadow.classList.remove('background__shadow--active');
         backgroundShadow.classList.remove('background__blur--active');

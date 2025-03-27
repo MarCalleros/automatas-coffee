@@ -24,10 +24,13 @@ function deleteCookie(name) {
 }
 
 function deleteAllCookies() {
+    // Eliminar todas las cookies excepto la de login (logged)
     document.cookie.split(';').forEach(cookie => {
-        const eqPos = cookie.indexOf('=');
-        const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
-        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        if (!(cookie.trim().startsWith('logged'))) {
+            const eqPos = cookie.indexOf('=');
+            const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+            document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        }
     });
 }
 

@@ -52,6 +52,7 @@
     font-family: 'Lato', sans-serif;
     font-size: 1.6rem;
     margin-bottom: 10px;
+    color: var(--black);
 }
 
 .register-modal__input {
@@ -63,6 +64,7 @@
     font-family: 'Lato', sans-serif;
     font-size: 1.6rem;
     outline: none;
+    color: var(--black);
 }
 
 .register-modal__button-container {
