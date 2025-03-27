@@ -45,7 +45,7 @@
 .register-modal__input-container {
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 .register-modal__label {
@@ -138,6 +138,16 @@
     color: var(--black);
 }
 
+.register-modal__error {
+    font-family: 'Lato', sans-serif;
+    font-size: 1.2rem;
+    color: var(--error-color);
+    visibility: hidden;
+}
+
+.register-modal__error--active {
+    visibility: visible;
+}
 .register-modal__link--italic {
     font-style: italic;
 }

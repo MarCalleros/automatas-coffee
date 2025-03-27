@@ -14,30 +14,26 @@
     <form class="register-modal__form">
         <div class="register-modal__input-container">
             <label for="name" class="register-modal__label">Nombre</label>
-            <input type="text" name="name" class="register-modal__input">
-            <div class="underline"></div>
-            <span class="error-message"></span>
+            <input type="text" name="name" class="register-modal__input" id="register-name">
+            <span class="register-modal__error">Solo letras y espacios</span>
         </div>
 
         <div class="register-modal__input-container">
             <label for="age" class="register-modal__label">Edad</label>
-            <input type="text" name="age" class="register-modal__input">
-            <div class="underline"></div>
-            <span class="error-message"></span>
+            <input type="text" name="age" class="register-modal__input" id="register-age">
+            <span class="register-modal__error">Solo números entre 1 y 99</span>
         </div>
         
         <div class="register-modal__input-container">
             <label for="email" class="register-modal__label">Correo</label>
-            <input type="text" name="email" class="register-modal__input">
-            <div class="underline"></div>
-            <span class="error-message"></span>
+            <input type="text" name="email" class="register-modal__input" id="register-email">
+            <span class="register-modal__error">Formato válido (ejemplo@dominio.com)</span>
         </div>
 
         <div class="register-modal__input-container">
             <label for="user" class="register-modal__label">Usuario</label>
             <input type="text" name="user" class="register-modal__input" id="register-username">
-            <div class="underline"></div>
-            <span class="error-message"></span>
+            <span class="register-modal__error">Solo letras y números, mínimo 5 caracteres, sin espacios</span>
         </div>
 
         <div class="register-modal__input-container">
@@ -64,8 +60,7 @@
                     </svg>
                 </div>
             </div>
-            <div class="underline"></div>
-            <span class="error-message"></span>
+            <span class="register-modal__error">Mínimo 8 caracteres, al menos una letra, un número y un símbolo especial</span>
         </div>
 
         <div class="register-modal__input-container">
@@ -92,8 +87,7 @@
                     </svg>
                 </div>
             </div>
-            <div class="underline"></div>
-            <span class="error-message"></span>
+            <span class="register-modal__error">Las contraseñas deben coincidir</span>
         </div>
 
         <div class="register-modal__button-container">
