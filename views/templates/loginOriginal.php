@@ -13,20 +13,20 @@
 
     <h2 class="login-modal__title">Inicio de Sesion</h2>
 
-    <form class="login-modal__form" id="login-form">
+    <form class="login-modal__form" action="">
         <div class="login-modal__input-container">
             <label for="user" class="login-modal__label">Usuario</label>
-            <input type="user" class="login-modal__input" id="login-username">
+            <input type="user" id="user" class="login-modal__input">
         </div>
 
         <div class="login-modal__input-container">
             <label for="password" class="login-modal__label">Contraseña</label>
-            <input type="password" class="login-modal__input" id="login-password">
+            <input type="password" id="password" class="login-modal__input">
         </div>
 
         <div class="login-modal__button-container">
-            <button class="login-modal__button login-modal__button--login" id="login-button">Iniciar Sesion</button>
-            <button class="login-modal__button login-modal__button--reset" id="login-reset">Resetear Campos</button>
+            <button class="login-modal__button login-modal__button--login">Iniciar Sesion</button>
+            <button class="login-modal__button login-modal__button--reset">Resetear Campos</button>
         </div>
     </form>
 

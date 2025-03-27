@@ -19,18 +19,23 @@ function getCookie(name) {
     return null;
 }
 
-function checkCookie() {
-    let username = getCookie("username");
-    if (username != "") {
-     alert("Welcome again " + username);
-    } else {
-      username = prompt("Please enter your name:", "");
-      if (username != "" && username != null) {
-        setCookie("username", username, 365);
-      }
-    }
+function deleteCookie(name) {
+    document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 }
 
+function deleteAllCookies() {
+    document.cookie.split(';').forEach(cookie => {
+        const eqPos = cookie.indexOf('=');
+        const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    });
+}
+
+/* COOKIE DE LOGIN */
+setCookie('logged', 'false', 365); // Se crea una cookie para saber si el usuario esta loggeado o no
+
+const loginForm = document.querySelector("#login-form");
+const registerForm = document.querySelector("#register-form");
 
 let nameInput = document.querySelector("#register-name");
 let ageInput = document.querySelector("#register-age");
@@ -45,7 +50,35 @@ const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 const regexUsername = /^[a-zA-Z0-9]{5,}$/
 const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&_\-#])[A-Za-z\d@$!%*?&_\-#]{8,}$/
 
+const loginButton = document.querySelector('#login-button');
+const loginResetButton = document.querySelector('#login-reset');
+
 const registerButton = document.querySelector('#register-button');
+const registerResetButton = document.querySelector('#register-reset');
+
+loginButton.addEventListener('click', function(event) {
+    event.preventDefault();
+
+    if (getCookie('logged') !== 'false') {
+        alert('Ya has iniciado sesión anteriormente con el usuario de ' + getCookie('logged'));
+        return
+    }
+
+    let username = document.querySelector("#login-username").value;
+    let password = document.querySelector("#login-password").value;
+
+    if (getCookie(username) === password) {
+        alert('Login exitoso');
+        setCookie('logged', username, 365);
+    } else {
+        alert('Usuario o contraseña incorrectos');
+    }
+});
+
+loginResetButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    loginForm.reset();
+});
 
 registerButton.addEventListener('click', async function(event) {
     event.preventDefault();
@@ -58,6 +91,16 @@ registerButton.addEventListener('click', async function(event) {
         
         getCookie(username) === null ? setCookie(username, password, 365) : alert('El usuario ya existe');
     }
+});
+
+registerResetButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    registerForm.reset();
+
+    const errorMessages = document.querySelectorAll(".register-modal__error");
+    errorMessages.forEach((errorMessage) => {
+        errorMessage.classList.remove("register-modal__error--active");
+    });
 });
 
 function validateInputs() {
@@ -160,3 +203,18 @@ inputs.forEach((input, index) => {
         }
     })
 })
+
+/* Eliminar posteriormente */
+const deleteButton = document.querySelector('#register-delete');
+const showButton = document.querySelector('#register-show');
+
+deleteButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    deleteAllCookies();
+});
+
+showButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    alert(document.cookie);
+});
+/* Eliminar posteriormente */

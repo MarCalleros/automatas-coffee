@@ -11,7 +11,7 @@
 
     <h2 class="register-modal__title">Registro de Usuarios</h2>
 
-    <form class="register-modal__form">
+    <form class="register-modal__form" id="register-form">
         <div class="register-modal__input-container">
             <label for="name" class="register-modal__label">Nombre</label>
             <input type="text" name="name" class="register-modal__input" id="register-name">
@@ -92,7 +92,11 @@
 
         <div class="register-modal__button-container">
             <button class="register-modal__button register-modal__button--register" id="register-button">Registrarse</button>
-            <button class="register-modal__button register-modal__button--reset">Resetear Campos</button>
+            <button class="register-modal__button register-modal__button--reset" id="register-reset">Resetear Campos</button>
+
+            <!-- Botones para eliminar cookies y listar usuarios (Eliminar despues) -->
+            <button class="register-modal__button register-modal__button--reset" id="register-delete">Eliminar Cookies</button>
+            <button class="register-modal__button register-modal__button--reset" id="register-show">Listar Usuarios</button>
         </div>
     </form>
 
