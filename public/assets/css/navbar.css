@@ -7,7 +7,7 @@
     height: auto;
     margin-bottom: 15px;
     width: 100%;
-    z-index: 1000;
+    z-index: 990;
     overflow: hidden;
     top: 0;
 }
@@ -269,6 +269,10 @@
         font-size: 2rem;
     }
 
+    .navbar__link--disabled {
+        display: none;
+    }
+
     .navbar__button {
         display: flex;
     }
@@ -301,13 +305,13 @@
     }
 
     to {
-        height: 308px;
+        height: 369px;
     }
 }
 
 @keyframes heightDecrease {
     from {
-        height: 308px;
+        height: 369px;
     }
 
     to {

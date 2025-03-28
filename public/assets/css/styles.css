@@ -7,6 +7,10 @@
 @import url(product.css);
 @import url(filter.css);
 @import url(category.css);
+@import url(search.css);
+@import url(login.css);
+@import url(register.css);
+@import url(notification.css);
 @import url(carrito.css);
 
 html {
@@ -41,6 +45,61 @@ h3 {
 .title--page {
     margin-top: 10px;
     margin-bottom: 20px;
+}
+
+.background__shadow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 35%);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    z-index: 998;
+}
+
+.background__shadow--active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.background__blur {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px); 
+    -webkit-backdrop-filter: blur(5px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    z-index: 998;
+}
+
+.background__blur--active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal__close {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.close-icon {
+    height: 20px;
+    width: 20px;
 }
 
 @media (min-width: 1024px) {

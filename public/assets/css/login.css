@@ -1,0 +1,135 @@
+.login-modal {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    width: auto;
+    height: auto;
+    background-color: var(--white);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    padding: 20px 30px;
+    border-radius: 20px;
+    display: none;
+}
+
+.login-modal--active {
+    display: flex;
+}
+
+.login-modal__logo {
+    width: 250px;
+    height: 75px;
+}
+
+.login-modal__title {
+    font-size: 2.4rem;
+    margin: 10px 0;
+}
+
+.login-modal__form {
+    width: 100%;
+}
+
+.login-modal__input-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.login-modal__label {
+    font-family: 'Lato', sans-serif;
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+    color: var(--black);
+}
+
+.login-modal__input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--dark-gray);
+    background-color: var(--white);
+    border-radius: 8px;
+    font-family: 'Lato', sans-serif;
+    font-size: 1.6rem;
+    outline: none;
+    color: var(--black);
+}
+
+.login-modal__button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.login-modal__button {
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    padding: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.6rem;
+    cursor: pointer;
+}
+
+.login-modal__button--login {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.login-modal__button--login:hover {
+    background-color: var(--primary-hover);
+}
+
+.login-modal__button--reset {
+    background-color: var(--white);
+    color: var(--black);
+    border: 1px solid var(--black);
+}
+
+.login-modal__footer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.login-modal__link {
+    font-family: 'Lato', sans-serif;
+    font-weight: bold;
+    font-size: 1.6rem;
+    color: var(--primary-color);
+    text-decoration: underline;
+    margin: 0;
+}
+
+.login-modal__link:hover {
+    color: var(--primary-hover);
+    cursor: pointer;
+}
+
+.login-modal__register {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-modal__text {
+    font-family: 'Lato', sans-serif;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--black);
+}
+
+.login-modal__link--italic {
+    font-style: italic;
+}
+
+@media (min-width: 768px) {
+    .login-modal__logo {
+        width: 390px;
+        height: 117px;
+    }
+}
