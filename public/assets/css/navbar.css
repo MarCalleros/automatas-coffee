@@ -90,6 +90,146 @@
     background-color: var(--primary-hover);
 }
 
+.navbar {
+    background-color: #222222;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.navbar__header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.navbar__header a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+}
+
+.navbar__logo {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.navbar__brand {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+}
+
+.navbar__subtitle {
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.hamburguer-menu-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: block;
+}
+
+.navbar__links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.navbar__link {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.navbar__link:hover {
+    color: #ff5100;
+}
+
+.navbar__button {
+    background-color: #ff5100;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.navbar__button:hover {
+    background-color: #e64800;
+}
+
+.navbar__user-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.navbar__icon-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+.navbar__icon-link:hover {
+    opacity: 0.8;
+}
+
+.cart-icon, .profile-icon {
+    width: 24px;
+    height: 24px;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 15px;
+    }
+    
+    .navbar__links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 70px);
+        background-color: #222222;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 30px;
+        transition: left 0.3s ease;
+    }
+    
+    .navbar__links.active {
+        left: 0;
+    }
+    
+    .navbar__link {
+        margin: 15px 0;
+        font-size: 18px;
+    }
+    
+    .navbar__user-icons {
+        margin-top: 20px;
+    }
+}
+
 @media (min-width: 768px) {
     .navbar__header {
         justify-content: space-between;
