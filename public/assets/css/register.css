@@ -143,7 +143,7 @@
 .register-modal__error {
     font-family: 'Lato', sans-serif;
     font-size: 1.2rem;
-    color: var(--error-color);
+    color: var(--error);
     visibility: hidden;
 }
 

@@ -10,6 +10,7 @@
 @import url(search.css);
 @import url(login.css);
 @import url(register.css);
+@import url(notification.css);
 
 html {
     font-size: 62.5%;

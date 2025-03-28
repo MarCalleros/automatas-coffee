@@ -1,3 +1,5 @@
+import { createNotification } from './notification.js';
+
 function setCookie(name, value, days) {
     let expires = "";
     if (days) {
@@ -63,7 +65,7 @@ loginButton.addEventListener('click', function(event) {
     event.preventDefault();
 
     if (getCookie('logged') !== 'false') {
-        alert('Ya has iniciado sesión anteriormente con el usuario de ' + getCookie('logged'));
+        createNotification('error', 'Ya has iniciado sesión anteriormente');
         return
     }
 
@@ -71,10 +73,10 @@ loginButton.addEventListener('click', function(event) {
     let password = document.querySelector("#login-password").value;
 
     if (getCookie(username) === password) {
-        alert('Login exitoso');
+        createNotification('success', 'Inicio de sesión exitoso');
         setCookie('logged', username, 365);
     } else {
-        alert('Usuario o contraseña incorrectos');
+        createNotification('error', 'Usuario o contraseña incorrectos');
     }
 });
 
@@ -92,7 +94,12 @@ registerButton.addEventListener('click', async function(event) {
     if (validateInputs()) {
         const encrpytedPassword = await encryptPassword(password);
         
-        getCookie(username) === null ? setCookie(username, password, 365) : alert('El usuario ya existe');
+        if (getCookie(username) === null) {
+            setCookie(username, password, 365);
+            createNotification("success", "Registro exitoso");
+        } else {
+            createNotification("error", "El usuario ya existe");
+        }
     }
 });
 
