@@ -13,19 +13,23 @@
 
     <div class="conteinergeneral">
         <div class="conteiner">
+            <h2 class="title--page">¿Quienes somos?</h2>
             <div class="imagenlogo">
-                <img src="#" alt="Logo" class="imagen-logo">
+                <img src="/assets/img/Logo-g.png" alt="Logo" class="imagen-logo">
             </div>
             <div class="texto">
-                <h1>¿Quienes somos?</h1>
+                
                 <p>En Automatas Coffee, llevamos la experiencia del café a otro nivel. Nuestra cafetería se distingue por ofrecer bebidas de alta calidad, preparadas con leche premium de Milkwas, una empresa comprometida con la excelencia y el sabor natural.
-                    Lo que hace única a Automatas Coffee es su origen: somos una creación de Automatas Software, una compañía innovadora en tecnología que ha decidido fusionar el mundo del software y la gastronomía para ofrecer una experiencia moderna y eficiente.</p>
+                </p>
+                <p>
+                Lo que hace única a Automatas Coffee es su origen: somos una creación de Automatas Software, una compañía innovadora en tecnología que ha decidido fusionar el mundo del software y la gastronomía para ofrecer una experiencia moderna y eficiente.
+                </p>
             </div>
         </div>
     
     
         <div class="conteiner contactanos">
-            <h1>Contactanos</h1>
+            <h2 class="title--page">Contactanos</h2>
             <div class="entradas">
                 <div class="grupocontacto">
                     <label for="nombre">Nombre</label>

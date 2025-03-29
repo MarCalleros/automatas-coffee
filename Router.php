@@ -5,7 +5,9 @@ $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
 $routes = [
     '/' => __DIR__ . '/views/pages/home.php',
     '/products' => __DIR__ . '/views/pages/products.php',
-    '/admin' => __DIR__ . '/views/administrator/admin.php'
+    '/admin' => __DIR__ . '/views/administrator/admin.php',
+    '/contact' => __DIR__ . '/views/pages/contact.php',
+    '/configuration' => __DIR__ . '/views/pages/configuration.php'
 ];
 
 routeView($uri, $routes);
