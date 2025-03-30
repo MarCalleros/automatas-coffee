@@ -13,7 +13,9 @@
     gap: 45px;
     height: 100%;
     width: 100%;
-    background-color: #F4F3F2;
+}
+.texto{
+    width: 70%;
 }
 .conteiner p{
     font-size: 2.4rem;
@@ -22,10 +24,9 @@
     font-weight: bold;
 }
 .conteiner h2{
-    
+    color: var(--dark-black);
     font-size: 4.8rem;
     text-align: center;
-    line-height: 59px;
 }
 .title--page{
     font-family: 'Montserrat';
@@ -33,23 +34,26 @@
     font-size: 3.2rem;
     font-weight: 600;
     text-align: center;
-    margin: 40px 0;
-    align-self: flex-start;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 .conteiner{
     width: 93%;
-    max-height: 1100px;
+    height: auto;
     display: flex;
-    align-items: center;;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
     background-color: #FAFAFA;
     border-radius: 100px;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    padding: 50px;
-    margin-left: 10px;
-    margin-right: 10px;
+    padding: 15px;
 }
 
+.contenido{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
 .contactanos {
     display: flex;
     flex-direction: column;

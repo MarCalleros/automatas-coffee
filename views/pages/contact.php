@@ -3,51 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/assets/css/contact.css">
     <link rel="stylesheet" href="/assets/css/styles.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="/assets/css/contact.css">
+    <link rel="stylesheet" href="/assets/css/variables.css">
+    
+    <title>Contacto</title>
 </head>
 <body>
-
-    <?php include_once __DIR__ . "/../templates/navbar.php"; ?>
-
     <div class="conteinergeneral">
+        <?php include_once __DIR__ . "/../templates/navbar.php"; ?>
         <div class="conteiner">
-            <h2 class="title--page">¿Quienes somos?</h2>
-            <div class="imagenlogo">
-                <img src="/assets/img/Logo-g.png" alt="Logo" class="imagen-logo">
+            <div class="titulo">
+                <h2 class="title--page">¿Quienes somos?</h2>
             </div>
-            <div class="texto">
+            <div class="contenido">
+                <div class="imagenlogo">
+                    <img src="/assets/img/Logo-g.png" alt="Logo" class="imagen-logo">
+                </div>
+                <div class="texto">
+                    <p>En Automatas Coffee, llevamos la experiencia del café a otro nivel. Nuestra cafetería se distingue por ofrecer bebidas de alta calidad, preparadas con leche premium de Milkwas, una empresa comprometida con la excelencia y el sabor natural.
+                    </p>
+                    <p>
+                    Lo que hace única a Automatas Coffee es su origen: somos una creación de Automatas Software, una compañía innovadora en tecnología que ha decidido fusionar el mundo del software y la gastronomía para ofrecer una experiencia moderna y eficiente.
+                    </p>
+                </div>
+            </div> 
                 
-                <p>En Automatas Coffee, llevamos la experiencia del café a otro nivel. Nuestra cafetería se distingue por ofrecer bebidas de alta calidad, preparadas con leche premium de Milkwas, una empresa comprometida con la excelencia y el sabor natural.
-                </p>
-                <p>
-                Lo que hace única a Automatas Coffee es su origen: somos una creación de Automatas Software, una compañía innovadora en tecnología que ha decidido fusionar el mundo del software y la gastronomía para ofrecer una experiencia moderna y eficiente.
-                </p>
-            </div>
         </div>
     
     
         <div class="conteiner contactanos">
-            <h2 class="title--page">Contactanos</h2>
-            <div class="entradas">
-                <div class="grupocontacto">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" id="nombre" name="Nombre" placeholder="Ingrese su nombre">
+            <div class="titulo">
+                <h2 class="title--page">Contactanos</h2>
+            </div>
+            <div class="contenido">
+                <div class="entradas">
+                    <div class="grupocontacto">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="Nombre" placeholder="Ingrese su nombre">
+                    </div>
+                    <div class="grupocontacto">
+                        <label for="correo">Correo</label>
+                        <input type="email" id="correo" name="Correo" placeholder="Ingrese su correo">
+                    </div>
+                    <div class="grupocontacto">
+                        <label for="telefono">Telefono</label>
+                        <input type="tel" id="telefono" name="Telefono" placeholder="Ingrese su telefono">
+                    </div>
                 </div>
-                <div class="grupocontacto">
-                    <label for="correo">Correo</label>
-                    <input type="email" id="correo" name="Correo" placeholder="Ingrese su correo">
-                </div>
-                <div class="grupocontacto">
-                    <label for="telefono">Telefono</label>
-                    <input type="tel" id="telefono" name="Telefono" placeholder="Ingrese su telefono">
+                <div class="botonescontacto">
+                    <button>Enviar</button>
+                    <button>Resetear campos</button>
                 </div>
             </div>
-            <div class="botonescontacto">
-                <button>Enviar</button>
-                <button>Resetear campos</button>
-            </div>
+            
         </div>
     </div>
 </body>
