@@ -7,38 +7,33 @@ function setCookie(name, value, days) {
         date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
         expires = "; expires=" + date.toUTCString();
     }
-    document.cookie = name + "=" + encodeURIComponent(value) + expires + "; path=/";
+    document.cookie = name + "=" + encodeURIComponent(value) + expires + "; path=/; SameSite=Lax";
+    console.log(`Cookie establecida: ${name}=${value}`);
+    
+    setTimeout(() => {
+        const cookieValue = getCookie(name);
+        console.log(`Verificación de cookie ${name}: ${cookieValue}`);
+    }, 100);
 }
-
+console.log(document.cookie);
 function getCookie(name) {
-    let cookies = document.cookie.split("; ");
-    for (let cookie of cookies) {
-        let [key, value] = cookie.split("=");
-        if (key === name) {
-            return decodeURIComponent(value);
-        }
-    }
-    return null;
+    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? decodeURIComponent(match[2]) : null;
 }
 
-function deleteCookie(name) {
-    document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+function forceLogout() {
+    document.cookie = 'logged=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Lax';
+    console.log("Forzando cierre de sesión. Cookies después:", document.cookie);
+    setTimeout(() => {
+        console.log("Verificando cookies después del logout:", document.cookie);
+    }, 500);
+    window.location.reload();
 }
 
-function deleteAllCookies() {
-    // Eliminar todas las cookies excepto la de login (logged)
-    document.cookie.split(';').forEach(cookie => {
-        if (!(cookie.trim().startsWith('logged'))) {
-            const eqPos = cookie.indexOf('=');
-            const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
-            document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        }
-    });
+
+if (getCookie('logged') === null && window.location.pathname !== '/login' && !document.cookie.includes('logged')) {
+    setCookie('logged', 'false', 365);
 }
-
-/* COOKIE DE LOGIN */
-setCookie('logged', 'false', 365); // Se crea una cookie para saber si el usuario esta loggeado o no
-
 const loginForm = document.querySelector("#login-form");
 const registerForm = document.querySelector("#register-form");
 
@@ -64,17 +59,39 @@ const registerResetButton = document.querySelector('#register-reset');
 loginButton.addEventListener('click', function(event) {
     event.preventDefault();
 
-    if (getCookie('logged') !== 'false') {
+    const currentLoggedValue = getCookie('logged');
+    if (currentLoggedValue && currentLoggedValue !== 'false') {
         createNotification('error', 'Ya has iniciado sesión anteriormente');
-        return
+        return;
     }
 
     let username = document.querySelector("#login-username").value;
     let password = document.querySelector("#login-password").value;
 
+    //Verificar credenciales
     if (getCookie(username) === password) {
-        createNotification('success', 'Inicio de sesión exitoso');
+        //Establecer la cookie de inicio de sesión
         setCookie('logged', username, 365);
+        console.log("Inicio de sesión exitoso. Cookie establecida:", document.cookie);
+        createNotification('success', 'Inicio de sesión exitoso');
+        
+        //Cerrar el modal
+        const loginModal = document.querySelector('.login-modal');
+        const backgroundShadow = document.querySelector('#background-login');
+        
+        if (loginModal) loginModal.classList.remove('login-modal--active');
+        if (backgroundShadow) {
+            backgroundShadow.classList.remove('background__shadow--active');
+            backgroundShadow.classList.remove('background__blur--active');
+        }
+        
+        document.body.style.position = '';
+        document.body.style.top = '';
+        
+        // Redireccionar a la página principal después de un breve retraso
+        setTimeout(function() {
+            window.location.reload(); // Recargar la página para actualizar la UI
+        }, 1000); // Esperar 1 segundo para que la notificación sea visible
     } else {
         createNotification('error', 'Usuario o contraseña incorrectos');
     }
@@ -220,7 +237,10 @@ const showButton = document.querySelector('#register-show');
 
 deleteButton.addEventListener('click', function(event) {
     event.preventDefault();
+    // Establecer la cookie logged a false para cerrar sesión
+    setCookie('logged', 'false', 365);
     deleteAllCookies();
+    window.location.reload(); // Recargar la página para actualizar la UI
 });
 
 showButton.addEventListener('click', function(event) {

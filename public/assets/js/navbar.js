@@ -1,20 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Referencias DOM
-    const bodyDOM = document.querySelector('body');
+    bodyDOM = document.querySelector('body');
     const navbar = document.querySelector(".navbar");
-    const loginButton = document.getElementById('login-button');
-    const userLoggedIcons = document.getElementById('user-logged-icons');
-    const hamburgerMenu = document.querySelector('.hamburguer-menu-icon');
-    const navbarLinks = document.querySelector('.navbar__links');
-    const cartCountElement = document.getElementById('cart-count');
-    const backgroundLogin = document.getElementById('background-login');
-    const loginModal = document.querySelector('.login-modal');
-    const registerModal = document.querySelector('.register-modal');
 
-    // Efecto de transparencia en la página principal
     if (navbar) {
         if (window.location.pathname === "/") {
             window.addEventListener("scroll", function() {
+            
                 if (window.scrollY > 180) {
                     navbar.style.backgroundColor = 'rgba(44, 44, 44, 1)';
                 } else {
@@ -24,114 +15,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Ajuste de padding para páginas específicas
     if (window.location.pathname === "/" || window.location.pathname === "/admin") {
         bodyDOM.style.paddingTop = '0px';
     }
-
-    // Verificar si el usuario está logueado
-    function checkUserLoggedIn() {
-        // Verificar primero en sessionStorage (para compatibilidad con código existente)
-        if (sessionStorage.getItem('userLoggedIn') === 'true') {
-            return true;
-        }
-        
-        // Verificar en localStorage (para persistencia entre sesiones)
-        if (localStorage.getItem('isLoggedIn') === 'true') {
-            // Sincronizar con sessionStorage para mantener compatibilidad
-            sessionStorage.setItem('userLoggedIn', 'true');
-            return true;
-        }
-        
-        // Caso especial: siempre mostrar como logueado en la página de productos
-        if (window.location.pathname.includes('/products')) {
-            return true;
-        }
-        
-        return false;
-    }
-    
-    // Actualizar la interfaz del navbar según el estado de login
-    function updateNavbar() {
-        const isLoggedIn = checkUserLoggedIn();
-        
-        if (isLoggedIn) {
-            if (loginButton) loginButton.style.display = 'none';
-            if (userLoggedIcons) userLoggedIcons.style.display = 'flex';
-        } else {
-            if (loginButton) loginButton.style.display = 'block';
-            if (userLoggedIcons) userLoggedIcons.style.display = 'none';
-        }
-    }
-    
-    // Actualizar contador del carrito
-    function updateCartCount() {
-        if (cartCountElement) {
-            // Obtener carrito del localStorage
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            let totalItems = 0;
-            
-            // Contar total de items
-            cart.forEach(item => {
-                totalItems += item.quantity || 1;
-            });
-            
-            // Actualizar contador
-            cartCountElement.textContent = totalItems;
-            
-            // Mostrar u ocultar el contador según si hay items
-            if (totalItems > 0) {
-                cartCountElement.style.display = 'flex';
-            } else {
-                cartCountElement.style.display = 'none';
-            }
-        }
-    }
-    
-    // Configurar evento de clic para el botón de login
-    if (loginButton) {
-        loginButton.addEventListener('click', function() {
-            // Mostrar el modal de login
-            if (backgroundLogin && loginModal) {
-                backgroundLogin.classList.add('background__shadow--active');
-                backgroundLogin.classList.add('background__blur--active');
-                loginModal.classList.add('login-modal--active');
-                document.body.style.overflow = 'hidden'; // Prevenir scroll
-            }
-        });
-    }
-    
-    // Configurar evento de clic para el menú hamburguesa
-    if (hamburgerMenu) {
-        hamburgerMenu.addEventListener('click', function() {
-            navbarLinks.classList.toggle('active');
-        });
-    }
-    
-    // Configurar eventos para los modales
-    setupModals();
-    
-    // Inicializar la UI
-    updateNavbar();
-    updateCartCount();
-    
-    // Caso especial para la página de productos
-    if (window.location.pathname.includes('/products')) {
-        sessionStorage.setItem('userLoggedIn', 'true');
-    }
-    
-    // Escuchar cambios en el carrito
-    window.addEventListener('storage', function(e) {
-        if (e.key === 'cart') {
-            updateCartCount();
-        }
-        if (e.key === 'isLoggedIn' || e.key === 'userLoggedIn') {
-            updateNavbar();
-        }
-    });
 });
 
-// Evento para resetear la UI en resize
 window.addEventListener("resize", function() {
     const navbar = document.querySelector(".navbar");
     const links = document.querySelectorAll('.navbar__link--active');
