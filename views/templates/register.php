@@ -91,11 +91,11 @@
         </div>
 
         <div class="register-modal__button-container">
-            <button class="register-modal__button register-modal__button--register" id="register-button">Registrarse</button>
-            <button class="register-modal__button register-modal__button--reset" id="register-reset">Resetear Campos</button>
+            <button type="button" class="register-modal__button register-modal__button--register" id="register-button">Registrarse</button>
+            <button type="button" class="register-modal__button register-modal__button--reset" id="register-reset">Resetear Campos</button>
 
             <!-- Botones para eliminar cookies y listar usuarios (Eliminar despues) -->
-            <button class="register-modal__button register-modal__button--reset" id="register-delete">Eliminar Cookies</button>
+            <button type="button" class="register-modal__button register-modal__button--reset" id="register-delete">Eliminar Cookies</button>
             <button class="register-modal__button register-modal__button--reset" id="register-show">Listar Usuarios</button>
         </div>
     </form>

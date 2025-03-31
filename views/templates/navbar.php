@@ -23,9 +23,6 @@
         <a class="navbar__link" href="">Contactanos</a>
         <a class="navbar__link navbar__link--disabled" href="">Mi Carrito</a>
         <button class="navbar__button">Iniciar Sesión</button>
-        <a class="navbar__link" href="/sobre-nosotros">Sobre Nosotros</a>
-        <a class="navbar__link" href="/encuentranos">Encuentranos</a>        
-        <button id="login-button" class="navbar__button" style="display: none;">Iniciar Sesión</button>
         
         <div id="user-logged-icons" class="navbar__user-icons">
             <a href="/views/pages/carrito" class="navbar__icon-link">
@@ -45,4 +42,6 @@
 
 <?php include_once __DIR__ . "/login.php"; ?>
 <?php include_once __DIR__ . "/register.php"; ?>
+
 <script src="/assets/js/login-modal.js"></script>
+<script type="module" src="/assets/js/cookie-login.js"></script>

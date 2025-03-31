@@ -15,7 +15,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    if (window.location.pathname === "/" || window.location.pathname === "/admin") {
+    // Ajuste de padding para páginas específicas
+    if (window.location.pathname === "/" || window.location.pathname.startsWith("/admin")) {
         bodyDOM.style.paddingTop = '0px';
     }
 });

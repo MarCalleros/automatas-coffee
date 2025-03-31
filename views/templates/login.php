@@ -25,8 +25,8 @@
         </div>
 
         <div class="login-modal__button-container">
-            <button class="login-modal__button login-modal__button--login" id="login-button">Iniciar Sesion</button>
-            <button class="login-modal__button login-modal__button--reset" id="login-reset">Resetear Campos</button>
+            <button class="login-modal__button login-modal__button--login" id="modal-login-button">Iniciar Sesion</button>
+            <button class="login-modal__button login-modal__button--reset" id="modal-login-reset">Resetear Campos</button>
         </div>
     </form>
 
@@ -35,7 +35,7 @@
 
         <div class="login-modal__register">
             <span class="login-modal__text">¿No estras registrado?</span>
-            <p class="login-modal__link login-modal__link--italic" id="login-register">Registrarse</p>
+            <p class="login-modal__link login-modal__link--italic" id="modal-login-register">Registrarse</p>
         </div>
     </div>
 </div>

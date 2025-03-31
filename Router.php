@@ -6,7 +6,9 @@ $routes = [
     '/' => __DIR__ . '/views/pages/home.php',
     '/products' => __DIR__ . '/views/pages/products.php',
     '/views/pages/carrito' => __DIR__ . '/views/pages/carrito.php',
-    '/admin' => __DIR__ . '/views/administrator/admin.php'
+    '/admin' => __DIR__ . '/views/administrator/admin.php',
+    '/admin/deliveryman' => __DIR__ . '/views/administrator/deliveryman.php',
+    '/admin/deliveries' => __DIR__ . '/views/administrator/deliveries.php'
 ];
 
 routeView($uri, $routes);

@@ -10,7 +10,7 @@
 
     const backgroundShadow = document.querySelector('#background-login');
 
-    const registerLink = document.querySelector('#login-register');
+    const registerLink = document.querySelector('#modal-login-register');
     const loginLink = document.querySelector('#register-login');
 
     const eyeContainerPassword = document.querySelector('#register-eye-container-password');
@@ -37,16 +37,18 @@
         document.body.style.width = '100%';
     });
 
-    loginButtonMobile.addEventListener('click', function() {
-        scrollY = window.scrollY;
-        loginModal.classList.add('login-modal--active');
-        backgroundShadow.classList.add('background__shadow--active');
-        backgroundShadow.classList.add('background__blur--active');
+    if (loginButtonMobile) {
+        loginButtonMobile.addEventListener('click', function() {
+            scrollY = window.scrollY;
+            loginModal.classList.add('login-modal--active');
+            backgroundShadow.classList.add('background__shadow--active');
+            backgroundShadow.classList.add('background__blur--active');
 
-        document.body.style.position = 'fixed';
-        document.body.style.top = `-${scrollY}px`;
-        document.body.style.width = '100%';
-    });
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.width = '100%';
+        });
+    }
 
     registerLink.addEventListener('click', function() {
         loginModal.classList.remove('login-modal--active');

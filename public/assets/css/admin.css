@@ -1,0 +1,96 @@
+.admin {
+    width: 100%;
+}
+
+.admin-panel {
+    display: flex;
+}
+
+.admin__title {
+    margin: 20px auto;
+    text-align: center;
+    width: 100%;
+}
+
+.admin__table {
+    font-family: 'Lato', sans-serif;
+    width: 95%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.admin-table__head,
+.admin-table__data {
+    border: 0;
+    padding: 5px 5px;
+    min-width: 30px;
+}
+
+.admin-table__head {
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-align: center;
+    height: 50px;
+}
+
+.admin-table__data {
+    font-size: 1.4rem;
+    text-align: center;
+    color: var(--black);
+    height: 50px;
+}
+
+.admin-table__data--active,
+.admin-table__data--inactive {
+    color: var(--white);
+    padding: 10px;
+    border-radius: 10px;
+    width: 85%;
+    margin: 0 auto;
+}
+
+.admin-table__data--active {
+    background-color: var(--success);
+}
+
+.admin-table__data--inactive {
+    background-color: var(--error);
+}
+
+.admin-table__row--data:nth-child(odd) {
+    background-color: var(--gray);
+}
+
+.admin-table__row--data:nth-child(even) {
+    background-color: var(--dark-gray);
+}
+
+.admin-table__actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 0;
+    min-width: 120px;
+}
+
+.admin-table__action {
+    color: var(--white);
+    font-size: 1.4rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    width: 85%;
+}
+
+.admin-table__action--edit {
+    background-color: var(--edit);
+}
+
+.admin-table__action--delete {
+    background-color: var(--error);
+}

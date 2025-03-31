@@ -1,3 +1,4 @@
+@import url(variables.css);
 @import url(header.css);
 @import url(footer.css);
 @import url(navbar.css);
@@ -12,6 +13,7 @@
 @import url(register.css);
 @import url(notification.css);
 @import url(carrito.css);
+@import url(admin.css);
 
 html {
     font-size: 62.5%;

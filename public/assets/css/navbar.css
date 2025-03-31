@@ -174,7 +174,7 @@
 }
 
 .navbar__user-icons {
-    display: flex;
+    display: none;
     align-items: center;
     gap: 20px;
 }
@@ -193,8 +193,8 @@
 }
 
 .cart-icon, .profile-icon {
-    width: 24px;
-    height: 24px;
+    width: 30px;
+    height: 30px;
 }
 
 @media (max-width: 768px) {
