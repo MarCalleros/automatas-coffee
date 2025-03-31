@@ -92,6 +92,9 @@
     font-family: 'Lato', sans-serif;
     font-weight: bold;
 }
+#mensaje{
+    resize: none;
+}
 label {
     font-size: 2.4rem;
     line-height: 40px;

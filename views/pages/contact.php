@@ -50,7 +50,7 @@
                 <div class="entradas mensaje">
                     <label for="mensaje">Mensaje</label>
                     <textarea id="mensaje" name="Mensaje" cols="30" rows="10" placeholder="Ingrese su mensaje"></textarea>
-
+    
                 </div>
                 <div class="botonescontacto">
                     <input type="submit" name="contacto " value="Enviar mensaje" class="botoncontacto">
