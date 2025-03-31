@@ -39,7 +39,7 @@
 }
 .conteiner{
     width: 93%;
-    height: auto;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -65,34 +65,61 @@
 
 .entradas {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 15px;
     width: 100%;
-    max-width: 400px;
+    margin-bottom: 20px;
 }
-
+.formulario{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
 .grupocontacto {
     display: flex;
     flex-direction: column;
     text-align: left;
     font-family: 'Lato', sans-serif;
     font-weight: bold;
+    width: 100%;
+    
+}
+.mensaje{
+    text-align: left;
+    flex-direction: column;
+    font-family: 'Lato', sans-serif;
+    font-weight: bold;
+}
+label {
+    font-size: 2.4rem;
+    line-height: 40px;
+    color: var(--dark-black);
 }
 
-.grupocontacto input {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-.botonescontacto {
+.botonescontacto{
     display: flex;
-    gap: 15px;
+    flex-direction: row;
+    gap: 20px;
 }
-
-.botonescontacto button {
-    padding: 10px 15px;
+.botoncontacto{
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-size: 2.4rem;
+    padding: 10px 20px;
+    border-radius: 10px;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.botonreseteo{
+    color: var(--dark-black);
+    font-size: 2.4rem;
+    border-radius: 10px;
+    border-color: var(--dark-black);
+    border: 1px solid;
+
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }

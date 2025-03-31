@@ -36,7 +36,7 @@
             <div class="titulo">
                 <h2 class="title--page">Contactanos</h2>
             </div>
-            <div class="contenido">
+            <form method="post" autocomplete="off" class="formulario">
                 <div class="entradas">
                     <div class="grupocontacto">
                         <label for="nombre">Nombre</label>
@@ -46,18 +46,21 @@
                         <label for="correo">Correo</label>
                         <input type="email" id="correo" name="Correo" placeholder="Ingrese su correo">
                     </div>
-                    <div class="grupocontacto">
-                        <label for="telefono">Telefono</label>
-                        <input type="tel" id="telefono" name="Telefono" placeholder="Ingrese su telefono">
-                    </div>
+                </div>
+                <div class="entradas mensaje">
+                    <label for="mensaje">Mensaje</label>
+                    <textarea id="mensaje" name="Mensaje" cols="30" rows="10" placeholder="Ingrese su mensaje"></textarea>
+
                 </div>
                 <div class="botonescontacto">
-                    <button>Enviar</button>
-                    <button>Resetear campos</button>
+                    <input type="submit" name="contacto " value="Enviar mensaje" class="botoncontacto">
+                    <input type="reset" name="resetear " value="Resetear campos" class="botonreseteo">
                 </div>
-            </div>
+            </form>
             
         </div>
     </div>
+
+    
 </body>
 </html>
