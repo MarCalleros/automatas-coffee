@@ -31,6 +31,9 @@ const navbarLoginButtin = document.querySelector('.navbar__button');
 
 if (getCookie('logged') === null && window.location.pathname !== '/login' && !document.cookie.includes('logged')) {
     setCookie('logged', 'false', 365);
+} else if (getCookie('logged') === 'false') {
+    userIcons.style.display = 'none';
+    navbarLoginButtin.style.display = 'flex';
 } else {
     userIcons.style.display = 'flex';
     navbarLoginButtin.style.display = 'none';
@@ -58,6 +61,10 @@ const loginResetButton = document.querySelector('#modal-login-reset');
 const registerButton = document.querySelector('#register-button');
 const registerResetButton = document.querySelector('#register-reset');
 
+const logoutButton = document.querySelector('#logout-profile');
+const profileButton = document.querySelector('#profile-button');
+const profileUsername = document.querySelector('.profile-modal__user');
+
 loginButton.addEventListener('click', function(event) {
     event.preventDefault();
 
@@ -72,29 +79,55 @@ loginButton.addEventListener('click', function(event) {
 
     //Verificar credenciales
     if (getCookie(username) === password) {
-        //Establecer la cookie de inicio de sesión
         setCookie('logged', username, 365);
-        console.log("Inicio de sesión exitoso. Cookie establecida:", document.cookie);
         createNotification('success', 'Inicio de sesión exitoso');
         
-        //Cerrar el modal
-        const loginModal = document.querySelector('.login-modal');
-        const backgroundShadow = document.querySelector('#background-login');
+        //Cerrar el modal con 1 segundo de retraso
+        setTimeout(() => {
+            const loginModal = document.querySelector('.login-modal');
+            const backgroundShadow = document.querySelector('#background-login');
+            
+            if (loginModal) loginModal.classList.remove('login-modal--active');
+            if (backgroundShadow) {
+                backgroundShadow.classList.remove('background__shadow--active');
+                backgroundShadow.classList.remove('background__blur--active');
+            }
+            
+            document.body.style.position = '';
+            document.body.style.top = '';
+
+            userIcons.style.display = 'flex';
+            navbarLoginButtin.style.display = 'none';
+        }, 1000);
         
-        if (loginModal) loginModal.classList.remove('login-modal--active');
+        
+    } else {
+        createNotification('error', 'Usuario o contraseña incorrectos');
+    }
+});
+
+logoutButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    setCookie('logged', 'false', 365);
+    createNotification('success', 'Sesión cerrada exitosamente');
+
+    //Cerrar el modal con 1 segundo de retraso
+    setTimeout(() => {
+        const profileModal = document.querySelector('.profile-modal');
+        const backgroundShadow = document.querySelector('#background-login');
+
+        if (profileModal) profileModal.classList.remove('profile-modal--active');
         if (backgroundShadow) {
             backgroundShadow.classList.remove('background__shadow--active');
             backgroundShadow.classList.remove('background__blur--active');
         }
-        
+
         document.body.style.position = '';
         document.body.style.top = '';
 
-        userIcons.style.display = 'flex';
-        navbarLoginButtin.style.display = 'none';
-    } else {
-        createNotification('error', 'Usuario o contraseña incorrectos');
-    }
+        userIcons.style.display = 'none';
+        navbarLoginButtin.style.display = 'flex';
+    }, 1000);
 });
 
 loginResetButton.addEventListener('click', function(event) {
@@ -128,6 +161,11 @@ registerResetButton.addEventListener('click', function(event) {
     errorMessages.forEach((errorMessage) => {
         errorMessage.classList.remove("register-modal__error--active");
     });
+});
+
+profileButton.addEventListener('click', function() {
+    let username = getCookie('logged');
+    profileUsername.textContent = username;
 });
 
 function validateInputs() {

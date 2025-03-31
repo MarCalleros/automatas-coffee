@@ -4,9 +4,11 @@
 
     const loginModal = document.querySelector('.login-modal');
     const registerModal = document.querySelector('.register-modal');
+    const profileModal = document.querySelector('.profile-modal');
 
     const closeLoginButton = document.querySelector('#login-close');
     const closeRegisterButton = document.querySelector('#register-close');
+    const closeProfileButton = document.querySelector('#profile-close');
 
     const backgroundShadow = document.querySelector('#background-login');
 
@@ -23,6 +25,7 @@
 
     const loginForm = document.querySelector("#login-form");
     const registerForm = document.querySelector("#register-form");
+    const profileButton = document.querySelector('#profile-button');
 
     let scrollY = 0;
 
@@ -97,6 +100,16 @@
         window.scrollTo(0, scrollY);
     });
 
+    closeProfileButton.addEventListener('click', function() {
+        profileModal.classList.remove('profile-modal--active');
+        backgroundShadow.classList.remove('background__shadow--active');
+        backgroundShadow.classList.remove('background__blur--active');
+
+        document.body.style.position = '';
+        document.body.style.top = '';
+        window.scrollTo(0, scrollY);
+    });
+
     eyeContainerPassword.addEventListener('click', function() {
         const passwordInput = document.querySelector('#register-password');
 
@@ -123,5 +136,16 @@
             eyeIconConfirm.style.display = 'block';
             slashIconConfirm.style.display = 'none';
         }
+    });
+
+    profileButton.addEventListener('click', function() {
+        scrollY = window.scrollY;
+        profileModal.classList.add('profile-modal--active');
+        backgroundShadow.classList.add('background__shadow--active');
+        backgroundShadow.classList.add('background__blur--active');
+
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${scrollY}px`;
+        document.body.style.width = '100%';
     });
 })();

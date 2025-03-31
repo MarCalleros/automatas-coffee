@@ -99,6 +99,10 @@
     border: 1px solid var(--black);
 }
 
+.register-modal__button--reset:hover {
+    background-color: var(--gray);
+}
+
 .register-modal__footer {
     display: flex;
     flex-direction: column;

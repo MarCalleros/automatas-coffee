@@ -89,6 +89,10 @@
     border: 1px solid var(--black);
 }
 
+.login-modal__button--reset:hover {
+    background-color: var(--gray);
+}
+
 .login-modal__footer {
     display: flex;
     flex-direction: column;
