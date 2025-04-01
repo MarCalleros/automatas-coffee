@@ -8,7 +8,7 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: url(../img/background.png);
+    background-image: url(../img/background.webp);
     background-repeat: no-repeat;
     background-size: cover;
     z-index: -1;
@@ -16,7 +16,7 @@
 
 .background__text {
     position: absolute;
-    font-family: 'Bobby', sans-serif;
+    font-family: 'Lato', sans-serif;
     font-size: 32px;
     color: var(--white);
     text-align: center;

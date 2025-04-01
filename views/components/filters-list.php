@@ -73,5 +73,8 @@
         </ul>
     </div>
 
-    <button type="button" class="filter__reset">Reiniciar Filtros</button>
+    <div class="filter__buttons">
+        <button type="button" class="filter__button--primary">Aplicar Filtros</button>
+        <button type="button" class="filter__button--primary">Reiniciar Filtros</button>
+    </div>
 </div>

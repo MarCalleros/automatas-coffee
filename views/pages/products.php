@@ -78,5 +78,6 @@
     <script src="/assets/js/hamburguer.js"></script>
     <script src="/assets/js/list-view.js"></script>
     <script src="/assets/js/filter-modal.js"></script>
+    <script src="/assets/js/products.js"></script>
 </body>
 </html>

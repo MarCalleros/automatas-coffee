@@ -90,9 +90,9 @@
 .product__footer-button {
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
-    color: var(--dark-black);
+    color: var(--white);
     border: none;
-    background-color: var(--gray);
+    background-color: var(--primary-color);
     padding: 7px;
     border-radius: 25px;
     width: 100%;
@@ -103,7 +103,7 @@
 
 .product__footer-button:hover {
     cursor: pointer;
-    background-color: var(--dark-gray);
+    background-color: var(--primary-hover);
 }
 
 .product__footer-size {
@@ -130,6 +130,11 @@
     background-color: var(--primary-color);
     color: var(--white);
     cursor: pointer;
+}
+
+.product__footer-size-option--selected {
+    background-color: var(--primary-color);
+    color: var(--white);
 }
 
 .product__footer-size-option--small {
@@ -168,6 +173,11 @@
 
 .view__button {
     display: none;
+}
+
+.product__footer-like--liked .heart-icon {
+    fill: var(--red);
+    stroke: var(--red);
 }
 
 @media (min-width: 768px) {
@@ -228,7 +238,7 @@
         margin-left: 10px;
         border: none;
         border-radius: 10px;
-        background-color: #FF5100;
+        background-color: var(--primary-color);
         padding: 0 15px;
         transition: background-color 0.3s ease;
     }
