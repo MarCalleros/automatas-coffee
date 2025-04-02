@@ -122,6 +122,6 @@
 
         <?php include_once __DIR__ . "/../templates/footer.php"; ?>
     </div>
-        
+    <script src="/assets/js/configuration.js"></script>
 </body>
 </html>
