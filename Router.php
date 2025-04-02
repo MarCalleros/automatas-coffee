@@ -8,7 +8,9 @@ $routes = [
     '/views/pages/carrito' => __DIR__ . '/views/pages/carrito.php',
     '/admin' => __DIR__ . '/views/administrator/admin.php',
     '/admin/deliveryman' => __DIR__ . '/views/administrator/deliveryman.php',
-    '/admin/deliveries' => __DIR__ . '/views/administrator/deliveries.php'
+    '/admin/deliveries' => __DIR__ . '/views/administrator/deliveries.php',
+    '/contact' => __DIR__ . '/views/pages/contact.php',
+    '/configuration' => __DIR__ . '/views/pages/configuration.php'
 ];
 
 routeView($uri, $routes);
