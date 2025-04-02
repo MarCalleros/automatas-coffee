@@ -1,9 +1,9 @@
-input {
+.grupocontacto input {
     border: 1px solid #d9d9d9;
     border-radius: 10px;
     height: 35px;
 }
-textarea{
+.mensaje textarea{
     border: 1px solid #d9d9d9;
     border-radius: 10px;
 
@@ -104,7 +104,8 @@ textarea{
     font-family: 'Lato', sans-serif;
     font-weight: bold;
 }
-label {
+.entradas, 
+.grupocontacto label {
     font-size: 2.4rem;
     line-height: 40px;
     color: var(--dark-black);
@@ -217,10 +218,11 @@ label {
         width: 70%;
         font-size: 1.5rem;
     }
-    input {
+    .grupocontacto input {
         height: 25px;
     }
-    label {
+    .entradas, 
+    .grupocontacto label {
         font-size: 1.5rem;
     }
     .conteiner{
