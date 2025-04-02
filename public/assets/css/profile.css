@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     position: fixed;
-    width: 450px;
+    width: 310px;
     height: auto;
     background-color: var(--white);
     top: 50%;
@@ -24,8 +24,8 @@
 }
 
 .profile-modal__pfp {
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 25%);
 }
@@ -61,7 +61,7 @@
 .config-icon,
 .exit-icon {
     position: absolute;
-    left: 50px;
+    left: 40px;
 }
 
 .profile-modal__button {
@@ -91,4 +91,22 @@
 
 .profile-modal__button--extra:hover {
     background-color: var(--gray);
+}
+
+@media (min-width: 768px) {
+    .profile-modal {
+        width: 450px;
+    }
+
+    .info-icon,
+    .config-icon,
+    .exit-icon {
+        position: absolute;
+        left: 50px;
+    }
+
+    .profile-modal__pfp {
+        width: 150px;
+        height: 150px;
+    }
 }
