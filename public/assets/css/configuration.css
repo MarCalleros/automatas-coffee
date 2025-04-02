@@ -50,7 +50,7 @@
     cursor: pointer;
 }
 .temas:hover{
-    transform: scale(1.01);
+    transform: scale(1.05);
     transition: 0.3s;
 }
 .tema1{
@@ -86,7 +86,7 @@
     cursor: pointer;
 }
 .imagen:hover{
-    transform: scale(1.01);
+    transform: scale(1.05);
     transition: 0.3s;
 }
 .imagen h3{
@@ -130,7 +130,7 @@
     border-radius: 0px 20px 20px 0px;
 }
 .texto:hover{
-    transform: scale(1.01);
+    transform: scale(1.05);
     transition: 0.3s;
 }
 .texto h3{

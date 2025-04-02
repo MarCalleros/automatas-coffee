@@ -1,3 +1,14 @@
+input {
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+    height: 35px;
+}
+textarea{
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+
+    resize: none;
+}
 .imagenlogo{
     width: 380px;
     height: 380px;
@@ -22,6 +33,7 @@
     line-height: 40px;
     font-family: 'Lato', sans-serif;
     font-weight: bold;
+    color: var(--black);
 }
 .conteiner h2{
     color: var(--dark-black);
@@ -75,7 +87,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    width: 85%;
 }
 .grupocontacto {
     display: flex;
@@ -92,9 +104,6 @@
     font-family: 'Lato', sans-serif;
     font-weight: bold;
 }
-#mensaje{
-    resize: none;
-}
 label {
     font-size: 2.4rem;
     line-height: 40px;
@@ -104,8 +113,21 @@ label {
 .botonescontacto{
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    gap: 40px;
+    width: 100%;
+    justify-content: center;
 }
+.botonescontacto input{
+    width: 30%;
+    height: 90%;
+    text-align: center;
+    font-size: 2.4rem;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
 .botoncontacto{
     background-color: var(--primary-color);
     color: var(--white);
@@ -117,7 +139,7 @@ label {
     transition: background-color 0.3s ease;
 }
 .botonreseteo{
-    color: var(--dark-black);
+    color: var(--black);
     font-size: 2.4rem;
     border-radius: 10px;
     border-color: var(--dark-black);
@@ -125,4 +147,83 @@ label {
 
     cursor: pointer;
     transition: background-color 0.3s ease;
+}
+
+@media (width <= 985px) {
+    .conteiner {
+        height: auto;
+    }
+    .conteiner p {
+        font-size: 2rem;
+        line-height: 30px;
+    }
+    .conteiner h2 {
+        font-size: 4rem;
+    }
+    .contenido {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .imagenlogo {
+        width: 100%;
+        height: auto;
+        margin: 0px;
+    }
+    .imagen-logo {
+        width: 30%;
+        height: auto;
+        margin: 0px;
+    }
+    .botonescontacto input{
+        width: 30%;
+        height: 90%;
+        text-align: center;
+        font-size: 1.5rem;
+        padding: 10px 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+}
+@media (width <= 700px) {
+    .conteiner p {
+        font-size: 1.5rem;
+        line-height: 30px;
+        text-align: center;
+    }
+    .conteiner h2 {
+        font-size: 2.5rem;
+    }
+    .imagen-logo {
+        width: 50%;
+    }
+    .formulario {
+        width: 100%;
+    }
+    .entradas {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+    .botonescontacto {
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+    .botonescontacto input{
+        width: 70%;
+        font-size: 1.5rem;
+    }
+    input {
+        height: 25px;
+    }
+    label {
+        font-size: 1.5rem;
+    }
+    .conteiner{
+        border-radius: 20px;
+    }
 }

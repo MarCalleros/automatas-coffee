@@ -12,7 +12,7 @@
 <body>
     <div class="conteinergeneral">
         <?php include_once __DIR__ . "/../templates/navbar.php"; ?>
-        <div class="conteiner">
+        <div class="conteiner ">
             <div class="titulo">
                 <h2 class="title--page">¿Quienes somos?</h2>
             </div>
@@ -40,16 +40,16 @@
                 <div class="entradas">
                     <div class="grupocontacto">
                         <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="Nombre" placeholder="Ingrese su nombre">
+                        <input type="text" id="nombre" name="Nombre" class ="inputs" >
                     </div>
                     <div class="grupocontacto">
                         <label for="correo">Correo</label>
-                        <input type="email" id="correo" name="Correo" placeholder="Ingrese su correo">
+                        <input type="email" id="correo" name="Correo" class="inputs" >
                     </div>
                 </div>
                 <div class="entradas mensaje">
                     <label for="mensaje">Mensaje</label>
-                    <textarea id="mensaje" name="Mensaje" cols="30" rows="10" placeholder="Ingrese su mensaje"></textarea>
+                    <textarea id="mensaje" name="Mensaje" cols="30" rows="10" ></textarea>
     
                 </div>
                 <div class="botonescontacto">
@@ -59,6 +59,8 @@
             </form>
             
         </div>
+
+        <?php include_once __DIR__ . "/../templates/footer.php"; ?>
     </div>
 
     

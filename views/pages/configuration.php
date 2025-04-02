@@ -120,6 +120,7 @@
             <input type="reset" name="resetear " value="Reiniciar Configuracion" class="botonreseteo">
         </div>
 
+        <?php include_once __DIR__ . "/../templates/footer.php"; ?>
     </div>
         
 </body>
