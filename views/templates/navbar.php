@@ -43,5 +43,7 @@
 <?php include_once __DIR__ . "/register.php"; ?>
 <?php include_once __DIR__ . "/profile.php"; ?>
 
+<script src="/assets/js/navbar.js"></script>
+<script src="/assets/js/hamburguer.js"></script>
 <script src="/assets/js/login-modal.js"></script>
 <script type="module" src="/assets/js/cookie-login.js"></script>
