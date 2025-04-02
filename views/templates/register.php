@@ -6,7 +6,7 @@
     </button>
 
     <div class="register-modal__logo-container">
-        <img src="assets/img/logo_black.png" alt="Automatas Coffee Logo" class="register-modal__logo">
+        <img src="/assets/img/logo_black.png" alt="Automatas Coffee Logo" class="register-modal__logo">
     </div>
 
     <h2 class="register-modal__title">Registro de Usuarios</h2>

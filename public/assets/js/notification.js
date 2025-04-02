@@ -1,21 +1,13 @@
 let activeNotification = null;
+let timeoutHide = null;
+let timeoutRemove = null;
 
 export function createNotification(type, message) {
-    let activeNotificationType = activeNotification !== null ? activeNotification.classList[1].split("--")[1] : null;
-
-    if (activeNotificationType === type) {
-        return;
-    } else if ((activeNotificationType !== type) && (activeNotification !== null)) {
-        activeNotification.classList.add("notification--hidden");
-        setTimeout(() => {
-            activeNotification.remove();
-            activeNotification = null;
-        }, 600);
-
-        setTimeout(() => {
-            createNotification(type, message);
-        }, 700);
-        return;
+    if (activeNotification) {
+        clearTimeout(timeoutHide);
+        clearTimeout(timeoutRemove);
+        activeNotification.remove();
+        activeNotification = null;
     }
 
     const notification = document.createElement("div");
@@ -29,11 +21,11 @@ export function createNotification(type, message) {
 
     activeNotification = notification;
 
-    setTimeout(() => {
+    timeoutHide = setTimeout(() => {
         notification.classList.add("notification--hidden");
     }, 5000);
 
-    setTimeout(() => {
+    timeoutRemove = setTimeout(() => {
         notification.remove();
         activeNotification = null;
     }, 5600);

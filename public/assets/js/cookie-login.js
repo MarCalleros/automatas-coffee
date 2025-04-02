@@ -15,8 +15,30 @@ function getCookie(name) {
     return match ? decodeURIComponent(match[2]) : null;
 }
 
+function deleteAllCookies() {
+    // Eliminar todas las cookies excepto la de login (logged)
+    document.cookie.split(';').forEach(cookie => {
+        if ((!(cookie.trim().startsWith('logged')))) {
+            const eqPos = cookie.indexOf('=');
+            const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+            document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        }
+    });
+}
+
+function addUserToUserCookie(username, password, encrpytedPassword) {
+    const users = JSON.parse(getCookie('users')) || [];
+    const user = { username, password, encrpytedPassword };
+    users.push(user);
+    setCookie('users', JSON.stringify(users), 365);
+}
+
 const userIcons = document.querySelector('.navbar__user-icons');
 const navbarLoginButtin = document.querySelector('.navbar__button');
+
+if (getCookie('users') === null) {
+    setCookie('users', JSON.stringify([]), 365);
+}
 
 if (getCookie('logged') === null && window.location.pathname !== '/login' && !document.cookie.includes('logged')) {
     setCookie('logged', 'false', 365);
@@ -87,6 +109,7 @@ loginButton.addEventListener('click', function(event) {
 
             userIcons.style.display = 'flex';
             navbarLoginButtin.style.display = 'none';
+            window.location.reload(); // Recargar la página para reflejar el cambio de estado de inicio de sesión
         }, 1000);
         
         
@@ -116,6 +139,7 @@ logoutButton.addEventListener('click', function(event) {
 
         userIcons.style.display = 'none';
         navbarLoginButtin.style.display = 'flex';
+        window.location.reload(); // Recargar la página para reflejar el cambio de estado de inicio de sesión
     }, 1000);
 });
 
@@ -135,6 +159,7 @@ registerButton.addEventListener('click', async function(event) {
         
         if (getCookie(username) === null) {
             setCookie(username, password, 365);
+            addUserToUserCookie(username, password, encrpytedPassword);
             createNotification("success", "Registro exitoso");
         } else {
             createNotification("error", "El usuario ya existe");
@@ -271,6 +296,17 @@ deleteButton.addEventListener('click', function(event) {
 
 showButton.addEventListener('click', function(event) {
     event.preventDefault();
-    alert(document.cookie);
+    const users = JSON.parse(getCookie('users')) || [];
+    
+    if (users.length === 0) {
+        alert("No hay usuarios registrados.");
+    } else {
+        let userList = "Usuarios registrados:\n";
+        users.forEach(user => {
+            userList += `Usuario: ${user.username}, Contraseña: ${user.password}, Contraseña Encriptada: ${user.encrpytedPassword}\n\n`;
+        });
+        alert(userList);
+    }
 });
+
 /* Eliminar posteriormente */

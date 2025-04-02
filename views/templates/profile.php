@@ -10,7 +10,7 @@
     <h2 class="profile-modal__title">Opciones de Perfil</h2>
 
     <div class="profile-modal__pfp-container">
-        <img src="assets/img/pfp.jpg" alt="Automatas Coffee Logo" class="profile-modal__pfp">
+        <img src="/assets/img/pfp.jpg" alt="Profile" class="profile-modal__pfp">
     </div>
 
     <strong class="profile-modal__user">Lillia</strong>
