@@ -73,6 +73,7 @@ const registerButton = document.querySelector('#register-button');
 const registerResetButton = document.querySelector('#register-reset');
 
 const logoutButton = document.querySelector('#logout-profile');
+const ConfigurationButton = document.querySelector('#configuration-profile');
 const profileButton = document.querySelector('#profile-button');
 const profileUsername = document.querySelector('.profile-modal__user');
 
@@ -142,7 +143,28 @@ logoutButton.addEventListener('click', function(event) {
         window.location.reload(); // Recargar la página para reflejar el cambio de estado de inicio de sesión
     }, 1000);
 });
+ConfigurationButton.addEventListener('click', function(event) {
+    event.preventDefault();
 
+    //Cerrar el modal con 1 segundo de retraso
+    setTimeout(() => {
+        const profileModal = document.querySelector('.profile-modal');
+        const backgroundShadow = document.querySelector('#background-login');
+
+        if (profileModal) profileModal.classList.remove('profile-modal--active');
+        if (backgroundShadow) {
+            backgroundShadow.classList.remove('background__shadow--active');
+            backgroundShadow.classList.remove('background__blur--active');
+        }
+
+        document.body.style.position = '';
+        document.body.style.top = '';
+
+        userIcons.style.display = 'none';
+        navbarLoginButtin.style.display = 'flex';
+        window.open('/configuration', '_self'); // Redirigir a la página de configuración
+    }, 1000);
+});
 loginResetButton.addEventListener('click', function(event) {
     event.preventDefault();
     loginForm.reset();
