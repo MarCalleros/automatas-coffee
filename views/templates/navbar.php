@@ -19,9 +19,8 @@
             
     <div class="navbar__links">
         <a class="navbar__link" href="/products">Productos</a>
-        <a class="navbar__link" href="">Sobre Nosotros</a>
+        <a class="navbar__link" href="">Encuentranos</a>
         <a class="navbar__link" href="/contact">Contactanos</a>
-        <a class="navbar__link navbar__link--disabled" href="">Mi Carrito</a>
         <button class="navbar__button">Iniciar Sesión</button>
         
         <div id="user-logged-icons" class="navbar__user-icons">
