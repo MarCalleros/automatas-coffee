@@ -130,6 +130,8 @@
         </div>
     </main>
     
-    <?php include_once __DIR__ . "/../templates/footer.php"; ?>    
+    <?php include_once __DIR__ . "/../templates/footer.php"; ?>   
+    <script type="module" src="/assets/js/-cookies-carrito.js"></script>
+    <script type="module" src="/assets/js/carrito.js"></script>     
 </body>
 </html>

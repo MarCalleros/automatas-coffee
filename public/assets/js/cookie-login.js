@@ -15,17 +15,6 @@ function getCookie(name) {
     return match ? decodeURIComponent(match[2]) : null;
 }
 
-function deleteAllCookies() {
-    // Eliminar todas las cookies excepto la de login (logged)
-    document.cookie.split(';').forEach(cookie => {
-        if (!(cookie.trim().startsWith('logged'))) {
-            const eqPos = cookie.indexOf('=');
-            const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
-            document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        }
-    });
-}
-
 const userIcons = document.querySelector('.navbar__user-icons');
 const navbarLoginButtin = document.querySelector('.navbar__button');
 
