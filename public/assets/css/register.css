@@ -36,6 +36,7 @@
 .register-modal__title {
     font-size: 2.4rem;
     margin: 10px 0;
+    color: var(--color-text);
 }
 
 .register-modal__form {
@@ -52,7 +53,7 @@
     font-family: 'Lato', sans-serif;
     font-size: 1.6rem;
     margin-bottom: 10px;
-    color: var(--black);
+    color: var(--color-text);
 }
 
 .register-modal__input {

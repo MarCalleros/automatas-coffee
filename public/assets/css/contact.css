@@ -35,16 +35,16 @@
     line-height: 40px;
     font-family: 'Lato', sans-serif;
     font-weight: bold;
-    color: var(--black);
+    color: var(--color-text);
 }
 .conteiner h2{
-    color: var(--black);
+    color: var(--color-text);
     font-size: 3.2rem;
     text-align: center;
 }
 .title--page{
     font-family: 'Montserrat';
-    color: var(--black);
+    color: var(--color-text);
     font-size: 3.2rem;
     font-weight: 600;
     text-align: center;
@@ -110,7 +110,7 @@
 .grupocontacto label {
     font-size: 2rem;
     line-height: 40px;
-    color: var(--dark-black);
+    color: var(--color-text-black);
 }
 
 .botonescontacto{
@@ -146,14 +146,14 @@
     transition: 0.3s;
 }
 .botonreseteo{
-    color: var(--black);
+    color: var(--color-text);
     font-size: 2rem;
     border-radius: 10px;
     border: 1px solid;
     background-color: var(--white);
     cursor: pointer;
     transition: background-color 0.3s ease;
-    border: 1px solid var(--black);
+    border: 1px solid var(--color-text);
 }
 
 @media (width <= 985px) {

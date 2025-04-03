@@ -6,6 +6,10 @@
     height: 100%;
     width: 100%;
 }
+.Textoejemplo{
+    fill: var(--color-text);
+    stroke: var(--color-text);
+}
 .conteiner{
     width: 17%;
     text-align: center;
@@ -16,7 +20,7 @@
 }
 .title--page{
     font-family: 'Montserrat';
-    color: var(--black);
+    color: var(--color-text);
     font-size: 4.8rem;
     font-weight: 600;
     text-align: center;
@@ -24,7 +28,7 @@
     margin-bottom: 0px;
 }
 .conteiner h2{
-    color: var(--dark-black);
+    color: var(--color-text-black);
     font-size: 4rem;
     text-align: center;
     margin: 10px;
@@ -92,6 +96,7 @@
 .imagen h3{
     font-size: 36px;
     margin: 0px;
+    color: var(--color-text);
 }
 .imagencafe{
     width: 299.91px;
@@ -136,6 +141,7 @@
 .texto h3{
     font-size: 36px;
     margin: 0px;
+    color: var(--color-text);
 }
 .textoejemplo{
     width: 65px;

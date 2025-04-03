@@ -55,6 +55,9 @@ function applyTheme(theme) {
         --white-background-color: #F4F3F2; 
         --color-conteiner: #FAFAFA;
         --color-navbar: #2C2C2C;
+        --color-text: #333333;
+        --color-text-black: #222222;
+
         
         }`;
     } else if (theme === "OSCURO") {
@@ -63,14 +66,18 @@ function applyTheme(theme) {
         --white-background-color: #1c1c1c;   
         --color-conteiner: #2c2c2c;
         --color-navbar: #2c2c2c;
+        --color-text: #fafafa;
+        --color-text-black: #fafafa;
+
         `;
     }else if (theme === "NOCTURNO") {
         styleTag.innerHTML = `:root { 
 
-        --white-background-color: #1E2D3F; 
+        --white-background-color: #15202b; 
         --color-conteiner: #1e2d3f;
         --color-navbar: #101820;
-        
+        --color-text: #fafafa;
+        --color-text-black: #fafafa;
         }`;
     } 
 }

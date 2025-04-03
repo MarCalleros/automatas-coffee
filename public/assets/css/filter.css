@@ -63,6 +63,7 @@
     margin-bottom: 15px;
     font-size: 2.4rem;
     text-align: center;
+    color: var(--color-text);
 }
 
 .filter__description {
@@ -75,6 +76,7 @@
     margin-bottom: 15px;
     display: flex;
     gap: 10px;
+    color: var(--color-text);
 }
 
 input[type="checkbox"] {

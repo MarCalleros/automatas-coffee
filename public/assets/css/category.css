@@ -57,7 +57,7 @@
     font-family: 'Montserrat', sans-serif;
     font-size: 22px;
     font-weight: bold;
-    color: var(--black);
+    color: var(--color-text);
     margin-bottom: 10px;
     margin-top: 0px;
     text-align: center;
@@ -65,14 +65,14 @@
 
 .information__description {
     font-family: 'Lato', sans-serif;
-    color: var(--black);
+    color: var(--color-text);
     font-size: 16px;
     margin-bottom: 15px;
 }
 
 .information__button {
     font-family: 'Poppins', sans-serif;
-    color: var(--dark-black);
+    color: var(--color-text-black);
     border: none;
     padding: 8px 15px;
     font-size: 16px;
