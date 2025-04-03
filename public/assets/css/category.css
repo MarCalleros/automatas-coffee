@@ -65,12 +65,7 @@
 
 .information__description {
     font-family: 'Lato', sans-serif;
-<<<<<<< HEAD
-    color: var(--color-text);
-    font-size: 16px;
-=======
     font-size: var(--text-small);
->>>>>>> 5055a466a2dde1ba4cc38aab29f2c8b53c7ca61b
     margin-bottom: 15px;
 }
 
