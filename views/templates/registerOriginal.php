@@ -111,3 +111,4 @@
 </div>
 
 <script src="/assets/js/cookie.js"></script>
+<script src="/assets/js/configuration.js"></script>

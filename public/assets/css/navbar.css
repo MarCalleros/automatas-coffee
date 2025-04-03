@@ -3,7 +3,7 @@
     font-family: 'Gliker', sans-serif;
     display: block;
     justify-content: space-between;
-    background-color: var(--black-background-color);
+    background-color: var(--color-navbar);
     height: auto;
     margin-bottom: 15px;
     width: 100%;

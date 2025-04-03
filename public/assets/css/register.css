@@ -5,7 +5,7 @@
     position: fixed;
     width: auto;
     height: auto;
-    background-color: var(--white);
+    background-color: var(--color-conteiner);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);

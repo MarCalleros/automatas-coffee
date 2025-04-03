@@ -39,3 +39,4 @@
         </div>
     </div>
 </div>
+<script src="/assets/js/configuration.js"></script>

@@ -3,11 +3,11 @@
 }
 
 .swiper-button-next, .swiper-button-prev {
-    color: var(--black-background-color) !important;
+    color: var(--black) !important;
 }
 
 .swiper-pagination-bullet-active {
-    background: var(--black-background-color) !important;
+    background: var(--black) !important;
     opacity: 1;
 }
 

@@ -75,5 +75,6 @@
     <script src="assets/js/carousel.js"></script>
     <script src="assets/js/navbar.js"></script>
     <script src="assets/js/hamburguer.js"></script>
+    <script src="/assets/js/configuration.js"></script>
 </body>
 </html>

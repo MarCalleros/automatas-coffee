@@ -31,6 +31,7 @@
     
     <?php include_once __DIR__ . "/../templates/footer.php"; ?>   
     <script type="module" src="/assets/js/cookies-carrito.js"></script>
-    <script type="module" src="/assets/js/carrito.js"></script>     
+    <script type="module" src="/assets/js/carrito.js"></script>    
+    <script src="/assets/js/configuration.js"></script> 
 </body>
 </html>

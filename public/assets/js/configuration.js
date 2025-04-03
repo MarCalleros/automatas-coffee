@@ -49,23 +49,40 @@ function applyTheme(theme) {
         document.head.appendChild(styleTag);
     }
 
-    if (theme === "NOCTURNO") {
-        styleTag.innerHTML = `:root { --white-background-color: #1E2D3F; }`;
-    } else if (theme === "CLARO") {
-        styleTag.innerHTML = `:root { --white-background-color: #F4F3F2; }`;
+    if (theme === "CLARO") {
+        styleTag.innerHTML = `:root { 
+
+        --white-background-color: #F4F3F2; 
+        --color-conteiner: #FAFAFA;
+        --color-navbar: #2C2C2C;
+        
+        }`;
     } else if (theme === "OSCURO") {
-        styleTag.innerHTML = `:root { --white-background-color: #2C2C2C; }`;
-    }
+        styleTag.innerHTML = `:root { 
+
+        --white-background-color: #1c1c1c;   
+        --color-conteiner: #2c2c2c;
+        --color-navbar: #2c2c2c;
+        `;
+    }else if (theme === "NOCTURNO") {
+        styleTag.innerHTML = `:root { 
+
+        --white-background-color: #1E2D3F; 
+        --color-conteiner: #1e2d3f;
+        --color-navbar: #101820;
+        
+        }`;
+    } 
 }
 
 document.addEventListener("DOMContentLoaded", function () {
     let temas = document.querySelectorAll(".temas");
-
     temas.forEach(tema => {
         tema.addEventListener("click", function () {
             let selectedTheme = this.querySelector("h3").textContent;
             setUserCookie("tema", selectedTheme, 30);
             applyTheme(selectedTheme);
+            createNotification('success', 'Elegiste el tema :'+ selectedTheme);
             alert("Tema guardado para " + (getCookie('logged') || "Usuario desconocido") + ": " + selectedTheme);
         });
     });
