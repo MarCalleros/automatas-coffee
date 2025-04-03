@@ -31,21 +31,29 @@
     width: 70%;
 }
 .conteiner p{
-    font-size: 2rem;
+    font-size: var(--text);
     line-height: 40px;
     font-family: 'Lato', sans-serif;
     font-weight: bold;
     color: var(--color-text);
 }
 .conteiner h2{
+<<<<<<< HEAD
     color: var(--color-text);
     font-size: 3.2rem;
+=======
+    font-size: var(--title);
+>>>>>>> 5055a466a2dde1ba4cc38aab29f2c8b53c7ca61b
     text-align: center;
 }
 .title--page{
     font-family: 'Montserrat';
+<<<<<<< HEAD
     color: var(--color-text);
     font-size: 3.2rem;
+=======
+    font-size: var(--title);
+>>>>>>> 5055a466a2dde1ba4cc38aab29f2c8b53c7ca61b
     font-weight: 600;
     text-align: center;
     margin-top: 0px;
@@ -108,7 +116,7 @@
 }
 .entradas, 
 .grupocontacto label {
-    font-size: 2rem;
+    font-size: var(--text);
     line-height: 40px;
     color: var(--color-text-black);
 }
@@ -124,7 +132,7 @@
     width: 30%;
     height: 90%;
     text-align: center;
-    font-size: 2rem;
+    font-size: var(--text);
     padding: 10px 20px;
     border-radius: 10px;
     cursor: pointer;
@@ -134,7 +142,7 @@
 .botoncontacto{
     background-color: var(--primary-color);
     color: var(--white);
-    font-size: 2rem;
+    font-size: var(--text);
     padding: 10px 20px;
     border-radius: 10px;
     border: none;
@@ -146,8 +154,12 @@
     transition: 0.3s;
 }
 .botonreseteo{
+<<<<<<< HEAD
     color: var(--color-text);
     font-size: 2rem;
+=======
+    font-size: var(--text);
+>>>>>>> 5055a466a2dde1ba4cc38aab29f2c8b53c7ca61b
     border-radius: 10px;
     border: 1px solid;
     background-color: var(--white);
@@ -155,17 +167,17 @@
     transition: background-color 0.3s ease;
     border: 1px solid var(--color-text);
 }
+.inputs,
+#mensaje {
+    font-family: 'Lato', sans-serif;
+}
 
 @media (width <= 985px) {
     .conteiner {
         height: auto;
     }
     .conteiner p {
-        font-size: 2rem;
         line-height: 30px;
-    }
-    .conteiner h2 {
-        font-size: 4rem;
     }
     .contenido {
         flex-direction: column;
@@ -186,7 +198,6 @@
         width: 30%;
         height: 90%;
         text-align: center;
-        font-size: 1.5rem;
         padding: 10px 20px;
         border-radius: 10px;
         cursor: pointer;
@@ -196,12 +207,8 @@
 }
 @media (width <= 700px) {
     .conteiner p {
-        font-size: 1.5rem;
         line-height: 30px;
         text-align: center;
-    }
-    .conteiner h2 {
-        font-size: 2.5rem;
     }
     .imagen-logo {
         width: 50%;
@@ -222,14 +229,9 @@
     }
     .botonescontacto input{
         width: 70%;
-        font-size: 1.5rem;
     }
     .grupocontacto input {
         height: 25px;
-    }
-    .entradas, 
-    .grupocontacto label {
-        font-size: 1.5rem;
     }
     .conteiner{
         border-radius: 20px;
