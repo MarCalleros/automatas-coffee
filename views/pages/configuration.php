@@ -116,9 +116,11 @@
             </li>
         </div>
 
+
         <div class="botonreinicio">
-            <input type="reset" name="resetear " value="Reiniciar Configuracion" class="botonreseteo">
+        <button type="button" class="botonreseteo">Reiniciar Configuración</button>
         </div>
+
 
         <?php include_once __DIR__ . "/../templates/footer.php"; ?>
     </div>
