@@ -35,12 +35,8 @@ ul {
 
 .card__title {
     font-family: 'Montserrat', sans-serif;
-<<<<<<< HEAD
     color: var(--color-text);
-    font-size: 20px;
-=======
     font-size: var(--text);
->>>>>>> 5055a466a2dde1ba4cc38aab29f2c8b53c7ca61b
     font-weight: 600;
     margin: 10px 10px 0 10px;
     display: -webkit-box;
@@ -53,12 +49,8 @@ ul {
 
 .card__description {
     font-family: 'Lato', sans-serif;
-<<<<<<< HEAD
     color: var(--color-text);
-    font-size: 16px;
-=======
     font-size: var(--text-small);
->>>>>>> 5055a466a2dde1ba4cc38aab29f2c8b53c7ca61b
     margin: 10px 10px 5px 10px;
     grid-column-start: 1;
     grid-column-end: 3;

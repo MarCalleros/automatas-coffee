@@ -20,24 +20,16 @@
 }
 .title--page{
     font-family: 'Montserrat';
-<<<<<<< HEAD
     color: var(--color-text);
-    font-size: 4.8rem;
-=======
     font-size: var(--title);
->>>>>>> 5055a466a2dde1ba4cc38aab29f2c8b53c7ca61b
     font-weight: 600;
     text-align: center;
     margin-top: 0px;
     margin-bottom: 0px;
 }
 .conteiner h2{
-<<<<<<< HEAD
     color: var(--color-text-black);
-    font-size: 4rem;
-=======
     font-size: var(--title);
->>>>>>> 5055a466a2dde1ba4cc38aab29f2c8b53c7ca61b
     text-align: center;
     margin: 10px;
 }

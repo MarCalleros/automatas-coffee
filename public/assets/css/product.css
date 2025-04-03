@@ -38,7 +38,9 @@
 .product__information {
     width: 100%;
 }
-
+.title--page {
+    color: var(--color-text);
+}
 .product__title {
     font-family: 'Montserrat', sans-serif;
     color: var(--color-text);
