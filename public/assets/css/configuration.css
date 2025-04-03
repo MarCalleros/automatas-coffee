@@ -17,15 +17,15 @@
 .title--page{
     font-family: 'Montserrat';
     color: var(--black);
-    font-size: 4.8rem;
+    font-size: var(--title);
     font-weight: 600;
     text-align: center;
     margin-top: 0px;
     margin-bottom: 0px;
 }
 .conteiner h2{
-    color: var(--dark-black);
-    font-size: 4rem;
+    color: var(--black);
+    font-size: var(--title);
     text-align: center;
     margin: 10px;
 }
@@ -90,7 +90,7 @@
     transition: 0.3s;
 }
 .imagen h3{
-    font-size: 36px;
+    font-size: var(--title);
     margin: 0px;
 }
 .imagencafe{
@@ -134,7 +134,7 @@
     transition: 0.3s;
 }
 .texto h3{
-    font-size: 36px;
+    font-size: var(--title);
     margin: 0px;
 }
 .textoejemplo{
@@ -147,7 +147,7 @@
 .botonreseteo{
     background-color: var(--primary-color);
     color: var(--white);
-    font-size: 2.4rem;
+    font-size: var(--subtitle);
     padding: 10px 20px;
     border-radius: 10px;
     border: none;
@@ -194,18 +194,11 @@
     }
     .temas h3 {
         margin: 15px;
-        font-size: 15px; 
     }
 
     .temas svg {
         width: 40px; 
         height: 40px;
-    }
-
-    
-    .imagen h3,
-    .texto h3 {
-        font-size: 20px; 
     }
 
     .imagencafe,

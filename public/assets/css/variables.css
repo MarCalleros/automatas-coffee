@@ -15,6 +15,11 @@
 }
 
 :root {
+    --title: 3.2rem;
+    --subtitle: 2.4rem;
+    --text: 2rem;
+    --text-small: 1.6rem;
+
     --white-background-color: #F4F3F2;
     --black-background-color: #2C2C2C;
     --nocturne-background-color: #1E2D3F;

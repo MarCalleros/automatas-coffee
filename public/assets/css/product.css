@@ -42,7 +42,7 @@
 .product__title {
     font-family: 'Montserrat', sans-serif;
     color: var(--black);
-    font-size: 20px;
+    font-size: var(--text);
     font-weight: 600;
     margin: 10px 0 0 10px;
     
@@ -55,7 +55,7 @@
 
 .product__price {
     font-family: 'Lato', sans-serif;
-    font-size: 20px;
+    font-size: var(--text);
     font-weight: 700;
     color: var(--black);
     margin: 10px 0 0 10px;
@@ -65,7 +65,7 @@
 .product__description {
     font-family: 'Lato', sans-serif;
     color: var(--black);
-    font-size: 16px;
+    font-size: var(--text-small);
     margin: 10px 0 0 10px;
     grid-column-start: 1;
     grid-column-end: 3;
@@ -97,7 +97,7 @@
     border-radius: 25px;
     width: 100%;
     height: max-content;
-    font-size: 14px;
+    font-size: var(--text-small);
     transition: background-color 0.3s ease;
 }
 
@@ -120,7 +120,7 @@
     background-color: var(--gray);
     font-family: 'Lato', sans-serif;
     font-weight: bold;
-    font-size: 1.6rem;
+    font-size: var(--text-small);
     color: var(--black);
     margin: 0 auto;
     transition: background-color 0.3s ease, color 0.3s ease;
