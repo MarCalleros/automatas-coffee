@@ -1,0 +1,12 @@
+.titulo h2{
+    color: var(--color-text);
+}
+.category__information h3{
+    color: var(--black);
+}
+.information__button{
+    color: var(--black);
+}
+.card__footer-button{
+    color: var(--black);
+}

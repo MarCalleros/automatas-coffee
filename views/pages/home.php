@@ -6,18 +6,24 @@
     <link rel="stylesheet" href="/assets/css/variables.css">
     <link rel="stylesheet" href="/assets/css/styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="/assets/css/home.css">
+
     <title>Automatas Coffee</title>
 </head>
 <body>
     <?php include_once __DIR__ . "/../templates/header.php"; ?>
     
     <div>
-        <h2>Nuestros Productos más Populares</h2>
-
+        <div class="titulo">
+            <h2>Nuestros Productos más Populares</h2>
+        </div>
+        
         <?php include_once __DIR__ . "/../components/carousel.php"; ?>
     </div>
-
-    <h2>Categorias</h2>
+    <div class="titulo">
+        <h2>Categorias</h2>
+    </div>
+    
 
     <div class="categories">
         <div class="category category--cafe-caliente">
