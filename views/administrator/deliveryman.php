@@ -1,3 +1,11 @@
+<?php
+namespace App;
+use App\Repartidor;
+require __DIR__ . '/../../vendor/autoload.php';
+
+$repartidores = Repartidor::all();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,71 +37,29 @@
                     </tr>
                 </thead>
                 <tbody class="admin-table__body">
-                    <tr class="admin-table__row admin-table__row--data">
-                        <td class="admin-table__data">1</td>
-                        <td class="admin-table__data">Martin Calleros Camarillo</td>
-                        <td class="admin-table__data">6682451652</td>
-                        <td class="admin-table__data">CACM041110HSLLMRA5</td>
-                        <td class="admin-table__data">CACM041110HD7</td>
-                        <td class="admin-table__data">O+</td>
-                        <td class="admin-table__data">91806082491</td>
-                        <td class="admin-table__data">12/10/2030</td>
-                        <td class="admin-table__data">
-                            <div class="admin-table__data--active">
-                                Activo
-                            </div>
-                        </td>
-                        <td class="admin-table__data">
-                            <div class="admin-table__actions">
-                                <a class="admin-table__action admin-table__action--edit" href="/admin/deliveryman/edit/">Editar</a>
-                                <a class="admin-table__action admin-table__action--delete" href="/admin/deliveryman/delete/">Eliminar</a>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr class="admin-table__row admin-table__row--data">
-                        <td class="admin-table__data">1</td>
-                        <td class="admin-table__data">Martin Calleros Camarillo</td>
-                        <td class="admin-table__data">6682451652</td>
-                        <td class="admin-table__data">CACM041110HSLLMRA5</td>
-                        <td class="admin-table__data">CACM041110HD7</td>
-                        <td class="admin-table__data">O+</td>
-                        <td class="admin-table__data">91806082491</td>
-                        <td class="admin-table__data">12/10/2030</td>
-                        <td class="admin-table__data">
-                            <div class="admin-table__data--active">
-                                Activo
-                            </div>
-                        </td>
-                        <td class="admin-table__data">
-                            <div class="admin-table__actions">
-                                <a class="admin-table__action admin-table__action--edit" href="/admin/deliveryman/edit/">Editar</a>
-                                <a class="admin-table__action admin-table__action--delete" href="/admin/deliveryman/delete/">Eliminar</a>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr class="admin-table__row admin-table__row--data">
-                        <td class="admin-table__data">1</td>
-                        <td class="admin-table__data">Martin Calleros Camarillo</td>
-                        <td class="admin-table__data">6682451652</td>
-                        <td class="admin-table__data">CACM041110HSLLMRA5</td>
-                        <td class="admin-table__data">CACM041110HD7</td>
-                        <td class="admin-table__data">O+</td>
-                        <td class="admin-table__data">91806082491</td>
-                        <td class="admin-table__data">12/10/2030</td>
-                        <td class="admin-table__data">
-                            <div class="admin-table__data--inactive">
-                                Inactivo
-                            </div>
-                        </td>
-                        <td class="admin-table__data">
-                            <div class="admin-table__actions">
-                                <a class="admin-table__action admin-table__action--edit" href="/admin/deliveryman/edit/">Editar</a>
-                                <a class="admin-table__action admin-table__action--delete" href="/admin/deliveryman/delete/">Eliminar</a>
-                            </div>
-                        </td>
-                    </tr>
+                    <?php foreach ($repartidores as $repartidor) : ?>
+                        <tr class="admin-table__row admin-table__row--data">
+                            <td class="admin-table__data"><?= $repartidor->id ?></td>
+                            <td class="admin-table__data"><?= $repartidor->nombre . ' ' . $repartidor->apellido1 . ' ' . $repartidor->apellido2 ?></td>
+                            <td class="admin-table__data"><?= $repartidor->telefono ?></td>
+                            <td class="admin-table__data"><?= $repartidor->curp ?></td>
+                            <td class="admin-table__data"><?= $repartidor->rfc ?></td>
+                            <td class="admin-table__data"><?= $repartidor->tipo_sangre ?></td>
+                            <td class="admin-table__data"><?= $repartidor->nss ?></td>
+                            <td class="admin-table__data"><?= $repartidor->vigencia_licencia ?></td>
+                            <td class="admin-table__data">
+                                <div class="<?= $repartidor->estatus ? 'admin-table__data--active' : 'admin-table__data--inactive' ?>">
+                                    <?= $repartidor->estatus ? 'Activo' : 'Inactivo' ?>
+                                </div>
+                            </td>
+                            <td class="admin-table__data">
+                                <div class="admin-table__actions">
+                                    <a class="admin-table__action admin-table__action--edit" href="/admin/deliveryman/edit">Editar</a>
+                                    <a class="admin-table__action admin-table__action--delete" href="/admin/deliveryman/delete">Eliminar</a>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </main>

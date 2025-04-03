@@ -1,15 +1,13 @@
 <?php
-/*
-$host = "centerbeam.proxy.rlwy.net";
-$port = 49197;
+$host = "localhost";
+$port = "3306";
 $usuario = "root";
-$password = "jcnELIjXQQYHnFqrINGNLJTCQOVXlOvJ";
-$base_datos = "automatas_coffee";
+$password = "1234";
+$base_datos = "db_automatas_coffee";
 
 $db = mysqli_connect($host, $usuario, $password, $base_datos, $port);
 
 if (!$db) {
     die("Error de conexión: " . mysqli_connect_error());
 }
-*/
 ?>

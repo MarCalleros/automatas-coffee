@@ -1,0 +1,16 @@
+{
+    "name": "automatas-software/automatas-coffee",
+    "description": "Automatas Coffee",
+    "authors": [
+        {
+            "name": "Automatas Software",
+            "email": "automatassoftware@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\": "./classes"
+        }
+    }
+}
