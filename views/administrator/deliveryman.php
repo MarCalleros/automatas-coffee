@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </td>
                                     <td class="admin-table__data">
                                         <div class="admin-table__actions">
-                                            <a href="/admin/deliveryman/edit"><button type="button" class="admin-table__action admin-table__action--edit">Editar</button></a>
+                                            <a href="<?php echo '/admin/deliveryman/edit?id=' . $repartidor->id ?>"><button type="button" class="admin-table__action admin-table__action--edit">Editar</button></a>
                                             <form class="admin-deliveryman-status-form" data-id="<?= $repartidor->id ?>" data-estatus="<?= $repartidor->estatus ?>">
                                                 <button type="button" class="admin-table__action admin-table__action--delete">
                                                     <?= $repartidor->estatus ? 'Dar de Baja' : 'Dar de Alta' ?>

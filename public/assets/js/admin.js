@@ -65,6 +65,14 @@ import { createNotification } from './notification.js';
 
             if (data.success) {
                 adminForm.reset();
+
+                if (data.updatedData) {
+                    Object.keys(data.updatedData).forEach(key => {
+                        const input = adminForm.querySelector(`[name="${key}"]`);
+                        if (input) input.value = data.updatedData[key];
+                    });
+                }
+
                 createNotification("success", "Datos guardados correctamente");
             } else {
                 createNotification("error", data.error || "Error al guardar los datos");
