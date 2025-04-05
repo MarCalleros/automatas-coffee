@@ -1,3 +1,28 @@
+<?php
+namespace App;
+use App\Repartidor;
+require __DIR__ . '/../../vendor/autoload.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $repartidor = new Repartidor();
+    
+    $repartidor->nombre = $_POST['nombre'];
+    $repartidor->apellido1 = $_POST['apellido1'];
+    $repartidor->apellido2 = $_POST['apellido2'];
+    $repartidor->telefono = $_POST['telefono'];
+    $repartidor->curp = $_POST['curp'];
+    $repartidor->rfc = $_POST['rfc'];
+    $repartidor->tipo_sangre = $_POST['tipo_sangre'];
+    $repartidor->nss = $_POST['nss'];
+    $repartidor->vigencia_licencia = $_POST['vigencia'];
+
+    if ($repartidor->save()) {
+        //header('Location: /admin/deliveryman');
+        //exit;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,65 +39,65 @@
             <h2 class="admin__title">AGREGAR REPARTIDOR</h2>
 
             <div class="admin-form__container">
-                <form action="" class="admin-form" method="POST">
+                <form action="/admin/deliveryman/create" class="admin-form" method="POST">
                     <div class="admin-form__group">
-                        <label class="admin-form__label" for="">Nombre(s)</label>
+                        <label class="admin-form__label" for="nombre">Nombre(s)</label>
                         <input class="admin-form__input" type="text" name="nombre" id="" placeholder="Nombre(s)">
                         <span class="admin-form__error">El nombre solo debe de contener letras y espacios</span>
                     </div>
 
                     <div class="admin-form__group-container">
                         <div class="admin-form__group">
-                            <label class="admin-form__label" for="">Apellido Paterno</label>
-                            <input class="admin-form__input" type="text" name="nombre" id="" placeholder="Apellido Paterno">
+                            <label class="admin-form__label" for="apellido1">Apellido Paterno</label>
+                            <input class="admin-form__input" type="text" name="apellido1" id="" placeholder="Apellido Paterno">
                             <span class="admin-form__error">El apellido solo debe de contener letras y espacios</span>
                         </div>
 
                         <div class="admin-form__group">
-                            <label class="admin-form__label" for="">Apellido Materno</label>
-                            <input class="admin-form__input" type="text" name="nombre" id="" placeholder="Apellido Materno">
+                            <label class="admin-form__label" for="apellido2">Apellido Materno</label>
+                            <input class="admin-form__input" type="text" name="apellido2" id="" placeholder="Apellido Materno">
                             <span class="admin-form__error">El apellido solo debe de contener letras y espacios</span>
                         </div>
                     </div>
 
                     <div class="admin-form__group-container">
                         <div class="admin-form__group">
-                            <label class="admin-form__label" for="">Telefono</label>
-                            <input class="admin-form__input" type="text" name="nombre" id="" placeholder="Telefono">
+                            <label class="admin-form__label" for="telefono">Telefono</label>
+                            <input class="admin-form__input" type="text" name="telefono" id="" placeholder="Telefono">
                             <span class="admin-form__error">El telefono debe de ser de 10 digitos</span>
                         </div>
 
                         <div class="admin-form__group">
-                            <label class="admin-form__label" for="">CURP</label>
-                            <input class="admin-form__input" type="text" name="nombre" id="" placeholder="CURP">
+                            <label class="admin-form__label" for="curp">CURP</label>
+                            <input class="admin-form__input" type="text" name="curp" id="" placeholder="CURP">
                             <span class="admin-form__error">La CURP debe de ser de 18 caracteres alfanumericos</span>
                         </div>
                     </div>
 
                     <div class="admin-form__group-container">
                         <div class="admin-form__group">
-                            <label class="admin-form__label" for="">RFC</label>
-                            <input class="admin-form__input" type="text" name="nombre" id="" placeholder="RFC">
+                            <label class="admin-form__label" for="rfc">RFC</label>
+                            <input class="admin-form__input" type="text" name="rfc" id="" placeholder="RFC">
                             <span class="admin-form__error">El RFC debe de ser de 13 caracteres alfanumericos</span>
                         </div>
 
                         <div class="admin-form__group">
-                            <label class="admin-form__label" for="">NSS</label>
-                            <input class="admin-form__input" type="text" name="nombre" id="" placeholder="NSS">
+                            <label class="admin-form__label" for="nss">NSS</label>
+                            <input class="admin-form__input" type="text" name="nss" id="" placeholder="NSS">
                             <span class="admin-form__error">El RFC debe de ser de 11 caracteres alfanumericos</span>
                         </div>
                     </div>
 
                     <div class="admin-form__group-container">
                         <div class="admin-form__group">
-                            <label class="admin-form__label" for="">Tipo de Sangre</label>
-                            <input class="admin-form__input" type="text" name="nombre" id="" placeholder="Tipo de Sangre">
+                            <label class="admin-form__label" for="tipo_sangre">Tipo de Sangre</label>
+                            <input class="admin-form__input" type="text" name="tipo_sangre" id="" placeholder="Tipo de Sangre">
                             <span class="admin-form__error">El tipo de sangre no puede ser mayor a 3 caracteres</span>
                         </div>
 
                         <div class="admin-form__group">
-                            <label class="admin-form__label" for="">Fecha de Vigencia de Licencia</label>
-                            <input class="admin-form__input" type="date" name="nombre" id="" placeholder="Fecha de Vigencia de Licencia">
+                            <label class="admin-form__label" for="vigencia">Fecha de Vigencia de Licencia</label>
+                            <input class="admin-form__input" type="date" name="vigencia" id="" placeholder="Fecha de Vigencia de Licencia">
                             <span class="admin-form__error">Seleccione una fecha valida</span>
                         </div>
                     </div>
