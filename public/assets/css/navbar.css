@@ -3,12 +3,13 @@
     font-family: 'Gliker', sans-serif;
     display: block;
     justify-content: space-between;
-    background-color: rgba(44, 44, 44, 0.4);
+    background-color: var(--color-navbar);
     height: auto;
     margin-bottom: 15px;
     width: 100%;
-    z-index: 1000;
+    z-index: 990;
     overflow: hidden;
+    top: 0;
 }
 
 .navbar__header {
@@ -70,6 +71,31 @@
     display: none;
 }
 
+.navbar__button {
+    font-family: 'Gliker', sans-serif;
+    background-color: #ff5100;
+    color: var(--white);
+    font-size: 22px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+
+    height: 0;
+    width: 0;
+    font-size: 0;
+    padding: 0;
+}
+
+.navbar__button--active {
+    font-size: 22px;
+    padding: 10px 15px;
+    width: auto;
+    height: auto;
+    display: flex;
+}
+
 .navbar__link--active {
     display: flex;
 }
@@ -86,7 +112,25 @@
 }
 
 .navbar__button:hover {
-    background-color: #E0A63A;
+    background-color: var(--primary-hover);
+}
+
+.cart-icon ,
+.profile-icon {
+    height: 0;
+    width: 0;
+}
+
+.cart-icon--active ,
+.profile-icon--active {
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
+}
+
+.navbar__user-icons {
+    display: flex;
+    gap: 60px;
 }
 
 @media (min-width: 768px) {
@@ -94,23 +138,28 @@
         justify-content: space-between;
         margin: 10px 20px;
     }
+
+    .navbar__link-logo {
+        margin: 0 auto;
+    }
 }
 
 @media (min-width: 1024px) {
     .navbar {
         display: flex;
-        height: 130px;
+        height: auto;
     }
 
     .navbar__header {
+        justify-content: space-between;
         padding: 0;
         margin: 0 0 0 20px;
     }
 
     .navbar__logo {
         width: auto;
-        height: 100px;
-        margin: 0;
+        height: 80px;
+        margin: 10px;
     }
 
     .navbar__links {
@@ -121,6 +170,15 @@
 
     .navbar__link {
         display: flex;
+        font-size: 2rem;
+    }
+
+    .navbar__link:hover {
+        font-size: 2rem;
+    }
+
+    .navbar__link--disabled {
+        display: none;
     }
 
     .navbar__button {
@@ -146,6 +204,20 @@
         cursor: pointer;
         transition: background-color 0.3s, color 0.3s;
         display: flex;
+        height: auto;
+        width: auto;
+    }
+
+    .cart-icon ,
+    .profile-icon {
+        height: 32px;
+        width: 32px;
+    }
+
+    .navbar__user-icons {
+        gap: 30px;
+        display: flex;
+        cursor: pointer;
     }
 }
 
@@ -155,13 +227,13 @@
     }
 
     to {
-        height: 308px;
+        height: 369px;
     }
 }
 
 @keyframes heightDecrease {
     from {
-        height: 308px;
+        height: 369px;
     }
 
     to {

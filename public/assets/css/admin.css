@@ -1,0 +1,245 @@
+.admin {
+    width: 100%;
+}
+
+.admin-panel {
+    display: flex;
+}
+
+.admin__title {
+    margin: 40px auto;
+    text-align: center;
+    width: 100%;
+}
+
+.admin__content {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-conteiner);
+    margin: 0 auto;
+    padding: 15px;
+    width: 95%;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 25%);
+}
+
+.admin__actions {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    margin: 20px 0 5px 0;
+}
+
+.admin__button {
+    border-radius: 10px;
+    border: none;
+    padding: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.6rem;
+    cursor: pointer;
+    width: 200px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    text-decoration: none;
+}
+
+.admin__button:hover {
+    background-color: var(--primary-hover);
+}
+
+.admin__table {
+    font-family: 'Lato', sans-serif;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+
+.admin-table__head,
+.admin-table__data {
+    border: 0;
+    padding: 5px 5px;
+    min-width: 30px;
+}
+
+.admin-table__head {
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-align: center;
+    height: 50px;
+}
+
+.admin-table__data {
+    font-size: 1.4rem;
+    text-align: center;
+    color: var(--black);
+    height: 50px;
+}
+
+.admin-table__data--active,
+.admin-table__data--inactive {
+    color: var(--white);
+    padding: 10px;
+    border-radius: 10px;
+    min-width: 70px;
+    width: 85%;
+    margin: 0 auto;
+}
+
+.admin-table__data--active {
+    background-color: var(--success);
+}
+
+.admin-table__data--inactive {
+    background-color: var(--error);
+}
+
+.admin-table__row--data:nth-child(odd) {
+    background-color: var(--gray);
+}
+
+.admin-table__row--data:nth-child(even) {
+    background-color: var(--dark-gray);
+}
+
+.admin-table__actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    padding: 5px 0;
+    min-width: 120px;
+}
+
+.admin-table__action {
+    color: var(--white);
+    font-size: 1.4rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    text-decoration: none;
+    width: 85%;
+}
+
+.admin-table__action:hover {
+    cursor: pointer;
+}
+
+.admin-table__action--edit {
+    background-color: var(--edit);
+}
+
+.admin-table__action--delete {
+    background-color: var(--error);
+}
+
+.admin-form__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-conteiner);
+    min-width: 600px;
+    width: 60%;
+    padding: 25px;
+    gap: 10px;
+    border-radius: 10px;
+    font-family: 'Lato', sans-serif;
+    font-size: var(--text-small);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 25%);
+}
+
+.admin-form__group-container {
+    display: flex;
+    gap: 20px;
+}
+
+.admin-form__group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.admin-form__label {
+    margin-bottom: 10px;
+    color: var(--color-text);
+}
+
+.admin-form__input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--dark-gray);
+    background-color: var(--white);
+    border-radius: 8px;
+    outline: none;
+    color: var(--color-text);
+}
+
+.admin-form__buttons-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.admin-form__buttons-action {
+    display: flex;
+    justify-content: right;
+    gap: 20px;
+    width: 100%;
+}
+
+.admin-form__button {
+    border-radius: 10px;
+    border: none;
+    padding: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.6rem;
+    cursor: pointer;
+    width: 150px;
+}
+
+.admin-form__button--submit {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.admin-form__button--submit:hover {
+    background-color: var(--primary-hover);
+}
+
+.admin-form__button--cancel {
+    background-color: var(--white);
+    color: var(--color-text);
+    border: 1px solid var(--color-text);
+}
+
+.admin-form__button--cancel:hover {
+    background-color: var(--gray);
+}
+
+.admin-form__button--return {
+    min-width: 150px;
+    background-color: var(--error);
+    color: var(--white);
+}
+
+.admin-form__button--return:hover {
+    background-color: var(--red);
+}
+
+.admin-form__error {
+    font-family: 'Lato', sans-serif;
+    font-size: 1.2rem;
+    color: var(--error);
+    visibility: hidden;
+}
+
+.admin-form__error--active {
+    visibility: visible;
+}

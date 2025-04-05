@@ -1,0 +1,113 @@
+.profile-modal {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    width: 310px;
+    height: auto;
+    background-color: var(--color-conteiner);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    padding: 20px 30px;
+    border-radius: 20px;
+    display: none;
+}
+
+.profile-modal--active {
+    display: flex;
+}
+
+.profile-modal__pfp-container {
+    margin: 10px 0;
+}
+
+.profile-modal__pfp {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 25%);
+}
+
+.profile-modal__title {
+    font-size: 2.4rem;
+    margin: 20px 0;
+    color: var(--color-text);
+}
+
+.profile-modal__user {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.4rem;
+    color: var(--color-text);
+    margin-top: 20px;
+}
+
+.profile-modal__buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.profile-modal__button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.info-icon,
+.config-icon,
+.exit-icon {
+    position: absolute;
+    left: 40px;
+}
+
+.profile-modal__button {
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    padding: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.6rem;
+    cursor: pointer;
+}
+
+.profile-modal__button--logout {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.profile-modal__button--logout:hover {
+    background-color: var(--primary-hover);
+}
+
+.profile-modal__button--extra {
+    background-color: var(--white);
+    color: var(--dark-black);
+    border: 1px solid var(--black);
+}
+
+.profile-modal__button--extra:hover {
+    background-color: var(--gray);
+}
+
+@media (min-width: 768px) {
+    .profile-modal {
+        width: 450px;
+    }
+
+    .info-icon,
+    .config-icon,
+    .exit-icon {
+        position: absolute;
+        left: 50px;
+    }
+
+    .profile-modal__pfp {
+        width: 150px;
+        height: 150px;
+    }
+}

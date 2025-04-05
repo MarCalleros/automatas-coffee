@@ -1,5 +1,5 @@
 .footer {
-    background-color: var(--black-background-color);
+    background-color: var(--color-navbar);
     height: 150px;
     width: 100%;
 }

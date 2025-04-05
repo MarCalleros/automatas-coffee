@@ -1,0 +1,222 @@
+.containergeneral{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 35px;
+    height: 100%;
+    width: 100%;
+}
+.Textoejemplo{
+    fill: var(--color-text);
+    stroke: var(--color-text);
+}
+.conteiner{
+    width: 17%;
+    text-align: center;
+    background-color: var(--color-conteiner);
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    
+}
+.title--page{
+    font-family: 'Montserrat';
+    color: var(--color-text);
+    font-size: var(--title);
+    font-weight: 600;
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.conteiner h2{
+    color: var(--color-text-black);
+    font-size: var(--title);
+    text-align: center;
+    margin: 10px;
+}
+.contenedorcontenido{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+    padding: 30px;
+}
+.temas{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 340px;
+    height: 340px;
+    cursor: pointer;
+}
+.temas:hover{
+    transform: scale(1.05);
+    transition: 0.3s;
+}
+.tema1{
+    background-color: var(--white);
+    
+}
+.tema2{
+    background-color: #2C2C2C;
+    
+}
+.tema2 h3{
+    color: var(--white);
+}
+.tema3{
+    background-color: #1E2D3F;
+    
+}
+.tema3 h3{
+    color: var(--white);
+}
+.imagen{
+    background-color: var(--color-conteiner);
+    display: flex;
+    flex-direction: column;
+    align-items:center ;
+    text-align: center;
+    gap: 20px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 500px;
+    height: 340px;
+    cursor: pointer;
+}
+.imagen:hover{
+    transform: scale(1.05);
+    transition: 0.3s;
+}
+.imagen h3{
+    font-size: var(--title);
+    margin: 0px;
+    color: var(--color-text);
+}
+.imagencafe{
+    width: 299.91px;
+    height: 175px;
+    border-radius: 15px;
+}
+.imagencafesito2{
+    width: 325.61px;
+    height: 190px;
+}
+.imagencafesito3{
+    width: 350px;
+    height: 204.81px;
+}
+.texto{
+    background-color: var(--color-conteiner);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 402.76px;
+    height: 201.38px;
+    cursor: pointer;
+}
+.texto1{
+    border-radius: 20px 0px 0px 20px;
+}
+.texto2{
+    border-radius: 0%;
+}
+.texto3{
+    border-radius: 0px 20px 20px 0px;
+}
+.texto:hover{
+    transform: scale(1.05);
+    transition: 0.3s;
+}
+.texto h3{
+    font-size: var(--title);
+    margin: 0px;
+    color: var(--color-text);
+}
+.textoejemplo{
+    width: 65px;
+    height: 65px;
+}
+.vistaprevia{
+    margin-top: 20px;
+}
+.botonreseteo{
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-size: var(--subtitle);
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 400px;
+    margin-bottom: 50px;
+}
+.botonreseteo:hover{
+    background-color: var(--primary-hover);
+    transition: 0.3s;
+}
+.card__footer-button{
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+@media (max-width: 773px) {
+    .contenedorcontenido {
+        width: 100%;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap; 
+        gap: 10px; 
+        padding: 5px;
+    }
+
+    .conteiner {
+        width: 90%; 
+        padding: 10px; 
+    }
+    .botonreseteo{
+        width: 100%;
+        margin: 10 ;
+    }
+    .imagen,
+    .texto ,.temas{
+        width: 30%;
+        height: auto;
+        padding: 10px;
+        gap: 0px;
+        
+    }
+    .temas h3 {
+        margin: 15px;
+    }
+
+    .temas svg {
+        width: 40px; 
+        height: 40px;
+    }
+
+    .imagencafe,
+    .imagencafesito2,
+    .imagencafesito3 {
+        width: 70%;
+        height: auto;
+        visibility: hidden;
+    }
+
+    .textoejemplo {
+        width: 40px;
+        height: 40px;
+    }
+}

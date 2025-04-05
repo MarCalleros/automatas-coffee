@@ -15,8 +15,22 @@
 }
 
 :root {
+    --title: 3.2rem;
+    --subtitle: 2.4rem;
+    --text: 2rem;
+    --text-small: 1.6rem;
+
     --white-background-color: #F4F3F2;
     --black-background-color: #2C2C2C;
+    --nocturne-background-color: #1E2D3F;
+
+    --color-conteiner: #FAFAFA;
+    --color-navbar: #2C2C2C;
+    --color-text: #333333;
+    --color-text-black: #222222;
+
+    --primary-color: #FF5100;
+    --primary-hover: #E63900;
 
     --white: #FAFAFA;
 
@@ -26,6 +40,11 @@
     --gray: #f1f1f1;
     --dark-gray: #e1e1e1;
     --darker-gray: #4A4A4A;
+    
+    --success: #28A745;
+    --error: #FF0000;
+    --edit: #007BFF;
+
 
     --red: #E63946;
 

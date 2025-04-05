@@ -1,0 +1,56 @@
+.notification {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 30px;
+    width: 310px;
+    height: 60px;
+    left: calc(50% - 155px);
+    overflow: hidden;
+    padding: 20px 30px;
+    border-radius: 10px;
+    z-index: 1000;
+
+    transform: translateY(-150%);
+    animation: moveIn 0.5s ease-in-out forwards;
+}
+
+.notification--hidden {
+    animation: moveOut 0.5s ease-in-out forwards;
+}
+
+.notification__message {
+    font-family: 'Lato', sans-serif;
+    font-size: 1.6rem;
+    color: var(--white);
+    font-weight: bold;
+    margin: 0;
+    text-align: center;
+}
+
+.notification--success {
+    background-color: var(--success);
+}
+
+.notification--error {
+    background-color: var(--error);
+}
+
+@keyframes moveIn {
+    0% {
+        transform: translateY(-150%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes moveOut {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-150%);
+    }
+}

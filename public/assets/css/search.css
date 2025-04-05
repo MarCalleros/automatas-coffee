@@ -1,0 +1,32 @@
+.search {
+    margin: 10px 15px 20px 15px;
+    display: flex;
+}
+
+.search__input {
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    width: 100%;
+    padding: 15px;
+    border-radius: 10px 0 0 10px;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.search__button {
+    border: none;
+    border-radius: 0 10px 10px 0;
+    background-color: #FF5100;
+    padding: 0 15px;
+    transition: background-color 0.3s ease;
+}
+
+.search__button:hover {
+    cursor: pointer;
+    background-color: var(--primary-hover);
+}
+
+.search-icon {
+    height: 25px;
+    width: 25px;
+}
