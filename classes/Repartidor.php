@@ -31,8 +31,8 @@ class Repartidor {
         $this->tipo_sangre = $args['tipo_sangre'] ?? '';
         $this->nss = $args['nss'] ?? '';
         $this->vigencia_licencia = $args['vigencia_licencia'] ?? '';
-        $this->estatus_repartiendo = $args['estatus_repartiendo'] ?? 1;
-        $this->estatus = $args['estatus'] ?? 0;
+        $this->estatus_repartiendo = $args['estatus_repartiendo'] ?? 0;
+        $this->estatus = $args['estatus'] ?? 1;
     }
 
     // Funcion para obtener a todos los repartidores
@@ -60,25 +60,69 @@ class Repartidor {
     // Funcion para agregar un nuevo repartidor
     public function save() {
         require __DIR__ . '/../includes/database.php';
+        
+        // Desactivar reporte de errores temporalmente
+        mysqli_report(MYSQLI_REPORT_OFF);
+
+        // Comprobar que no existe un repartidor con el mismo CURP
+        if (self::find('curp', $this->curp)) {
+            return "La CURP ya se encuentra registrada"; // Ya existe un repartidor con el mismo CURP
+        }
+
+        // Comprobar que no existe un repartidor con el mismo RFC
+        if (self::find('rfc', $this->rfc)) {
+            return "El RFC ya se encuentra registrado"; // Ya existe un repartidor con el mismo RFC
+        }
+
+        // Comprobar que no existe un repartidor con el mismo NSS
+        if (self::find('nss', $this->nss)) {
+            return "El NSS ya se encuentra registrado"; // Ya existe un repartidor con el mismo NSS
+        }
 
         $query = "INSERT INTO " . static::$tabla . " (nombre, apellido1, apellido2, telefono, curp, rfc, tipo_sangre, nss, vigencia_licencia, estatus_repartiendo, estatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = mysqli_prepare($db, $query);
         mysqli_stmt_bind_param($stmt, 'sssssssssii', $this->nombre, $this->apellido1, $this->apellido2, $this->telefono, $this->curp, $this->rfc, $this->tipo_sangre, $this->nss, $this->vigencia_licencia, $this->estatus_repartiendo, $this->estatus);
-        mysqli_stmt_execute($stmt);
-
-        return mysqli_stmt_affected_rows($stmt) > 0;
+        $executed = mysqli_stmt_execute($stmt);
+        
+        // Reactivar reporte de errores (opcional)
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+        
+        return $executed && mysqli_stmt_affected_rows($stmt) > 0;
     }
 
     // Funcion para cambiar el estatus de un repartidor
     public function changeStatus() {
         require __DIR__ . '/../includes/database.php';
-
+        
+        // Desactivar reporte de errores temporalmente
+        mysqli_report(MYSQLI_REPORT_OFF);
+        
         $query = "UPDATE " . static::$tabla . " SET estatus = ? WHERE id = ?";
         $stmt = mysqli_prepare($db, $query);
         mysqli_stmt_bind_param($stmt, 'ii', $this->estatus, $this->id);
-        mysqli_stmt_execute($stmt);
+        $executed = mysqli_stmt_execute($stmt);
+        
+        // Reactivar reporte de errores (opcional)
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+        
+        return $executed && mysqli_stmt_affected_rows($stmt) > 0;
+    }
 
-        return mysqli_stmt_affected_rows($stmt) > 0;
+    // Funcion para buscar un repartidor por algun atributo
+    public static function find($attribute, $value) {
+        require __DIR__ . '/../includes/database.php';
+
+        $query = "SELECT * FROM " . static::$tabla . " WHERE " . $attribute . " = ?";
+        $stmt = mysqli_prepare($db, $query);
+        mysqli_stmt_bind_param($stmt, 's', $value);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        if ($result->num_rows > 0) {
+            return new Repartidor(mysqli_fetch_assoc($result));
+        } else {
+            return null;
+        }
     }
 }
 
