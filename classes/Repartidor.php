@@ -43,6 +43,30 @@ class Repartidor {
         $stmt = mysqli_prepare($db, $query);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
+        mysqli_close($db);
+
+        if ($result->num_rows > 0) {
+            $repartidores = [];
+
+            while ($row = mysqli_fetch_assoc($result)) {
+                $repartidores[] = new Repartidor($row);
+            }
+            
+            return $repartidores;
+        } else {
+            return [];
+        }
+    }
+
+    // Funcion para obtener a todos los repartidores con estatus activo y ordenanos por su estatus de repartiendo
+    public static function allActiveAsc() {
+        require __DIR__ . '/../includes/database.php';
+
+        $query = "SELECT * FROM " . static::$tabla . " WHERE estatus = 1 ORDER BY estatus_repartiendo DESC";
+        $stmt = mysqli_prepare($db, $query);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        mysqli_close($db);
 
         if ($result->num_rows > 0) {
             $repartidores = [];
@@ -86,6 +110,7 @@ class Repartidor {
         
         // Reactivar reporte de errores (opcional)
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+        mysqli_close($db);
         
         return $executed && mysqli_stmt_affected_rows($stmt) > 0;
     }
@@ -119,6 +144,7 @@ class Repartidor {
         
         // Reactivar reporte de errores (opcional)
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+        mysqli_close($db);
         
         return $executed && mysqli_stmt_affected_rows($stmt) > 0;
     }
@@ -137,6 +163,7 @@ class Repartidor {
         
         // Reactivar reporte de errores (opcional)
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+        mysqli_close($db);
         
         return $executed && mysqli_stmt_affected_rows($stmt) > 0;
     }
@@ -150,6 +177,7 @@ class Repartidor {
         mysqli_stmt_bind_param($stmt, 'i', $id);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
+        mysqli_close($db);
 
         if ($result->num_rows > 0) {
             return new Repartidor(mysqli_fetch_assoc($result));
@@ -167,6 +195,7 @@ class Repartidor {
         mysqli_stmt_bind_param($stmt, 's', $value);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
+        mysqli_close($db);
 
         if ($result->num_rows > 0) {
             return new Repartidor(mysqli_fetch_assoc($result));

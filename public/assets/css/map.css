@@ -1,0 +1,50 @@
+.admin__map-container {
+    width: 100%;
+    height: 100%;
+}
+
+.map__deliverymen-container {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Lato', sans-serif;
+    font-size: var(--text-small);
+    background-color: rgba(44, 44, 44, 85%);
+    color: var(--white);
+    padding: 10px;
+    border-radius: 10px;
+    width: 250px;
+    height: 300px;
+    overflow: auto;
+
+    position: absolute;
+    bottom: 30px;
+    left: 280px;
+}
+
+.map__title {
+    margin-bottom: 15px;
+}
+
+.map__deliveryman {
+    display: flex;
+    align-items: center;
+}
+
+.map__deliveryman-status {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.map__deliveryman-status--active {
+    background-color: var(--success);
+}
+
+.map__deliveryman-status--inactive {
+    background-color: var(--error);
+}
+
+.map__deliveryman-name {
+    margin: 0;
+}

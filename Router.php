@@ -12,7 +12,8 @@ $routes = [
     '/admin/deliveryman' => __DIR__ . '/views/administrator/deliveryman.php',
     '/admin/deliveryman/create' => __DIR__ . '/views/administrator/deliveryman-create.php',
     '/admin/deliveryman/edit' => __DIR__ . '/views/administrator/deliveryman-edit.php',
-    '/admin/deliveries' => __DIR__ . '/views/administrator/deliveries.php'
+    '/admin/deliveries' => __DIR__ . '/views/administrator/deliveries.php',
+    '/admin/map' => __DIR__ . '/views/administrator/map.php'
 ];
 
 routeView($uri, $routes);
