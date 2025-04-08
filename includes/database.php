@@ -1,9 +1,9 @@
 <?php
-$host = "bpcafylogojfnatuctzn-mysql.services.clever-cloud.com";
+$host = "localhost";
 $port = "3306";
-$usuario = "u0zljesyfj7kegrd";
-$password = "lBkeOhtdL2VRGzFdtQxZ";
-$base_datos = "bpcafylogojfnatuctzn";
+$usuario = "automatascoffe";
+$password = "admin1234";
+$base_datos = "automatascoffedb_automatas_coffee";
 
 $db = mysqli_connect($host, $usuario, $password, $base_datos, $port);
 

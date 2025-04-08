@@ -39,22 +39,30 @@ class Repartidor {
     public static function all() {
         require __DIR__ . '/../includes/database.php';
 
-        $query = "SELECT * FROM " . static::$tabla;
-        $stmt = mysqli_prepare($db, $query);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        mysqli_close($db);
+        try {
+            // Desactivar reporte de errores temporalmente
+            mysqli_report(MYSQLI_REPORT_OFF);
 
-        if ($result->num_rows > 0) {
-            $repartidores = [];
-
-            while ($row = mysqli_fetch_assoc($result)) {
-                $repartidores[] = new Repartidor($row);
+            $query = "SELECT * FROM " . static::$tabla;
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+    
+            if ($result->num_rows > 0) {
+                $repartidores = [];
+    
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $repartidores[] = new Repartidor($row);
+                }
+                
+                return $repartidores;
+            } else {
+                return [];
             }
-            
-            return $repartidores;
-        } else {
-            return [];
+        } finally {
+            // Reactivar reporte de errores y cerrar la conexión
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            //mysqli_close($db);
         }
     }
 
@@ -62,127 +70,155 @@ class Repartidor {
     public static function allActiveAsc() {
         require __DIR__ . '/../includes/database.php';
 
-        $query = "SELECT * FROM " . static::$tabla . " WHERE estatus = 1 ORDER BY estatus_repartiendo DESC";
-        $stmt = mysqli_prepare($db, $query);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        mysqli_close($db);
+        try {
+            // Desactivar reporte de errores temporalmente
+            mysqli_report(MYSQLI_REPORT_OFF);
 
-        if ($result->num_rows > 0) {
-            $repartidores = [];
+            $query = "SELECT * FROM " . static::$tabla . " WHERE estatus = 1 ORDER BY estatus_repartiendo DESC";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            //mysqli_close($db);
 
-            while ($row = mysqli_fetch_assoc($result)) {
-                $repartidores[] = new Repartidor($row);
+            if ($result->num_rows > 0) {
+                $repartidores = [];
+
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $repartidores[] = new Repartidor($row);
+                }
+
+                return $repartidores;
+            } else {
+                return [];
             }
-
-            return $repartidores;
-        } else {
-            return [];
+        } finally {
+            // Reactivar reporte de errores y cerrar la conexión
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            //mysqli_close($db);
         }
+
+        
     }
 
     // Funcion para agregar un nuevo repartidor
     public function save() {
         require __DIR__ . '/../includes/database.php';
-        
-        // Desactivar reporte de errores temporalmente
-        mysqli_report(MYSQLI_REPORT_OFF);
 
-        // Comprobar que no existe un repartidor con el mismo CURP
-        if (self::find('curp', $this->curp)) {
-            return "La CURP ya se encuentra registrada"; // Ya existe un repartidor con el mismo CURP
+        try {
+            // Desactivar reporte de errores temporalmente
+            mysqli_report(MYSQLI_REPORT_OFF);
+
+            // Comprobar que no existe un repartidor con el mismo CURP
+            if (self::find('curp', $this->curp)) {
+                return "La CURP ya se encuentra registrada"; // Ya existe un repartidor con el mismo CURP
+            }
+
+            // Comprobar que no existe un repartidor con el mismo RFC
+            if (self::find('rfc', $this->rfc)) {
+                return "El RFC ya se encuentra registrado"; // Ya existe un repartidor con el mismo RFC
+            }
+
+            // Comprobar que no existe un repartidor con el mismo NSS
+            if (self::find('nss', $this->nss)) {
+                return "El NSS ya se encuentra registrado"; // Ya existe un repartidor con el mismo NSS
+            }
+
+            $query = "INSERT INTO " . static::$tabla . " (nombre, apellido1, apellido2, telefono, curp, rfc, tipo_sangre, nss, vigencia_licencia, estatus_repartiendo, estatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'sssssssssii', $this->nombre, $this->apellido1, $this->apellido2, $this->telefono, $this->curp, $this->rfc, $this->tipo_sangre, $this->nss, $this->vigencia_licencia, $this->estatus_repartiendo, $this->estatus);
+            $executed = mysqli_stmt_execute($stmt);
+            
+            return $executed && mysqli_stmt_affected_rows($stmt) > 0;
+        } finally {
+            // Reactivar reporte de errores y cerrar la conexión
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            //mysqli_close($db);
         }
-
-        // Comprobar que no existe un repartidor con el mismo RFC
-        if (self::find('rfc', $this->rfc)) {
-            return "El RFC ya se encuentra registrado"; // Ya existe un repartidor con el mismo RFC
-        }
-
-        // Comprobar que no existe un repartidor con el mismo NSS
-        if (self::find('nss', $this->nss)) {
-            return "El NSS ya se encuentra registrado"; // Ya existe un repartidor con el mismo NSS
-        }
-
-        $query = "INSERT INTO " . static::$tabla . " (nombre, apellido1, apellido2, telefono, curp, rfc, tipo_sangre, nss, vigencia_licencia, estatus_repartiendo, estatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = mysqli_prepare($db, $query);
-        mysqli_stmt_bind_param($stmt, 'sssssssssii', $this->nombre, $this->apellido1, $this->apellido2, $this->telefono, $this->curp, $this->rfc, $this->tipo_sangre, $this->nss, $this->vigencia_licencia, $this->estatus_repartiendo, $this->estatus);
-        $executed = mysqli_stmt_execute($stmt);
-        
-        // Reactivar reporte de errores (opcional)
-        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-        mysqli_close($db);
-        
-        return $executed && mysqli_stmt_affected_rows($stmt) > 0;
     }
 
     // Funcion para actualizar un repartidor
     public function update() {
         require __DIR__ . '/../includes/database.php';
-        
-        // Desactivar reporte de errores temporalmente
-        mysqli_report(MYSQLI_REPORT_OFF);
 
-        // Comprobar que no existe un repartidor con el mismo CURP
-        if (self::find('curp', $this->curp) && self::find('curp', $this->curp)->id != $this->id) {
-            return "La CURP ya se encuentra registrada"; // Ya existe un repartidor con el mismo CURP
-        }
+        try {
+            // Desactivar reporte de errores temporalmente
+            mysqli_report(MYSQLI_REPORT_OFF);
 
-        // Comprobar que no existe un repartidor con el mismo RFC
-        if (self::find('rfc', $this->rfc) && self::find('rfc', $this->rfc)->id != $this->id) {
-            return "El RFC ya se encuentra registrado"; // Ya existe un repartidor con el mismo RFC
-        }
+            // Comprobar que no existe un repartidor con el mismo CURP
+            if (self::find('curp', $this->curp) && self::find('curp', $this->curp)->id != $this->id) {
+                return "La CURP ya se encuentra registrada"; // Ya existe un repartidor con el mismo CURP
+            }
 
-        // Comprobar que no existe un repartidor con el mismo NSS
-        if (self::find('nss', $this->nss) && self::find('nss', $this->nss)->id != $this->id) {
-            return "El NSS ya se encuentra registrado"; // Ya existe un repartidor con el mismo NSS
+            // Comprobar que no existe un repartidor con el mismo RFC
+            if (self::find('rfc', $this->rfc) && self::find('rfc', $this->rfc)->id != $this->id) {
+                return "El RFC ya se encuentra registrado"; // Ya existe un repartidor con el mismo RFC
+            }
+
+            // Comprobar que no existe un repartidor con el mismo NSS
+            if (self::find('nss', $this->nss) && self::find('nss', $this->nss)->id != $this->id) {
+                return "El NSS ya se encuentra registrado"; // Ya existe un repartidor con el mismo NSS
+            }
+            
+            $query = "UPDATE " . static::$tabla . " SET nombre = ?, apellido1 = ?, apellido2 = ?, telefono = ?, curp = ?, rfc = ?, tipo_sangre = ?, nss = ?, vigencia_licencia = ? WHERE id = ?";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'sssssssssi', $this->nombre, $this->apellido1, $this->apellido2, $this->telefono, $this->curp, $this->rfc, $this->tipo_sangre, $this->nss, $this->vigencia_licencia, $this->id);
+            $executed = mysqli_stmt_execute($stmt);
+            
+            return $executed && mysqli_stmt_affected_rows($stmt) > 0;
+        } finally {
+            // Reactivar reporte de errores y cerrar la conexión
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            //mysqli_close($db);
         }
         
-        $query = "UPDATE " . static::$tabla . " SET nombre = ?, apellido1 = ?, apellido2 = ?, telefono = ?, curp = ?, rfc = ?, tipo_sangre = ?, nss = ?, vigencia_licencia = ? WHERE id = ?";
-        $stmt = mysqli_prepare($db, $query);
-        mysqli_stmt_bind_param($stmt, 'sssssssssi', $this->nombre, $this->apellido1, $this->apellido2, $this->telefono, $this->curp, $this->rfc, $this->tipo_sangre, $this->nss, $this->vigencia_licencia, $this->id);
-        $executed = mysqli_stmt_execute($stmt);
         
-        // Reactivar reporte de errores (opcional)
-        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-        mysqli_close($db);
-        
-        return $executed && mysqli_stmt_affected_rows($stmt) > 0;
     }
 
     // Funcion para cambiar el estatus de un repartidor
     public function changeStatus() {
         require __DIR__ . '/../includes/database.php';
-        
-        // Desactivar reporte de errores temporalmente
-        mysqli_report(MYSQLI_REPORT_OFF);
-        
-        $query = "UPDATE " . static::$tabla . " SET estatus = ? WHERE id = ?";
-        $stmt = mysqli_prepare($db, $query);
-        mysqli_stmt_bind_param($stmt, 'ii', $this->estatus, $this->id);
-        $executed = mysqli_stmt_execute($stmt);
-        
-        // Reactivar reporte de errores (opcional)
-        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-        mysqli_close($db);
-        
-        return $executed && mysqli_stmt_affected_rows($stmt) > 0;
+
+        try {
+            // Desactivar reporte de errores temporalmente
+            mysqli_report(MYSQLI_REPORT_OFF);
+            
+            $query = "UPDATE " . static::$tabla . " SET estatus = ? WHERE id = ?";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'ii', $this->estatus, $this->id);
+            $executed = mysqli_stmt_execute($stmt);
+            
+            return $executed && mysqli_stmt_affected_rows($stmt) > 0;
+        } finally {
+            // Reactivar reporte de errores y cerrar la conexión
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            //mysqli_close($db);
+        }
     }
 
     // Funcion para buscar un repartidor por ID
     public static function findById($id) {
         require __DIR__ . '/../includes/database.php';
 
-        $query = "SELECT * FROM " . static::$tabla . " WHERE id = ?";
-        $stmt = mysqli_prepare($db, $query);
-        mysqli_stmt_bind_param($stmt, 'i', $id);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        mysqli_close($db);
+        try {
+            // Desactivar reporte de errores temporalmente
+            mysqli_report(MYSQLI_REPORT_OFF);
 
-        if ($result->num_rows > 0) {
-            return new Repartidor(mysqli_fetch_assoc($result));
-        } else {
-            return null;
+            $query = "SELECT * FROM " . static::$tabla . " WHERE id = ?";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'i', $id);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            //mysqli_close($db);
+
+            if ($result->num_rows > 0) {
+                return new Repartidor(mysqli_fetch_assoc($result));
+            } else {
+                return null;
+            }
+        } finally {
+            // Reactivar reporte de errores y cerrar la conexión
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            //mysqli_close($db);
         }
     }
 
@@ -190,19 +226,27 @@ class Repartidor {
     public static function find($attribute, $value) {
         require __DIR__ . '/../includes/database.php';
 
-        $query = "SELECT * FROM " . static::$tabla . " WHERE " . $attribute . " = ?";
-        $stmt = mysqli_prepare($db, $query);
-        mysqli_stmt_bind_param($stmt, 's', $value);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        mysqli_close($db);
+        try {
+            // Desactivar reporte de errores temporalmente
+            mysqli_report(MYSQLI_REPORT_OFF);
 
-        if ($result->num_rows > 0) {
-            return new Repartidor(mysqli_fetch_assoc($result));
-        } else {
-            return null;
+            $query = "SELECT * FROM " . static::$tabla . " WHERE " . $attribute . " = ?";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 's', $value);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            //mysqli_close($db);
+
+            if ($result->num_rows > 0) {
+                return new Repartidor(mysqli_fetch_assoc($result));
+            } else {
+                return null;
+            }
+        } finally {
+            // Reactivar reporte de errores y cerrar la conexión
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            //mysqli_close($db);
         }
     }
 }
-
 ?>
