@@ -63,7 +63,9 @@
                         <div class="product__content">
                             <div class="product__information">
                                 <h3 class="product__title"><?php echo $product->nombre?></h3>
-                                <p class="product__price">$30.00</p>
+                                <p value="chico" class="product__price">$<?php echo $product->chico?></p>
+                                <p value="mediano" class="product__price product__price--hidden">$<?php echo $product->mediano?></p>
+                                <p value="grande" class="product__price product__price--hidden">$<?php echo $product->grande?></p>
                                 <p class="product__description"><?php echo $product->descripcion?></p>
                             </div>
                         </div>
@@ -71,9 +73,9 @@
                         <div class="product__footer">
                             <button class="product__footer-button">Agregar al carrito</button>
                             <div class="product__footer-size">
-                                <div value="small" class="product__footer-size-option product__footer-size-option--small product__footer-size-option--selected">C</div>
-                                <div value="medium" class="product__footer-size-option product__footer-size-option--medium">M</div>
-                                <div value="large" class="product__footer-size-option product__footer-size-option--large">G</div>
+                                <div value="chico" class="product__footer-size-option product__footer-size-option--small product__footer-size-option--selected">C</div>
+                                <div value="mediano" class="product__footer-size-option product__footer-size-option--medium">M</div>
+                                <div value="grande" class="product__footer-size-option product__footer-size-option--large">G</div>
                             </div>
                             <div class="product__footer-like">
                                 <svg class="heart-icon" viewBox="0 0 24 24" width="26" height="26">
@@ -83,6 +85,77 @@
                         </div>
                     </div>
                 <?php endforeach; ?>
+            </div>
+
+            <div class="pagination">
+                <button class="pagination__button pagination__button--first">
+                    <svg class="pagination-icon" viewBox="-2 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier"> 
+                            <g id="Free-Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"> 
+                                <g class="pagination-icon-edit" transform="translate(-1267.000000, -748.000000)" id="Group" stroke="#333333" stroke-width="3">
+                                    <g transform="translate(1263.000000, 746.000000)" id="Shape">
+                                        <path d="M19,21 L9.5,12 L19,3 M5,3 L5,21"> </path>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
+                </button>
+
+                <button class="pagination__button pagination__button--prev">
+                    <svg class="pagination-icon" viewBox="-4 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <g id="Free-Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"> 
+                                <g class="pagination-icon-edit" transform="translate(-825.000000, -674.000000)" id="Group" stroke="#333333" stroke-width="3"> 
+                                    <g transform="translate(819.000000, 672.000000)" id="Shape"> 
+                                        <polyline points="17.0011615 3 7 12.0021033 17.0011615 21.0042067"> </polyline> 
+                                    </g> 
+                                </g> 
+                            </g> 
+                        </g>
+                    </svg>
+                </button>
+
+                <button class="pagination__button pagination__button--selected">1</button>
+                <button class="pagination__button">2</button>
+                <button class="pagination__button">3</button>
+                <button class="pagination__button">4</button>
+
+                <button class="pagination__button pagination__button--next">
+                    <svg class="pagination-icon" viewBox="-4 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">  
+                            <g id="Free-Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"> 
+                                <g class="pagination-icon-edit" transform="translate(-751.000000, -674.000000)" id="Group" stroke="#333333" stroke-width="3"> 
+                                    <g transform="translate(745.000000, 672.000000)" id="Shape"> 
+                                        <polyline points="7 3 17.0011615 12.0021033 7 21.0042067"> </polyline> 
+                                    </g> 
+                                </g> 
+                            </g> 
+                        </g>
+                    </svg>
+                </button>
+
+                <button class="pagination__button pagination__button--last">
+                    <svg class="pagination-icon" viewBox="-1.5 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier"> 
+                            <g id="Free-Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"> 
+                                <g class="pagination-icon-edit" transform="translate(-1192.000000, -748.000000)" id="Group" stroke="#333333" stroke-width="3"> 
+                                    <g transform="translate(1189.000000, 746.000000)" id="Shape"> 
+                                        <path d="M19,21 L9.5,12 L19,3 M5,3 L5,21" transform="translate(11.750000, 12.000000) scale(-1, 1) translate(-11.750000, -12.000000) "></path> 
+                                    </g> 
+                                </g> 
+                            </g> 
+                        </g>
+                    </svg>
+                </button>
             </div>
         </div>
     </div>

@@ -63,6 +63,9 @@
     margin: 10px 0 0 10px;
 }
 
+.product__price--hidden {
+    display: none;
+}
 
 .product__description {
     font-family: 'Lato', sans-serif;

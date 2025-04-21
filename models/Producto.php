@@ -1,6 +1,7 @@
 <?php
 
 namespace Model;
+use Model\ProductoTamaño;
 
 class Producto {
     private static $tabla = 'producto';
@@ -10,6 +11,10 @@ class Producto {
     public $ruta;
     public $descripcion;
     public $estatus;
+
+    public $chico;
+    public $mediano;
+    public $grande;
 
     public function __construct($args = []) {
         $this->id = $args['id'] ?? null;
@@ -30,9 +35,29 @@ class Producto {
 
             if ($result->num_rows > 0) {
                 $products = [];
-    
+
+                // Obtener los tamaños y precios de cada producto
                 while ($row = mysqli_fetch_assoc($result)) {
-                    $products[] = new Producto($row);
+                    $product = new Producto($row);
+                    $sizes = ProductoTamaño::getByIdProducto($product->id);
+
+                    if ($sizes) {
+                        foreach ($sizes as $size) {
+                            switch ($size->id_tamaño) {
+                                case 1:
+                                    $product->chico = $size->precio;
+                                    break;
+                                case 2:
+                                    $product->mediano = $size->precio;
+                                    break;
+                                case 3:
+                                    $product->grande = $size->precio;
+                                    break;
+                            }
+                        }
+                    }
+
+                    $products[] = $product;
                 }
                 
                 return $products;
