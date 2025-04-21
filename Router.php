@@ -1,33 +1,47 @@
 <?php 
 
-$uri = parse_url($_SERVER['REQUEST_URI'])['path'];
+namespace App;
 
-$routes = [
-    '/' => __DIR__ . '/views/pages/home.php',
-    '/products' => __DIR__ . '/views/pages/products.php',
-    '/views/pages/carrito' => __DIR__ . '/views/pages/carrito.php',
-    '/contact' => __DIR__ . '/views/pages/contact.php',
-    '/configuration' => __DIR__ . '/views/pages/configuration.php',
-    '/admin' => __DIR__ . '/views/administrator/admin.php',
-    '/admin/deliveryman' => __DIR__ . '/views/administrator/deliveryman.php',
-    '/admin/deliveryman/create' => __DIR__ . '/views/administrator/deliveryman-create.php',
-    '/admin/deliveryman/edit' => __DIR__ . '/views/administrator/deliveryman-edit.php',
-    '/admin/deliveries' => __DIR__ . '/views/administrator/deliveries.php',
-    '/admin/map' => __DIR__ . '/views/administrator/map.php'
-];
+class Router {
+    public array $getRoutes = [];
+    public array $postRoutes = [];
 
-routeView($uri, $routes);
-
-function routeView($uri, $routes) {
-    if (array_key_exists($uri, $routes)) {
-        require $routes[$uri];
-    } else {
-        notFound();
+    public function get($url, $fn){
+        $this->getRoutes[$url] = $fn;
     }
-}
 
-function notFound() {
-    http_response_code(404);
-    require __DIR__ . '/views/pages/404.php';
-    die();
+    public function post($url, $fn){
+        $this->postRoutes[$url] = $fn;
+    }
+
+    public function testRoutes() {
+        $url = $_SERVER['PATH_INFO'] ?? '/';
+        $method = $_SERVER['REQUEST_METHOD'];
+
+        if ($method === 'GET') {
+            $fn = $this->getRoutes[$url] ?? null;
+        } else {
+            $fn = $this->postRoutes[$url] ?? null;
+        }
+
+        if ($fn) {
+            call_user_func($fn, $this);
+        } else {
+            //header('Location: /404');
+            echo "404 Not Found";
+            exit;
+        }
+    }
+
+    public function render($view, $data = []) {
+        foreach ($data as $key => $value) {
+            $$key = $value; 
+        }
+        
+        //ob_start(); 
+        include_once __DIR__ . "/views/$view.php";
+        //$content = ob_get_clean();
+
+        //echo $content;
+    }
 }

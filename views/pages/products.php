@@ -53,8 +53,37 @@
                 </button>
             </div>
 
-            <?php include_once __DIR__ . "/../components/products-list.php"; ?>
-    
+            <div class="product-list">
+                <?php foreach ($products as $product): ?>
+                    <div class="product">
+                        <div class="product__image-container">
+                            <img class="product__image" src="/assets/img/product/<?php echo $product->ruta?>.jpg" alt="<?php echo $product->nombre?>">
+                        </div>
+                                    
+                        <div class="product__content">
+                            <div class="product__information">
+                                <h3 class="product__title"><?php echo $product->nombre?></h3>
+                                <p class="product__price">$30.00</p>
+                                <p class="product__description"><?php echo $product->descripcion?></p>
+                            </div>
+                        </div>
+
+                        <div class="product__footer">
+                            <button class="product__footer-button">Agregar al carrito</button>
+                            <div class="product__footer-size">
+                                <div value="small" class="product__footer-size-option product__footer-size-option--small product__footer-size-option--selected">C</div>
+                                <div value="medium" class="product__footer-size-option product__footer-size-option--medium">M</div>
+                                <div value="large" class="product__footer-size-option product__footer-size-option--large">G</div>
+                            </div>
+                            <div class="product__footer-like">
+                                <svg class="heart-icon" viewBox="0 0 24 24" width="26" height="26">
+                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         </div>
     </div>
 
