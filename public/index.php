@@ -6,8 +6,14 @@ use App\Router;
 use Controller\PagesController;
 use Controller\ProductoController;
 use Controller\APIProducto;
+use Controller\APIUsuario;
 
 $router = new Router();
+
+// Login
+$router->post('/api/user/create', [APIUsuario::class, 'create']);
+$router->post('/api/user/login', [APIUsuario::class, 'login']);
+$router->post('/api/user/logout', [APIUsuario::class, 'logout']);
 
 // Usuario
 $router->get('/', [PagesController::class, 'home']);

@@ -27,7 +27,7 @@
         <div class="register-modal__input-container">
             <label for="register-email" class="register-modal__label">Correo</label>
             <input type="text" name="register-email" class="register-modal__input" id="register-email">
-            <span class="register-modal__error">Formato válido (ejemplo@dominio.com)</span>
+            <span class="register-modal__error">Formato inválido (ejemplo@dominio.com)</span>
         </div>
 
         <div class="register-modal__input-container">

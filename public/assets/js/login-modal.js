@@ -29,16 +29,18 @@
 
     let scrollY = 0;
 
-    loginButton.addEventListener('click', function() {
-        scrollY = window.scrollY;
-        loginModal.classList.add('login-modal--active');
-        backgroundShadow.classList.add('background__shadow--active');
-        backgroundShadow.classList.add('background__blur--active');
+    if (loginButton) {
+        loginButton.addEventListener('click', function() {
+            scrollY = window.scrollY;
+            loginModal.classList.add('login-modal--active');
+            backgroundShadow.classList.add('background__shadow--active');
+            backgroundShadow.classList.add('background__blur--active');
 
-        document.body.style.position = 'fixed';
-        document.body.style.top = `-${scrollY}px`;
-        document.body.style.width = '100%';
-    });
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.width = '100%';
+        });
+    }
 
     if (loginButtonMobile) {
         loginButtonMobile.addEventListener('click', function() {

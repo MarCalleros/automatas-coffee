@@ -25,8 +25,8 @@
         </div>
 
         <div class="login-modal__button-container">
-            <button class="login-modal__button login-modal__button--login" id="modal-login-button">Iniciar Sesion</button>
-            <button class="login-modal__button login-modal__button--reset" id="modal-login-reset">Resetear Campos</button>
+            <button type="button" class="login-modal__button login-modal__button--login" id="modal-login-button">Iniciar Sesion</button>
+            <button type="button" class="login-modal__button login-modal__button--reset" id="modal-login-reset">Resetear Campos</button>
         </div>
     </form>
 

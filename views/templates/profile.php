@@ -13,7 +13,7 @@
         <img src="/assets/img/pfpcoffee.png" alt="Profile" class="profile-modal__pfp">
     </div>
 
-    <strong class="profile-modal__user">Lillia</strong>
+    <strong class="profile-modal__user"><?php echo $_SESSION['usuario']?></strong>
 
     <div class="profile-modal__buttons-container">
         <div class="profile-modal__button-container">
@@ -34,7 +34,7 @@
                 </clipPath>
                 </defs>
             </svg>
-            <button type="button" class="profile-modal__button profile-modal__button--extra" id="configuration-profile">Configuración</button>
+            <a style="width: 100%;" href="/configuracion"><button type="button" class="profile-modal__button profile-modal__button--extra" id="configuration-profile">Configuración</button></a>
         </div>
         <div class="profile-modal__button-container">
             <svg class="exit-icon" width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
