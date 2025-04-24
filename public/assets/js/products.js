@@ -1,3 +1,5 @@
+import { createNotification } from './notification.js';
+
 (function() {
     let productsArray = [];
     const productList = document.querySelector('.product-list');
@@ -227,7 +229,7 @@
 
         const filterLike = document.querySelector('#filter-like').checked;
         if (filterLike) {
-            params.append('liked', 1); // Aquí podría ir el ID del usuario si lo necesitas
+            params.append('liked', true); // Aquí podría ir el ID del usuario si lo necesitas
         }
 
         const filtersCategory = document.querySelectorAll('.filter__input--category');
@@ -333,7 +335,48 @@
         // Like
         if (e.target.closest('.product__footer-like')) {
             const heart = e.target.closest('.product__footer-like');
-            heart.classList.toggle('product__footer-like--liked');
+            const productContainer = heart.closest('.product');
+            const id = productContainer.getAttribute('data-id');
+
+            if (heart.classList.contains('product__footer-like--liked')) {
+                fetch('/api/product/unfavorite', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: id 
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        heart.classList.remove('product__footer-like--liked');
+                        createNotification("success", data.message);
+                    } else {
+                        createNotification("error", data.message);
+                    }
+                });
+            } else {
+                fetch('/api/product/favorite', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: id 
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        heart.classList.add('product__footer-like--liked');
+                        createNotification("success", data.message);
+                    } else {
+                        createNotification("error", data.message);
+                    }
+                });
+            }
         }
 
         // Cambio de tamaño
@@ -406,7 +449,7 @@ function updateHTML(container, products, notFound = false) {
             });
           
             const productHTML = `
-              <div class="product">
+              <div class="product" data-id="${product.id}">
                 <div class="product__image-container">
                   <img class="product__image" src="/assets/img/product/${product.ruta}.jpg" alt="${product.nombre}">
                 </div>
@@ -422,7 +465,7 @@ function updateHTML(container, products, notFound = false) {
                   <div class="product__footer-size">
                     ${sizeHTML}
                   </div>
-                  <div class="product__footer-like">
+                  <div class="product__footer-like ${product.favorito ? 'product__footer-like--liked' : ''}">
                     <svg class="heart-icon" viewBox="0 0 24 24" width="26" height="26">
                       <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
                     </svg>

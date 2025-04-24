@@ -3,7 +3,7 @@
     <div class="filter-container__list">
         <ul class="filter__list">
             <li class="filter__item">
-                <input type="checkbox" id="filter-like" name="filter-like" <?php if ($filters["liked"] == 1) echo "checked" ?>>
+                <input type="checkbox" id="filter-like" name="filter-like" <?php if ($filters["liked"] == true) echo "checked" ?>>
                 <label for="filter-like"></label>
                 <span class="filter__description">Favoritos</span>
             </li>

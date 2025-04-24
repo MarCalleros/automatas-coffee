@@ -22,6 +22,8 @@ class Producto {
     public $mediano; // Precio del tamaño mediano
     public $grande; // Precio del tamaño grande
 
+    public $favorito;
+
     public function __construct($args = []) {
         $this->id = $args['id'] ?? null;
         $this->nombre = $args['nombre'] ?? '';
@@ -42,9 +44,21 @@ class Producto {
             if ($result->num_rows > 0) {
                 $products = [];
 
-                // Obtener los tamaños y precios de cada producto
+                // Obtener los tamaños, precios y favoritos de cada producto
                 while ($row = mysqli_fetch_assoc($result)) {
                     $product = new Producto($row);
+
+                    if (isLogged()) {
+                        $favorito = Favorito::getByIdUsuarioAndIdProducto($_SESSION['id'], $product->id);
+                        if ($favorito) {
+                            $product->favorito = true;
+                        } else {
+                            $product->favorito = false;
+                        }
+                    } else {
+                        $product->favorito = false;
+                    }
+
                     $sizes = ProductoTamaño::getByIdProducto($product->id);
 
                     if ($sizes) {
@@ -125,6 +139,18 @@ class Producto {
     
             while ($row = mysqli_fetch_assoc($result)) {
                 $product = new Producto($row);
+
+                if (isLogged()) {
+                    $favorito = Favorito::getByIdUsuarioAndIdProducto($_SESSION['id'], $product->id);
+                    if ($favorito) {
+                        $product->favorito = true;
+                    } else {
+                        $product->favorito = false;
+                    }
+                } else {
+                    $product->favorito = false;
+                }
+                
                 $sizes = ProductoTamaño::getByIdProducto($product->id);
     
                 if ($sizes) {
@@ -183,6 +209,7 @@ class Producto {
                         foreach ($result as $item) {
                             $product = self::where("id", $item->id_producto);
                             if ($product) {
+                                $product[0]->favorito = true; // Marcar como favorito
                                 $productsLiked[] = $product[0];
                             }
                         }

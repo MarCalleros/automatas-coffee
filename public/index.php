@@ -27,6 +27,8 @@ $router->get('/productos', [ProductoController::class, 'index']);
 $router->get('/api/productos', [APIProducto::class, 'listPagination']);
 $router->get('/api/list', [APIProducto::class, 'list']);
 $router->get('/api/filter', [APIProducto::class, 'filter']);
+$router->post('/api/product/favorite', [APIProducto::class, 'favorite']);
+$router->post('/api/product/unfavorite', [APIProducto::class, 'unfavorite']);
 
 $router->testRoutes();
 ?>
