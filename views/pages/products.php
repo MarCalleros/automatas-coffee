@@ -27,7 +27,7 @@
                     </svg>
                 </button>
 
-                <input type="text" class="search__input" placeholder="Buscar producto...">
+                <input type="text" class="search__input" placeholder="Buscar producto..." value="<?php echo $filters['search'] ?>">
 
                 <button class="search__button">
                     <svg class="search-icon" fill="#ffffff" height="200px" width="200px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 490.40 490.40" xml:space="preserve" stroke="#ffffff" stroke-width="0.004904">
@@ -70,9 +70,21 @@
                         <div class="product__content">
                             <div class="product__information">
                                 <h3 class="product__title"><?php echo $product->nombre?></h3>
-                                <p value="chico" class="product__price">$<?php echo $product->chico?></p>
-                                <p value="mediano" class="product__price product__price--hidden">$<?php echo $product->mediano?></p>
-                                <p value="grande" class="product__price product__price--hidden">$<?php echo $product->grande?></p>
+                                <?php 
+                                    $sizes = ["chico", "mediano", "grande"];
+                                    $firstSize = true;
+
+                                    foreach ($sizes as $size) {
+                                        if ($product->$size != null) {
+                                            if ($firstSize) {
+                                                $firstSize = false;
+                                                echo '<p value="' . $size . '" class="product__price">$' . $product->$size . '</p>';
+                                            } else {
+                                                echo '<p value="' . $size . '" class="product__price product__price--hidden">$' . $product->$size . '</p>';
+                                            }
+                                        }
+                                    }
+                                ?>
                                 <p class="product__description"><?php echo $product->descripcion?></p>
                             </div>
                         </div>
@@ -80,9 +92,21 @@
                         <div class="product__footer">
                             <button class="product__footer-button">Agregar al carrito</button>
                             <div class="product__footer-size">
-                                <div value="chico" class="product__footer-size-option product__footer-size-option--small product__footer-size-option--selected">C</div>
-                                <div value="mediano" class="product__footer-size-option product__footer-size-option--medium">M</div>
-                                <div value="grande" class="product__footer-size-option product__footer-size-option--large">G</div>
+                                <?php 
+                                    $sizes = ["chico", "mediano", "grande"];
+                                    $firstSize = true;
+
+                                    foreach ($sizes as $size) {
+                                        if ($product->$size != null) {
+                                            if ($firstSize) {
+                                                $firstSize = false;
+                                                echo '<div value="' . $size . '" class="product__footer-size-option product__footer-size-option--' . $size . ' product__footer-size-option--selected">' . strtoupper(substr($size, 0, 1)) . '</div>';
+                                            } else {
+                                                echo '<div value="' . $size . '" class="product__footer-size-option product__footer-size-option--' . $size . '">' . strtoupper(substr($size, 0, 1)) . '</div>';
+                                            }
+                                        }
+                                    } 
+                                ?>
                             </div>
                             <div class="product__footer-like">
                                 <svg class="heart-icon" viewBox="0 0 24 24" width="26" height="26">
@@ -94,8 +118,8 @@
                 <?php endforeach; ?>
             </div>
 
-            <?php if ($products): ?>
-                <div class="pagination">
+            <div class="pagination">
+                <?php if ($products): ?>
                     <button class="pagination__button pagination__button--first" data-page="first">
                         <svg class="pagination-icon" viewBox="-2 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -128,10 +152,17 @@
                         </svg>
                     </button>
 
-                    <button class="pagination__button pagination__button--selected" data-page="1">1</button>
-                    <button class="pagination__button" data-page="2">2</button>
-                    <button class="pagination__button" data-page="3">3</button>
-                    <button class="pagination__button" data-page="4">4</button>
+                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+
+                    <?php
+                        if (isset($_GET['page'])) {
+                            $activeClass = ($i == $_GET['page']) ? 'pagination__button--selected' : '';
+                        } else {
+                            $activeClass = ($i == 1) ? 'pagination__button--selected' : '';
+                        }
+                    ?>
+                        <button class="pagination__button pagination__button--number <?php echo $activeClass ?> " data-page="<?php echo $i ?>"><?php echo $i ?></button>
+                    <?php endfor; ?>
 
                     <button class="pagination__button pagination__button--next" data-page="next">
                         <svg class="pagination-icon" viewBox="-4 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
@@ -164,8 +195,8 @@
                             </g>
                         </svg>
                     </button>
-                </div>
-            <?php endif; ?>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 

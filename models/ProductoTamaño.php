@@ -42,5 +42,31 @@ class ProductoTamaño {
             return null;
         }
     }
+
+    public static function where($column, $value) {
+        try {
+            require __DIR__ . '/../includes/database.php';
+
+            $query = "SELECT * FROM " . self::$tabla . " WHERE $column = ?";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'i', $value);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+
+            if ($result->num_rows > 0) {
+                $sizes = [];
+
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $sizes[] = new ProductoTamaño($row);
+                }
+                
+                return $sizes;
+            } else {
+                return null;
+            }
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
 }
 ?>

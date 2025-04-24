@@ -19,6 +19,8 @@ $router->get('/productos', [ProductoController::class, 'index']);
 
 // API
 $router->get('/api/productos', [APIProducto::class, 'listPagination']);
+$router->get('/api/list', [APIProducto::class, 'list']);
+$router->get('/api/filter', [APIProducto::class, 'filter']);
 
 $router->testRoutes();
 ?>

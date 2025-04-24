@@ -128,6 +128,7 @@
     font-size: 1.6rem;
     color: var(--dark-black);
     margin: 0 auto;
+    border-radius: 0;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -142,17 +143,19 @@
     color: var(--white);
 }
 
-.product__footer-size-option--small {
+.product__footer-size-option:first-child {
     border-radius: 100px 0 0 100px;
     padding-left: 5px;
 }
 
-.product__footer-size-option--medium {
-    border-radius: 0;
+.product__footer-size-option:last-child {
+    border-radius: 0 100px 100px 0;
+    padding-right: 5px;
 }
 
-.product__footer-size-option--large {
-    border-radius: 0 100px 100px 0;
+.product__footer-size-option:only-child {
+    border-radius: 100px;
+    padding-left: 5px;
     padding-right: 5px;
 }
 
