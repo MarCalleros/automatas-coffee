@@ -427,6 +427,19 @@ function updateHTML(container, products, notFound = false) {
 
         container.insertAdjacentHTML('beforeend', productHTML);
     } else {
+        const viewButton = document.querySelector('.view__button');
+        let productGrid = "";
+        let productImageContainerGrid = "";
+        let productImageGrid = "";
+        let productFooterGrid = "";
+
+        if (viewButton.classList.contains('view__button--grid')) {
+            productGrid = "product--grid";
+            productImageContainerGrid = "product__image-container--grid";
+            productImageGrid = "product__image--grid";
+            productFooterGrid = "product__footer--grid";
+        }
+
         products.forEach(product => {
             const sizes = ['chico', 'mediano', 'grande'];
             let firstSizeSet = false;
@@ -449,9 +462,9 @@ function updateHTML(container, products, notFound = false) {
             });
           
             const productHTML = `
-              <div class="product" data-id="${product.id}">
-                <div class="product__image-container">
-                  <img class="product__image" src="/assets/img/product/${product.ruta}.jpg" alt="${product.nombre}">
+              <div class="product ${productGrid}" data-id="${product.id}">
+                <div class="product__image-container ${productImageContainerGrid}">
+                  <img class="product__image ${productImageGrid}" src="/assets/img/product/${product.ruta}.jpg" alt="${product.nombre}">
                 </div>
                 <div class="product__content">
                   <div class="product__information">
@@ -460,7 +473,7 @@ function updateHTML(container, products, notFound = false) {
                     <p class="product__description">${product.descripcion}</p>
                   </div>
                 </div>
-                <div class="product__footer">
+                <div class="product__footer ${productFooterGrid}">
                   <button class="product__footer-button">Agregar al carrito</button>
                   <div class="product__footer-size">
                     ${sizeHTML}
