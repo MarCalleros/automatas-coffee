@@ -36,6 +36,11 @@
             </svg>
             <a style="width: 100%;" href="/configuracion"><button type="button" class="profile-modal__button profile-modal__button--extra" id="configuration-profile">Configuración</button></a>
         </div>
+        <?php if (isAdmin()) : ?>
+            <div class="profile-modal__button-container">
+            <a style="width: 100%;" href="/admin"><button type="button" class="profile-modal__button profile-modal__button--extra" id="configuration-profile">Administrador</button></a>
+        </div>
+        <?php endif; ?>
         <div class="profile-modal__button-container">
             <svg class="exit-icon" width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <rect width="25" height="25" fill="url(#pattern0_80_7933)"/>

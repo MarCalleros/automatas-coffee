@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../includes/app.php';
 
 use App\Router;
+use Controller\AdminPagesController;
 use Controller\PagesController;
 use Controller\ProductoController;
 use Controller\APIProducto;
@@ -14,6 +15,11 @@ $router = new Router();
 $router->post('/api/user/create', [APIUsuario::class, 'create']);
 $router->post('/api/user/login', [APIUsuario::class, 'login']);
 $router->post('/api/user/logout', [APIUsuario::class, 'logout']);
+
+// Admin
+$router->get('/admin', [AdminPagesController::class, 'index']);
+$router->get('/admin/deliveryman', [AdminPagesController::class, 'deliveryman']);
+$router->get('/admin/map', [AdminPagesController::class, 'map']);
 
 // Usuario
 $router->get('/', [PagesController::class, 'home']);
