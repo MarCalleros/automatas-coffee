@@ -1,8 +1,6 @@
 <?php
 
-namespace App;
-use App\Repartidor;
-require __DIR__ . '/../vendor/autoload.php';
+namespace Model;
 
 class Repartidor {
     protected static $tabla = 'repartidor';

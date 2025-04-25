@@ -1,28 +1,3 @@
-<?php
-namespace App;
-use App\Repartidor;
-require __DIR__ . '/../../vendor/autoload.php';
-
-$repartidores = Repartidor::all();
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $repartidor = new Repartidor();
-    
-    $repartidor->id = $_POST['id'];
-    $repartidor->estatus = $_POST['estatus'];
-
-    if ($repartidor->changeStatus()) {
-        header('Content-Type: application/json');
-        echo json_encode(['success' => true]);
-        exit;
-    } else {
-        header('Content-Type: application/json');
-        echo json_encode(['success' => false, 'error' => 'Error en la base de datos']);
-        exit;
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

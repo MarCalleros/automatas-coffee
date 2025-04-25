@@ -1,35 +1,3 @@
-<?php
-namespace App;
-use App\Repartidor;
-require __DIR__ . '/../../vendor/autoload.php';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $repartidor = new Repartidor();
-    
-    $repartidor->nombre = $_POST['nombre'];
-    $repartidor->apellido1 = $_POST['apellido1'];
-    $repartidor->apellido2 = $_POST['apellido2'];
-    $repartidor->telefono = $_POST['telefono'];
-    $repartidor->curp = $_POST['curp'];
-    $repartidor->rfc = $_POST['rfc'];
-    $repartidor->tipo_sangre = $_POST['tipo_sangre'];
-    $repartidor->nss = $_POST['nss'];
-    $repartidor->vigencia_licencia = $_POST['vigencia'];
-
-    $result = $repartidor->save();
-
-    if ($result === true) {
-        header('Content-Type: application/json');
-        echo json_encode(['success' => true]);
-        exit;
-    } else {
-        header('Content-Type: application/json');
-        echo json_encode(['success' => false, 'error' => "$result"]);
-        exit;
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

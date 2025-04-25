@@ -3,6 +3,7 @@
 namespace Controller;
 
 use App\Router;
+use Model\Repartidor;
 
 class AdminPagesController {
     public static function index(Router $router) {
@@ -14,22 +15,17 @@ class AdminPagesController {
         $router->render('administrator/admin', []);
     }
 
-    public static function deliveryman(Router $router) {
-        if (!isAdmin()) {
-            header('Location: /');
-            exit;
-        }
-
-        $router->render('administrator/deliveryman', []);
-    }
-
     public static function map(Router $router) {
         if (!isAdmin()) {
             header('Location: /');
             exit;
         }
 
-        $router->render('administrator/map', []);
+        $repartidores = Repartidor::allActiveAsc();
+
+        $router->render('administrator/map', [
+            'repartidores' => $repartidores
+        ]);
     }
 }
 ?>

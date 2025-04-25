@@ -6,6 +6,7 @@ use App\Router;
 use Controller\AdminPagesController;
 use Controller\PagesController;
 use Controller\ProductoController;
+use Controller\RepartidorController;
 use Controller\APIProducto;
 use Controller\APIUsuario;
 
@@ -18,7 +19,12 @@ $router->post('/api/user/logout', [APIUsuario::class, 'logout']);
 
 // Admin
 $router->get('/admin', [AdminPagesController::class, 'index']);
-$router->get('/admin/deliveryman', [AdminPagesController::class, 'deliveryman']);
+$router->get('/admin/deliveryman', [RepartidorController::class, 'index']);
+$router->post('/admin/deliveryman', [RepartidorController::class, 'index']);
+$router->get('/admin/deliveryman/create', [RepartidorController::class, 'create']);
+$router->post('/admin/deliveryman/create', [RepartidorController::class, 'create']);
+$router->get('/admin/deliveryman/edit', [RepartidorController::class, 'edit']);
+$router->post('/admin/deliveryman/edit', [RepartidorController::class, 'edit']);
 $router->get('/admin/map', [AdminPagesController::class, 'map']);
 
 // Usuario

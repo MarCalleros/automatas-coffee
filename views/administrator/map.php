@@ -1,12 +1,3 @@
-<?php
-namespace App;
-use App\Repartidor;
-require __DIR__ . '/../../vendor/autoload.php';
-
-$repartidores = Repartidor::allActiveAsc();
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
