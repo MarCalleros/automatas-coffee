@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/assets/css/variables.css">
     <link rel="stylesheet" href="/assets/css/styles.css">
     <link rel="stylesheet" href="/assets/css/configuration.css">
+    <link rel="shortcut icon" href="/assets/img/logo-coffee.png">
     <title>Document</title>
 </head>
 <body>

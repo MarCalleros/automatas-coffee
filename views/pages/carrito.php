@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/assets/css/carrito.css">
     <link rel="stylesheet" href="/assets/css/variables.css">
     <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="shortcut icon" href="/assets/img/logo-coffee.png">
 </head>
 <body>
 <?php include_once __DIR__ . "/../templates/navbar.php"; ?>
