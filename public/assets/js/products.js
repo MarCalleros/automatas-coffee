@@ -14,6 +14,7 @@ import { createNotification } from './notification.js';
         //productsArray = chunkArrayInGroups(list, 10);
         const url = new URL(window.location.href);
         const params = url.searchParams;
+        const page = params.get('page') || 1; // Obtener el número de página actual o 1 si no existe
 
         if (params.get('page')) {
             params.delete('page');
@@ -27,10 +28,15 @@ import { createNotification } from './notification.js';
     
         if (!productsArray || productsArray.length === 0) {
             updateHTML(productList, [], true);
-            updatePagination(pagination, 0, true);
+            updatePagination(pagination, 0, 1, true);
         } else {
-            updateHTML(productList, productsArray[0]);
-            updatePagination(pagination, productsArray.length);
+            if (page > productsArray.length) {
+                page = productsArray.length; // Asegurarse de que la página no exceda el número total de páginas
+            }
+            const pageIndex = page - 1; // Ajustar el índice de la página para acceder al array
+
+            updateHTML(productList, productsArray[pageIndex]); // Actualizar el HTML con los productos de la página actual
+            updatePagination(pagination, productsArray.length, page);
         }
     });
 
@@ -155,13 +161,13 @@ import { createNotification } from './notification.js';
     
         params.delete('search');
         params.append('search', input.value);
-    
-        const newUrl = `${window.location.pathname}?${params.toString()}`;
-        window.history.pushState({}, '', newUrl);
-    
+
         if (params.get('page')) {
             params.delete('page');
         }
+    
+        const newUrl = `${window.location.pathname}?${params.toString()}`;
+        window.history.pushState({}, '', newUrl);
     
         const endpoint = params.toString() === '' ? "/api/list" : `/api/filter?${params.toString()}`;
         const res = await fetch(endpoint);
@@ -172,10 +178,10 @@ import { createNotification } from './notification.js';
     
         if (!productsArray || productsArray.length === 0) {
             updateHTML(productList, [], true);
-            updatePagination(pagination, 0, true);
+            updatePagination(pagination, 0, 1, true);
         } else {
             updateHTML(productList, productsArray[0]);
-            updatePagination(pagination, productsArray.length);
+            updatePagination(pagination, productsArray.length, 1);
         }
     }
     
@@ -220,7 +226,7 @@ import { createNotification } from './notification.js';
         let params = new URLSearchParams();
 
         if (currentParams.has('page')) {
-            params.append('page', currentParams.get('page'));
+            params.delete('page');
         }
     
         if (currentParams.has('search')) {
@@ -272,10 +278,10 @@ import { createNotification } from './notification.js';
 
         if (productsArray === undefined || productsArray.length === 0) {
             updateHTML(productList, [], true); // Mostrar mensaje de no encontrado
-            updatePagination(pagination, 0, true); // Actualizar la paginación
+            updatePagination(pagination, 0, 1, true); // Actualizar la paginación
         } else {
             updateHTML(productList, productsArray[0]); // Actualizar el HTML con los productos filtrados
-            updatePagination(pagination, productsArray.length); // Actualizar la paginación
+            updatePagination(pagination, productsArray.length, 1); // Actualizar la paginación
         }
     });
 
@@ -304,8 +310,9 @@ import { createNotification } from './notification.js';
 
         const params = new URLSearchParams();
         if (currentParams.has('page')) {
-            params.append('page', currentParams.get('page'));
+            params.delete('page');
         }
+    
         if (currentParams.has('search')) {
             params.append('search', currentParams.get('search'));
         }
@@ -324,10 +331,10 @@ import { createNotification } from './notification.js';
 
         if (productsArray === undefined || productsArray.length === 0) {
             updateHTML(productList, [], true); // Mostrar mensaje de no encontrado
-            updatePagination(pagination, 0, true); // Actualizar la paginación
+            updatePagination(pagination, 0, 1, true); // Actualizar la paginación
         } else {
             updateHTML(productList, productsArray[0]); // Actualizar el HTML con los productos filtrados
-            updatePagination(pagination, productsArray.length); // Actualizar la paginación
+            updatePagination(pagination, productsArray.length, 1); // Actualizar la paginación
         }
     });
 
@@ -492,7 +499,7 @@ function updateHTML(container, products, notFound = false) {
     }
 }
 
-function updatePagination(container, totalPages, notFound = false) {
+function updatePagination(container, totalPages, actualPage = 1, notFound = false) {
     container.innerHTML = ''; // Limpiar la paginación
     let paginationHTML = '';
 
@@ -538,7 +545,7 @@ function updatePagination(container, totalPages, notFound = false) {
     container.insertAdjacentHTML('beforeend', paginationHTML);
 
     for (let i = 1; i <= totalPages; i++) {
-        const activeClass = (i == 1) ? 'pagination__button--selected' : '';
+        const activeClass = (i == actualPage) ? 'pagination__button--selected' : '';
 
         paginationHTML = `
             <button class="pagination__button pagination__button--number ${activeClass}" data-page="${i}">${i}</button>
