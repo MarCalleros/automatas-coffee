@@ -4,6 +4,7 @@ require_once __DIR__ . '/../includes/app.php';
 
 use App\Router;
 use Controller\AdminPagesController;
+use Controller\AdminProductController;
 use Controller\PagesController;
 use Controller\ProductoController;
 use Controller\RepartidorController;
@@ -19,6 +20,7 @@ $router->post('/api/user/logout', [APIUsuario::class, 'logout']);
 
 // Admin
 $router->get('/admin', [AdminPagesController::class, 'index']);
+$router->get('/admin/adminproduct', [AdminProductController::class, 'index']);
 $router->get('/admin/deliveryman', [RepartidorController::class, 'index']);
 $router->post('/admin/deliveryman', [RepartidorController::class, 'index']);
 $router->get('/admin/deliveryman/create', [RepartidorController::class, 'create']);
@@ -32,7 +34,6 @@ $router->get('/', [PagesController::class, 'home']);
 $router->get('/contactanos', [PagesController::class, 'contact']);
 $router->get('/configuracion', [PagesController::class, 'configuration']);
 $router->get('/carrito', [PagesController::class, 'carrito']);
-
 $router->get('/productos', [ProductoController::class, 'index']);
 
 // API
