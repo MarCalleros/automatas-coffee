@@ -7,7 +7,7 @@ use Model\Repartidor;
 
 class AdminPagesController {
     public static function index(Router $router) {
-        if (isAdmin()) {
+        if (!isAdmin()) {
             header('Location: /');
             exit;
         }
@@ -16,7 +16,7 @@ class AdminPagesController {
     }
 
     public static function map(Router $router) {
-        if (isAdmin()) {
+        if (!isAdmin()) {
             header('Location: /');
             exit;
         }
