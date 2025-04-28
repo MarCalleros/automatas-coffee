@@ -56,19 +56,20 @@ document.getElementById('agregar').onclick = async function() {
 
     const productId = getProductIdFromUrl();
 
-    if (productId) {
-        formData.append('id', productId);
-    }
+        if (productId) {
+            formData.append('id', productId);
+        }
 
     // Envía los datos al backend
     try {
-        const response = await fetch('/admin/editproduct', {
+        const response = await fetch('/admin/addproduct', {
             method: 'POST',
             body: formData
         });
 
         if (response.ok) {
-            window.location.href = '/admin/adminproduct';
+            //window.location.href = '/admin/adminproduct';
+            alert("todo bn");
         } else {
             alert('Error al guardar el producto');
         }

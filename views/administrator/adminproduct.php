@@ -27,7 +27,7 @@
                 <?php foreach ($products as $product) : ?>
                     <div class="admin__product" id="product-<?= $product->id ?>">
                         <div class="admin__product__info">
-                            <img src="/public/assets/img/product/<?= $product->ruta ?>.jpg" alt="<?= $product->nombre ?>">
+                            <img src="/assets/img/product/<?= $product->ruta ?>.jpg" alt="<?= $product->nombre ?>">
                             <h4><?= $product->nombre ?></h4>
                             <p><?= $product->descripcion ?></p>
                         </div>
