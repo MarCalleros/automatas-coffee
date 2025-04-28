@@ -357,5 +357,65 @@ class Producto {
             return 0;
         }
     }
+
+    public static function getAdminProductos() {
+        require __DIR__ . '/../includes/database.php';
+        $query = "SELECT * FROM " . self::$tabla . " WHERE estatus = 1";
+        $stmt = mysqli_prepare($db, $query);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        
+        $productos = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $productos[] = new Producto($row);
+        }
+        return $productos;
+    }
+
+    public static function findById($id) {
+        require __DIR__ . '/../includes/database.php';
+        $query = "SELECT * FROM " . self::$tabla . " WHERE id = ? AND estatus = 1";
+        $stmt = mysqli_prepare($db, $query);
+        mysqli_stmt_bind_param($stmt, 'i', $id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        if ($result->num_rows > 0) {
+            return new Producto(mysqli_fetch_assoc($result));
+        } else {
+            return null;
+        }
+    }
+
+    public static function create($nombre, $descripcion, $tamanos, $precios, $categorias, $rutaImagen) {
+        require __DIR__ . '/../includes/database.php';
+        $query = "INSERT INTO " . self::$tabla . " (nombre, ruta, descripcion, estatus) VALUES (?, ?, ?, 1)";
+        $stmt = mysqli_prepare($db, $query);
+        mysqli_stmt_bind_param($stmt, 'sss', $nombre, $rutaImagen, $descripcion);
+        mysqli_stmt_execute($stmt);
+    
+        if (mysqli_affected_rows($db) > 0) {
+            $id_producto = mysqli_insert_id($db);
+    
+            foreach ($tamanos as $i => $id_tamano) {
+                $precio = $precios[$i] ?? 0;
+                $query = "INSERT INTO producto_tamaño (id_producto, id_tamaño, precio, existencia) VALUES (?, ?, ?, 20)";
+                $stmt = mysqli_prepare($db, $query);
+                mysqli_stmt_bind_param($stmt, 'iid', $id_producto, $id_tamano, $precio);
+                mysqli_stmt_execute($stmt);
+            }
+    
+            foreach ($categorias as $cat) {
+                $query = "INSERT INTO producto_categoria (id_producto, id_categoria) VALUES (?, ?)";
+                $stmt = mysqli_prepare($db, $query);
+                mysqli_stmt_bind_param($stmt, 'ii', $id_producto, $cat);
+                mysqli_stmt_execute($stmt);
+            }
+    
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 ?>

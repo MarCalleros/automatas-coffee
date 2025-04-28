@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/adminproduct.css">
     <title>Productos</title>
 </head>
 <body>
@@ -22,7 +23,23 @@
             </div>
 
             <script src="/assets/js/adminproducts.js"></script>
-            <?php include_once __DIR__ . "/../components/products-list.php"; ?>
+            <div class="admin__products">
+                <?php foreach ($products as $product) : ?>
+                    <div class="admin__product" id="product-<?= $product->id ?>">
+                        <div class="admin__product__info">
+                            <img src="/public/assets/img/product/<?= $product->ruta ?>.jpg" alt="<?= $product->nombre ?>">
+                            <h4><?= $product->nombre ?></h4>
+                            <p><?= $product->descripcion ?></p>
+                        </div>
+                        <div class="admin__product__actions">
+                            <a href="/admin/editproduct?id=<?= $product->id ?>" class="edit-product">Editar</a>
+                            <a href="/admin/deleteproduct?id=<?= $product->id ?>" class="delete-product">Eliminar</a>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            
+
         </main>
 
     </div>

@@ -21,6 +21,9 @@ $router->post('/api/user/logout', [APIUsuario::class, 'logout']);
 // Admin
 $router->get('/admin', [AdminPagesController::class, 'index']);
 $router->get('/admin/adminproduct', [AdminProductController::class, 'index']);
+$router->get('/admin/addproduct', [AdminProductController::class, 'create']);
+$router->post('/admin/addproduct', [AdminProductController::class, 'create']);
+$router->get('/admin/editproduct', [AdminProductController::class, 'edit']);
 $router->get('/admin/deliveryman', [RepartidorController::class, 'index']);
 $router->post('/admin/deliveryman', [RepartidorController::class, 'index']);
 $router->get('/admin/deliveryman/create', [RepartidorController::class, 'create']);

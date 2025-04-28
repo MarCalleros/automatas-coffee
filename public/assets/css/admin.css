@@ -243,3 +243,36 @@
 .admin-form__error--active {
     visibility: visible;
 }
+
+.admin__subtitles {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 50px 40px 0px 40px;
+    height: 40px;
+}
+
+.admin__subtitles a {
+    font-family: 'Montserrat';
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    border-radius: 15px;
+    box-shadow: 0px 4px 15px gray;
+    align-items: center;
+    padding: 2px 7px 2px 0px;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--black);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin__subtitles a:hover {
+    background-color: #c4c4c4;
+    box-shadow: 0px 0px 10px #c4c4c4;
+}
+
+.add__product__icon {
+    width: 30px;
+    margin: 5px;
+}
