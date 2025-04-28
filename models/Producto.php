@@ -445,5 +445,41 @@ class Producto {
             return false;
         }
     }
+
+    public static function update($id, $nombre, $descripcion, $tamanos, $precios, $categorias) {
+        require __DIR__ . '/../includes/database.php';
+    
+        $query = "UPDATE " . self::$tabla . " SET nombre = ?, descripcion = ? WHERE id = ?";
+        $stmt = mysqli_prepare($db, $query);
+        mysqli_stmt_bind_param($stmt, 'ssi', $nombre, $descripcion, $id);
+        mysqli_stmt_execute($stmt);
+    
+        $query = "DELETE FROM producto_tamaño WHERE id_producto = ?";
+        $stmt = mysqli_prepare($db, $query);
+        mysqli_stmt_bind_param($stmt, 'i', $id);
+        mysqli_stmt_execute($stmt);
+    
+        foreach ($tamanos as $i => $id_tamano) {
+            $precio = $precios[$i] ?? 0;
+            $query = "INSERT INTO producto_tamaño (id_producto, id_tamaño, precio, existencia) VALUES (?, ?, ?, 20)";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'iid', $id, $id_tamano, $precio);
+            mysqli_stmt_execute($stmt);
+        }
+    
+        $query = "DELETE FROM producto_categoria WHERE id_producto = ?";
+        $stmt = mysqli_prepare($db, $query);
+        mysqli_stmt_bind_param($stmt, 'i', $id);
+        mysqli_stmt_execute($stmt);
+    
+        foreach ($categorias as $cat) {
+            $query = "INSERT INTO producto_categoria (id_producto, id_categoria) VALUES (?, ?)";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'ii', $id, $cat);
+            mysqli_stmt_execute($stmt);
+        }
+    
+        return true;
+    }
 }
 ?>

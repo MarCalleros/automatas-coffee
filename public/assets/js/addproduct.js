@@ -54,9 +54,15 @@ document.getElementById('agregar').onclick = async function() {
         formData.append('precios[]', obj.precio);
     });
 
+    const productId = getProductIdFromUrl();
+
+    if (productId) {
+        formData.append('id', productId);
+    }
+
     // Envía los datos al backend
     try {
-        const response = await fetch('/admin/addproduct', {
+        const response = await fetch('/admin/editproduct', {
             method: 'POST',
             body: formData
         });
@@ -70,3 +76,8 @@ document.getElementById('agregar').onclick = async function() {
         alert('Error de conexión');
     }
 };
+
+function getProductIdFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('id');
+}
