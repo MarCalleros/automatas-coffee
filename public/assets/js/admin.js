@@ -2,7 +2,8 @@ import { createNotification } from './notification.js';
 
 (function() {
     const deliverymanStatusForms = document.querySelectorAll('.admin-deliveryman-status-form');
-    const adminForm = document.querySelector('#admin-form');
+    const userStatusForms = document.querySelectorAll('.admin-user-status-form');
+    const adminForm = document.querySelector('.admin-form');
     const adminResetButton = document.querySelector('#admin-reset-button');
 
     if (deliverymanStatusForms) {
@@ -42,15 +43,60 @@ import { createNotification } from './notification.js';
             });
         });
     }
+    if (userStatusForms) {
+        userStatusForms.forEach(form => {
+            const button = form.querySelector('button')
+    
+            button.addEventListener('click', async () => {
+                const id = form.dataset.id;
+                let estatus = form.dataset.estatus === "1" ? "0" : "1";
+    
+                const formData = new FormData();
+                formData.append("id", id);
+                formData.append("estatus", estatus);
+    
+                const response = await fetch("/admin/usuario", {
+                    method: "POST",
+                    body: formData
+                });
+    
+                if (response.ok) {
+                    form.dataset.estatus = estatus;
+                    button.textContent = estatus === "1" ? "Dar de Baja" : "Dar de Alta";
+                    
+                    const row = form.closest("tr");
+                    const estatusCell = row.querySelectorAll("td")[5];
+                    const div = estatusCell.querySelector("div");
+                    
+                    div.className = estatus === "1"
+                        ? "admin-table__data--active"
+                        : "admin-table__data--inactive";
+                    
+                    div.textContent = estatus === "1" ? "Alta" : "Baja";
+                    createNotification("success", "Estado del usuario cambiado correctamente");
+                } else {
+                    createNotification("error", "Error al cambiar el estado del usuario");
+                }
+            });
+        });
+    }
 
     if (adminForm) {
         adminForm.addEventListener('submit', async (event) => {
             event.preventDefault();
 
-            if (!validateDeliverymanForm()) {
-                return;
+             // Verifica el ID del formulario para ejecutar la validación correspondiente
+            if (adminForm.id === 'admin-form') {
+                if (!validateDeliverymanForm()) {
+                    console.log("Error en el formulario de repartidor");
+                    return;
+                }
+            } else if (adminForm.id === 'admin-user-form') {
+                if (!validateUserForm()) {
+                    console.log("Error en el formulario de usuario");
+                    return;
+                }
             }
-
             const adminSubmitButton = adminForm.querySelector('#admin-submit-button');
             adminSubmitButton.disabled = true;
             adminSubmitButton.textContent = 'Guardando...';
@@ -203,6 +249,83 @@ function validateDeliverymanForm() {
     } else {
         errorVigencia.classList.remove('admin-form__error--active');
     }
+
+    if (error) {
+        return false;
+    }
+
+    return true;
+}
+
+function validateUserForm() {
+    let error = false;
+
+    const nombre = document.querySelector('#nombre').value;
+    const edad = document.querySelector('#edad').value;
+    const email = document.querySelector('#email').value;
+    const usuario = document.querySelector('#usuario').value;
+    const password = document.querySelector('#password').value;
+
+    const errorNombre = document.querySelector('#error-nombre');
+    const errorEdad = document.querySelector('#error-edad');
+    const errorEmail = document.querySelector('#error-email');
+    const errorUsuario = document.querySelector('#error-usuario');
+    const errorPassword = document.querySelector('#error-password');
+
+    const regexNombre = /^[A-Za-zÁáÉéÍíÓóÚúÑñ\s]+$/
+    const regexEdad = /^[1-9][0-9]?$/
+    const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    const regexUsuario = /^[a-zA-Z0-9]{5,}$/
+    const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&_\-#])[A-Za-z\d@$!%*?&_\-#]{8,}$/
+
+    const mensajeVacio = "Este campo es obligatorio";
+    const mensajeNombre= "El nombre solo puede contener letras y espacios";
+    const mensajeEdad = "La edad debe ser un número entre 1 y 99";
+    const mensajeEmail = "El email no es valido";
+    const mensajeUsuario = "El usuario debe contener al menos 5 caracteres alfanuméricos";
+    const mensajePassword = "La contraseña debe contener al menos 8 caracteres, una letra, un número y un símbolo especial";
+
+    if (!nombre || !regexNombre.test(nombre)) {
+        errorNombre.textContent = nombre ? mensajeNombre : mensajeVacio;
+        errorNombre.classList.add('admin-form__error--active');
+        error = true;
+    } else {
+        errorNombre.classList.remove('admin-form__error--active');
+    }
+
+    if (!edad || !regexEdad.test(edad)) {
+        errorEdad.textContent = edad ? mensajeEdad : mensajeVacio;
+        errorEdad.classList.add('admin-form__error--active');
+        error = true;
+    }
+    else {
+        errorEdad.classList.remove('admin-form__error--active');
+    }
+
+    if (!email || !regexEmail.test(email)) {
+        errorEmail.textContent = email ? mensajeEmail : mensajeVacio;
+        errorEmail.classList.add('admin-form__error--active');
+        error = true;
+    } else {
+        errorEmail.classList.remove('admin-form__error--active');
+    }
+
+    if (!usuario || !regexUsuario.test(usuario)) {
+        errorUsuario.textContent = usuario ? mensajeUsuario : mensajeVacio;
+        errorUsuario.classList.add('admin-form__error--active');
+        error = true;
+    } else {
+        errorUsuario.classList.remove('admin-form__error--active');
+    }
+
+    if (!password || !regexPassword.test(password)) {
+        errorPassword.textContent = password ? mensajePassword : mensajeVacio;
+        errorPassword.classList.add('admin-form__error--active');
+        error = true;
+    } else {
+        errorPassword.classList.remove('admin-form__error--active');
+    }
+
 
     if (error) {
         return false;

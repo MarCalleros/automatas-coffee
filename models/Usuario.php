@@ -24,7 +24,196 @@ class Usuario {
         $this->contraseña = $args['contraseña'] ?? null;
         $this->estatus = $args['estatus'] ?? 1;
     }
+    public static function all() {
+        require __DIR__ . '/../includes/database.php';
 
+        try {
+            // Desactivar reporte de errores temporalmente
+            mysqli_report(MYSQLI_REPORT_OFF);
+
+            $query = "SELECT * FROM " . static::$tabla;
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+    
+            if ($result->num_rows > 0) {
+                $usuarios = [];
+    
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $usuarios[] = new Usuario($row);
+                }
+                
+                return $usuarios;
+            } else {
+                return [];
+            }
+        } finally {
+            // Reactivar reporte de errores y cerrar la conexión
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            //mysqli_close($db);
+        }
+    }
+    // Funcion para obtener a todos los usuarios activos 
+    public static function allActiveAsc() {
+        require __DIR__ . '/../includes/database.php';
+
+        try {
+            // Desactivar reporte de errores temporalmente
+            mysqli_report(MYSQLI_REPORT_OFF);
+
+            $query = "SELECT * FROM " . static::$tabla . " WHERE estatus = 1 ";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            //mysqli_close($db);
+
+            if ($result->num_rows > 0) {
+                $usuarios = [];
+
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $usuarios[] = new Usuario($row);
+                }
+
+                return $usuarios;
+            } else {
+                return [];
+            }
+        } finally {
+            // Reactivar reporte de errores y cerrar la conexión
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            //mysqli_close($db);
+        }     
+    }
+    // Funcion para agregar un nuevo usuario
+    public function save() {
+        require __DIR__ . '/../includes/database.php';
+    
+        try {
+            // Desactivar reporte de errores temporalmente
+            mysqli_report(MYSQLI_REPORT_OFF);
+    
+            // Comprobar que no existe un usuario con el mismo correo
+            if (self::find('correo', $this->correo)) {
+                return "El correo ya se encuentra registrado"; // Ya existe un usuario con el mismo correo
+            }
+            // Comprobar que no existe un usuario con el mismo nombre de usuario
+            if (self::find('usuario', $this->usuario)) {
+                return "El nombre de usuario ya se encuentra registrado"; // Ya existe un usuario con el mismo nombre de usuario
+            }
+            
+            $this->estatus = 1; // Establecer estatus por defecto a 1 (activo)
+            $this->id_tipo_usuario = 2; // Establecer id_tipo_usuario por defecto a 2 (usuario normal)
+            // Hashear la contraseña antes de guardar
+            $this->contraseña = password_hash($this->contraseña, PASSWORD_BCRYPT);
+    
+            // Preparar la consulta para insertar un nuevo usuario
+            $query = "INSERT INTO " . static::$tabla . " (id_tipo_usuario, nombre, edad, correo, usuario, contraseña, estatus) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'isssssi', $this->id_tipo_usuario, $this->nombre, $this->edad, $this->correo, $this->usuario, $this->contraseña, $this->estatus);
+            $executed = mysqli_stmt_execute($stmt);
+    
+            return $executed && mysqli_stmt_affected_rows($stmt) > 0;
+        } finally {
+            // Reactivar reporte de errores
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+        }
+    }
+    // Funcion para actualizar un usuario
+    public function update() {
+        require __DIR__ . '/../includes/database.php';
+    
+        try {
+            mysqli_report(MYSQLI_REPORT_OFF);
+    
+            $query = "UPDATE " . static::$tabla . " SET nombre = ?, edad = ?, correo = ?, usuario = ?, contraseña = ? WHERE id = ?";
+            $stmt = mysqli_prepare($db, $query);
+    
+            // Solo hashear la contraseña si no está vacía
+            if (!empty($this->contraseña)) {
+                $this->contraseña = password_hash($this->contraseña, PASSWORD_BCRYPT);
+            }
+    
+            mysqli_stmt_bind_param($stmt, 'sssssi', $this->nombre, $this->edad, $this->correo, $this->usuario, $this->contraseña, $this->id);
+            $executed = mysqli_stmt_execute($stmt);
+    
+            return $executed && mysqli_stmt_affected_rows($stmt) > 0;
+        } finally {
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+        }
+    }
+      // Funcion para cambiar el estatus de un usuario
+    public function changeStatus() {
+        require __DIR__ . '/../includes/database.php';
+
+        try {
+            // Desactivar reporte de errores temporalmente
+            mysqli_report(MYSQLI_REPORT_OFF);
+            
+            $query = "UPDATE " . static::$tabla . " SET estatus = ? WHERE id = ?";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'ii', $this->estatus, $this->id);
+            $executed = mysqli_stmt_execute($stmt);
+            
+            return $executed && mysqli_stmt_affected_rows($stmt) > 0;
+        } finally {
+            // Reactivar reporte de errores y cerrar la conexión
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            //mysqli_close($db);
+        }
+    }
+    
+    // Funcion para buscar un usuario por ID
+    public static function findById($id) {
+        require __DIR__ . '/../includes/database.php';
+
+        try {
+            // Desactivar reporte de errores temporalmente
+            mysqli_report(MYSQLI_REPORT_OFF);
+
+            $query = "SELECT * FROM " . static::$tabla . " WHERE id = ?";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'i', $id);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            //mysqli_close($db);
+
+            if ($result->num_rows > 0) {
+                return new Usuario(mysqli_fetch_assoc($result));
+            } else {
+                return null;
+            }
+        } finally {
+            // Reactivar reporte de errores y cerrar la conexión
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            //mysqli_close($db);
+        }
+    }
+    // Funcion para buscar un usuario por algun atributo
+    public static function find($attribute, $value) {
+        require __DIR__ . '/../includes/database.php';
+
+        try {
+            // Desactivar reporte de errores temporalmente
+            mysqli_report(MYSQLI_REPORT_OFF);
+
+            $query = "SELECT * FROM " . static::$tabla . " WHERE " . $attribute . " = ?";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 's', $value);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            //mysqli_close($db);
+
+            if ($result->num_rows > 0) {
+                return new Usuario(mysqli_fetch_assoc($result));
+            } else {
+                return null;
+            }
+        } finally {
+            // Reactivar reporte de errores y cerrar la conexión
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            //mysqli_close($db);
+        }
+    }
     public function create() {
         try {
             require __DIR__ . '/../includes/database.php';

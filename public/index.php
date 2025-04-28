@@ -10,6 +10,7 @@ use Controller\ProductoController;
 use Controller\RepartidorController;
 use Controller\APIProducto;
 use Controller\APIUsuario;
+use Controller\UserController;
 
 $router = new Router();
 
@@ -30,6 +31,12 @@ $router->get('/admin/deliveryman/create', [RepartidorController::class, 'create'
 $router->post('/admin/deliveryman/create', [RepartidorController::class, 'create']);
 $router->get('/admin/deliveryman/edit', [RepartidorController::class, 'edit']);
 $router->post('/admin/deliveryman/edit', [RepartidorController::class, 'edit']);
+$router->get('/admin/usuario', [UserController::class, 'index']);
+$router->post('/admin/usuario', [UserController::class, 'index']);
+$router->get('/admin/usuario/create', [UserController::class, 'create']);
+$router->post('/admin/usuario/create', [UserController::class, 'create']);
+$router->get('/admin/usuario/edit', [UserController::class, 'edit']);
+$router->post('/admin/usuario/edit', [UserController::class, 'edit']);
 $router->get('/admin/map', [AdminPagesController::class, 'map']);
 
 // Usuario
