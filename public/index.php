@@ -11,6 +11,8 @@ use Controller\RepartidorController;
 use Controller\APIProducto;
 use Controller\APIUsuario;
 use Controller\UserController;
+use Controller\APICarrito;
+use Controller\CarritoController;
 
 $router = new Router();
 
@@ -46,6 +48,7 @@ $router->get('/', [PagesController::class, 'home']);
 $router->get('/contactanos', [PagesController::class, 'contact']);
 $router->get('/configuracion', [PagesController::class, 'configuration']);
 $router->get('/carrito', [PagesController::class, 'carrito']);
+
 $router->get('/productos', [ProductoController::class, 'index']);
 
 // API
@@ -54,6 +57,14 @@ $router->get('/api/list', [APIProducto::class, 'list']);
 $router->get('/api/filter', [APIProducto::class, 'filter']);
 $router->post('/api/product/favorite', [APIProducto::class, 'favorite']);
 $router->post('/api/product/unfavorite', [APIProducto::class, 'unfavorite']);
+
+// API Carrito
+$router->get('/api/carrito/obtener', [APICarrito::class, 'obtener']);
+$router->post('/api/carrito/agregar', [APICarrito::class, 'agregar']);
+$router->post('/api/carrito/actualizar', [APICarrito::class, 'actualizar']);
+$router->post('/api/carrito/eliminar', [APICarrito::class, 'eliminar']);
+$router->post('/api/carrito/vaciar', [APICarrito::class, 'vaciar']);
+$router->post('/api/carrito/comprar', [APICarrito::class, 'comprar']);
 
 $router->testRoutes();
 ?>

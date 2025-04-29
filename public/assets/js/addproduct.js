@@ -1,3 +1,5 @@
+import { createNotification } from './notification.js';
+
 document.getElementById('agregar').onclick = async function() {
     // Captura los datos básicos
     const nombre = document.getElementById('nombre').value.trim();
@@ -68,13 +70,13 @@ document.getElementById('agregar').onclick = async function() {
         });
 
         if (response.ok) {
-            //window.location.href = '/admin/adminproduct';
-            alert("todo bn");
+            createNotification('success', 'Producto guardado correctamente');
+            window.location.href = '/admin/adminproduct';
         } else {
-            alert('Error al guardar el producto');
+            createNotification('error', 'Error al guardar el producto');
         }
     } catch (e) {
-        alert('Error de conexión');
+        createNotification('error', 'Error de conexión al servidor');
     }
 };
 

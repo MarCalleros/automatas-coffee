@@ -98,6 +98,7 @@
         });
     });
     </script>
-    <script src="/assets/js/addproduct.js"></script>
+    <script src="/assets/js/notification.js"></script>
+    <script type="module" src="/assets/js/addproduct.js"></script>
 </body>
 </html>

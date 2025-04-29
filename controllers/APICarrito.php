@@ -1,0 +1,221 @@
+<?php
+
+namespace Controller;
+
+use Model\Carrito;
+
+class APICarrito {
+
+    public static function agregar() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['status' => 'error', 'message' => 'Método no permitido']);
+            return;
+        }
+
+        if (!isLogged()) {
+            echo json_encode(['status' => 'error', 'message' => 'Debes iniciar sesión para agregar productos al carrito']);
+            return;
+        }
+
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if (!isset($data['id_producto'], $data['id_tamaño'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Faltan datos requeridos']);
+            return;
+        }
+
+        $carrito = new Carrito();
+        $carrito->id_usuario = $_SESSION['id'];
+        $carrito->id_producto = $data['id_producto'];
+        $carrito->id_tamaño = $data['id_tamaño'];
+        $carrito->cantidad = $data['cantidad'] ?? 1;
+
+        $result = $carrito->agregarAlCarrito();
+
+        if ($result === true) {
+            $totalItems = Carrito::contarItems($_SESSION['id']);
+            
+            echo json_encode([
+                'status' => 'success', 
+                'message' => 'Producto agregado al carrito',
+                'total_items' => $totalItems
+            ]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => $result]);
+        }
+    }
+
+    public static function actualizar() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['status' => 'error', 'message' => 'Método no permitido']);
+            return;
+        }
+
+        if (!isLogged()) {
+            echo json_encode(['status' => 'error', 'message' => 'Debes iniciar sesión para actualizar el carrito']);
+            return;
+        }
+
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if (!isset($data['id'], $data['cantidad'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Faltan datos requeridos']);
+            return;
+        }
+
+        $carrito = new Carrito();
+        $carrito->id = $data['id'];
+        $carrito->cantidad = $data['cantidad'];
+
+        $result = $carrito->actualizarCantidad();
+
+        if ($result === true) {
+            // Calcular el nuevo total del carrito
+            $total = Carrito::calcularTotal($_SESSION['id']);
+            $totalItems = Carrito::contarItems($_SESSION['id']);
+            
+            echo json_encode([
+                'status' => 'success', 
+                'message' => 'Carrito actualizado',     
+                'total' => $total,
+                'total_items' => $totalItems
+            ]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => $result]);
+        }
+    }
+
+    public static function eliminar() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['status' => 'error', 'message' => 'Método no permitido']);
+            return;
+        }
+
+        if (!isLogged()) {
+            echo json_encode(['status' => 'error', 'message' => 'Debes iniciar sesión para eliminar productos del carrito']);
+            return;
+        }
+
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if (!isset($data['id'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Faltan datos requeridos']);
+            return;
+        }
+
+        $carrito = new Carrito();
+        $carrito->id = $data['id'];
+
+        $result = $carrito->eliminar();
+
+        if ($result === true) {
+            // Calcular el nuevo total del carrito
+            $total = Carrito::calcularTotal($_SESSION['id']);
+            $totalItems = Carrito::contarItems($_SESSION['id']);
+            
+            echo json_encode([
+                'status' => 'success', 
+                'message' => 'Producto eliminado del carrito',
+                'total' => $total,
+                'total_items' => $totalItems
+            ]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => $result]);
+        }
+    }
+
+    /**
+     * Vacía el carrito de un usuario
+     */
+    public static function vaciar() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['status' => 'error', 'message' => 'Método no permitido']);
+            return;
+        }
+
+        if (!isLogged()) {
+            echo json_encode(['status' => 'error', 'message' => 'Debes iniciar sesión para vaciar el carrito']);
+            return;
+        }
+
+        $result = Carrito::vaciar($_SESSION['id']);
+
+        if ($result === true) {
+            echo json_encode(['status' => 'success', 'message' => 'Carrito vaciado']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => $result]);
+        }
+    }
+
+    public static function obtener() {
+        if (!isLogged()) {
+            echo json_encode(['status' => 'error', 'message' => 'Debes iniciar sesión para ver el carrito']);
+            return;
+        }
+
+        $items = Carrito::obtenerCarritoCompleto($_SESSION['id']);
+        $total = Carrito::calcularTotal($_SESSION['id']);
+
+        if ($items !== null) {
+            echo json_encode([
+                'status' => 'success',
+                'items' => $items,
+                'total' => $total
+            ]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Error al obtener el carrito']);
+        }
+    }
+
+    public static function comprar() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['status' => 'error', 'message' => 'Método no permitido']);
+            return;
+        }
+
+        if (!isLogged()) {
+            echo json_encode(['status' => 'error', 'message' => 'Debes iniciar sesión para realizar una compra']);
+            return;
+        }
+
+        // Obtener los items del carrito
+        $items = Carrito::obtenerCarritoCompleto($_SESSION['id']);
+        
+        if (empty($items)) {
+            echo json_encode(['status' => 'error', 'message' => 'El carrito está vacío']);
+            return;
+        }
+
+        // Verificar stock antes de procesar la compra
+        foreach ($items as $item) {
+            if ($item->cantidad > $item->stock_disponible) {
+                echo json_encode([
+                    'status' => 'error', 
+                    'message' => "Stock insuficiente para {$item->nombre_producto} ({$item->nombre_tamaño}). Solo hay {$item->stock_disponible} unidades disponibles."
+                ]);
+                return;
+            }
+        }
+
+        // Actualizar el stock
+        $stockActualizado = Carrito::actualizarStock($items);
+        
+        if (!$stockActualizado) {
+            echo json_encode(['status' => 'error', 'message' => 'Error al actualizar el stock']);
+            return;
+        }
+
+        $carritoVaciado = Carrito::vaciar($_SESSION['id']);
+        
+        if ($carritoVaciado !== true) {
+            echo json_encode(['status' => 'error', 'message' => 'Error al vaciar el carrito']);
+            return;
+        }
+
+        echo json_encode([
+            'status' => 'success', 
+            'message' => '¡Compra realizada con éxito! Gracias por tu compra.'
+        ]);
+    }
+}
+?>

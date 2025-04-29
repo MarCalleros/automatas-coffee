@@ -16,9 +16,8 @@
     <main>
         <div class="container">            
             <div class="cart-container">
-                <!-- Aquí se cargarán dinámicamente los elementos del carrito -->
                 <div class="cart-items">
-                    <!-- El contenido del carrito se cargará mediante JavaScript -->
+                    
                 </div>
                 
                 <div class="order-summary">
