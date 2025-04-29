@@ -1,3 +1,5 @@
+import { createNotification } from './notification.js';
+
 document.querySelectorAll('.status-btn').forEach(btn => {
     btn.addEventListener('click', async function(e) {
         e.preventDefault();
@@ -15,13 +17,15 @@ document.querySelectorAll('.status-btn').forEach(btn => {
                 btn.textContent = 'Activo';
                 btn.classList.add('activo');
                 btn.classList.remove('inactivo');
+                createNotification('success', 'Producto activado');
             } else {
                 btn.textContent = 'Inactivo';
                 btn.classList.add('inactivo');
                 btn.classList.remove('activo');
+                createNotification('error', 'Producto desactivado');
             }
         } else {
-            alert('No se pudo cambiar el status');
+            createNotification('error', 'No se pudo cambiar el status');
         }
     });
 });

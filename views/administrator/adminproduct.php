@@ -48,6 +48,6 @@
     </div>
 
     <script src="/assets/js/navbar.js"></script>
-    <script src="/assets/js/adminproduct.js"></script>
-</body>
+    <script src="/assets/js/notification.js"></script>
+    <script type="module" src="/assets/js/adminproduct.js"></script></body>
 </html>
