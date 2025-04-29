@@ -2,7 +2,7 @@
     <div class="card-wrapper">
         <ul class="card-list swiper-wrapper">
             <li class="card swiper-slide">
-                <img class="card__image" src="/assets/img/product/cafe-helado.jpg" alt="Cafe Helado">
+                <img class="card__image" src="/assets/img/product/6b54adffe99b5079ac668ad0e743ab0d.jpg" alt="Cafe Helado">
 
                 <div class="card__information">
                     <h3 class="card__title">Café Helado</h3>
@@ -21,7 +21,7 @@
             </li>
 
             <li class="card swiper-slide">
-                <img class="card__image" src="/assets/img/product/capuccino.jpg" alt="Cafe Helado">
+                <img class="card__image" src="/assets/img/product/19f63018976f9c24c521088ad0d34fee.jpg" alt="Cafe Helado">
                         
                 <div class="card__information">
                     <h3 class="card__title">Capuccino</h3>
@@ -40,7 +40,7 @@
             </li>
 
             <li class="card swiper-slide">
-                <img class="card__image" src="/assets/img/product/espresso.jpg" alt="Cafe Helado">
+                <img class="card__image" src="/assets/img/product/47c9750d06a57b69f1b23ab4796b3340.jpg" alt="Cafe Helado">
                         
                 <div class="card__information">
                     <h3 class="card__title">Espresso</h3>
@@ -59,7 +59,7 @@
             </li>
 
             <li class="card swiper-slide">
-                <img class="card__image" src="/assets/img/product/chocolate-helado.jpg" alt="Cafe Helado">
+                <img class="card__image" src="/assets/img/product/108f751e54d3906d49c45b89c01bc4cb.jpg" alt="Cafe Helado">
                         
                 <div class="card__information">
                     <h3 class="card__title">Chocolate Helado</h3>
@@ -78,7 +78,7 @@
             </li>
 
             <li class="card swiper-slide">
-                <img class="card__image" src="/assets/img/product/machiato.jpg" alt="Cafe Helado">
+                <img class="card__image" src="/assets/img/product/c2a253beab3a9d95bba0025db35ec43b.jpg" alt="Cafe Helado">
                         
                 <div class="card__information">
                     <h3 class="card__title">Machiato</h3>

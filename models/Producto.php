@@ -357,5 +357,149 @@ class Producto {
             return 0;
         }
     }
+
+    public static function getAdminProductos() {
+        require __DIR__ . '/../includes/database.php';
+        $query = "SELECT * FROM " . self::$tabla . ";";
+        $stmt = mysqli_prepare($db, $query);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        
+        $productos = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $productos[] = new Producto($row);
+        }
+        return $productos;
+    }
+
+    public static function findById($id) {
+        require __DIR__ . '/../includes/database.php';
+    
+        // Datos básicos
+        $query = "SELECT * FROM producto WHERE id = ?";
+        $stmt = mysqli_prepare($db, $query);
+        mysqli_stmt_bind_param($stmt, 'i', $id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $producto = mysqli_fetch_assoc($result);
+    
+        if (!$producto) return null;
+    
+        // Categorías asociadas
+        $query = "SELECT id_categoria FROM producto_categoria WHERE id_producto = ?";
+        $stmt = mysqli_prepare($db, $query);
+        mysqli_stmt_bind_param($stmt, 'i', $id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $categorias = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $categorias[] = $row['id_categoria'];
+        }
+        $producto['categorias'] = $categorias;
+    
+        // Tamaños y precios asociados
+        $query = "SELECT id_tamaño, precio FROM producto_tamaño WHERE id_producto = ?";
+        $stmt = mysqli_prepare($db, $query);
+        mysqli_stmt_bind_param($stmt, 'i', $id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $tamanos = [];
+        $precios = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $tamanos[] = $row['id_tamaño'];
+            $precios[$row['id_tamaño']] = $row['precio'];
+        }
+        $producto['tamanos'] = $tamanos;
+        $producto['precios'] = $precios;
+    
+        return $producto;
+    }
+
+    public static function create($nombre, $descripcion, $tamanos, $precios, $categorias, $rutaImagen) {
+        require __DIR__ . '/../includes/database.php';
+        $query = "INSERT INTO " . self::$tabla . " (nombre, ruta, descripcion, estatus) VALUES (?, ?, ?, 1)";
+        $stmt = mysqli_prepare($db, $query);
+        mysqli_stmt_bind_param($stmt, 'sss', $nombre, $rutaImagen, $descripcion);
+        mysqli_stmt_execute($stmt);
+    
+        if (mysqli_affected_rows($db) > 0) {
+            $id_producto = mysqli_insert_id($db);
+    
+            foreach ($tamanos as $i => $id_tamano) {
+                $precio = $precios[$i] ?? 0;
+                $query = "INSERT INTO producto_tamaño (id_producto, id_tamaño, precio, existencia) VALUES (?, ?, ?, 20)";
+                $stmt = mysqli_prepare($db, $query);
+                mysqli_stmt_bind_param($stmt, 'iid', $id_producto, $id_tamano, $precio);
+                mysqli_stmt_execute($stmt);
+            }
+    
+            foreach ($categorias as $cat) {
+                $query = "INSERT INTO producto_categoria (id_producto, id_categoria) VALUES (?, ?)";
+                $stmt = mysqli_prepare($db, $query);
+                mysqli_stmt_bind_param($stmt, 'ii', $id_producto, $cat);
+                mysqli_stmt_execute($stmt);
+            }
+    
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function update($id, $nombre, $descripcion, $tamanos, $precios, $categorias) {
+        require __DIR__ . '/../includes/database.php';
+    
+        $query = "UPDATE " . self::$tabla . " SET nombre = ?, descripcion = ? WHERE id = ?";
+        $stmt = mysqli_prepare($db, $query);
+        mysqli_stmt_bind_param($stmt, 'ssi', $nombre, $descripcion, $id);
+        mysqli_stmt_execute($stmt);
+    
+        $query = "DELETE FROM producto_tamaño WHERE id_producto = ?";
+        $stmt = mysqli_prepare($db, $query);
+        mysqli_stmt_bind_param($stmt, 'i', $id);
+        mysqli_stmt_execute($stmt);
+    
+        foreach ($tamanos as $i => $id_tamano) {
+            $precio = $precios[$i] ?? 0;
+            $query = "INSERT INTO producto_tamaño (id_producto, id_tamaño, precio, existencia) VALUES (?, ?, ?, 20)";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'iid', $id, $id_tamano, $precio);
+            mysqli_stmt_execute($stmt);
+        }
+    
+        $query = "DELETE FROM producto_categoria WHERE id_producto = ?";
+        $stmt = mysqli_prepare($db, $query);
+        mysqli_stmt_bind_param($stmt, 'i', $id);
+        mysqli_stmt_execute($stmt);
+    
+        foreach ($categorias as $cat) {
+            $query = "INSERT INTO producto_categoria (id_producto, id_categoria) VALUES (?, ?)";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'ii', $id, $cat);
+            mysqli_stmt_execute($stmt);
+        }
+    
+        return true;
+    }
+
+    public static function toggleStatus($id) {
+        require __DIR__ . '/../includes/database.php';
+        // Obtiene el status actual
+        $query = "SELECT estatus FROM producto WHERE id = ?";
+        $stmt = mysqli_prepare($db, $query);
+        mysqli_stmt_bind_param($stmt, 'i', $id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $row = mysqli_fetch_assoc($result);
+        $nuevoStatus = ($row['estatus'] == 1) ? 0 : 1;
+    
+        // Actualiza el status
+        $query = "UPDATE producto SET estatus = ? WHERE id = ?";
+        $stmt = mysqli_prepare($db, $query);
+        mysqli_stmt_bind_param($stmt, 'ii', $nuevoStatus, $id);
+        mysqli_stmt_execute($stmt);
+    
+        return $nuevoStatus;
+    }
 }
 ?>

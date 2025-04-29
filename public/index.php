@@ -4,11 +4,13 @@ require_once __DIR__ . '/../includes/app.php';
 
 use App\Router;
 use Controller\AdminPagesController;
+use Controller\AdminProductController;
 use Controller\PagesController;
 use Controller\ProductoController;
 use Controller\RepartidorController;
 use Controller\APIProducto;
 use Controller\APIUsuario;
+use Controller\UserController;
 use Controller\APICarrito;
 use Controller\CarritoController;
 
@@ -21,19 +23,31 @@ $router->post('/api/user/logout', [APIUsuario::class, 'logout']);
 
 // Admin
 $router->get('/admin', [AdminPagesController::class, 'index']);
+$router->get('/admin/adminproduct', [AdminProductController::class, 'index']);
+$router->get('/admin/addproduct', [AdminProductController::class, 'create']);
+$router->post('/admin/addproduct', [AdminProductController::class, 'create']);
+$router->get('/admin/editproduct', [AdminProductController::class, 'edit']);
+$router->post('/admin/editproduct', [AdminProductController::class, 'edit']);
+$router->post('/admin/togglestatus', [AdminProductController::class, 'toggleStatus']);
 $router->get('/admin/deliveryman', [RepartidorController::class, 'index']);
 $router->post('/admin/deliveryman', [RepartidorController::class, 'index']);
 $router->get('/admin/deliveryman/create', [RepartidorController::class, 'create']);
 $router->post('/admin/deliveryman/create', [RepartidorController::class, 'create']);
 $router->get('/admin/deliveryman/edit', [RepartidorController::class, 'edit']);
 $router->post('/admin/deliveryman/edit', [RepartidorController::class, 'edit']);
+$router->get('/admin/usuario', [UserController::class, 'index']);
+$router->post('/admin/usuario', [UserController::class, 'index']);
+$router->get('/admin/usuario/create', [UserController::class, 'create']);
+$router->post('/admin/usuario/create', [UserController::class, 'create']);
+$router->get('/admin/usuario/edit', [UserController::class, 'edit']);
+$router->post('/admin/usuario/edit', [UserController::class, 'edit']);
 $router->get('/admin/map', [AdminPagesController::class, 'map']);
 
 // Usuario
 $router->get('/', [PagesController::class, 'home']);
 $router->get('/contactanos', [PagesController::class, 'contact']);
 $router->get('/configuracion', [PagesController::class, 'configuration']);
-$router->get('/carrito', [CarritoController::class, 'index']);
+$router->get('/carrito', [PagesController::class, 'carrito']);
 
 $router->get('/productos', [ProductoController::class, 'index']);
 

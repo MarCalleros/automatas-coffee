@@ -53,15 +53,15 @@
 
         <div class="contenedorcontenido">
             <div class="imagen ">
-                <img src="/assets/img/product/espresso.jpg" alt="Imagen demostracion" class="imagencafe">
+                <img src="/assets/img/product/47c9750d06a57b69f1b23ab4796b3340.jpg" alt="Imagen demostracion" class="imagencafe">
                 <h3>CHICO</h3>
             </div>
             <div class="imagen ">
-                <img src="/assets/img/product/espresso.jpg" alt="Imagen demostracion" class="imagencafe imagencafesito2">
+                <img src="/assets/img/product/47c9750d06a57b69f1b23ab4796b3340.jpg" alt="Imagen demostracion" class="imagencafe imagencafesito2">
                 <h3>MEDIANO</h3>
             </div>
             <div class="imagen ">
-                <img src="/assets/img/product/espresso.jpg" alt="Imagen demostracion" class="imagencafe imagencafesito3">
+                <img src="/assets/img/product/47c9750d06a57b69f1b23ab4796b3340.jpg" alt="Imagen demostracion" class="imagencafe imagencafesito3">
                 <h3>GRANDE</h3>
             </div>
         </div>
@@ -98,7 +98,7 @@
 
         <div class="vistaprevia">
             <li class="card swiper-slide">
-                <img class="card__image" src="/assets/img/product/espresso.jpg" alt="Cafe Helado">
+                <img class="card__image" src="/assets/img/product/47c9750d06a57b69f1b23ab4796b3340.jpg" alt="Cafe Helado">
 
                 <div class="card__information">
                     <h3 class="card__title">Espresso</h3>
@@ -125,6 +125,6 @@
 
         <?php include_once __DIR__ . "/../templates/footer.php"; ?>
     </div>
-    <script src="/assets/js/configuration.js"></script>
+    <script type="module" src="/assets/js/configuration.js"></script>
 </body>
 </html>
