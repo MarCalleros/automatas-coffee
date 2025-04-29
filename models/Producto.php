@@ -360,7 +360,7 @@ class Producto {
 
     public static function getAdminProductos() {
         require __DIR__ . '/../includes/database.php';
-        $query = "SELECT * FROM " . self::$tabla . " WHERE estatus = 1";
+        $query = "SELECT * FROM " . self::$tabla . ";";
         $stmt = mysqli_prepare($db, $query);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
@@ -480,6 +480,26 @@ class Producto {
         }
     
         return true;
+    }
+
+    public static function toggleStatus($id) {
+        require __DIR__ . '/../includes/database.php';
+        // Obtiene el status actual
+        $query = "SELECT estatus FROM producto WHERE id = ?";
+        $stmt = mysqli_prepare($db, $query);
+        mysqli_stmt_bind_param($stmt, 'i', $id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $row = mysqli_fetch_assoc($result);
+        $nuevoStatus = ($row['estatus'] == 1) ? 0 : 1;
+    
+        // Actualiza el status
+        $query = "UPDATE producto SET estatus = ? WHERE id = ?";
+        $stmt = mysqli_prepare($db, $query);
+        mysqli_stmt_bind_param($stmt, 'ii', $nuevoStatus, $id);
+        mysqli_stmt_execute($stmt);
+    
+        return $nuevoStatus;
     }
 }
 ?>

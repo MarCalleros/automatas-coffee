@@ -17,7 +17,6 @@
             <div class="admin__subtitles">
                 <h3>Menu</h3>
                 <a href="/admin/addproduct">
-                    <img class="add__product__icon" src="../assets/img/3.png" alt="">
                     Agregar producto
                 </a>
             </div>
@@ -33,7 +32,9 @@
                         </div>
                         <div class="admin__product__actions">
                             <a href="/admin/editproduct?id=<?= $product->id ?>" class="edit-product">Editar</a>
-                            <a href="/admin/deleteproduct?id=<?= $product->id ?>" class="delete-product">Eliminar</a>
+                            <a href="#" class="status-btn <?= $product->estatus == 1 ? 'activo' : 'inactivo' ?>">
+                                <?= $product->estatus == 1 ? 'Activo' : 'Inactivo' ?>
+                            </a>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -45,5 +46,6 @@
     </div>
 
     <script src="/assets/js/navbar.js"></script>
+    <script src="/assets/js/productstatus.js"></script>
 </body>
 </html>

@@ -99,5 +99,20 @@ class AdminProductController {
             'product' => $product
         ]);
     }
+
+    public static function toggleStatus(Router $router) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'] ?? null;
+            if (!$id) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'ID requerido']);
+                exit;
+            }
+            $nuevoStatus = Producto::toggleStatus($id);
+            echo json_encode(['success' => true, 'nuevoStatus' => $nuevoStatus]);
+            exit;
+        }
+    }
+
 }
 ?>
