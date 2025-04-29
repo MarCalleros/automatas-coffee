@@ -16,9 +16,8 @@
     <main>
         <div class="container">            
             <div class="cart-container">
-                <!-- Aquí se cargarán dinámicamente los elementos del carrito -->
                 <div class="cart-items">
-                    <!-- El contenido del carrito se cargará mediante JavaScript -->
+                    
                 </div>
                 
                 <div class="order-summary">
@@ -31,8 +30,8 @@
     </main>
     
     <?php include_once __DIR__ . "/../templates/footer.php"; ?>   
-    <script type="module" src="/assets/js/cookies-carrito.js"></script>
-    <script type="module" src="/assets/js/carrito.js"></script>    
+    <script type="module" src="/assets/js/carrito.js"></script> 
+    <script type="module" src="/assets/js/products.js"></script>
     <script src="/assets/js/configuration.js"></script> 
 </body>
 </html>

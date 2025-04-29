@@ -85,7 +85,6 @@
     <script src="/assets/js/list-view.js"></script>
     <script src="/assets/js/filter-modal.js"></script>
     <script type="module" src="/assets/js/products.js"></script>
-    <script type="module" src="/assets/js/cookies-carrito.js"></script>
     <script type="module" src="/assets/js/carrito.js"></script>
     <script src="/assets/js/configuration.js"></script>
 </body>
