@@ -10,7 +10,7 @@ use Model\ProductoTamaño;
 class AdminProductController {
 
     public static function index(Router $router) {
-        if (isAdmin()) {
+        if (!isAdmin()) {
             header('Location: /');
             exit;
         }

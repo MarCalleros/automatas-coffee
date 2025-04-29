@@ -1,3 +1,4 @@
+import { createNotification } from './notification.js';
 let username = getCookie('logged') || "defaultUser";
 
 function setUserCookie(name, value, days) {
@@ -77,7 +78,7 @@ function resetConfig() {
     applyTextStyle("MEDIANO");
     applyImage("MEDIANO");
 
-    alert("La configuración ha sido restablecida a los valores predeterminados.");
+    createNotification("success", "Configuración restablecida");
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -86,6 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let selectedTheme = this.querySelector("h3").textContent.trim().toUpperCase();
             setUserCookie("tema", selectedTheme, 30);
             applyTheme(selectedTheme);
+            createNotification("success", "Tema seleccionado: " + selectedTheme);
         });
     });
 
@@ -94,6 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let selectedTextStyle = this.querySelector("h3").textContent.trim().toUpperCase();
             setUserCookie("texto", selectedTextStyle, 30);
             applyTextStyle(selectedTextStyle);
+            createNotification("success", "Texto seleccionado: " + selectedTextStyle);
         });
     });
 
@@ -102,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let selectedImage = this.querySelector("h3").textContent.trim().toUpperCase();
             setUserCookie("imagen", selectedImage, 30);
             applyImage(selectedImage);
-            alert("Imagen de fondo seleccionada: " + selectedImage);
+            createNotification("success", "Imagen de fondo seleccionada: " + selectedImage);
         });
     });
 
