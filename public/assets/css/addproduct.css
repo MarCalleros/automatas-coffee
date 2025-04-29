@@ -61,11 +61,6 @@ input, select {
 }
 
 
-
-
-
-
-
 .seccion2 * {
     display: block;
     margin: 7px;
@@ -188,4 +183,8 @@ input[type="file"] {
     width: 140px;
     min-width: 120px;
     margin-left: 50px;
+}
+
+span {
+    font-size: 16px;
 }

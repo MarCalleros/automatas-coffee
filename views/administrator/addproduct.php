@@ -43,21 +43,21 @@
             <div class="seccion22">
                 <label for="tamano">Tamaño del producto</label>
                 <div class="opciones">
-                <div class="opcion">
-                    <input type="checkbox" id="tamano-ch" name="tamano" value="1">
-                    <label for="tamano-ch">Chico</label>
-                    <input type="number" id="precio-1" class="precio-tamano" placeholder="Precio chico" min="0" step="0.01" style="display:none;">
-                </div>
-                <div class="opcion">
-                    <input type="checkbox" id="tamano-md" name="tamano" value="2">
-                    <label for="tamano-md">Mediano</label>
-                    <input type="number" id="precio-2" class="precio-tamano" placeholder="Precio mediano" min="0" step="0.01" style="display:none;">
-                </div>
-                <div class="opcion">
-                    <input type="checkbox" id="tamano-gr" name="tamano" value="3">
-                    <label for="tamano-gr">Grande</label>
-                    <input type="number" id="precio-3" class="precio-tamano" placeholder="Precio grande" min="0" step="0.01" style="display:none;">
-                </div>
+                    <div class="opcion">
+                        <input type="checkbox" id="tamano-ch" name="tamano" value="1">
+                        <span>Chico</span>
+                        <input type="number" id="precio-1" class="precio-tamano" placeholder="Precio chico" min="0" step="0.01" style="display:none;">
+                    </div>
+                    <div class="opcion">
+                        <input type="checkbox" id="tamano-md" name="tamano" value="2">
+                        <span>Mediano</span>
+                        <input type="number" id="precio-2" class="precio-tamano" placeholder="Precio mediano" min="0" step="0.01" style="display:none;">
+                    </div>
+                    <div class="opcion">
+                        <input type="checkbox" id="tamano-gr" name="tamano" value="3">
+                        <span>Grande</span>
+                        <input type="number" id="precio-3" class="precio-tamano" placeholder="Precio grande" min="0" step="0.01" style="display:none;">
+                    </div>
                 </div>
             </div>
         </div>

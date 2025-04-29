@@ -25,3 +25,15 @@ document.querySelectorAll('.status-btn').forEach(btn => {
         }
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const buscador = document.getElementById('buscador-productos');
+    if (!buscador) return;
+    buscador.addEventListener('input', function() {
+        const filtro = buscador.value.toLowerCase();
+        document.querySelectorAll('.admin__product').forEach(card => {
+            const nombre = card.querySelector('h4').textContent.toLowerCase();
+            card.style.display = nombre.includes(filtro) ? '' : 'none';
+        });
+    });
+});

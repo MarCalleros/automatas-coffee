@@ -49,21 +49,21 @@ $categoria2 = $product['categorias'][1] ?? '';
                 <div class="opciones">
                     <div class="opcion">
                         <input type="checkbox" id="tamano-ch" name="tamano" value="1" <?= in_array(1, $product['tamanos']) ? 'checked' : '' ?>>
-                        <label for="tamano-ch">Chico</label>
+                        <span>Chico</span>
                         <input type="number" id="precio-1" class="precio-tamano" placeholder="Precio chico" min="0" step="0.01"
                             value="<?= isset($product['precios'][1]) ? $product['precios'][1] : '' ?>"
                             style="<?= in_array(1, $product['tamanos']) ? 'display:inline-block;' : 'display:none;' ?>">
                     </div>
                     <div class="opcion">
                         <input type="checkbox" id="tamano-md" name="tamano" value="2" <?= in_array(2, $product['tamanos']) ? 'checked' : '' ?>>
-                        <label for="tamano-md">Mediano</label>
+                        <span>Mediano</span>
                         <input type="number" id="precio-2" class="precio-tamano" placeholder="Precio mediano" min="0" step="0.01"
                             value="<?= isset($product['precios'][2]) ? $product['precios'][2] : '' ?>"
                             style="<?= in_array(2, $product['tamanos']) ? 'display:inline-block;' : 'display:none;' ?>">
                     </div>
                     <div class="opcion">
                         <input type="checkbox" id="tamano-gr" name="tamano" value="3" <?= in_array(3, $product['tamanos']) ? 'checked' : '' ?>>
-                        <label for="tamano-gr">Grande</label>
+                        <span>Grande</span>
                         <input type="number" id="precio-3" class="precio-tamano" placeholder="Precio grande" min="0" step="0.01"
                             value="<?= isset($product['precios'][3]) ? $product['precios'][3] : '' ?>"
                             style="<?= in_array(3, $product['tamanos']) ? 'display:inline-block;' : 'display:none;' ?>">

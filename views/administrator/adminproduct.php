@@ -20,6 +20,8 @@
                     Agregar producto
                 </a>
             </div>
+            <input type="text" id="buscador-productos" placeholder="Buscar producto..." style="margin: 5px 0px 0px 40px; padding:5px; border-radius:5px;">
+
 
             <script src="/assets/js/adminproducts.js"></script>
             <div class="admin__products">
@@ -46,6 +48,6 @@
     </div>
 
     <script src="/assets/js/navbar.js"></script>
-    <script src="/assets/js/productstatus.js"></script>
+    <script src="/assets/js/adminproduct.js"></script>
 </body>
 </html>
