@@ -68,6 +68,7 @@
                 <textarea id="descripcion" placeholder="Describe el producto"></textarea>
                 <label for="imagen">Imagen del producto</label>
                 <input type="file" id="imagen" accept="image/*">
+                <img id="preview-imagen" src="/assets/img/product/<?= $product['ruta'] ?>.jpg" alt="Sin imagen cargada" style="max-width:150px;">
             </div>
         </div>
 

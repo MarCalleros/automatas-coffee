@@ -20,25 +20,27 @@ document.getElementById('agregar').onclick = async function() {
         tamanos.push({ tamano: cb.value, precio: precio });
     });
 
+    const productId = getProductIdFromUrl();
+
     // Validación básica
     if (!nombre) {
-        alert('El nombre es obligatorio');
+        createNotification('error', 'El nombre es obligatorio');
         return;
     }
     if (!categoria1 && !categoria2) {
-        alert('Selecciona al menos una categoría');
+        createNotification('error', 'Debes seleccionar al menos una categoría');
         return;
     }
     if (tamanos.length === 0) {
-        alert('Selecciona al menos un tamaño y su precio');
+        createNotification('error', 'Debes seleccionar al menos un tamaño');
         return;
     }
     if (!descripcion) {
-        alert('La descripción es obligatoria');
+        createNotification('error', 'La descripción es obligatoria');
         return;
     }
-    if (!imagen) {
-        alert('La imagen es obligatoria');
+    if (!imagen && !productId) {
+        createNotification('error', 'Debes seleccionar una imagen');
         return;
     }
 
@@ -56,11 +58,9 @@ document.getElementById('agregar').onclick = async function() {
         formData.append('precios[]', obj.precio);
     });
 
-    const productId = getProductIdFromUrl();
-
-        if (productId) {
-            formData.append('id', productId);
-        }
+    if (productId) {
+        formData.append('id', productId);
+    }
 
     // Envía los datos al backend
     try {
@@ -79,6 +79,21 @@ document.getElementById('agregar').onclick = async function() {
         createNotification('error', 'Error de conexión al servidor');
     }
 };
+
+document.getElementById('imagen').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const preview = document.getElementById('preview-imagen');
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    } else {
+        // Si se deselecciona la imagen, vuelve a mostrar la imagen original
+        preview.src = preview.getAttribute('data-original') || preview.src;
+    }
+});
 
 function getProductIdFromUrl() {
     const params = new URLSearchParams(window.location.search);

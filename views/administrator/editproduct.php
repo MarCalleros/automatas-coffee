@@ -78,6 +78,7 @@ $categoria2 = $product['categorias'][1] ?? '';
                 <textarea id="descripcion" placeholder="Describe el producto"><?= htmlspecialchars($product['descripcion']) ?></textarea>
                 <label for="imagen">Imagen del producto</label>
                 <input type="file" id="imagen" accept="image/*">
+                <img id="preview-imagen" src="/assets/img/product/<?= $product['ruta'] ?>.jpg" alt="Imagen actual" style="max-width:150px;">
             </div>
         </div>
 
