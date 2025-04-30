@@ -148,6 +148,16 @@ class Producto {
                                 case 2: $product->mediano = $size->precio; break;
                                 case 3: $product->grande = $size->precio; break;
                             }
+
+                            if ($product->precio == null) {
+                                if ($size->id_tamaño == 1) {
+                                    $product->precio = $size->precio;
+                                } else if ($size->id_tamaño == 2) {
+                                    $product->precio = $size->precio;
+                                } else if ($size->id_tamaño == 3) {
+                                    $product->precio = $size->precio;
+                                }
+                            }
                         }
                     }
 
