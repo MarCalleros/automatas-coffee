@@ -1,22 +1,20 @@
 (function() {
-    const buttonMessage = document.querySelector('#information-messages');
-    const buttonPruchases = document.querySelector('#information-purchases');
-    const buttonAccount = document.querySelector('#information-account');
+    const buttons = [
+        { button: document.querySelector('#information-messages'), options: document.querySelector('#information-messages-options') },
+        { button: document.querySelector('#information-purchases'), options: document.querySelector('#information-purchases-options') },
+        { button: document.querySelector('#information-account'), options: document.querySelector('#information-account-options') }
+    ];
 
-    const optionsMessage = document.querySelector('#information-messages-options');
-    const optionsPurchases = document.querySelector('#information-purchases-options');
-    const optionsAccount = document.querySelector('#information-account-options');
-
-    buttonMessage.addEventListener('click', function() {
-        console.log('Messages button clicked');
-        optionsMessage.classList.toggle('information-menu__options--active');
-    });
-
-    buttonPruchases.addEventListener('click', function() {
-        console.log('Purchases button clicked');
-    });
-
-    buttonAccount.addEventListener('click', function() {
-        console.log('Account button clicked');
+    buttons.forEach(item => {
+        item.button.addEventListener('click', function() {
+            item.options.classList.toggle('information-menu__options--active');
+            
+            const arrow = this.querySelector('.information-menu__arrow svg');
+            if (item.options.classList.contains('information-menu__options--active')) {
+                arrow.style.transform = 'rotate(180deg)';
+            } else {
+                arrow.style.transform = 'rotate(0deg)';
+            }
+        });
     });
 })();

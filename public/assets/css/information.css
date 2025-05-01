@@ -45,6 +45,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    transition: background-color 0.3s ease;
 }
 
 .information-menu__button:hover {
@@ -74,17 +75,25 @@
 }
 
 .information-menu__options {
-    display: none;
+    display: flex;
+    flex-direction: column;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, opacity 0.2s ease;
+    opacity: 0;
 }
 
 .information-menu__options--active {
-    display: flex;
-    flex-direction: column;
+    max-height: 500px;
+    opacity: 1;
+    transition: max-height 0.3s ease-in, opacity 0.3s ease 0.1s;
 }
 
 .information-menu__option {
+    flex-shrink: 0;
     display: flex;
     align-items: center;
+    transition: background-color 0.3s ease;
 }
 
 .information-menu__option:hover {
@@ -130,4 +139,8 @@
 .information-icon {
     height: 32px;
     width: 32px;
+}
+
+.information-menu__arrow svg {
+    transition: transform 0.3s ease;
 }
