@@ -47,6 +47,7 @@ $router->get('/admin/map', [AdminPagesController::class, 'map']);
 $router->get('/', [PagesController::class, 'home']);
 $router->get('/contactanos', [PagesController::class, 'contact']);
 $router->get('/configuracion', [PagesController::class, 'configuration']);
+$router->get('/informacion', [PagesController::class, 'information']);
 $router->get('/carrito', [PagesController::class, 'carrito']);
 
 $router->get('/productos', [ProductoController::class, 'index']);

@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="/assets/css/variables.css">
     <link rel="stylesheet" href="/assets/css/styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-    <link rel="stylesheet" href="/assets/css/home.css">
     <link rel="shortcut icon" href="/assets/img/logo-coffee.png">
     <title>Automatas Coffee</title>
 </head>

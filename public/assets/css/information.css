@@ -1,0 +1,133 @@
+.information-container {
+    display: flex;
+    gap: 20px;
+    flex: 1;
+    margin-bottom: 15px;
+}
+
+.information-section {
+    background-color: var(--color-conteiner);
+}
+
+.information-section--menu {
+    border-radius: 0 25px 25px 0;
+    width: auto;
+    max-width: 400px;
+    height: 100%;
+}
+
+.information-section--content {
+    flex: 1;
+    min-width: 700px;
+    width: auto;
+    height: auto;
+    border-radius: 25px;
+    margin-right: 20px;
+}
+
+.information-section__title {
+    margin: 25px 0;
+    font-size: var(--title);
+    color: var(--color-text);
+}
+
+.information-menu {
+    display: flex;
+    flex-direction: column;
+}
+
+.information-menu__item {
+    display: flex;
+    flex-direction: column;
+}
+
+.information-menu__button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.information-menu__button:hover {
+    cursor: pointer;
+    background-color: var(--dark-gray);
+}
+
+.information-menu__button:hover .information-menu__title {
+    color: var(--black);
+}
+
+.information-menu__button:hover .information-item-icon {
+    fill: var(--black);
+}
+
+.information-menu__title {
+    font-size: var(--subtitle);
+    color: var(--color-text);
+    margin: 20px;
+}
+
+.information-menu__arrow {
+    height: 24px;
+    width: 24px;
+    background-color: transparent;
+    margin-right: 20px;
+}
+
+.information-menu__options {
+    display: none;
+}
+
+.information-menu__options--active {
+    display: flex;
+    flex-direction: column;
+}
+
+.information-menu__option {
+    display: flex;
+    align-items: center;
+}
+
+.information-menu__option:hover {
+    cursor: pointer;
+    background-color: var(--dark-gray);
+}
+
+.information-menu__option:hover .information-option__title,
+.information-menu__option:hover .information-option__description {
+    color: var(--black);
+}
+
+.information-menu__option:hover .information-stroke-icon {
+    stroke: var(--black);
+}
+
+.information-option__icon {
+    margin-left: 20px;
+}
+
+.information-option__title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: var(--text);
+    color: var(--color-text);
+    margin: 20px 20px 0 20px;
+}
+
+.information-option__description {
+    font-family: 'Lato', sans-serif;
+    font-size: var(--text-small);
+    color: var(--color-text);
+    margin: 0 20px 20px 20px;
+}
+
+.information-item-icon {
+    fill: var(--color-text);
+}
+
+.information-stroke-icon {
+    stroke: var(--color-text);
+}
+
+.information-icon {
+    height: 32px;
+    width: 32px;
+}

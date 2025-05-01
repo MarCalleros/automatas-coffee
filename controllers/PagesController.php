@@ -19,11 +19,30 @@ class PagesController {
     }
 
     public static function configuration(Router $router) {
+        if (!isLogged()) {
+            header('Location: /');
+            return;
+        }
+
         $router->render('pages/configuration', []);
     }
 
     public static function carrito(Router $router) {
+        if (!isLogged()) {
+            header('Location: /');
+            return;
+        }
+
         $router->render('pages/carrito', []);
+    }
+
+    public static function information(Router $router) {
+        if (!isLogged()) {
+            header('Location: /');
+            return;
+        }
+        
+        $router->render('pages/information', []);
     }
 }
 ?>
