@@ -78,7 +78,10 @@
 }
 
 .admin-table__data--active,
-.admin-table__data--inactive {
+.admin-table__data--inactive,
+.admin-table__data--Administrador,
+.admin-table__data--Cliente,
+.admin-table__data--Repartidor {
     color: var(--white);
     padding: 10px;
     border-radius: 10px;
@@ -93,6 +96,18 @@
 
 .admin-table__data--inactive {
     background-color: var(--error);
+}
+
+.admin-table__data--Administrador {
+    background-color: #FF8C42;
+}
+
+.admin-table__data--Cliente {
+    background-color: #3CB371;
+}
+
+.admin-table__data--Repartidor {
+    background-color: #4682B4;
 }
 
 .admin-table__row--data:nth-child(odd) {

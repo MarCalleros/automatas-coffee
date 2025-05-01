@@ -4,6 +4,7 @@ namespace Controller;
 
 use App\Router;
 use Model\Usuario;
+use Model\TipoUsuario;
 
 class UserController {
     public static function index(Router $router) {
@@ -42,6 +43,13 @@ class UserController {
             exit;
         }
 
+        $tiposUsuario = TipoUsuario::all();
+
+        if (!$tiposUsuario) {
+            header('Location: /admin/usuario');
+            exit;
+        }
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $Usuario = new Usuario();
             
@@ -66,7 +74,9 @@ class UserController {
             }
         }
 
-        $router->render('administrator/user-create', []);
+        $router->render('administrator/user-create', [
+            'tiposUsuario' => $tiposUsuario
+        ]);
     }
 
     public static function edit(Router $router) {
@@ -77,6 +87,13 @@ class UserController {
 
         $id = $_GET['id'] ?? null;
         if (!$id) {
+            header('Location: /admin/usuario');
+            exit;
+        }
+
+        $tiposUsuario = TipoUsuario::all();
+
+        if (!$tiposUsuario) {
             header('Location: /admin/usuario');
             exit;
         }
@@ -92,27 +109,58 @@ class UserController {
             $usuarioBD->edad = $_POST['edad'] ?? $usuarioBD->edad;
             $usuarioBD->correo = $_POST['correo'] ?? $usuarioBD->correo;
             $usuarioBD->usuario = $_POST['usuario'] ?? $usuarioBD->usuario;
+            $usuarioBD->id_tipo_usuario = $_POST['id_tipo_usuario'] ?? $usuarioBD->id_tipo_usuario;
 
             // Solo actualizar la contraseña si se proporciona una nueva
             if (!empty($_POST['contraseña'])) {
                 $usuarioBD->contraseña = password_hash($_POST['contraseña'], PASSWORD_BCRYPT);
             }
 
-            $resultado = $usuarioBD->update();
-
-            if ($resultado) {
+            // Buscar el correo en la base de datos para verificar si ya existe
+            $usuarioExistente = Usuario::find('correo', $usuarioBD->correo);
+            if ($usuarioExistente && $usuarioExistente->id !== $usuarioBD->id) {
                 header('Content-Type: application/json');
-                echo json_encode(['success' => true]);
+                echo json_encode(['success' => false, 'error' => 'El correo ya esta registrado']);
+                exit;
+            }
+
+            // Buscar el usuario en la base de datos para verificar si ya existe
+            $usuarioExistente = Usuario::find('usuario', $usuarioBD->usuario);
+            if ($usuarioExistente && $usuarioExistente->id !== $usuarioBD->id) {
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'error' => 'El usuario ya esta registrado']);
+                exit;
+            }
+
+            $result = $usuarioBD->update();
+
+            if ($result === true) {
+                header('Content-Type: application/json');
+                echo json_encode([
+                    'success' => true,
+                    'updatedData' => [
+                        'nombre' => $usuarioBD->nombre,
+                        'edad' => $usuarioBD->edad,
+                        'correo' => $usuarioBD->correo,
+                        'usuario' => $usuarioBD->usuario,
+                        'id_tipo_usuario' => $usuarioBD->id_tipo_usuario
+                    ]
+                ]);
+                exit;
+            } else if ($result === false) {
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'error' => 'No se realizo ningun cambio']);
                 exit;
             } else {
                 header('Content-Type: application/json');
-                echo json_encode(['success' => false, 'error' => 'No se realizo ningun cambio']);
+                echo json_encode(['success' => false, 'error' => "$result"]);
+                exit;
             }
         }
 
         $router->render('administrator/user-edit', [
             'usuarioBD' => $usuarioBD,
-            'error' => $error ?? null
+            'tiposUsuario' => $tiposUsuario
         ]);
     }
 }
