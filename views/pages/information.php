@@ -11,14 +11,14 @@
 <body class="page--full-height">
     <?php include_once __DIR__ . "/../templates/navbar.php"; ?>
 
-    <main class="information-container">
+    <main class="information-container main--full-height">
         <section class="information-section information-section--menu">
             <h2 class="information-section__title">Informacion</h2>
 
             <div class="information-menu">
                 <div class="information-menu__item">
                     <div class="information-menu__button" id="information-messages">
-                        <h3 class="information-menu__title">Mensajes Enviados</h3>
+                        <h3 class="information-menu__title">Mensajes</h3>
 
                         <div class="information-menu__arrow">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -116,7 +116,7 @@
                     </div>
 
                     <div class="information-menu__options" id="information-account-options">
-                        <div class="information-menu__option">
+                        <div class="information-menu__option" id="information-account-data">
                             <div class="information-option__icon">
                                 <svg class="information-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -134,7 +134,7 @@
                             </div>
                         </div>
 
-                        <div class="information-menu__option">
+                        <div class="information-menu__option" id="information-account-password">
                             <div class="information-option__icon">
                                 <svg class="information-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -151,7 +151,7 @@
                             </div>
                         </div>
 
-                        <div class="information-menu__option">
+                        <div class="information-menu__option" id="information-account-desactivate">
                             <div class="information-option__icon">
                                 <svg class="information-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -174,13 +174,15 @@
 
         <section class="information-section information-section--content">
             <h2 class="information-section__title">Titulo de la seccion</h2>
+
+
         </section>
     </main>
 
     <?php include_once __DIR__ . "/../templates/footer.php"; ?>
 
     <script src="assets/js/navbar.js"></script>
-    <script src="assets/js/information.js"></script>
+    <script type="module" src="assets/js/information.js"></script>
     <script type="module" src="/assets/js/configuration.js"></script>
 </body>
 </html>

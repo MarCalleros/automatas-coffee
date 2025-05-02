@@ -9,11 +9,11 @@
     <link rel="stylesheet" href="/assets/css/styles.css">
     <link rel="shortcut icon" href="/assets/img/logo-coffee.png">
 </head>
-<body>
+<body class="page--full-height">
 <?php include_once __DIR__ . "/../templates/navbar.php"; ?>
     <h2 class="title--page">Carrito Compras</h2>
     
-    <main>
+    <main class="main--full-height">
         <div class="container">            
             <div class="cart-container">
                 <div class="cart-items">

@@ -70,6 +70,7 @@ class Usuario {
             //mysqli_close($db);
         }
     }
+
     // Funcion para obtener a todos los usuarios activos 
     public static function allActiveAsc() {
         require __DIR__ . '/../includes/database.php';
@@ -101,6 +102,7 @@ class Usuario {
             //mysqli_close($db);
         }     
     }
+
     // Funcion para agregar un nuevo usuario
     public function save() {
         require __DIR__ . '/../includes/database.php';
@@ -134,6 +136,7 @@ class Usuario {
             mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         }
     }
+
     // Funcion para actualizar un usuario
     public function update() {
         require __DIR__ . '/../includes/database.php';
@@ -157,6 +160,7 @@ class Usuario {
             mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         }
     }
+
       // Funcion para cambiar el estatus de un usuario
     public function changeStatus() {
         require __DIR__ . '/../includes/database.php';
@@ -204,6 +208,7 @@ class Usuario {
             //mysqli_close($db);
         }
     }
+
     // Funcion para buscar un usuario por algun atributo
     public static function find($attribute, $value) {
         require __DIR__ . '/../includes/database.php';
@@ -230,6 +235,7 @@ class Usuario {
             //mysqli_close($db);
         }
     }
+
     public function create() {
         try {
             require __DIR__ . '/../includes/database.php';
@@ -266,9 +272,14 @@ class Usuario {
                 $user = new Usuario(mysqli_fetch_assoc($result));
                 if (password_verify($this->contraseña, $user->contraseña)) {
                     // Crear la variable de sesión
-                    session_start();
+                    if (!isset($_SESSION)) {
+                        session_start();
+                    }
+
+                    // Guardar los datos del usuario en la sesión
                     $_SESSION['id'] = $user->id;
                     $_SESSION['nombre'] = $user->nombre;
+                    $_SESSION['edad'] = $user->edad;
                     $_SESSION['correo'] = $user->correo;
                     $_SESSION['usuario'] = $user->usuario;
                     $_SESSION['id_tipo_usuario'] = $user->id_tipo_usuario;
@@ -298,7 +309,7 @@ class Usuario {
             $result = mysqli_stmt_get_result($stmt);
 
             if ($result->num_rows > 0) {
-                return mysqli_fetch_assoc($result);
+                return new Usuario(mysqli_fetch_assoc($result));
             } else {
                 return null;
             }

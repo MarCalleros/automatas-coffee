@@ -115,6 +115,10 @@ h3 {
     min-height: 100vh;
 }
 
+.main--full-height {
+    flex: 1;
+}
+
 @media (min-width: 1024px) {
     body {
         padding-top: 115px;

@@ -1,7 +1,6 @@
 .information-container {
     display: flex;
     gap: 20px;
-    flex: 1;
     margin-bottom: 15px;
 }
 
@@ -110,6 +109,19 @@
     stroke: var(--black);
 }
 
+.information-menu__option--selected {
+    background-color: var(--dark-gray);
+}
+
+.information-menu__option--selected .information-option__title,
+.information-menu__option--selected .information-option__description {
+    color: var(--black);
+}
+
+.information-menu__option--selected .information-stroke-icon {
+    stroke: var(--black);
+}
+
 .information-option__icon {
     margin-left: 20px;
 }
@@ -143,4 +155,81 @@
 
 .information-menu__arrow svg {
     transition: transform 0.3s ease;
+}
+
+/* Informacion de mi cuenta */
+.information-form {
+    margin: 0 auto;
+    width: 50%;
+}
+
+.information-form__input-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.information-form__label {
+    font-family: 'Lato', sans-serif;
+    font-size: var(--text-small);
+    color: var(--color-text);
+    margin-bottom: 10px;
+}
+
+.information-form__input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--dark-gray);
+    border-radius: 8px;
+    font-family: 'Lato', sans-serif;
+    font-size: var(--text-small);
+    outline: none;
+    color: var(--color-text);
+    background-color: transparent;
+}
+
+.information-form__error {
+    font-family: 'Lato', sans-serif;
+    font-size: 1.2rem;
+    color: var(--error);
+    visibility: hidden;
+}
+
+.information-form__error--active {
+    visibility: visible;
+}
+
+.information-form__button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.information-form__button {
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    padding: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: var(--text-small);
+    cursor: pointer;
+}
+
+.information-form__button--orange {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.information-form__button--orange:hover {
+    background-color: var(--primary-hover);
+}
+
+.information-form__button--white {
+    background-color: var(--white);
+    color: var(--black);
+    border: 1px solid var(--color-text);
+}
+
+.information-form__button--white:hover {
+    background-color: var(--gray);
 }
