@@ -14,6 +14,8 @@ class Usuario {
     public $contraseña;
     public $estatus;
 
+    public $tipo_usuario;
+
     public function __construct($args = []) {
         $this->id = $args['id'] ?? null;
         $this->id_tipo_usuario = $args['id_tipo_usuario'] ?? 2;
@@ -40,7 +42,22 @@ class Usuario {
                 $usuarios = [];
     
                 while ($row = mysqli_fetch_assoc($result)) {
-                    $usuarios[] = new Usuario($row);
+                    $usuario = new Usuario($row);
+
+                    $query = "SELECT * FROM tipo_usuario WHERE id = ?";
+                    $stmt = mysqli_prepare($db, $query);
+                    mysqli_stmt_bind_param($stmt, 'i', $usuario->id_tipo_usuario);
+                    mysqli_stmt_execute($stmt);
+                    $res = mysqli_stmt_get_result($stmt);
+
+                    if ($res->num_rows > 0) {
+                        $tipo_usuario = mysqli_fetch_assoc($res);
+                        $usuario->tipo_usuario = $tipo_usuario['nombre'];
+                    } else {
+                        $usuario->tipo_usuario = null;
+                    }
+
+                    $usuarios[] = $usuario;
                 }
                 
                 return $usuarios;
@@ -53,6 +70,7 @@ class Usuario {
             //mysqli_close($db);
         }
     }
+
     // Funcion para obtener a todos los usuarios activos 
     public static function allActiveAsc() {
         require __DIR__ . '/../includes/database.php';
@@ -84,6 +102,7 @@ class Usuario {
             //mysqli_close($db);
         }     
     }
+
     // Funcion para agregar un nuevo usuario
     public function save() {
         require __DIR__ . '/../includes/database.php';
@@ -102,7 +121,6 @@ class Usuario {
             }
             
             $this->estatus = 1; // Establecer estatus por defecto a 1 (activo)
-            $this->id_tipo_usuario = 2; // Establecer id_tipo_usuario por defecto a 2 (usuario normal)
             // Hashear la contraseña antes de guardar
             $this->contraseña = password_hash($this->contraseña, PASSWORD_BCRYPT);
     
@@ -118,6 +136,7 @@ class Usuario {
             mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         }
     }
+
     // Funcion para actualizar un usuario
     public function update() {
         require __DIR__ . '/../includes/database.php';
@@ -125,7 +144,7 @@ class Usuario {
         try {
             mysqli_report(MYSQLI_REPORT_OFF);
     
-            $query = "UPDATE " . static::$tabla . " SET nombre = ?, edad = ?, correo = ?, usuario = ?, contraseña = ? WHERE id = ?";
+            $query = "UPDATE " . static::$tabla . " SET id_tipo_usuario = ?, nombre = ?, edad = ?, correo = ?, usuario = ?, contraseña = ? WHERE id = ?";
             $stmt = mysqli_prepare($db, $query);
     
             // Solo hashear la contraseña si no está vacía
@@ -133,7 +152,7 @@ class Usuario {
                 $this->contraseña = password_hash($this->contraseña, PASSWORD_BCRYPT);
             }
     
-            mysqli_stmt_bind_param($stmt, 'sssssi', $this->nombre, $this->edad, $this->correo, $this->usuario, $this->contraseña, $this->id);
+            mysqli_stmt_bind_param($stmt, 'isssssi', $this->id_tipo_usuario, $this->nombre, $this->edad, $this->correo, $this->usuario, $this->contraseña, $this->id);
             $executed = mysqli_stmt_execute($stmt);
     
             return $executed && mysqli_stmt_affected_rows($stmt) > 0;
@@ -141,6 +160,7 @@ class Usuario {
             mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         }
     }
+
       // Funcion para cambiar el estatus de un usuario
     public function changeStatus() {
         require __DIR__ . '/../includes/database.php';
@@ -188,6 +208,7 @@ class Usuario {
             //mysqli_close($db);
         }
     }
+
     // Funcion para buscar un usuario por algun atributo
     public static function find($attribute, $value) {
         require __DIR__ . '/../includes/database.php';
@@ -214,6 +235,7 @@ class Usuario {
             //mysqli_close($db);
         }
     }
+
     public function create() {
         try {
             require __DIR__ . '/../includes/database.php';
@@ -250,9 +272,14 @@ class Usuario {
                 $user = new Usuario(mysqli_fetch_assoc($result));
                 if (password_verify($this->contraseña, $user->contraseña)) {
                     // Crear la variable de sesión
-                    session_start();
+                    if (!isset($_SESSION)) {
+                        session_start();
+                    }
+
+                    // Guardar los datos del usuario en la sesión
                     $_SESSION['id'] = $user->id;
                     $_SESSION['nombre'] = $user->nombre;
+                    $_SESSION['edad'] = $user->edad;
                     $_SESSION['correo'] = $user->correo;
                     $_SESSION['usuario'] = $user->usuario;
                     $_SESSION['id_tipo_usuario'] = $user->id_tipo_usuario;
@@ -282,7 +309,7 @@ class Usuario {
             $result = mysqli_stmt_get_result($stmt);
 
             if ($result->num_rows > 0) {
-                return mysqli_fetch_assoc($result);
+                return new Usuario(mysqli_fetch_assoc($result));
             } else {
                 return null;
             }

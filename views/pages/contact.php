@@ -64,6 +64,6 @@
         
     </div>
 
-    <script src="/assets/js/configuration.js"></script>
+    <script type="module" src="/assets/js/configuration.js"></script>
 </body>
 </html>

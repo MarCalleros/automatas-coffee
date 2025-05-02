@@ -24,6 +24,7 @@
                                 <th class="admin-table__head">Edad</th>
                                 <th class="admin-table__head">Email</th>
                                 <th class="admin-table__head">Usuario</th>
+                                <th class="admin-table__head">T. de Usuario</th>
                                 <th class="admin-table__head">Estatus</th>
                                 <th class="admin-table__head">Acciones</th>
                             </tr>
@@ -36,6 +37,11 @@
                                     <td class="admin-table__data"><?= $usuario->edad ?></td>
                                     <td class="admin-table__data"><?= $usuario->correo ?></td>
                                     <td class="admin-table__data"><?= $usuario->usuario ?></td>
+                                    <td class="admin-table__data">
+                                        <div class="admin-table__data--<?php echo $usuario->tipo_usuario ?>">
+                                            <?= $usuario->tipo_usuario ?>
+                                        </div>
+                                    </td>
                                     <td class="admin-table__data">
                                         <div class="<?= $usuario->estatus ? 'admin-table__data--active' : 'admin-table__data--inactive' ?>">
                                             <?= $usuario->estatus ? 'Alta' : 'Baja' ?>

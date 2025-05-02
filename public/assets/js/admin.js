@@ -43,6 +43,7 @@ import { createNotification } from './notification.js';
             });
         });
     }
+
     if (userStatusForms) {
         userStatusForms.forEach(form => {
             const button = form.querySelector('button')
@@ -65,7 +66,7 @@ import { createNotification } from './notification.js';
                     button.textContent = estatus === "1" ? "Dar de Baja" : "Dar de Alta";
                     
                     const row = form.closest("tr");
-                    const estatusCell = row.querySelectorAll("td")[5];
+                    const estatusCell = row.querySelectorAll("td")[6];
                     const div = estatusCell.querySelector("div");
                     
                     div.className = estatus === "1"
@@ -88,15 +89,14 @@ import { createNotification } from './notification.js';
              // Verifica el ID del formulario para ejecutar la validación correspondiente
             if (adminForm.id === 'admin-form') {
                 if (!validateDeliverymanForm()) {
-                    console.log("Error en el formulario de repartidor");
                     return;
                 }
             } else if (adminForm.id === 'admin-user-form') {
                 if (!validateUserForm()) {
-                    console.log("Error en el formulario de usuario");
                     return;
                 }
             }
+
             const adminSubmitButton = adminForm.querySelector('#admin-submit-button');
             adminSubmitButton.disabled = true;
             adminSubmitButton.textContent = 'Guardando...';
@@ -265,12 +265,14 @@ function validateUserForm() {
     const email = document.querySelector('#email').value;
     const usuario = document.querySelector('#usuario').value;
     const password = document.querySelector('#password').value;
+    const tipoUsuario = document.querySelector('#id_tipo_usuario').value;
 
     const errorNombre = document.querySelector('#error-nombre');
     const errorEdad = document.querySelector('#error-edad');
     const errorEmail = document.querySelector('#error-email');
     const errorUsuario = document.querySelector('#error-usuario');
     const errorPassword = document.querySelector('#error-password');
+    const errorTipoUsuario = document.querySelector('#error-tipo-usuario');
 
     const regexNombre = /^[A-Za-zÁáÉéÍíÓóÚúÑñ\s]+$/
     const regexEdad = /^[1-9][0-9]?$/
@@ -284,6 +286,7 @@ function validateUserForm() {
     const mensajeEmail = "El email no es valido";
     const mensajeUsuario = "El usuario debe contener al menos 5 caracteres alfanuméricos";
     const mensajePassword = "La contraseña debe contener al menos 8 caracteres, una letra, un número y un símbolo especial";
+    const mensajeTipoUsuario = "Seleccione un tipo de usuario";
 
     if (!nombre || !regexNombre.test(nombre)) {
         errorNombre.textContent = nombre ? mensajeNombre : mensajeVacio;
@@ -326,6 +329,13 @@ function validateUserForm() {
         errorPassword.classList.remove('admin-form__error--active');
     }
 
+    if (!tipoUsuario) {
+        errorTipoUsuario.textContent = mensajeTipoUsuario;
+        errorTipoUsuario.classList.add('admin-form__error--active');
+        error = true;
+    } else {
+        errorTipoUsuario.classList.remove('admin-form__error--active');
+    }
 
     if (error) {
         return false;

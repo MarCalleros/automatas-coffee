@@ -50,4 +50,4 @@
 <script src="/assets/js/hamburguer.js"></script>
 <script src="/assets/js/login-modal.js"></script>
 <script type="module" src="/assets/js/cookie-login.js"></script>
-<script src="/assets/js/configuration.js"></script>
+<script type="module" src="/assets/js/configuration.js"></script>

@@ -124,6 +124,55 @@ class Producto {
         }
     }
 
+    public static function listPopular($limit = 6) {
+        try {
+            require __DIR__ . '/../includes/database.php';
+
+            $query = "SELECT * FROM " . self::$tabla . " WHERE estatus = 1 LIMIT ?";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'i', $limit);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+
+            if ($result->num_rows > 0) {
+                $products = [];
+
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $product = new Producto($row);
+                    $sizes = ProductoTamaño::getByIdProducto($product->id);
+
+                    if ($sizes) {
+                        foreach ($sizes as $size) {
+                            switch ($size->id_tamaño) {
+                                case 1: $product->chico = $size->precio; break;
+                                case 2: $product->mediano = $size->precio; break;
+                                case 3: $product->grande = $size->precio; break;
+                            }
+
+                            if ($product->precio == null) {
+                                if ($size->id_tamaño == 1) {
+                                    $product->precio = $size->precio;
+                                } else if ($size->id_tamaño == 2) {
+                                    $product->precio = $size->precio;
+                                } else if ($size->id_tamaño == 3) {
+                                    $product->precio = $size->precio;
+                                }
+                            }
+                        }
+                    }
+
+                    $products[] = $product;
+                }
+
+                return $products;
+            } else {
+                return null;
+            }
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
     public static function where($column, $value) {
         try {
             require __DIR__ . '/../includes/database.php';

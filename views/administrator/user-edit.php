@@ -18,34 +18,55 @@
             <form action="/admin/usuario/edit?id=<?php echo $usuarioBD->id ?>" id="admin-user-form" class="admin-form" method="POST">
                 <input type="hidden" name="id" id="id" value="<?php echo $usuarioBD->id; ?>">
 
-                <div class="admin-form__group">
-                    <label class="admin-form__label" for="nombre">Nombre</label>
-                    <input class="admin-form__input" type="text" name="nombre" id="nombre" placeholder="Nombre" value="<?php echo $usuarioBD->nombre; ?>">
-                    <span id="error-nombre" class="admin-form__error">Error</span>
+                <div class="admin-form__group-container">
+                    <div class="admin-form__group">
+                        <label class="admin-form__label" for="nombre">Nombre</label>
+                        <input class="admin-form__input" type="text" name="nombre" id="nombre" placeholder="Nombre" value="<?php echo $usuarioBD->nombre; ?>">
+                        <span id="error-nombre" class="admin-form__error">Error</span>
+                    </div>
+
+                    <div class="admin-form__group">
+                        <label class="admin-form__label" for="edad">Edad</label>
+                        <input class="admin-form__input" type="text" name="edad" id="edad" placeholder="Edad" value="<?php echo $usuarioBD->edad; ?>">
+                        <span id="error-edad" class="admin-form__error">Error</span>
+                    </div>
                 </div>
 
-                <div class="admin-form__group">
-                    <label class="admin-form__label" for="edad">Edad</label>
-                    <input class="admin-form__input" type="text" name="edad" id="edad" placeholder="Edad" value="<?php echo $usuarioBD->edad; ?>">
-                    <span id="error-edad" class="admin-form__error">Error</span>
-                </div>
+                <div class="admin-form__group-container">
+                    <div class="admin-form__group">
+                        <label class="admin-form__label" for="email">Email</label>
+                        <input class="admin-form__input" type="email" name="correo" id="email" placeholder="Email" value="<?php echo $usuarioBD->correo; ?>">
+                        <span id="error-email" class="admin-form__error">Error</span>
+                    </div>
 
-                <div class="admin-form__group">
-                    <label class="admin-form__label" for="correo">Correo</label>
-                    <input class="admin-form__input" type="email" name="correo" id="correo" placeholder="Correo" value="<?php echo $usuarioBD->correo; ?>">
-                    <span id="error-correo" class="admin-form__error">Error</span>
+                    <div class="admin-form__group">
+                        <label class="admin-form__label" for="usuario">Usuario</label>
+                        <input class="admin-form__input" type="text" name="usuario" id="usuario" placeholder="Usuario" value="<?php echo $usuarioBD->usuario; ?>">
+                        <span id="error-usuario" class="admin-form__error">Error</span>
+                    </div>
                 </div>
+                
+                <div class="admin-form__group-container">
+                    <div class="admin-form__group">
+                        <label class="admin-form__label" for="password">Contraseña</label>
+                        <input class="admin-form__input" type="text" name="contraseña" id="password" placeholder="Password">
+                        <span id="error-password" class="admin-form__error">Error</span>
+                    </div>
 
-                <div class="admin-form__group">
-                    <label class="admin-form__label" for="usuario">Usuario</label>
-                    <input class="admin-form__input" type="text" name="usuario" id="usuario" placeholder="Usuario" value="<?php echo $usuarioBD->usuario; ?>">
-                    <span id="error-usuario" class="admin-form__error">Error</span>
-                </div>
-
-                <div class="admin-form__group">
-                    <label class="admin-form__label" for="contraseña">Contraseña</label>
-                    <input class="admin-form__input" type="password" name="contraseña" id="contraseña" placeholder="Contraseña">
-                    <span id="error-contraseña" class="admin-form__error">Error</span>
+                    <div class="admin-form__group">
+                        <label class="admin-form__label" for="id_tipo_usuario">Tipo de Usuario</label>
+                        <div class="admin-form__select-container">
+                            <select class="admin-form__input" name="id_tipo_usuario" id="id_tipo_usuario">
+                                <option value="" disabled >Seleccione un tipo de usuario</option>
+                                <?php foreach ($tiposUsuario as $tipoUsuario) : ?>
+                                    <option value="<?= $tipoUsuario->id ?>" <?= $usuarioBD->id_tipo_usuario == $tipoUsuario->id ? 'selected' : '' ?>>
+                                        <?= $tipoUsuario->nombre ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <span id="error-tipo-usuario" class="admin-form__error">Error</span>
+                    </div>
                 </div>
 
                 <div class="admin-form__buttons-container">

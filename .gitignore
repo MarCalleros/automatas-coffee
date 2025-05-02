@@ -1,0 +1,2 @@
+# Base de datos para no tener que cambiar los datos cada vez
+/includes/database.php

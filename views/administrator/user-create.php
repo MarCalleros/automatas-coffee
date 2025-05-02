@@ -47,9 +47,22 @@
 
                     <div class="admin-form__group-container">
                         <div class="admin-form__group">
-                            <label class="admin-form__label" for="password">Password</label>
+                            <label class="admin-form__label" for="password">Contraseña</label>
                             <input class="admin-form__input" type="text" name="contraseña" id="password" placeholder="Password">
                             <span id="error-password" class="admin-form__error">Error</span>
+                        </div>
+
+                        <div class="admin-form__group">
+                            <label class="admin-form__label" for="id_tipo_usuario">Tipo de Usuario</label>
+                            <div class="admin-form__select-container">
+                                <select class="admin-form__input" name="id_tipo_usuario" id="id_tipo_usuario">
+                                    <option value="" disabled selected>Seleccione un tipo de usuario</option>
+                                    <?php foreach ($tiposUsuario as $tipoUsuario) : ?>
+                                        <option value="<?= $tipoUsuario->id ?>"><?= $tipoUsuario->nombre ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <span id="error-tipo-usuario" class="admin-form__error">Error</span>
                         </div>
                     </div>
 

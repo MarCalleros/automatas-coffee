@@ -18,8 +18,11 @@ $router = new Router();
 
 // Login
 $router->post('/api/user/create', [APIUsuario::class, 'create']);
+$router->post('/api/user/update', [APIUsuario::class, 'update']);
 $router->post('/api/user/login', [APIUsuario::class, 'login']);
 $router->post('/api/user/logout', [APIUsuario::class, 'logout']);
+$router->post('/api/user/check-password', [APIUsuario::class, 'checkPassword']);
+$router->post('/api/user/get-logged-data', [APIUsuario::class, 'getLoggedUserData']);
 
 // Admin
 $router->get('/admin', [AdminPagesController::class, 'index']);
@@ -47,6 +50,7 @@ $router->get('/admin/map', [AdminPagesController::class, 'map']);
 $router->get('/', [PagesController::class, 'home']);
 $router->get('/contactanos', [PagesController::class, 'contact']);
 $router->get('/configuracion', [PagesController::class, 'configuration']);
+$router->get('/informacion', [PagesController::class, 'information']);
 $router->get('/carrito', [PagesController::class, 'carrito']);
 
 $router->get('/productos', [ProductoController::class, 'index']);
