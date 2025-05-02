@@ -14,7 +14,7 @@ document.getElementById('agregar').onclick = async function() {
     document.querySelectorAll('input[name="tamano"]:checked').forEach(cb => {
         const precio = document.getElementById('precio-' + cb.value).value;
         if (!precio) {
-            alert('Debes ingresar el precio para el tamaño seleccionado: ' + cb.nextElementSibling.textContent);
+            createNotification('error', 'Debes ingresar el precio para el tamaño seleccionado: ' + cb.nextElementSibling.textContent);
             return;
         }
         tamanos.push({ tamano: cb.value, precio: precio });
@@ -31,8 +31,12 @@ document.getElementById('agregar').onclick = async function() {
         createNotification('error', 'Debes seleccionar al menos una categoría');
         return;
     }
+    if(categoria1 === categoria2) {
+        createNotification('error', 'Las categorías no pueden ser iguales');
+        return;
+    }
     if (tamanos.length === 0) {
-        createNotification('error', 'Debes seleccionar al menos un tamaño');
+        createNotification('error', 'Debes seleccionar y poner precio a al menos un tamaño');
         return;
     }
     if (!descripcion) {

@@ -88,7 +88,7 @@ class AdminProductController {
             }
     
             // Llama al modelo para actualizar, pasando la ruta de la imagen (nueva o anterior)
-            Producto::update($id, $nombre, $descripcion, $tamanos, $precios, $categorias, $rutaImagen);
+            Producto::update($nombre, $descripcion, $tamanos, $precios, $categorias, $rutaImagen);
     
             http_response_code(200);
             exit;

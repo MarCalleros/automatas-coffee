@@ -87,18 +87,19 @@
     </div>
 
     <script>
-    document.querySelectorAll('input[name="tamano"]').forEach(cb => {
-        cb.addEventListener('change', function() {
-            const precioInput = document.getElementById('precio-' + this.value);
-            if (this.checked) {
-                precioInput.style.display = 'inline-block';
-            } else {
-                precioInput.style.display = 'none';
-                precioInput.value = '';
-            }
+        document.querySelectorAll('input[name="tamano"]').forEach(cb => {
+            cb.addEventListener('change', function() {
+                const precioInput = document.getElementById('precio-' + this.value);
+                if (this.checked) {
+                    precioInput.style.display = 'inline-block';
+                } else {
+                    precioInput.style.display = 'none';
+                    precioInput.value = '';
+                }
+            });
         });
-    });
     </script>
+
     <script src="/assets/js/notification.js"></script>
     <script type="module" src="/assets/js/addproduct.js"></script>
 </body>
