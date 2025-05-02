@@ -1,5 +1,4 @@
 <?php
-
 namespace Controller;
 
 use Model\Carrito;
@@ -66,23 +65,9 @@ class APICarrito {
         $carrito = new Carrito();
         $carrito->id = $data['id'];
         $carrito->cantidad = $data['cantidad'];
-
+        $carrito->id_usuario = $_SESSION['id']; 
         $result = $carrito->actualizarCantidad();
-
-        if ($result === true) {
-            // Calcular el nuevo total del carrito
-            $total = Carrito::calcularTotal($_SESSION['id']);
-            $totalItems = Carrito::contarItems($_SESSION['id']);
-            
-            echo json_encode([
-                'status' => 'success', 
-                'message' => 'Carrito actualizado',     
-                'total' => $total,
-                'total_items' => $totalItems
-            ]);
-        } else {
-            echo json_encode(['status' => 'error', 'message' => $result]);
-        }
+        echo json_encode($result);
     }
 
     public static function eliminar() {
@@ -152,20 +137,33 @@ class APICarrito {
             echo json_encode(['status' => 'error', 'message' => 'Debes iniciar sesión para ver el carrito']);
             return;
         }
-
+    
         $items = Carrito::obtenerCarritoCompleto($_SESSION['id']);
         $total = Carrito::calcularTotal($_SESSION['id']);
-
-        if ($items !== null) {
-            echo json_encode([
-                'status' => 'success',
-                'items' => $items,
-                'total' => $total
-            ]);
-        } else {
-            echo json_encode(['status' => 'error', 'message' => 'Error al obtener el carrito']);
-        }
+    
+        // Convertir objetos Carrito a arrays
+        $itemsArray = array_map(function($item) {
+            return [
+                'id'               => $item->id,
+                'id_producto'      => $item->id_producto,
+                'id_tamaño'        => $item->id_tamaño,
+                'cantidad'         => $item->cantidad,
+                'nombre_producto'  => $item->nombre_producto,
+                'nombre_tamaño'    => $item->nombre_tamaño,
+                'precio'           => $item->precio,
+                'descripcion'      => $item->descripcion,
+                'ruta_imagen'      => $item->ruta_imagen,
+                'stock_disponible' => $item->stock_disponible,
+            ];
+        }, $items);
+    
+        echo json_encode([
+            'status' => 'success',
+            'items'  => $itemsArray,
+            'total'  => $total
+        ]);
     }
+    
 
     public static function comprar() {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -191,7 +189,7 @@ class APICarrito {
             if ($item->cantidad > $item->stock_disponible) {
                 echo json_encode([
                     'status' => 'error', 
-                    'message' => "Stock insuficiente para {$item->nombre_producto} ({$item->nombre_tamaño}). Solo hay {$item->stock_disponible} unidades disponibles."
+                    'message' => "Stock insuficiente para {$item->nombre_producto} {$item->nombre_tamaño}. No hay unidades disponibles."
                 ]);
                 return;
             }

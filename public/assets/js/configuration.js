@@ -1,4 +1,4 @@
-import { createNotification } from './notification.js';
+
 let username = getCookie('logged') || "defaultUser";
 
 function setUserCookie(name, value, days) {

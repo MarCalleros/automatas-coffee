@@ -45,7 +45,7 @@ class Carrito {
             }
             
             if ($stockDisponible < $this->cantidad) {
-                return "Stock insuficiente. Solo hay {$stockDisponible} unidades disponibles";
+                return "No hay unidades por el momento";
             }
 
             // Verificar si el producto ya está en el carrito
@@ -82,81 +82,75 @@ class Carrito {
     }
 
     public function actualizarCantidad() {
-    try {
-        require __DIR__ . '/../includes/database.php';
-        mysqli_begin_transaction($db);
-
-        // 1. Obtener datos actuales del item
-        $queryItem = "SELECT id_producto, id_tamaño, existencia FROM producto_tamaño WHERE id_producto = ? FOR UPDATE";
-        $stmt = mysqli_prepare($db, $queryItem);
-        mysqli_stmt_bind_param($stmt, 'i', $this->id);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        
-        if ($result->num_rows === 0) {
-            mysqli_rollback($db);
-            return ["status" => "error", "message" => "Item no encontrado en el carrito"];
-        
-        }
-        
-        $itemActual = mysqli_fetch_assoc($result);
-        $this->id_producto = $itemActual['id_producto'];
-        $this->id_tamaño = $itemActual['id_tamaño'];
-        $cantidadActual = $itemActual['existencia'];
-
-        // 2. Verificar nuevo stock
-        $stockDisponible = $this->verificarStock($db);
-        if ($stockDisponible === false) {
-            mysqli_rollback($db);
-            return ["status" => "error", "message" => "Error al verificar stock"];
-        }
-        
-        $diferencia = $this->cantidad - $cantidadActual;
-        $nuevoStockRequerido = $stockDisponible - $diferencia;
-
-        if ($nuevoStockRequerido < 0) {
-            mysqli_rollback($db);
+        try {
+            require __DIR__ . '/../includes/database.php';
+            mysqli_begin_transaction($db);
+    
+            // 1. Leer cantidad anterior en carrito
+            $queryOld = "SELECT cantidad, id_producto, id_tamaño FROM carrito WHERE id = ? FOR UPDATE";
+            $stmt = mysqli_prepare($db, $queryOld);
+            mysqli_stmt_bind_param($stmt, 'i', $this->id);
+            mysqli_stmt_execute($stmt);
+            $resOld = mysqli_stmt_get_result($stmt);
+            if ($resOld->num_rows === 0) {
+                mysqli_rollback($db);
+                return ["status" => "error", "message" => "Item no encontrado en carrito"];
+            }
+            $rowOld = mysqli_fetch_assoc($resOld);
+            $cantidadAnterior = intval($rowOld['cantidad']);
+            $this->id_producto = $rowOld['id_producto'];
+            $this->id_tamaño   = $rowOld['id_tamaño'];
+    
+            // 2. Leer existencia real en inventario (solo para validar)
+            $queryStock = "SELECT existencia FROM producto_tamaño WHERE id_producto = ? AND id_tamaño = ? FOR UPDATE";
+            $stmt = mysqli_prepare($db, $queryStock);
+            mysqli_stmt_bind_param($stmt, 'ii', $this->id_producto, $this->id_tamaño);
+            mysqli_stmt_execute($stmt);
+            $resStock = mysqli_stmt_get_result($stmt);
+            if ($resStock->num_rows === 0) {
+                mysqli_rollback($db);
+                return ["status" => "error", "message" => "Item no encontrado en inventario"];
+            }
+            $rowStock        = mysqli_fetch_assoc($resStock);
+            $stockDisponible = intval($rowStock['existencia']);
+    
+            // 3. Validar que no exceda stock
+            if ($this->cantidad > $stockDisponible) {
+                mysqli_rollback($db);
+                return [
+                    "status"      => "error",
+                    "message"     => "Stock insuficiente. Solo quedan {$stockDisponible} unidades.",
+                    "total"       => self::calcularTotal($this->id_usuario),
+                    "total_items" => self::contarItems($this->id_usuario)
+                ];
+            }
+    
+            // 4. Actualizar solo el carrito (sin tocar inventario)
+            $queryUpdCart = "UPDATE carrito SET cantidad = ? WHERE id = ?";
+            $stmt = mysqli_prepare($db, $queryUpdCart);
+            mysqli_stmt_bind_param($stmt, 'ii', $this->cantidad, $this->id);
+            if (!mysqli_stmt_execute($stmt)) {
+                mysqli_rollback($db);
+                return ["status"=>"error","message"=>"Error al actualizar carrito"];
+            }
+    
+            mysqli_commit($db);
+    
             return [
-                "status" => "error", 
-                "message" => "Stock insuficiente. Disponible: $stockDisponible",
-                "stock_maximo" => $stockDisponible
+                "status"      => "success",
+                // Quitamos "nuevo_stock" porque no lo modificamos aquí
+                "total"       => self::calcularTotal($this->id_usuario),
+                "total_items" => self::contarItems($this->id_usuario)
             ];
+    
+        } catch (\Exception $e) {
+            if (isset($db)) mysqli_rollback($db);
+            return ["status"=>"error","message"=>$e->getMessage()];
         }
-
-        // 3. Actualizar cantidad
-        $queryUpdate = "UPDATE producto_tamaño SET existencia = ? WHERE id = ?";
-        $stmt = mysqli_prepare($db, $queryUpdate);
-        mysqli_stmt_bind_param($stmt, 'ii', $this->cantidad, $this->id);
-        
-        if (!mysqli_stmt_execute($stmt)) {
-            mysqli_rollback($db);
-            return ["status" => "error", "message" => "Error al actualizar cantidad"];
-        }
-
-        // 4. Bloquear stock temporalmente
-        $queryStock = "UPDATE producto_tamaño SET existencia = existencia - ? 
-                      WHERE id_producto = ? AND id_tamaño = ?";
-        $stmt = mysqli_prepare($db, $queryStock);
-        mysqli_stmt_bind_param($stmt, 'iii', $diferencia, $this->id_producto, $this->id_tamaño);
-        
-        if (!mysqli_stmt_execute($stmt)) {
-            mysqli_rollback($db);
-            return ["status" => "error", "message" => "Error al actualizar stock"];
-        }
-
-        mysqli_commit($db);
-        return [
-            "status" => "success",
-            "nuevo_stock" => $stockDisponible - $diferencia,
-            "total" => self::calcularTotal($this->id_usuario),
-            "total_items" => self::contarItems($this->id_usuario)
-        ];
-
-    } catch (\Exception $e) {
-        if (isset($db)) mysqli_rollback($db);
-        return ["status" => "error", "message" => $e->getMessage()];
     }
-}
+    
+    
+    
 
     public function eliminar() {
         try {
@@ -241,9 +235,9 @@ class Carrito {
             require __DIR__ . '/../includes/database.php';
 
             $query = "SELECT SUM(c.cantidad * pt.precio) as total
-                      FROM " . self::$tabla . " c
-                      JOIN producto_tamaño pt ON c.id_producto = pt.id_producto AND c.id_tamaño = pt.id_tamaño
-                      WHERE c.id_usuario = ?";
+                    FROM " . self::$tabla . " c
+                    JOIN producto_tamaño pt ON c.id_producto = pt.id_producto AND c.id_tamaño = pt.id_tamaño
+                    WHERE c.id_usuario = ?";
             
             $stmt = mysqli_prepare($db, $query);
             mysqli_stmt_bind_param($stmt, 'i', $id_usuario);
@@ -304,24 +298,27 @@ class Carrito {
     
 
     private function verificarStock($db) {
-    try {
-        $query = "SELECT existencia FROM producto_tamaño 
-                  WHERE id_producto = ? AND id_tamaño = ?";
-        
-        $stmt = mysqli_prepare($db, $query);
-        mysqli_stmt_bind_param($stmt, 'ii', $this->id_producto, $this->id_tamaño);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        if ($result->num_rows > 0) {
-            $row = mysqli_fetch_assoc($result);
-            return intval($row['existencia']);
-        } else {
-            return 0;
+        try {
+            $query = "SELECT existencia FROM producto_tamaño 
+                      WHERE id_producto = ? AND id_tamaño = ?";
+            
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'ii', $this->id_producto, $this->id_tamaño);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+    
+            if ($result->num_rows > 0) {
+                $row = mysqli_fetch_assoc($result);
+                return intval($row['existencia']);
+            } else {
+                // Producto o tamaño no encontrado
+                return false;
+            }
+        } catch (\Exception $e) {
+            return false;
         }
-    } catch (\Exception $e) {
-        return false;
     }
-}
+    
 
     public static function actualizarStock($items) {
         try {

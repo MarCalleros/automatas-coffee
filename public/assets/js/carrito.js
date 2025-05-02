@@ -1,9 +1,7 @@
 import { createNotification } from "./notification.js"
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("Carrito cargado")
   cargarProductosCarrito()
-  actualizarContadorCarrito()
 
   function cargarProductosCarrito() {
     const cartContainer = document.querySelector('.cart-items');
@@ -18,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (data.status == "success" && data.items.length === 0) {
           cartContainer.innerHTML = '<div class="empty-cart">Tu carrito está vacío</div>';
           document.querySelector(".buy-btn").disabled = true;
+          document.querySelector(".total-price").textContent = "$0.00";
           return;
         }
   
@@ -25,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
         data.items.forEach(product => {
           const productHTML = `
-            <div class="cart-item" data-id="${product.id}">
+            <div class="cart-item" data-id="${product.id_producto}" data-idcarrito="${product.id}">
               <div class="cart-item__image">
                 <img src="/assets/img/product/${product.ruta_imagen}.jpg" alt="${product.nombre_producto}">
               </div>
@@ -62,7 +61,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         inicializarEventosCarrito()
-  
         document.querySelector(".total-price").textContent = `$${data.total.toFixed(2)}`;
       })
       .catch(error => {
@@ -77,27 +75,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Botones de aumentar cantidad
     document.querySelectorAll(".quantity-btn.plus").forEach((btn) => {
-      console.log(document.querySelectorAll(".quantity-btn.plus"))
       btn.addEventListener("click", function () {
         if (this.disabled) return
 
         const cartItem = this.closest(".cart-item")
-        const id = cartItem.dataset.id
+        const id = cartItem.getAttribute("data-idcarrito")
         const quantityElement = cartItem.querySelector(".quantity")
         let cantidad = Number.parseInt(quantityElement.textContent)
         cantidad++
 
         actualizarCantidadEnServidor(id, cantidad, (response) => {
-          if (response.message.status === "success") {
+          if (response.status === "success") {
             quantityElement.textContent = cantidad
 
             // Actualizar precio del item
             const precioUnitario = obtenerPrecioUnitario(cartItem)
             cartItem.querySelector(".item-price").textContent = "$" + (precioUnitario * cantidad).toFixed(2)
-
             // Actualizar total
+            if (typeof response.total === "number") {
             document.querySelector(".total-price").textContent = "$" + response.total.toFixed(2)
-
+            }
             // Verificar si se alcanzó el stock máximo
             const stockDisponible = obtenerStockDisponible(cartItem)
             if (cantidad >= stockDisponible) {
@@ -150,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (this.disabled) return
 
         const cartItem = this.closest(".cart-item")
-        const id = cartItem.dataset.id
+        const id = cartItem.dataset.idcarrito
         const quantityElement = cartItem.querySelector(".quantity")
         let cantidad = Number.parseInt(quantityElement.textContent)
 
@@ -158,7 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
           cantidad--
 
           actualizarCantidadEnServidor(id, cantidad, (response) => {
-            if (response.message.status === "success") {
+            if (response.status === "success") {
               quantityElement.textContent = cantidad
 
               // Actualizar precio del item
@@ -191,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.addEventListener("click", function () {
         console.log("Eliminando producto del carrito")
         const cartItem = this.closest(".cart-item")
-        const id = cartItem.dataset.id
+        const id = cartItem.getAttribute("data-idcarrito")
 
         eliminarDelServidor(id, (response) => {
           if (response.status === "success") {
@@ -305,15 +302,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     return 999
   }
-
-  function actualizarContadorCarrito(count) {
-  const contadorElement = document.querySelector(".cart-count")
-  if (!contadorElement) return
-
-  if (count !== undefined) {
-    contadorElement.textContent = count
-    contadorElement.style.display = count > 0 ? "block" : "none"
-    return
-  }
-}
 })
