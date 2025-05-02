@@ -174,8 +174,6 @@
 
         <section class="information-section information-section--content">
             <h2 class="information-section__title">Titulo de la seccion</h2>
-
-
         </section>
     </main>
 

@@ -113,7 +113,9 @@ class UserController {
 
             // Solo actualizar la contraseña si se proporciona una nueva
             if (!empty($_POST['contraseña'])) {
-                $usuarioBD->contraseña = password_hash($_POST['contraseña'], PASSWORD_BCRYPT);
+                $usuarioBD->contraseña = $_POST['contraseña'];
+            } else {
+                $usuarioBD->contraseña = null;
             }
 
             // Buscar el correo en la base de datos para verificar si ya existe
