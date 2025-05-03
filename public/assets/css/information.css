@@ -160,6 +160,7 @@
 /* Informacion de mi cuenta */
 .information-form {
     margin: 0 auto;
+    min-width: 500px;
     width: 50%;
 }
 
