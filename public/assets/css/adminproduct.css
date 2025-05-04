@@ -1,3 +1,8 @@
+h4 {
+    font-size: 18px;
+    margin: 20px;
+}
+
 .admin__subtitles {
     margin: 20px;
     padding: 0px;
@@ -43,12 +48,13 @@
 
 /* CSS para que el texto de la descripción no se desborde */
 .admin__product__info p {
-    padding: 0px 10px;
+    display: -webkit-box;
     text-align: start;
     overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 3; 
+    -webkit-line-clamp: 3; /* Se tienen que agregar esta y la de abajo por estándar */
+    line-clamp: 3;
     -webkit-box-orient: vertical;
+    padding: 0px 10px;
 }
 
 .admin__product__info img {

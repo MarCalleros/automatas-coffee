@@ -46,17 +46,20 @@
                     <div class="opcion">
                         <input type="checkbox" id="tamano-ch" name="tamano" value="1">
                         <span>Chico</span>
-                        <input type="number" id="precio-1" class="precio-tamano" placeholder="Precio chico" min="0" step="0.01" style="display:none;">
+                        <input type="number" id="precio-1" class="precio-tamano" placeholder="Precio chico" min="0" step="0.01" style="visibility:hidden;">
+                        <input type="number" id="stock-1" class="stock-tamano" placeholder="Ingresar stock" min="0" style="visibility:hidden;">
                     </div>
                     <div class="opcion">
                         <input type="checkbox" id="tamano-md" name="tamano" value="2">
                         <span>Mediano</span>
-                        <input type="number" id="precio-2" class="precio-tamano" placeholder="Precio mediano" min="0" step="0.01" style="display:none;">
+                        <input type="number" id="precio-2" class="precio-tamano" placeholder="Precio mediano" min="0" step="0.01" style="visibility:hidden;">
+                        <input type="number" id="stock-2" class="stock-tamano" placeholder="Ingresar stock" min="0" style="visibility:hidden;">
                     </div>
                     <div class="opcion">
                         <input type="checkbox" id="tamano-gr" name="tamano" value="3">
                         <span>Grande</span>
-                        <input type="number" id="precio-3" class="precio-tamano" placeholder="Precio grande" min="0" step="0.01" style="display:none;">
+                        <input type="number" id="precio-3" class="precio-tamano" placeholder="Precio grande" min="0" step="0.01" style="visibility:hidden;">
+                        <input type="number" id="stock-3" class="stock-tamano" placeholder="Ingresar stock" min="0" style="visibility:hidden;">
                     </div>
                 </div>
             </div>
@@ -90,11 +93,15 @@
         document.querySelectorAll('input[name="tamano"]').forEach(cb => {
             cb.addEventListener('change', function() {
                 const precioInput = document.getElementById('precio-' + this.value);
+                const stockInput = document.getElementById('stock-' + this.value);
                 if (this.checked) {
-                    precioInput.style.display = 'inline-block';
+                    precioInput.style.visibility = 'visible';
+                    stockInput.style.visibility = 'visible';
                 } else {
-                    precioInput.style.display = 'none';
+                    precioInput.style.visibility = 'hidden';
                     precioInput.value = '';
+                    stockInput.style.visibility = 'hidden';
+                    stockInput.value = '';
                 }
             });
         });

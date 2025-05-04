@@ -43,7 +43,6 @@
                     </div>
                 <?php endforeach; ?>
             </div>
-            
 
         </main>
 

@@ -84,6 +84,11 @@ document.getElementById('agregar').onclick = async function() {
     }
 };
 
+document.getElementById('cancelar').onclick = function() {
+    // Redirige a la página de administración de productos
+    window.location.href = '/admin/adminproduct';
+}
+
 document.getElementById('imagen').addEventListener('change', function(event) {
     const file = event.target.files[0];
     const preview = document.getElementById('preview-imagen');
