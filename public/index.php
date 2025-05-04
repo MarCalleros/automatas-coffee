@@ -22,6 +22,7 @@ $router->post('/api/user/update', [APIUsuario::class, 'update']);
 $router->post('/api/user/login', [APIUsuario::class, 'login']);
 $router->post('/api/user/logout', [APIUsuario::class, 'logout']);
 $router->post('/api/user/check-password', [APIUsuario::class, 'checkPassword']);
+$router->post('/api/user/update-password', [APIUsuario::class, 'updatePassword']);
 $router->post('/api/user/get-logged-data', [APIUsuario::class, 'getLoggedUserData']);
 
 // Admin

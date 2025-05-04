@@ -12,8 +12,6 @@
 
         <a class="navbar__link-logo" href="/">
             <img src="/assets/img/logo_white.png" alt="Automatas Coffee Logo" class="navbar__logo">
-            <div class="navbar__brand">
-            </div>
         </a>
     </div>
             

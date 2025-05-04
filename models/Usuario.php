@@ -150,11 +150,38 @@ class Usuario {
             // Solo hashear la contraseña si no está vacía
             if (!empty($this->contraseña)) {
                 $this->contraseña = password_hash($this->contraseña, PASSWORD_BCRYPT);
+
+                $query = "UPDATE " . static::$tabla . " SET id_tipo_usuario = ?, nombre = ?, edad = ?, correo = ?, usuario = ?, contraseña = ? WHERE id = ?";
+                $stmt = mysqli_prepare($db, $query);
+
+                mysqli_stmt_bind_param($stmt, 'isssssi', $this->id_tipo_usuario, $this->nombre, $this->edad, $this->correo, $this->usuario, $this->contraseña, $this->id);
+            } else {
+                $query = "UPDATE " . static::$tabla . " SET id_tipo_usuario = ?, nombre = ?, edad = ?, correo = ?, usuario = ? WHERE id = ?";
+                $stmt = mysqli_prepare($db, $query);
+
+                mysqli_stmt_bind_param($stmt, 'issssi', $this->id_tipo_usuario, $this->nombre, $this->edad, $this->correo, $this->usuario, $this->id);
             }
     
-            mysqli_stmt_bind_param($stmt, 'isssssi', $this->id_tipo_usuario, $this->nombre, $this->edad, $this->correo, $this->usuario, $this->contraseña, $this->id);
             $executed = mysqli_stmt_execute($stmt);
     
+            return $executed && mysqli_stmt_affected_rows($stmt) > 0;
+        } finally {
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+        }
+    }
+
+    public function updatePassword() {
+        require __DIR__ . '/../includes/database.php';
+
+        try {
+            mysqli_report(MYSQLI_REPORT_OFF);
+
+            $this->contraseña = password_hash($this->contraseña, PASSWORD_BCRYPT);
+            $query = "UPDATE " . static::$tabla . " SET contraseña = ? WHERE id = ?";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'si', $this->contraseña, $this->id);
+            $executed = mysqli_stmt_execute($stmt);
+
             return $executed && mysqli_stmt_affected_rows($stmt) > 0;
         } finally {
             mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);

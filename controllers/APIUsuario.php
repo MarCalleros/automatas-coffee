@@ -78,8 +78,6 @@ class APIUsuario {
             return;
         }
 
-        $result = Usuario::findById($_SESSION['id']);
-
         $usuario = new Usuario();
 
         $usuario->id = $_SESSION['id'];
@@ -88,14 +86,44 @@ class APIUsuario {
         $usuario->edad = $data['age'];
         $usuario->correo = $data['email'];
         $usuario->usuario = $data['username'];
-        $usuario->contraseña = $result->contraseña;
 
         $result = $usuario->update();
     
         if ($result) {
             echo json_encode(['status' => 'success', 'message' => 'Usuario actualizado exitosamente']);
         } else {
-            echo json_encode(['status' => 'error', 'message' => 'Error al actualizar el usuario']);
+            echo json_encode(['status' => 'error', 'message' => 'No se realizo ningun cambio']);
+        }
+    }
+
+    public static function updatePassword() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
+            return;
+        }
+    
+        $data = json_decode(file_get_contents('php://input'), true);
+    
+        if (!isset($data['password'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Faltan datos requeridos']);
+            return;
+        }
+    
+        if (!isLogged()) {
+            echo json_encode(['status' => 'error', 'message' => 'No hay sesión activa']);
+            return;
+        }
+    
+        $usuario = new Usuario();
+        $usuario->id = $_SESSION['id'];
+        $usuario->contraseña = $data['password'];
+    
+        $result = $usuario->updatePassword();
+    
+        if ($result) {
+            echo json_encode(['status' => 'success', 'message' => 'Contraseña actualizada exitosamente']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Error al actualizar la contraseña']);
         }
     }
     
