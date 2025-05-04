@@ -15,7 +15,7 @@
             <h2 class="admin__title">PRODUCTOS</h2>
 
             <div class="admin__subtitles">
-                <h3>Menu</h3>
+                <h3>Menú</h3>
                 <a href="/admin/addproduct">
                     Agregar producto
                 </a>
