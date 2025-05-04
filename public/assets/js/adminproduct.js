@@ -31,7 +31,7 @@ document.querySelectorAll('.status-btn').forEach(btn => {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    const buscador = document.getElementById('buscador-productos');
+    const buscador = document.getElementById('buscador__productos');
     if (!buscador) return;
     buscador.addEventListener('input', function() {
         const filtro = buscador.value.toLowerCase();

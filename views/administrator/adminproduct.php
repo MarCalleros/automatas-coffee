@@ -20,7 +20,9 @@
                     Agregar producto
                 </a>
             </div>
-            <input type="text" id="buscador-productos" placeholder="Buscar producto..." style="margin: 5px 0px 0px 40px; padding:5px; border-radius:5px;">
+            <div class="buscador__contenedor">
+                <input type="text" id="buscador__productos" placeholder="Buscar producto...">
+            </div>
 
 
             <script src="/assets/js/adminproducts.js"></script>

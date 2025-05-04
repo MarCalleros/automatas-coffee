@@ -84,7 +84,7 @@ $categoria2 = $product['categorias'][1] ?? '';
 
         <div class="seccion4">
             <div id="agregar">
-                <label for="">Agregar producto</label>
+                <label for="">Editar producto</label>
             </div>
             <div id="cancelar">
                 <label for="">Cancelar</label>
@@ -109,6 +109,7 @@ $categoria2 = $product['categorias'][1] ?? '';
         });
     });
     </script>
+    
     <script src="/assets/js/notification.js"></script>
     <script type="module" src="/assets/js/addproduct.js"></script>
 </body>
