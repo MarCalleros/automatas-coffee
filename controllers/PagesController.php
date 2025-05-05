@@ -14,6 +14,10 @@ class PagesController {
         ]);
     }
 
+    public static function find(Router $router) {
+        $router->render('pages/find', []);
+    }
+
     public static function contact(Router $router) {
         $router->render('pages/contact', []);
     }

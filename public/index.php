@@ -50,6 +50,7 @@ $router->get('/admin/map', [AdminPagesController::class, 'map']);
 // Usuario
 $router->get('/', [PagesController::class, 'home']);
 $router->get('/contactanos', [PagesController::class, 'contact']);
+$router->get('/encuentranos', [PagesController::class, 'find']);
 $router->get('/configuracion', [PagesController::class, 'configuration']);
 $router->get('/informacion', [PagesController::class, 'information']);
 $router->get('/carrito', [PagesController::class, 'carrito']);

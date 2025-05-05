@@ -18,7 +18,7 @@
             
     <div class="navbar__links">
         <a class="navbar__link" href="/productos">Productos</a>
-        <a class="navbar__link" href="">Encuentranos</a>
+        <a class="navbar__link" href="encuentranos">Encuentranos</a>
         <a class="navbar__link" href="/contactanos">Contactanos</a>
 
         <?php if (isLogged()): ?>
