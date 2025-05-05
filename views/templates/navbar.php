@@ -1,3 +1,4 @@
+<body username="<?php echo getLoggedUsername(); ?>">
 <nav class="navbar">
     <div class="navbar__header">
         <svg class="hamburguer-menu-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

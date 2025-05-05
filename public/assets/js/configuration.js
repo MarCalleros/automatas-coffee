@@ -1,7 +1,7 @@
-
-let username = getCookie('logged') || "defaultUser";
+let username = document.body.getAttribute("username") || null;
 
 function setUserCookie(name, value, days) {
+    if (!username) return; 
     let cookieName = name + "_" + username;
     let date = new Date();
     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
@@ -9,6 +9,7 @@ function setUserCookie(name, value, days) {
 }
 
 function getUserCookie(name) {
+    if (!username) return "";
     let cookieName = name + "_" + username;
     let cookies = document.cookie.split("; ");
     for (let cookie of cookies) {
@@ -70,6 +71,7 @@ function applyTextStyle(option) {
 }
 
 function resetConfig() {
+    if (!username) return; 
     document.cookie = "tema_" + username + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     document.cookie = "texto_" + username + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     document.cookie = "imagen_" + username + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -81,7 +83,27 @@ function resetConfig() {
     createNotification("success", "Configuración restablecida");
 }
 
+function clearUserCookies() {
+    if (!username) return;
+    document.cookie = "tema_" + username + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "texto_" + username + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "imagen_" + username + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    console.log("Cookies personalizadas eliminadas.");
+}
+
 document.addEventListener("DOMContentLoaded", function () {
+    if (username) {
+        console.log("Aplicando configuraciones personalizadas para:", username);
+        applyImage(getUserCookie("imagen") || "MEDIANO");
+        applyTheme(getUserCookie("tema") || "CLARO");
+        applyTextStyle(getUserCookie("texto") || "MEDIANO");
+    } else {
+        console.log("No hay un usuario activo. Aplicando configuraciones predeterminadas.");
+        applyTheme("CLARO");
+        applyTextStyle("MEDIANO");
+        applyImage("MEDIANO");
+    }
+
     document.querySelectorAll(".temas").forEach(tema => {
         tema.addEventListener("click", function () {
             let selectedTheme = this.querySelector("h3").textContent.trim().toUpperCase();
@@ -114,7 +136,4 @@ document.addEventListener("DOMContentLoaded", function () {
         resetButton.addEventListener("click", resetConfig);
     }
 
-    applyImage(getUserCookie("imagen"));
-    applyTheme(getUserCookie("tema"));
-    applyTextStyle(getUserCookie("texto"));
 });

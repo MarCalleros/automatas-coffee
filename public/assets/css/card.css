@@ -81,7 +81,7 @@ ul {
 .card__footer-button {
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
-    color: var(--color-text-black);
+    color: var(--black);
     border: none;
     background-color: var(--gray);
     padding: 7px;

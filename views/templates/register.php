@@ -1,3 +1,4 @@
+<body username="<?php echo getLoggedUsername(); ?>">
 <div class="register-modal">
     <button class="modal__close" id="register-close">
         <svg class="close-icon" width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">

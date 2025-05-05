@@ -146,14 +146,14 @@
     transition: 0.3s;
 }
 .botonreseteo{
-    color: var(--color-text);
+    color: var(--black);
     font-size: var(--text);
     border-radius: 10px;
     border: 1px solid;
     background-color: var(--white);
     cursor: pointer;
     transition: background-color 0.3s ease;
-    border: 1px solid var(--color-text);
+    border: 1px solid var(--black);
 }
 .inputs,
 #mensaje {

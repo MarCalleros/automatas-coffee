@@ -9,7 +9,7 @@
     <link rel="shortcut icon" href="/assets/img/logo-coffee.png">
     <title>Document</title>
 </head>
-<body>
+<body username="<?php echo getLoggedUsername(); ?>">
 
     <div class="containergeneral">
         <?php include_once __DIR__ . "/../templates/navbar.php"; ?>

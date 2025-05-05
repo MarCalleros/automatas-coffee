@@ -9,7 +9,7 @@
     <link rel="shortcut icon" href="/assets/img/logo-coffee.png">
     <title>Automatas Coffee</title>
 </head>
-<body>
+<body username="<?php echo getLoggedUsername(); ?>">
     <?php include_once __DIR__ . "/../templates/header.php"; ?>
     
     <div>

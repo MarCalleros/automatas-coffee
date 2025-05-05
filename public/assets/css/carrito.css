@@ -230,7 +230,7 @@
 
 .empty-cart {
     font-family: 'Lato', sans-serif;
-    color: var(--dark-gray);
+    color: var(--black);
     font-size: var(--text-small);
     text-align: center;
     padding: 30px;
