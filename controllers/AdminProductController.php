@@ -63,33 +63,29 @@ class AdminProductController {
             $descripcion = $_POST['descripcion'] ?? '';
             $tamanos = $_POST['tamanos'] ?? [];
             $precios = $_POST['precios'] ?? [];
+            $stock = $_POST['stocks'] ?? [];
             $imagen = $_FILES['imagen'] ?? null;
     
             $categorias = [];
             if ($categoria1) $categorias[] = $categoria1;
             if ($categoria2 && $categoria2 !== $categoria1) $categorias[] = $categoria2;
-    
-            // Obtener la ruta actual de la imagen del producto
-            $productoActual = Producto::findById($id);
-            $rutaImagen = $productoActual['ruta'] ?? null;
-    
-            // Si el usuario subió una nueva imagen, la procesamos y actualizamos la ruta
+
+            $productoAcual = Producto::findById($id);
+            $rutaImagen = $productoAcual['ruta'];
+
             if ($imagen && $imagen['tmp_name']) {
-                $extension = pathinfo($imagen['name'], PATHINFO_EXTENSION);
-                $nombreImagen = bin2hex(random_bytes(15)) . '.' . $extension;
-                $destino = __DIR__ . '/../../public/assets/img/product/' . $nombreImagen;
-                move_uploaded_file($imagen['tmp_name'], $destino);
+                $nombreImagen = md5(uniqid(rand(), true));
                 $rutaImagen = $nombreImagen;
+                $destino = __DIR__ . '../../public/assets/img/product/' . $nombreImagen . '.jpg';
+                move_uploaded_file($imagen['tmp_name'], $destino);
             }
     
-            // Llama al modelo para actualizar, pasando la ruta de la imagen (nueva o anterior)
-            Producto::update($nombre, $descripcion, $tamanos, $precios, $categorias, $rutaImagen);
+            Producto::update($id, $nombre, $descripcion, $tamanos, $precios, $stock, $categorias, $rutaImagen);
     
             http_response_code(200);
             exit;
         }
     
-        // Si es GET, muestra el formulario de edición como ya lo tienes
         $id = $_GET['id'] ?? null;
         if (!$id) {
             header('Location: /admin/adminproduct');

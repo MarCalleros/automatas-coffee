@@ -78,26 +78,45 @@ document.getElementById('agregar').onclick = async function() {
     }
 
     // Envía los datos al backend
-    try {
-        const response = await fetch('/admin/addproduct', {
-            method: 'POST',
-            body: formData
-        });
+    if (!productId) {
+        try {
+            const response = await fetch('/admin/addproduct', {
+                method: 'POST',
+                body: formData
+            });
 
-        if (response.ok) {
-            console.log(response);
-            createNotification('success', 'Producto guardado correctamente');
-            window.location.href = '/admin/adminproduct';
-        } else {
-            createNotification('error', 'Error al guardar el producto');
+            if (response.ok) {
+                console.log(response);
+                createNotification('success', 'Producto guardado correctamente');
+                window.location.href = '/admin/adminproduct';
+            } else {
+                createNotification('error', 'Error al guardar el producto');
+            }
+        } catch (e) {
+            createNotification('error', 'Error de conexión al servidor');
         }
-    } catch (e) {
-        createNotification('error', 'Error de conexión al servidor');
+    } else {
+        try {
+            const response = await fetch('/admin/editproduct', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                console.log(response);
+                createNotification('success', 'Producto actualizado correctamente');
+                window.location.href = '/admin/adminproduct';
+            } else {
+                createNotification('error', 'Error al actualizar el producto');
+            }
+        } catch (e) {
+            createNotification('error', 'Error de conexión al servidor');
+        }
+
     }
 };
 
 document.getElementById('cancelar').onclick = function() {
-    // Redirige a la página de administración de productos
     window.location.href = '/admin/adminproduct';
 }
 
