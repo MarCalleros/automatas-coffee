@@ -22,6 +22,10 @@ class Producto {
     public $mediano; // Precio del tamaño mediano
     public $grande; // Precio del tamaño grande
 
+    public $stockch; // Stock del tamaño chico
+    public $stockmd; // Stock del tamaño mediano
+    public $stockgr; // Stock del tamaño grande
+
     public $favorito;
 
     public function __construct($args = []) {
@@ -464,7 +468,7 @@ class Producto {
         return $producto;
     }
 
-    public static function create($nombre, $descripcion, $tamanos, $precios, $categorias, $rutaImagen) {
+    public static function create($nombre, $descripcion, $tamanos, $precios, $stocks, $categorias, $rutaImagen) {
         require __DIR__ . '/../includes/database.php';
         $query = "INSERT INTO " . self::$tabla . " (nombre, ruta, descripcion, estatus) VALUES (?, ?, ?, 1)";
         $stmt = mysqli_prepare($db, $query);
@@ -476,9 +480,10 @@ class Producto {
     
             foreach ($tamanos as $i => $id_tamano) {
                 $precio = $precios[$i] ?? 0;
-                $query = "INSERT INTO producto_tamaño (id_producto, id_tamaño, precio, existencia) VALUES (?, ?, ?, 20)";
+                $stock = $stocks[$i] ?? 0;
+                $query = "INSERT INTO producto_tamaño (id_producto, id_tamaño, precio, existencia) VALUES (?, ?, ?, ?)";
                 $stmt = mysqli_prepare($db, $query);
-                mysqli_stmt_bind_param($stmt, 'iid', $id_producto, $id_tamano, $precio);
+                mysqli_stmt_bind_param($stmt, 'iidi', $id_producto, $id_tamano, $precio, $stock);
                 mysqli_stmt_execute($stmt);
             }
     

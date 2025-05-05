@@ -9,16 +9,26 @@ document.getElementById('agregar').onclick = async function() {
     const imagenInput = document.getElementById('imagen');
     const imagen = imagenInput.files[0];
 
-    // Captura los tamaños seleccionados y sus precios
+    // Captura los tamaños seleccionados con sus precios y su stock
+    let error = false;
     const tamanos = [];
     document.querySelectorAll('input[name="tamano"]:checked').forEach(cb => {
         const precio = document.getElementById('precio-' + cb.value).value;
+        const stock = document.getElementById('stock-' + cb.value).value;
         if (!precio) {
             createNotification('error', 'Debes ingresar el precio para el tamaño seleccionado: ' + cb.nextElementSibling.textContent);
+            error = true;
             return;
         }
-        tamanos.push({ tamano: cb.value, precio: precio });
+        if (!stock) {
+            createNotification('error', 'Debes ingresar el stock para el tamaño seleccionado: ' + cb.nextElementSibling.textContent);
+            error = true;
+            return;
+        }
+        tamanos.push({ tamano: cb.value, precio: precio , stock: stock });
     });
+
+    if (error) { return; }
 
     const productId = getProductIdFromUrl();
 
@@ -36,7 +46,7 @@ document.getElementById('agregar').onclick = async function() {
         return;
     }
     if (tamanos.length === 0) {
-        createNotification('error', 'Debes seleccionar y poner precio a al menos un tamaño');
+        createNotification('error', 'Debes seleccionar y poner precio y stock a al menos un tamaño');
         return;
     }
     if (!descripcion) {
@@ -60,6 +70,7 @@ document.getElementById('agregar').onclick = async function() {
     tamanos.forEach(obj => {
         formData.append('tamanos[]', obj.tamano);
         formData.append('precios[]', obj.precio);
+        formData.append('stocks[]', obj.stock);
     });
 
     if (productId) {
@@ -74,6 +85,7 @@ document.getElementById('agregar').onclick = async function() {
         });
 
         if (response.ok) {
+            console.log(response);
             createNotification('success', 'Producto guardado correctamente');
             window.location.href = '/admin/adminproduct';
         } else {

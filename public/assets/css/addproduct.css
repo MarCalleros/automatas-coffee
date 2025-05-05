@@ -37,7 +37,7 @@ input, select {
     border-radius: 5px;
     padding: 5px;
     width: 150%;
-    height: 45px;
+    height: 40px;
 }
 
 .seccion1 *{
@@ -198,9 +198,4 @@ span {
 
 .precio-tamano {
     margin-left: 50px;
-}
-
-.precioLabel {
-    font-size: 16px;
-    font-weight: 600;
 }
