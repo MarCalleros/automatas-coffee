@@ -36,11 +36,11 @@
             <div class="titulo">
                 <h2 class="title--page">Contactanos</h2>
             </div>
-            <form method="post" autocomplete="off" class="formulario">
-                <div class="entradas">
+            <form method="post" autocomplete="off" class="formulario" id="formulario">
+                <div class="entradas"> 
                     <div class="grupocontacto">
                         <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="Nombre" class ="inputs" >
+                        <input type="text" id="nombre" name="Nombre" class ="inputs"  >
                     </div>
                     <div class="grupocontacto">
                         <label for="correo">Correo</label>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="entradas mensaje">
                     <label for="mensaje">Mensaje</label>
-                    <textarea id="mensaje" name="Mensaje" cols="30" rows="10" ></textarea>
+                    <textarea id="mensaje" name="Mensaje" cols="30" rows="10" class="inputs" ></textarea>
     
                 </div>
                 <div class="botonescontacto">
@@ -63,7 +63,7 @@
         <?php include_once __DIR__ . "/../templates/footer.php"; ?>
         
     </div>
-
+    <script type="module" src="/assets/js/contact.js"></script>
     <script type="module" src="/assets/js/configuration.js"></script>
 </body>
 </html>
