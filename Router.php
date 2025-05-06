@@ -15,7 +15,7 @@ class Router {
     }
 
     public function testRoutes() {
-        $url = $_SERVER['PATH_INFO'] ?? '/';
+        $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $method = $_SERVER['REQUEST_METHOD'];
 
         if ($method === 'GET') {
