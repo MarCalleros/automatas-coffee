@@ -193,6 +193,7 @@ function messageSent(container) {
                         <div class="information-message">
                             <p class="information-message__text"><strong>Nombre: </strong>${data.user.nombre}</p>
                             <p class="information-message__text"><strong>Correo: </strong>${data.user.correo}</p>
+                            <p class="information-message__text"><strong>Numero de mensaje: </strong>${message.identificador}</p>
                             <p class="information-message__text"><strong>Mensaje enviado el: </strong>${message.fecha}</p>
                             <p class="information-message__text"><strong>Contenido: </strong>${message.contenido}</p>
                         </div>
