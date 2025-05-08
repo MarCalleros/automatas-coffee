@@ -27,6 +27,7 @@
                     <svg width="30" height="30" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg" class="cart-icon">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M4.16634 2.08331C3.01576 2.08331 2.08301 3.01606 2.08301 4.16665C2.08301 5.31723 3.01576 6.24998 4.16634 6.24998H6.70638L14.1319 35.9519C11.9429 36.9242 10.4163 39.1171 10.4163 41.6666C10.4163 45.1185 13.2146 47.9166 16.6663 47.9166C20.1181 47.9166 22.9163 45.1185 22.9163 41.6666C22.9163 40.9362 22.7909 40.235 22.5607 39.5833H31.6053C31.3751 40.235 31.2497 40.9362 31.2497 41.6666C31.2497 45.1185 34.0478 47.9166 37.4997 47.9166C40.9516 47.9166 43.7497 45.1185 43.7497 41.6666C43.7497 38.2148 40.9516 35.4166 37.4997 35.4166H18.293L17.2513 31.25H37.4997C41.8001 31.25 44.3786 28.5331 45.8095 25.5331C47.2078 22.6014 47.6945 19.0977 47.8643 16.5493C48.1005 13.0003 45.167 10.4166 41.9186 10.4166H12.043L10.7487 5.23942C10.2849 3.38454 8.61834 2.08331 6.70638 2.08331H4.16634ZM37.4997 27.0833H16.2096L13.0846 14.5833H41.9186C43.0709 14.5833 43.7628 15.4307 43.7068 16.2724C43.5484 18.6504 43.1051 21.5246 42.0488 23.7394C41.0251 25.8856 39.6249 27.0833 37.4997 27.0833ZM37.4997 43.7371C36.3561 43.7371 35.4293 42.8102 35.4293 41.6666C35.4293 40.5231 36.3561 39.5962 37.4997 39.5962C38.6432 39.5962 39.5701 40.5231 39.5701 41.6666C39.5701 42.8102 38.6432 43.7371 37.4997 43.7371ZM14.5959 41.6666C14.5959 42.8102 15.5228 43.7371 16.6663 43.7371C17.8098 43.7371 18.7368 42.8102 18.7368 41.6666C18.7368 40.5231 17.8098 39.5962 16.6663 39.5962C15.5228 39.5962 14.5959 40.5231 14.5959 41.6666Z" fill="white"/>
                     </svg>
+                    <span class="cart-indicator"></span>
                 </a>
                 
                 <div id="profile-button" class="navbar__icon-link profile-link">
@@ -50,3 +51,46 @@
 <script src="/assets/js/login-modal.js"></script>
 <script type="module" src="/assets/js/cookie-login.js"></script>
 <script type="module" src="/assets/js/configuration.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Función para actualizar el contador del carrito
+    function actualizarContadorCarrito() {
+        const contadorElement = document.querySelector(".cart-indicator");
+        if (!contadorElement) return;
+
+        fetch("/api/carrito/obtener")
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    const totalProductos = data.items.length;
+                    contadorElement.textContent = totalProductos;
+                    contadorElement.style.display = totalProductos > 0 ? "flex" : "none";
+                } else {
+                    contadorElement.style.display = "none";
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                contadorElement.style.display = "none";
+            });
+    }
+    actualizarContadorCarrito();
+    //Sobrescribir el método fetch original para detectar lso cambios en el carrito
+    const originalFetch = window.fetch;
+    window.fetch = function() {
+        const url = arguments[0];
+        const promise = originalFetch.apply(this, arguments);
+        if (typeof url === "string") {
+            if (url.includes("/api/carrito/agregar") || url.includes("/api/carrito/eliminar") || url.includes("/api/carrito/comprar")) {
+                promise.then(() => {
+                    setTimeout(actualizarContadorCarrito, 100);
+                });
+            }
+        }
+        return promise;
+    };
+    setInterval(actualizarContadorCarrito, 5000);
+});
+</script>
+</body>
