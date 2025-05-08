@@ -7,7 +7,9 @@
             "email": "automatassoftware@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "ramsey/uuid": "^4.7"
+    },
     "autoload": {
         "psr-4": {
             "Model\\": "./models",
