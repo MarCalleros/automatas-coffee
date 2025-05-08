@@ -8,11 +8,12 @@ use Controller\AdminProductController;
 use Controller\PagesController;
 use Controller\ProductoController;
 use Controller\RepartidorController;
+use Controller\UserController;
+use Controller\CarritoController;
 use Controller\APIProducto;
 use Controller\APIUsuario;
-use Controller\UserController;
 use Controller\APICarrito;
-use Controller\CarritoController;
+use Controller\APIMensaje;
 
 $router = new Router();
 
@@ -63,6 +64,7 @@ $router->get('/api/list', [APIProducto::class, 'list']);
 $router->get('/api/filter', [APIProducto::class, 'filter']);
 $router->post('/api/product/favorite', [APIProducto::class, 'favorite']);
 $router->post('/api/product/unfavorite', [APIProducto::class, 'unfavorite']);
+$router->post('/api/message/send', [APIMensaje::class, 'send']);
 
 // API Carrito
 $router->get('/api/carrito/obtener', [APICarrito::class, 'obtener']);

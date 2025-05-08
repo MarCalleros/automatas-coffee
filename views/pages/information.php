@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="information-menu__options" id="information-messages-options">
-                        <div class="information-menu__option">
+                        <div class="information-menu__option" id="information-messages-sent">
                             <div class="information-option__icon">
                                 <svg class="information-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -48,7 +48,7 @@
                             </div>
                         </div>
 
-                        <div class="information-menu__option">
+                        <div class="information-menu__option" id="information-messages-received">
                             <div class="information-option__icon">
                                 <svg class="information-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -82,7 +82,7 @@
                     </div>
 
                     <div class="information-menu__options" id="information-purchases-options">
-                        <div class="information-menu__option">
+                        <div class="information-menu__option" id="information-purchases-history">
                             <div class="information-option__icon">
                                 <svg class="information-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>

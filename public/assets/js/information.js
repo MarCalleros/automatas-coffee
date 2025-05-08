@@ -7,10 +7,19 @@ import { createNotification } from './notification.js';
         { button: document.querySelector('#information-account'), options: document.querySelector('#information-account-options') }
     ];
 
+    const messageButtons = [
+        { button: document.querySelector('#information-messages-sent') },
+        { button: document.querySelector('#information-messages-received') }
+    ];
+
+    const purchaseButtons = [
+        { button: document.querySelector('#information-purchases-history') }
+    ];
+
     const accountButtons = [
-        { button: document.querySelector('#information-account-data')},
-        { button: document.querySelector('#information-account-password')},
-        { button: document.querySelector('#information-account-desactivate')}
+        { button: document.querySelector('#information-account-data') },
+        { button: document.querySelector('#information-account-password') },
+        { button: document.querySelector('#information-account-desactivate') }
     ];
 
     buttons.forEach(item => {
@@ -26,15 +35,73 @@ import { createNotification } from './notification.js';
         });
     });
 
-    accountButtons.forEach(item => {
+    messageButtons.forEach(item => {
         item.button.addEventListener('click', function() {
+            messageButtons.forEach(button => {
+                button.button.classList.remove('information-menu__option--selected');
+            });
+
+            purchaseButtons.forEach(button => {
+                button.button.classList.remove('information-menu__option--selected');
+            });
+
+            accountButtons.forEach(button => {
+                button.button.classList.remove('information-menu__option--selected');
+            });
+
             item.button.classList.add('information-menu__option--selected');
 
-            for (let i = 0; i < accountButtons.length; i++) {
-                if (accountButtons[i].button !== item.button) {
-                    accountButtons[i].button.classList.remove('information-menu__option--selected');
-                }
+            const container = document.querySelector('.information-section--content');
+
+            if (item.button == messageButtons[0].button) {
+                // Call the function to show sent messages
             }
+
+            if (item.button == messageButtons[1].button) {
+                // Call the function to show received messages
+            }
+        });
+    });
+
+    purchaseButtons.forEach(item => {
+        item.button.addEventListener('click', function() {
+            messageButtons.forEach(button => {
+                button.button.classList.remove('information-menu__option--selected');
+            });
+
+            purchaseButtons.forEach(button => {
+                button.button.classList.remove('information-menu__option--selected');
+            });
+
+            accountButtons.forEach(button => {
+                button.button.classList.remove('information-menu__option--selected');
+            });
+
+            item.button.classList.add('information-menu__option--selected');
+
+            const container = document.querySelector('.information-section--content');
+
+            if (item.button == purchaseButtons[0].button) {
+                // Call the function to show purchase history
+            }
+        });
+    });
+
+    accountButtons.forEach(item => {
+        item.button.addEventListener('click', function() {
+            messageButtons.forEach(button => {
+                button.button.classList.remove('information-menu__option--selected');
+            });
+
+            purchaseButtons.forEach(button => {
+                button.button.classList.remove('information-menu__option--selected');
+            });
+
+            accountButtons.forEach(button => {
+                button.button.classList.remove('information-menu__option--selected');
+            });
+
+            item.button.classList.add('information-menu__option--selected');
 
             const container = document.querySelector('.information-section--content');
 

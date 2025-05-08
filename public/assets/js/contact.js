@@ -20,8 +20,24 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        createNotification('success', '¡Mensaje enviado correctamente!');
-        form.reset();
+        fetch('/api/message/send', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                content: mensaje.value
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status == "success") {
+                createNotification("success", data.message);
+                form.reset();
+            } else {
+                createNotification("error", data.message);
+            }
+        });
     });
 
     function validarCorreo(email) {
