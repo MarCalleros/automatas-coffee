@@ -214,6 +214,19 @@
     -webkit-box-orient: vertical;
 }
 
+.information-message__text--unlimited {
+    font-family: 'Lato', sans-serif;
+    font-size: var(--text-small);
+    color: var(--color-text);
+    margin: 0;
+    overflow: unset;
+    text-overflow: unset;
+    display: -webkit-box;
+    line-clamp: unset;
+    -webkit-line-clamp: unset;
+    -webkit-box-orient: vertical;
+}
+
 .information-message__status {
     display: flex;
     align-items: center;

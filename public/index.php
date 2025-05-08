@@ -55,6 +55,7 @@ $router->get('/encuentranos', [PagesController::class, 'find']);
 $router->get('/configuracion', [PagesController::class, 'configuration']);
 $router->get('/informacion', [PagesController::class, 'information']);
 $router->get('/informacion/:section', [PagesController::class, 'information']);
+$router->get('/informacion/:section/:identifier', [PagesController::class, 'information']);
 $router->get('/carrito', [PagesController::class, 'carrito']);
 
 $router->get('/productos', [ProductoController::class, 'index']);
@@ -67,6 +68,7 @@ $router->post('/api/product/favorite', [APIProducto::class, 'favorite']);
 $router->post('/api/product/unfavorite', [APIProducto::class, 'unfavorite']);
 $router->post('/api/message/send', [APIMensaje::class, 'send']);
 $router->get('/api/message/sended', [APIMensaje::class, 'getUserMessages']);
+$router->get('/api/message/detail', [APIMensaje::class, 'getDetailMessage']);
 
 // API Carrito
 $router->get('/api/carrito/obtener', [APICarrito::class, 'obtener']);

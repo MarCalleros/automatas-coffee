@@ -131,7 +131,14 @@ import { createNotification } from './notification.js';
             buttons[0].options.classList.add('information-menu__options--active');
             buttons[0].button.querySelector('.information-menu__arrow svg').style.transform = 'rotate(180deg)';
             buttons[0].options.querySelectorAll('.information-menu__option')[0].classList.add('information-menu__option--selected');
-            messageSent(document.querySelector('.information-section--content'));
+
+            // Si hay un tercer enlace como identificador, entonces mostrar el mensaje
+            const identifier = window.location.pathname.split('/')[3];
+            if (identifier) {
+                messageDetails(document.querySelector('.information-section--content'), identifier);
+            } else {
+                messageSent(document.querySelector('.information-section--content'));
+            }
             break;
         case 'pedidos':
             buttons[1].options.classList.add('information-menu__options--active');
@@ -202,13 +209,75 @@ function messageSent(container) {
                     </div>
                 `;
             });
+
+            container.innerHTML = html;
+
+            const messages = document.querySelectorAll('.information-section__content--hover');
+            messages.forEach(message => {
+                message.addEventListener('click', function() {
+                    const identifier = this.querySelectorAll('.information-message__text')[2].innerText.split(': ')[1];
+                    window.history.pushState({}, '', '/informacion/mensajes/' + identifier);
+                    messageDetails(container, identifier);
+                });
+            });
         } else {
             html += `
                 <div class="information-section__content">
                     <p class="information-message__title">No has enviado ningun mensaje aun</p>
                 </div>
             `;
+
+            container.innerHTML = html;
         }
+    });
+}
+
+function messageDetails(container, identifier) {
+    container.innerHTML = '';
+    let html = `
+        <div class="information-section__header">
+            <h2 class="information-section__title information-section__title--no-margin">Mensajes Enviados</h2>
+        </div>
+    `;
+
+    fetch(`/api/message/detail?identifier=${identifier}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status == "success") {
+            let answerDiv = '';
+
+            if (data.messages[0].respondido == 0) {
+                answerDiv = `<div class="information-message__status information-message__status--green">Enviado</div>`;
+            } else {
+                answerDiv = `<div class="information-message__status information-message__status--orange">Respondido</div>`;
+            }
+
+            html += `
+                <div class="information-section__content">
+                    <div class="information-message">
+                        <p class="information-message__text"><strong>Nombre: </strong>${data.user.nombre}</p>
+                        <p class="information-message__text"><strong>Correo: </strong>${data.user.correo}</p>
+                        <p class="information-message__text"><strong>Numero de mensaje: </strong>${data.messages[0].identificador}</p>
+                        <p class="information-message__text"><strong>Mensaje enviado el: </strong>${data.messages[0].fecha}</p>
+                        <p class="information-message__text information-message__text--unlimited"><strong>Contenido: </strong>${data.messages[0].contenido}</p>
+                    </div>
+
+                    ${answerDiv}
+                </div>
+            `;
+        } else {
+            html += `
+                <div class="information-section__content">
+                    <p class="information-message__title">Este mensaje no existe</p>
+                </div>
+            `;
+        }
+
         container.innerHTML = html;
     });
 }

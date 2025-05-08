@@ -40,14 +40,15 @@ class PagesController {
         $router->render('pages/carrito', []);
     }
 
-    public static function information(Router $router, $section = null) {
+    public static function information(Router $router, $section = null, $identifier = null) {
         if (!isLogged()) {
             header('Location: /');
             return;
         }
         
         $router->render('pages/information', [
-            'section' => $section
+            'section' => $section,
+            'identifier' => $identifier
         ]);
     }
 }

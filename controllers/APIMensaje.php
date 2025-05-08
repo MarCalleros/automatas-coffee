@@ -68,5 +68,52 @@ class APIMensaje {
             echo json_encode(['status' => 'error', 'message' => 'No se encontraron mensajes']);
         }
     }
+
+    public static function getDetailMessage() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+            echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
+            return;
+        }
+
+        if (!isLogged()) {
+            echo json_encode(['status' => 'error', 'message' => 'Debes iniciar sesión para ver los mensajes']);
+            return;
+        }
+
+        if (!isset($_GET['identifier'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Faltan datos requeridos']);
+            return;
+        }
+
+        $usuario = Usuario::where('id', $_SESSION['id']);
+
+        if (!$usuario) {
+            echo json_encode(['status' => 'error', 'message' => 'Usuario no encontrado']);
+            return;
+        }
+
+        $usuario->id_tipo_usuario = null;
+        $usuario->edad = null;
+        $usuario->usuario = null;
+        $usuario->contraseña = null;
+
+        $mensajes = Mensaje::where('identificador', $_GET['identifier']);
+
+        // Comprobar si el mensaje pertenece al usuario
+        if ($mensajes) {
+            foreach ($mensajes as $mensaje) {
+                if ($mensaje->id_usuario !== $_SESSION['id']) {
+                    echo json_encode(['status' => 'error', 'message' => 'No se encontro el mensajes']);
+                    return;
+                }
+            }
+        }
+
+        if ($mensajes) {
+            echo json_encode(['status' => 'success', 'user' => $usuario, 'messages' => $mensajes]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'No se encontro el mensajes']);
+        }
+    }
 }
 ?>
