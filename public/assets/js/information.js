@@ -54,6 +54,7 @@ import { createNotification } from './notification.js';
             const container = document.querySelector('.information-section--content');
 
             if (item.button == messageButtons[0].button) {
+                window.history.pushState({}, '', '/informacion/mensajes');
                 messageSent(container);
             }
 
@@ -82,7 +83,8 @@ import { createNotification } from './notification.js';
             const container = document.querySelector('.information-section--content');
 
             if (item.button == purchaseButtons[0].button) {
-                // Call the function to show purchase history
+                window.history.pushState({}, '', '/informacion/pedidos');
+                //funcion
             }
         });
     });
@@ -106,14 +108,58 @@ import { createNotification } from './notification.js';
             const container = document.querySelector('.information-section--content');
 
             if (item.button == accountButtons[0].button) {
+                window.history.pushState({}, '', '/informacion/cuenta');
                 accountConfirmPassword(container, accountData);
             }
 
             if (item.button == accountButtons[1].button) {
+                window.history.pushState({}, '', '/informacion/contrasena');
                 accountConfirmPassword(container, accountPassword);
+            }
+
+            if (item.button == accountButtons[2].button) {
+                window.history.pushState({}, '', '/informacion/desactivar');
             }
         });
     });
+
+    // Mirar si en el link hay otro enlace como /informacion/mensajes o /informacion/cuenta
+    const path = window.location.pathname.split('/')[2];
+
+    switch (path) {
+        case 'mensajes':
+            buttons[0].options.classList.add('information-menu__options--active');
+            buttons[0].button.querySelector('.information-menu__arrow svg').style.transform = 'rotate(180deg)';
+            buttons[0].options.querySelectorAll('.information-menu__option')[0].classList.add('information-menu__option--selected');
+            messageSent(document.querySelector('.information-section--content'));
+            break;
+        case 'pedidos':
+            buttons[1].options.classList.add('information-menu__options--active');
+            buttons[1].button.querySelector('.information-menu__arrow svg').style.transform = 'rotate(180deg)';
+            buttons[1].options.querySelectorAll('.information-menu__option')[0].classList.add('information-menu__option--selected');
+            //funcion
+            break;
+        case 'cuenta':
+            buttons[2].options.classList.add('information-menu__options--active');
+            buttons[2].button.querySelector('.information-menu__arrow svg').style.transform = 'rotate(180deg)';
+            buttons[2].options.querySelectorAll('.information-menu__option')[0].classList.add('information-menu__option--selected');
+            accountConfirmPassword(document.querySelector('.information-section--content'), accountData);
+            break;
+        case 'contrasena':
+            buttons[2].options.classList.add('information-menu__options--active');
+            buttons[2].button.querySelector('.information-menu__arrow svg').style.transform = 'rotate(180deg)';
+            buttons[2].options.querySelectorAll('.information-menu__option')[1].classList.add('information-menu__option--selected');
+            accountConfirmPassword(document.querySelector('.information-section--content'), accountPassword);
+            break;
+        case 'desactivar':
+            buttons[2].options.classList.add('information-menu__options--active');
+            buttons[2].button.querySelector('.information-menu__arrow svg').style.transform = 'rotate(180deg)';
+            buttons[2].options.querySelectorAll('.information-menu__option')[2].classList.add('information-menu__option--selected');
+            console.log('Desactivar cuenta');
+            break;
+        default:
+            break;
+    }
 })();
 
 function messageSent(container) {

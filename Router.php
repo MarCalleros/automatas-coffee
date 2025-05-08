@@ -17,21 +17,24 @@ class Router {
     public function testRoutes() {
         $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $method = $_SERVER['REQUEST_METHOD'];
-
-        if ($method === 'GET') {
-            $fn = $this->getRoutes[$url] ?? null;
-        } else {
-            $fn = $this->postRoutes[$url] ?? null;
+    
+        $routes = $method === 'GET' ? $this->getRoutes : $this->postRoutes;
+    
+        foreach ($routes as $route => $fn) {
+            // Ruta con parámetros tipo /informacion/:seccion
+            $routeRegex = preg_replace('#:([\w]+)#', '([^/]+)', $route);
+            $routeRegex = "#^" . $routeRegex . "$#";
+    
+            if (preg_match($routeRegex, $url, $matches)) {
+                array_shift($matches); // quitamos la coincidencia completa
+                return call_user_func_array($fn, array_merge([$this], $matches));
+            }
         }
-
-        if ($fn) {
-            call_user_func($fn, $this);
-        } else {
-            //header('Location: /404');
-            echo "404 Not Found";
-            exit;
-        }
+    
+        echo "404 Not Found";
+        exit;
     }
+    
 
     public function render($view, $data = []) {
         foreach ($data as $key => $value) {

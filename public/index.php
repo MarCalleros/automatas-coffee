@@ -54,6 +54,7 @@ $router->get('/contactanos', [PagesController::class, 'contact']);
 $router->get('/encuentranos', [PagesController::class, 'find']);
 $router->get('/configuracion', [PagesController::class, 'configuration']);
 $router->get('/informacion', [PagesController::class, 'information']);
+$router->get('/informacion/:section', [PagesController::class, 'information']);
 $router->get('/carrito', [PagesController::class, 'carrito']);
 
 $router->get('/productos', [ProductoController::class, 'index']);
