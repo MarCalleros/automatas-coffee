@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Model\Mensaje;
+use Model\Usuario;
 
 class APIMensaje {
     public static function send() {
@@ -33,6 +34,38 @@ class APIMensaje {
             echo json_encode(['status' => 'success', 'message' => 'Mensaje enviado exitosamente']);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Error al enviar el mensaje']);
+        }
+    }
+
+    public static function getUserMessages() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+            echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
+            return;
+        }
+
+        if (!isLogged()) {
+            echo json_encode(['status' => 'error', 'message' => 'Debes iniciar sesión para ver los mensajes']);
+            return;
+        }
+
+        $usuario = Usuario::where('id', $_SESSION['id']);
+
+        if (!$usuario) {
+            echo json_encode(['status' => 'error', 'message' => 'Usuario no encontrado']);
+            return;
+        }
+
+        $usuario->id_tipo_usuario = null;
+        $usuario->edad = null;
+        $usuario->usuario = null;
+        $usuario->contraseña = null;
+
+        $mensajes = Mensaje::where('id_usuario', $_SESSION['id']);
+
+        if ($mensajes) {
+            echo json_encode(['status' => 'success', 'user' => $usuario, 'messages' => $mensajes]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'No se encontraron mensajes']);
         }
     }
 }

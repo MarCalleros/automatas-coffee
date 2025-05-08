@@ -65,6 +65,7 @@ $router->get('/api/filter', [APIProducto::class, 'filter']);
 $router->post('/api/product/favorite', [APIProducto::class, 'favorite']);
 $router->post('/api/product/unfavorite', [APIProducto::class, 'unfavorite']);
 $router->post('/api/message/send', [APIMensaje::class, 'send']);
+$router->get('/api/message/sended', [APIMensaje::class, 'getUserMessages']);
 
 // API Carrito
 $router->get('/api/carrito/obtener', [APICarrito::class, 'obtener']);

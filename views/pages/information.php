@@ -173,7 +173,10 @@
         </section>
 
         <section class="information-section information-section--content">
-            <h2 class="information-section__title">Titulo de la seccion</h2>
+            <div class="information-section__header">
+                <h2 class="information-section__title information-section__title--no-margin">Titulo de la seccion</h2>
+            </div>
+            
         </section>
     </main>
 

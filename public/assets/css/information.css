@@ -16,6 +16,7 @@
 }
 
 .information-section--content {
+    background-color: transparent;
     flex: 1;
     min-width: 700px;
     width: auto;
@@ -24,10 +25,30 @@
     margin-right: 20px;
 }
 
+.information-section__header {
+    background-color: var(--color-conteiner);
+    padding: 25px 0;
+    border-radius: 25px;
+}
+
 .information-section__title {
     margin: 25px 0;
     font-size: var(--title);
     color: var(--color-text);
+}
+
+.information-section__title--no-margin {
+    margin: 0;
+}
+
+.information-section__content {
+    display: flex;
+    width: 100%;
+    background-color: var(--color-conteiner);
+    border-radius: 25px;
+    margin-top: 20px;
+    padding: 20px;
+    position: relative;
 }
 
 .information-menu {
@@ -155,6 +176,65 @@
 
 .information-menu__arrow svg {
     transition: transform 0.3s ease;
+}
+
+/* Mensajes enviados */
+.information-section__content--hover:hover {
+    cursor: pointer;
+    background-color: var(--dark-gray);
+}
+
+.information-section__content--hover:hover .information-message__text {
+    color: var(--black);
+}
+
+.information-message {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.information-message__title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: var(--text);
+    color: var(--color-text);
+    margin: 0 auto;
+}
+
+.information-message__text {
+    font-family: 'Lato', sans-serif;
+    font-size: var(--text-small);
+    color: var(--color-text);
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.information-message__status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Lato', sans-serif;
+    font-size: 1.6rem;
+    color: var(--white);
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    border-radius: 10px;
+    height: 45px;
+    width: 120px;
+}
+
+.information-message__status--green {
+    background-color: var(--success);
+}
+
+.information-message__status--orange {
+    background-color: var(--primary-color);
 }
 
 /* Informacion de mi cuenta */
