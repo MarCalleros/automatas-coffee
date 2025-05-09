@@ -100,14 +100,46 @@ document.addEventListener("DOMContentLoaded", () => {
             if (cantidad >= stockDisponible) {
               this.disabled = true
             }
+
             // Habilitar el botón de disminuir
             cartItem.querySelector(".quantity-btn.minus").disabled = false
+
+            // Actualizar contador del carrito
+            actualizarContadorCarrito(response.total_items)
           } else {
             createNotification("error", response.message)
           }
         })
       })
     })
+
+    function actualizarContadorCarrito(count) {
+      const contadorElements = document.querySelectorAll(".cart-indicator, .cart-count")
+      if (contadorElements.length === 0) return
+
+      if (count !== undefined) {
+        contadorElements.forEach((element) => {
+          element.textContent = count
+          element.style.display = count > 0 ? "flex" : "none"
+        })
+        return
+      }
+
+      fetch("/api/carrito/obtener")
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === "success") {
+            const totalItems = data.items.reduce((total, item) => total + Number.parseInt(item.cantidad), 0)
+            contadorElements.forEach((element) => {
+              element.textContent = totalItems
+              element.style.display = totalItems > 0 ? "flex" : "none"
+            })
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error)
+        })
+    }
 
     // Botones de disminuir cantidad
     document.querySelectorAll(".quantity-btn.minus").forEach((btn) => {
@@ -137,9 +169,12 @@ document.addEventListener("DOMContentLoaded", () => {
               if (cantidad <= 1) {
                 this.disabled = true
               }
-              
+
               // Habilitar el botón de aumentar
               cartItem.querySelector(".quantity-btn.plus").disabled = false
+
+              // Actualizar contador del carrito
+              actualizarContadorCarrito(response.total_items)
             } else {
               createNotification("error", response.message)
             }
@@ -161,11 +196,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Actualizar total
             document.querySelector(".total-price").textContent = "$" + response.total.toFixed(2)
+
             // Verificar si el carrito quedó vacío
             if (response.total === 0) {
               document.querySelector(".cart-items").innerHTML = '<div class="empty-cart">Tu carrito está vacío</div>'
               document.querySelector(".buy-btn").disabled = true
             }
+
+            // Actualizar contador del carrito
+            actualizarContadorCarrito(response.total_items)
+
             createNotification("success", response.message)
           } else {
             createNotification("error", response.message)
@@ -183,6 +223,10 @@ document.addEventListener("DOMContentLoaded", () => {
             document.querySelector(".cart-items").innerHTML = '<div class="empty-cart">Tu carrito está vacío</div>'
             document.querySelector(".total-price").textContent = "$0.00"
             this.disabled = true
+
+            //Actualizar el contador del carrito
+            actualizarContadorCarrito(0)
+
             createNotification("success", response.message)
           } else {
             createNotification("error", response.message)

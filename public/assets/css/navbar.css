@@ -223,14 +223,14 @@
 
 .cart-indicator {
     position: absolute;
-    top: -3px;
+    top: -4px;
     right: -5px;
     background-color: #ff5100;
     color: white;
     border-radius: 50%;
-    width: 16px;
-    height: 16px;
-    font-size: 12px;
+    width: 17px;
+    height: 17px;
+    font-size: 10px;
     display: none; 
     align-items: center;
     justify-content: center;
