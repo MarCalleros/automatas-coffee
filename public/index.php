@@ -5,6 +5,7 @@ require_once __DIR__ . '/../includes/app.php';
 use App\Router;
 use Controller\AdminPagesController;
 use Controller\AdminProductController;
+use Controller\AdminMensajeController;
 use Controller\PagesController;
 use Controller\ProductoController;
 use Controller\RepartidorController;
@@ -47,6 +48,10 @@ $router->post('/admin/usuario/create', [UserController::class, 'create']);
 $router->get('/admin/usuario/edit', [UserController::class, 'edit']);
 $router->post('/admin/usuario/edit', [UserController::class, 'edit']);
 $router->get('/admin/map', [AdminPagesController::class, 'map']);
+$router->get('/admin/message', [AdminMensajeController::class, 'index']);
+$router->post('/admin/message', [AdminMensajeController::class, 'index']);
+$router->get('/admin/message/view', [AdminMensajeController::class, 'view']);
+$router->post('/admin/message/view', [AdminMensajeController::class, 'view']);
 
 // Usuario
 $router->get('/', [PagesController::class, 'home']);

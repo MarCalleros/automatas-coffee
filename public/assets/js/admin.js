@@ -3,6 +3,7 @@ import { createNotification } from './notification.js';
 (function() {
     const deliverymanStatusForms = document.querySelectorAll('.admin-deliveryman-status-form');
     const userStatusForms = document.querySelectorAll('.admin-user-status-form');
+    const messageStatusForms = document.querySelectorAll('.admin-message-status-form');
     const adminForm = document.querySelector('.admin-form');
     const adminResetButton = document.querySelector('#admin-reset-button');
 
@@ -12,7 +13,7 @@ import { createNotification } from './notification.js';
     
             button.addEventListener('click', async () => {
                 const id = form.dataset.id;
-                let estatus = form.dataset.estatus === "1" ? "0" : "1";
+                const estatus = form.dataset.estatus === "1" ? "0" : "1";
     
                 const formData = new FormData();
                 formData.append("id", id);
@@ -82,17 +83,73 @@ import { createNotification } from './notification.js';
         });
     }
 
+    if (messageStatusForms) {
+        messageStatusForms.forEach(form => {
+            const button = form.querySelector('button')
+
+            button.addEventListener('click', async () => {
+                const id = form.dataset.id;
+                const leido = form.dataset.leido === "1" ? "0" : "1";
+
+                const formData = new FormData();
+                formData.append("id", id);
+                formData.append("leido", leido);
+
+                const response = await fetch("/admin/message", {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (response.ok) {
+                    form.dataset.leido = leido;
+                    button.textContent = leido === "1" ? "Marcar como no leído" : "Marcar como leído";
+                    
+                    const row = form.closest("tr");
+                    const leidoCell = row.querySelectorAll("td")[5];
+                    const div = leidoCell.querySelector("div");
+                    
+                    div.className = leido === "1"
+                        ? "admin-table__data--active"
+                        : "admin-table__data--inactive";
+                    
+                    div.textContent = leido === "1" ? "Leído" : "No leído";
+                    createNotification("success", "Estado del mensaje cambiado correctamente");
+                } else {
+                    createNotification("error", "Error al cambiar el estado del mensaje");
+                }
+            });
+        });
+
+        const textareas = document.querySelectorAll(".admin-form__area");
+
+        textareas.forEach(textarea => {
+            // Ajustar altura inicial
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+
+            // Si quieres que también se ajuste en tiempo real mientras escriben:
+            textarea.addEventListener("input", () => {
+                textarea.style.height = 'auto';
+                textarea.style.height = textarea.scrollHeight + 'px';
+            });
+        });
+    }
+
     if (adminForm) {
         adminForm.addEventListener('submit', async (event) => {
             event.preventDefault();
-
-             // Verifica el ID del formulario para ejecutar la validación correspondiente
-            if (adminForm.id === 'admin-form') {
+            
+            // Verifica el ID del formulario para ejecutar la validación correspondiente
+            if (adminForm.getAttribute('id') == 'admin-form') {
                 if (!validateDeliverymanForm()) {
                     return;
                 }
-            } else if (adminForm.id === 'admin-user-form') {
+            } else if (adminForm.getAttribute('id') == 'admin-user-form') {
                 if (!validateUserForm()) {
+                    return;
+                }
+            } else if (adminForm.getAttribute('id') == 'admin-message-form') {
+                if (!validateMessageForm()) {
                     return;
                 }
             }
@@ -335,6 +392,30 @@ function validateUserForm() {
         error = true;
     } else {
         errorTipoUsuario.classList.remove('admin-form__error--active');
+    }
+
+    if (error) {
+        return false;
+    }
+
+    return true;
+}
+
+function validateMessageForm() {
+    let error = false;
+
+    const respuesta = document.querySelector('#respuesta').value;
+
+    const errorRespuesta = document.querySelector('#error-respuesta');
+
+    const mensajeVacio = "Este campo es obligatorio";
+
+    if (!respuesta) {
+        errorRespuesta.textContent = mensajeVacio;
+        errorRespuesta.classList.add('admin-form__error--active');
+        error = true;
+    } else {
+        errorRespuesta.classList.remove('admin-form__error--active');
     }
 
     if (error) {

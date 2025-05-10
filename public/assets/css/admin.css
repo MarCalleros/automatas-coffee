@@ -196,6 +196,19 @@
     color: var(--color-text);
 }
 
+.admin-form__area {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--dark-gray);
+    background-color: var(--white);
+    border-radius: 8px;
+    outline: none;
+    color: var(--color-text);
+    font-family: 'Lato', sans-serif;
+    font-size: 1.6rem;
+    max-height: 250px;
+}
+
 .admin-form__buttons-container {
     display: flex;
     align-items: center;
