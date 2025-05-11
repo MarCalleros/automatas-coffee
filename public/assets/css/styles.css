@@ -19,6 +19,7 @@
 @import url(information.css);
 @import url(admin.css);
 @import url(map.css	);
+@import url(confirmation.css);
 
 html {
     font-size: 62.5%;

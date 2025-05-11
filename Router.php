@@ -31,7 +31,9 @@ class Router {
             }
         }
     
-        echo "404 Not Found";
+        // Mostrar la pagina 4040 en /views/pages/404.php
+        http_response_code(404);
+        include_once __DIR__ . "/views/pages/404.php";
         exit;
     }
     

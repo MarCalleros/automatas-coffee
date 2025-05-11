@@ -55,6 +55,7 @@ $router->post('/admin/message/view', [AdminMensajeController::class, 'view']);
 
 // Usuario
 $router->get('/', [PagesController::class, 'home']);
+$router->get('/confirmacion', [PagesController::class, 'confirmation']);
 $router->get('/contactanos', [PagesController::class, 'contact']);
 $router->get('/encuentranos', [PagesController::class, 'find']);
 $router->get('/configuracion', [PagesController::class, 'configuration']);

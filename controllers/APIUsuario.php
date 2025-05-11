@@ -40,7 +40,7 @@ class APIUsuario {
         $result = $usuario->create();
     
         if ($result) {
-            echo json_encode(['status' => 'success', 'message' => 'Usuario creado exitosamente']);
+            echo json_encode(['status' => 'success', 'message' => 'Hemos enviado un correo de confirmación, por favor verifica tu correo']);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Error al crear el usuario']);
         }
@@ -149,7 +149,7 @@ class APIUsuario {
         if ($result) {
             echo json_encode(['status' => 'success', 'message' => 'Inicio de sesion exitoso']);
         } else {
-            echo json_encode(['status' => 'error', 'message' => 'Usuario o contraseña incorrectos']);
+            echo json_encode(['status' => 'error', 'message' => 'Los datos son incorrectos o la cuenta no se ha confirmado']);
         }
     }
 

@@ -6,17 +6,18 @@
     <link rel="stylesheet" href="/assets/css/variables.css">
     <link rel="stylesheet" href="/assets/css/styles.css">
     <link rel="shortcut icon" href="/assets/img/logo-coffee.png">
-    <title>Nuestros Productos</title>
+    <title>Ooopss...</title>
 </head>
-<body>
-    <?php include_once __DIR__ . "/../templates/header.php"; ?>
+<body class="page--full-height">
+    <?php include_once __DIR__ . "/../templates/navbar.php"; ?>
     
-    <h2>ERROR 404. PÁGINA NO ENCONTRADA</h2>
+    <main class="main--full-height"> 
+        <h2>ERROR 404. PÁGINA NO ENCONTRADA</h2>
+    </main>
 
     <?php include_once __DIR__ . "/../templates/footer.php"; ?>
 
     <script src="/assets/js/navbar.js"></script>
-    <script src="/assets/js/hamburguer.js"></script>
     <script type="module" src="/assets/js/configuration.js"></script>
 </body>
 </html>
