@@ -105,7 +105,7 @@ import { createNotification } from './notification.js';
                     button.textContent = leido === "1" ? "Marcar como no leído" : "Marcar como leído";
                     
                     const row = form.closest("tr");
-                    const leidoCell = row.querySelectorAll("td")[5];
+                    const leidoCell = row.querySelectorAll("td")[6];
                     const div = leidoCell.querySelector("div");
                     
                     div.className = leido === "1"

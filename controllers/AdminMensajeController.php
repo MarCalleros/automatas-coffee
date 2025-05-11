@@ -55,7 +55,7 @@ class AdminMensajeController {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mensaje = new Mensaje();
-            
+
             $mensaje->id = $_POST['id_mensaje'];
             $mensaje->respondido = 1;
             $mensaje->leido = 1;
@@ -70,10 +70,17 @@ class AdminMensajeController {
                 exit;
             }
 
+            $tmp = Mensaje::where('id', $_POST['id_mensaje'])[0];
+
+            if ($tmp->id_mensaje) { // Esto significa que es una respuesta
+                $mensaje->id_mensaje = $tmp->id_mensaje;
+            } else {
+                $mensaje->id_mensaje = $_POST['id_mensaje'];
+            }
+
             $mensaje->respondido = 0;
             $mensaje->leido = 0;
 
-            $mensaje->id_mensaje = $_POST['id_mensaje'];
             $mensaje->id_usuario = $_SESSION['id'];
             $mensaje->contenido = $_POST['respuesta'];
         
