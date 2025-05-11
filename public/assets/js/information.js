@@ -249,16 +249,31 @@ function messageDetails(container, identifier) {
     .then(response => response.json())
     .then(data => {
         if (data.status == "success") {
-            let answerDiv = '';
+            let statusDiv = '';
+            let responseDiv = '';
 
             if (data.messages[0].respondido == 0) {
-                answerDiv = `<div class="information-message__status information-message__status--green">Enviado</div>`;
+                statusDiv = `<div class="information-message__status information-message__status--green">Enviado</div>`;
             } else {
-                answerDiv = `<div class="information-message__status information-message__status--orange">Respondido</div>`;
+                statusDiv = `<div class="information-message__status information-message__status--orange">Respondido</div>`;
+            }
+
+            if (data.responses !== null) {
+                data.responses.forEach(response => {
+                    responseDiv += `
+                        <div class="information-message information-message--separator">
+                            <p class="information-message__text"><strong>Nombre: </strong>${response.usuario.nombre}</p>
+                            <p class="information-message__text"><strong>Correo: </strong>${response.usuario.correo}</p>
+                            <p class="information-message__text"><strong>Numero de mensaje: </strong>${response.identificador}</p>
+                            <p class="information-message__text"><strong>Mensaje enviado el: </strong>${response.fecha}</p>
+                            <p class="information-message__text information-message__text--unlimited"><strong>Contenido: </strong>${response.contenido}</p>
+                        </div>
+                    `;
+                });
             }
 
             html += `
-                <div class="information-section__content">
+                <div class="information-section__content information-section__content--flex-column">
                     <div class="information-message">
                         <p class="information-message__text"><strong>Nombre: </strong>${data.user.nombre}</p>
                         <p class="information-message__text"><strong>Correo: </strong>${data.user.correo}</p>
@@ -267,7 +282,16 @@ function messageDetails(container, identifier) {
                         <p class="information-message__text information-message__text--unlimited"><strong>Contenido: </strong>${data.messages[0].contenido}</p>
                     </div>
 
-                    ${answerDiv}
+                    ${responseDiv}
+
+                    <div class="information-message information-message--separator">
+                        <div class="information-message__response">
+                            <textarea class="information-message__textarea" placeholder="Escribe tu respuesta"></textarea>
+                            <button class="information-message__button">Responder</button>
+                        </div>
+                    </div>
+                    
+                    ${statusDiv}
                 </div>
             `;
         } else {
@@ -277,8 +301,43 @@ function messageDetails(container, identifier) {
                 </div>
             `;
         }
-
+        
         container.innerHTML = html;
+
+        const textarea = document.querySelector('.information-message__textarea');
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+
+        textarea.addEventListener("input", () => {
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+        });
+
+        const button = document.querySelector('.information-message__button');
+
+        button.addEventListener('click', function() {
+            const identifier = window.location.pathname.split('/')[3];
+
+            fetch('/api/message/response', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    identifier: identifier,
+                    content: textarea.value
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status == "success") {
+                    createNotification("success", data.message);
+                    messageDetails(container, identifier);
+                } else {
+                    createNotification("error", data.message);
+                }
+            })
+        });
     });
 }
 

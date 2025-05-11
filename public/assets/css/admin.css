@@ -81,7 +81,9 @@
 .admin-table__data--inactive,
 .admin-table__data--Administrador,
 .admin-table__data--Cliente,
-.admin-table__data--Repartidor {
+.admin-table__data--Repartidor,
+.admin-table__data--Mensaje,
+.admin-table__data--Respuesta {
     color: var(--white);
     padding: 10px;
     border-radius: 10px;
@@ -108,6 +110,14 @@
 
 .admin-table__data--Repartidor {
     background-color: #4682B4;
+}
+
+.admin-table__data--Mensaje {
+    background-color: #6F42C1;
+}
+
+.admin-table__data--Respuesta {
+    background-color: #17A2B8;
 }
 
 .admin-table__row--data:nth-child(odd) {

@@ -51,6 +51,11 @@
     position: relative;
 }
 
+.information-section__content--flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
 .information-menu {
     display: flex;
     flex-direction: column;
@@ -194,6 +199,12 @@
     gap: 15px;
 }
 
+.information-message--separator {
+    border-top: 2px solid var(--color-text);
+    margin-top: 30px;
+    padding-top: 30px;
+}
+
 .information-message__title {
     font-family: 'Montserrat', sans-serif;
     font-size: var(--text);
@@ -248,6 +259,43 @@
 
 .information-message__status--orange {
     background-color: var(--primary-color);
+}
+
+.information-message__response {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    gap: 20px;
+}
+
+.information-message__textarea {
+    width: 100%;
+    min-height: 100px;
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid var(--dark-gray);
+    font-family: 'Lato', sans-serif;
+    font-size: var(--text-small);
+    outline: none;
+    color: var(--color-text);
+    background-color: transparent;
+}
+
+.information-message__button {
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    padding: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: var(--text-small);
+    cursor: pointer;
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.information-message__button:hover {
+    background-color: var(--primary-hover);
 }
 
 /* Informacion de mi cuenta */

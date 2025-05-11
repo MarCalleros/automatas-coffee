@@ -63,6 +63,13 @@ class APIMensaje {
         $mensajes = Mensaje::where('id_usuario', $_SESSION['id']);
 
         if ($mensajes) {
+            foreach ($mensajes as $mensaje) {
+                if ($mensaje->id_mensaje) {
+                    // Si es una resouesta, quitarla de la lista
+                    unset($mensajes[array_search($mensaje, $mensajes)]);
+                }
+            }
+
             echo json_encode(['status' => 'success', 'user' => $usuario, 'messages' => $mensajes]);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'No se encontraron mensajes']);
@@ -109,10 +116,61 @@ class APIMensaje {
             }
         }
 
+        $respuestas = Mensaje::where('id_mensaje', $mensajes[0]->id);
+        if ($respuestas) {
+            foreach ($respuestas as $respuesta) {
+                $respuesta->usuario = Usuario::where('id', $respuesta->id_usuario);
+                $respuesta->usuario->id_tipo_usuario = null;
+                $respuesta->usuario->edad = null;
+                $respuesta->usuario->usuario = null;
+                $respuesta->usuario->contraseña = null;
+            }
+        }
+
         if ($mensajes) {
-            echo json_encode(['status' => 'success', 'user' => $usuario, 'messages' => $mensajes]);
+            echo json_encode(['status' => 'success', 'user' => $usuario, 'messages' => $mensajes, 'responses' => $respuestas]);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'No se encontro el mensajes']);
+        }
+    }
+
+    public static function responseMessage() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
+            return;
+        }
+
+        if (!isLogged()) {
+            echo json_encode(['status' => 'error', 'message' => 'Debes iniciar sesión para enviar un mensaje']);
+            return;
+        }
+    
+        $data = json_decode(file_get_contents('php://input'), true);
+    
+        if (!isset($data['identifier'], $data['content'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Faltan datos requeridos']);
+            return;
+        }
+
+        $msjOriginal = new Mensaje();
+        $msjOriginal = Mensaje::where('identificador', $data['identifier']);
+
+        if (!$msjOriginal) {
+            echo json_encode(['status' => 'error', 'message' => 'Mensaje no encontrado']);
+            return;
+        }
+
+        $mensaje = new Mensaje();
+        $mensaje->id_mensaje = $msjOriginal[0]->id;
+        $mensaje->id_usuario = $_SESSION['id'];
+        $mensaje->contenido = $data['content'];
+
+        $result = $mensaje->create();
+
+        if ($result) {
+            echo json_encode(['status' => 'success', 'message' => 'Mensaje enviado exitosamente']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Error al enviar el mensaje']);
         }
     }
 }

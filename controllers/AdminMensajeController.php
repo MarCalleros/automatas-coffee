@@ -16,6 +16,15 @@ class AdminMensajeController {
 
         $mensajes = Mensaje::all();
 
+        if ($mensajes) {
+            foreach ($mensajes as $mensaje) {
+                if ($mensaje->id_mensaje) {
+                    $msjOriginal = Mensaje::where('id', $mensaje->id_mensaje);
+                    $mensaje->identificador_mensaje = $msjOriginal[0]->identificador;
+                }
+            }
+        }
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mensaje = new Mensaje();
             

@@ -21,11 +21,13 @@
                             <tr class="admin-table__row">
                                 <th class="admin-table__head">ID</th>
                                 <th class="admin-table__head">Nro. Mensaje</th>
+                                <th class="admin-table__head">Msj. Original</th>
                                 <th class="admin-table__head">Nombre</th>
                                 <th class="admin-table__head">Usuario</th>
                                 <th class="admin-table__head">Fecha Envio</th>
                                 <th class="admin-table__head">Leido</th>
                                 <th class="admin-table__head">Respondido</th>
+                                <th class="admin-table__head">Tipo</th>
                                 <th class="admin-table__head">Acciones</th>
                             </tr>
                         </thead>
@@ -34,6 +36,7 @@
                                 <tr class="admin-table__row admin-table__row--data">
                                     <td class="admin-table__data"><?= $mensaje->id ?></td>
                                     <td class="admin-table__data"><?= $mensaje->identificador ?></td>
+                                    <td class="admin-table__data"><?= $mensaje->identificador_mensaje ?></td>
                                     <td class="admin-table__data"><?= $mensaje->usuario->nombre ?></td>
                                     <td class="admin-table__data"><?= $mensaje->usuario->usuario ?></td>
                                     <td class="admin-table__data"><?= $mensaje->fecha ?></td>
@@ -45,6 +48,11 @@
                                     <td class="admin-table__data">
                                         <div class="<?= $mensaje->respondido ? 'admin-table__data--active' : 'admin-table__data--inactive' ?>">
                                             <?= $mensaje->respondido ? 'Respondido' : 'No Respondido' ?>
+                                        </div>
+                                    </td>
+                                    <td class="admin-table__data">
+                                        <div class="<?= $mensaje->id_mensaje ? 'admin-table__data--Respuesta' : 'admin-table__data--Mensaje' ?>">
+                                            <?= $mensaje->id_mensaje ? 'Respuesta' : 'Mensaje' ?>
                                         </div>
                                     </td>
                                     <td class="admin-table__data">
