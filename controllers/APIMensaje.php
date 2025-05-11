@@ -65,9 +65,15 @@ class APIMensaje {
         if ($mensajes) {
             foreach ($mensajes as $mensaje) {
                 if ($mensaje->id_mensaje) {
-                    // Si es una resouesta, quitarla de la lista
+                    // Si es una respuesta, quitarla de la lista
                     unset($mensajes[array_search($mensaje, $mensajes)]);
                 }
+            }
+
+            // Checar si quedo vacio el array
+            if (empty($mensajes)) {
+                echo json_encode(['status' => 'error', 'message' => 'No se encontraron mensajes']);
+                return;
             }
 
             echo json_encode(['status' => 'success', 'user' => $usuario, 'messages' => $mensajes]);
@@ -106,14 +112,24 @@ class APIMensaje {
 
         $mensajes = Mensaje::where('identificador', $_GET['identifier']);
 
-        // Comprobar si el mensaje pertenece al usuario
         if ($mensajes) {
-            foreach ($mensajes as $mensaje) {
-                if ($mensaje->id_usuario !== $_SESSION['id']) {
-                    echo json_encode(['status' => 'error', 'message' => 'No se encontro el mensajes']);
-                    return;
-                }
+            if ($mensajes[0]->id_usuario !== $_SESSION['id']) { // Comprobar si el mensaje pertenece al usuario
+                echo json_encode(['status' => 'error', 'message' => 'No se encontro el mensajes']);
+                return;
             }
+
+            if ($mensajes[0]->id_mensaje) { // Si es una respuesta, redirigir al mensaje original
+                $mensajes = Mensaje::where('id', $mensajes[0]->id_mensaje);
+            }
+
+            
+            if ($mensajes[0]->id_usuario !== $_SESSION['id']) { // Comprobar si el mensaje pertenece al usuario
+                echo json_encode(['status' => 'error', 'message' => 'No se encontro el mensajes']);
+                return;
+            }
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'No se encontro el mensajes']);
+            return;
         }
 
         $respuestas = Mensaje::where('id_mensaje', $mensajes[0]->id);
