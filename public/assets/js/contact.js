@@ -9,6 +9,19 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', (e) => {
         e.preventDefault(); 
 
+        fetch('/api/user/logged', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status == "error") {
+                createNotification("error", "Debes iniciar sesión para enviar un mensaje");
+                return;
+            }
+        });
         
         if (nombre.value.trim() === '' || correo.value.trim() === '' || mensaje.value.trim() === '') {
             createNotification('error', 'Por favor, completa todos los campos.');

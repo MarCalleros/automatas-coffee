@@ -19,6 +19,7 @@ use Controller\APIMensaje;
 $router = new Router();
 
 // Login
+$router->get('/api/user/logged', [APIUsuario::class, 'logged']);
 $router->post('/api/user/create', [APIUsuario::class, 'create']);
 $router->post('/api/user/update', [APIUsuario::class, 'update']);
 $router->post('/api/user/login', [APIUsuario::class, 'login']);
