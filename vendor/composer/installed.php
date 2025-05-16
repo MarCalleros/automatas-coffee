@@ -3,7 +3,7 @@
         'name' => 'automatas-software/automatas-coffee',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'd97d501f0dc354751b03ad8cdb84cd0da851477c',
+        'reference' => 'c45530b879a82c9737f26ad6db95b3fdde04b706',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'automatas-software/automatas-coffee' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'd97d501f0dc354751b03ad8cdb84cd0da851477c',
+            'reference' => 'c45530b879a82c9737f26ad6db95b3fdde04b706',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
