@@ -389,22 +389,24 @@ function accountConfirmPassword(container, functionName) {
         </div>
 
         <div class="information-section__content">
-            <form class="information-form">
+            <form class="information-form" method="POST" action="/api/user/check-password">
                     <div class="information-form__input-container">
                     <label for="login-password" class="information-form__label">Ingrese su contraseña para acceder a sus datos personales</label>
                     <input type="password" class="information-form__input" name="login-password" id="information-password">
                 </div>
 
                 <div class="information-form__button-container" id="information-button-login">
-                    <button type="button" class="information-form__button information-form__button--orange">Continuar</button>
+                    <button type="submit" class="information-form__button information-form__button--orange">Continuar</button>
                 </div>
             </form>
         </div>
     `;
     container.innerHTML = html;
 
-    const button = document.querySelector('#information-button-login');
-    button.addEventListener('click', function() {
+    const form = container.querySelector('form');
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        
         const password = document.querySelector('#information-password').value;
         if (password) {
             fetch('/api/user/check-password', {
