@@ -8,14 +8,17 @@
     <link rel="stylesheet" href="/assets/css/estadisticas.css">
     <link rel="shortcut icon" href="/assets/img/logo-coffee.png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 </head>
 <body data-page="estadisticas">
 <?php
 require_once __DIR__ . '/../../includes/database.php';
 require_once __DIR__ . '/../../includes/functions.php';
 
-$tab = isset($_GET['tab']) ? $_GET['tab'] : 'productos_cantidad';
+// Obtener el valor de la pestaña activa que se encuentra en la URL (/admin/estadisticas/productos)
+//$section = isset($_GET['section']) ? $_GET['section'] : 'productos';
+
+//$tab = isset($_GET['tab']) ? $_GET['tab'] : 'productos';
+$tab = $section ?? 'productos';
 $pagina = isset($_GET['pagina']) ? intval($_GET['pagina']) : 1;
 $periodo = isset($_GET['periodo']) ? $_GET['periodo'] : 'dia';
 ?>
@@ -26,14 +29,14 @@ $periodo = isset($_GET['periodo']) ? $_GET['periodo'] : 'dia';
     <div class="admin">
         <h2 class="admin__title">ESTADISTICAS</h2>
         <div class="tabs">
-            <a href="#" data-tab="productos_cantidad" class="tab <?php echo $tab == 'productos_cantidad' ? 'active' : ''; ?>">Productos Vendidos</a>
-            <a href="#" data-tab="productos_ingresos" class="tab <?php echo $tab == 'productos_ingresos' ? 'active' : ''; ?>">Ingresos por Producto</a>
-            <a href="#" data-tab="clientes_compras" class="tab <?php echo $tab == 'clientes_compras' ? 'active' : ''; ?>">Clientes por Compras</a>
-            <a href="#" data-tab="clientes_ingresos" class="tab <?php echo $tab == 'clientes_ingresos' ? 'active' : ''; ?>">Clientes por ingresos</a>
-            <a href="#" data-tab="ventas_periodo" class="tab <?php echo $tab == 'ventas_periodo' ? 'active' : ''; ?>">Ventas por Período</a>
+            <a href="/admin/estadisticas/productos" data-tab="productos" class="tab <?php echo $tab == 'productos' ? 'active' : ''; ?>">Productos Vendidos</a>
+            <a href="/admin/estadisticas/ingresos" data-tab="ingresos" class="tab <?php echo $tab == 'ingresos' ? 'active' : ''; ?>">Ingresos por Producto</a>
+            <a href="/admin/estadisticas/compras" data-tab="compras" class="tab <?php echo $tab == 'compras' ? 'active' : ''; ?>">Clientes por Compras</a>
+            <a href="/admin/estadisticas/clientes" data-tab="clientes" class="tab <?php echo $tab == 'clientes' ? 'active' : ''; ?>">Clientes por ingresos</a>
+            <a href="/admin/estadisticas/ventas" data-tab="ventas" class="tab <?php echo $tab == 'ventas' ? 'active' : ''; ?>">Ventas por Período</a>
         </div>
 
-        <div id="productos_cantidad" class="tab-content <?php echo $tab == 'productos_cantidad' ? 'active' : ''; ?>">
+        <div id="productos" class="tab-content <?php echo $tab == 'productos' ? 'active' : ''; ?>">
             <div class="charts-container">
                 <div class="chart-card">
                     <h1>Productos Más Vendidos</h1>
@@ -70,7 +73,7 @@ $periodo = isset($_GET['periodo']) ? $_GET['periodo'] : 'dia';
             </div>
         </div>
 
-        <div id="productos_ingresos" class="tab-content <?php echo $tab == 'productos_ingresos' ? 'active' : ''; ?>">
+        <div id="ingresos" class="tab-content <?php echo $tab == 'ingresos' ? 'active' : ''; ?>">
             <div class="charts-container">
                 <div class="chart-card">
                     <h1>Productos con Más Ingresos</h1>
@@ -107,7 +110,7 @@ $periodo = isset($_GET['periodo']) ? $_GET['periodo'] : 'dia';
             </div>
         </div>
 
-        <div id="clientes_compras" class="tab-content <?php echo $tab == 'clientes_compras' ? 'active' : ''; ?>">
+        <div id="compras" class="tab-content <?php echo $tab == 'compras' ? 'active' : ''; ?>">
             <div class="chart-card full-width">
                 <h1>Clientes con Más Compras</h1>
                 <p>5 clientes que compran más productos</p>
@@ -135,7 +138,7 @@ $periodo = isset($_GET['periodo']) ? $_GET['periodo'] : 'dia';
             </div>
         </div>
 
-        <div id="clientes_ingresos" class="tab-content <?php echo $tab == 'clientes_ingresos' ? 'active' : ''; ?>">
+        <div id="clientes" class="tab-content <?php echo $tab == 'clientes' ? 'active' : ''; ?>">
             <div class="chart-card full-width">
                 <h1>Clientes que han generado más Ingresos</h1>
                 <p>5 clientes que generan más ingresos</p>
@@ -164,7 +167,7 @@ $periodo = isset($_GET['periodo']) ? $_GET['periodo'] : 'dia';
             </div>
         </div>
 
-        <div id="ventas_periodo" class="tab-content <?php echo $tab == 'ventas_periodo' ? 'active' : ''; ?>">
+        <div id="ventas" class="tab-content <?php echo $tab == 'ventas' ? 'active' : ''; ?>">
             <div class="period-selector">
                 <a href="#" data-periodo="dia" class="period-btn <?php echo $periodo == 'dia' ? 'active' : ''; ?>">Por Día</a>
                 <a href="#" data-periodo="semana" class="period-btn <?php echo $periodo == 'semana' ? 'active' : ''; ?>">Por Semana</a>

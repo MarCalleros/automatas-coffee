@@ -49,12 +49,14 @@ $router->get('/admin/usuario/create', [UserController::class, 'create']);
 $router->post('/admin/usuario/create', [UserController::class, 'create']);
 $router->get('/admin/usuario/edit', [UserController::class, 'edit']);
 $router->post('/admin/usuario/edit', [UserController::class, 'edit']);
-$router->get('/admin/map', [AdminPagesController::class, 'map']);
+$router->get('/admin/mapa', [AdminPagesController::class, 'map']);
 $router->get('/admin/message', [AdminMensajeController::class, 'index']);
 $router->post('/admin/message', [AdminMensajeController::class, 'index']);
 $router->get('/admin/message/view', [AdminMensajeController::class, 'view']);
 $router->post('/admin/message/view', [AdminMensajeController::class, 'view']);
-$router->get('/admin/estadisticas', [AdminPagesController::class, 'estadisticas']);
+$router->get('/admin/estadisticas', [AdminPagesController::class, 'statistics']);
+$router->get('/admin/estadisticas/:section', [AdminPagesController::class, 'statistics']);
+//$router->get('/admin/estadisticas/:section/:identifier', [AdminPagesController::class, 'statistics']);
 
 // API Estadísticas
 $router->get('/api/estadisticas/productos_cantidad', [APIEstadisticas::class, 'productosVendidos']);

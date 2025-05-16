@@ -38,13 +38,15 @@ class AdminPagesController {
         ]);
     }
 
-    public static function estadisticas(Router $router) {
+    public static function statistics(Router $router, $section = null) {
         if (!isAdmin()) {
             header('Location: /');
             exit;
         }
 
-        $router->render('administrator/estadisticas', []);
+        $router->render('administrator/statistics', [
+            'section' => $section
+        ]);
     }
 }
 ?>
