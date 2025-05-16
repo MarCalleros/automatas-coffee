@@ -5,6 +5,19 @@ namespace Controller;
 use Model\Usuario;
 
 class APIUsuario {
+    public static function logged() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+            echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
+            return;
+        }
+    
+        if (isLogged()) {
+            echo json_encode(['status' => 'success', 'message' => 'Usuario logueado']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'No hay sesión activa']);
+        }
+    }
+
     public static function create() {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);

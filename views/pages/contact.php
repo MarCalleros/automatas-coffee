@@ -53,8 +53,8 @@
     
                 </div>
                 <div class="botonescontacto">
-                    <input type="submit" name="contacto " value="Enviar mensaje" class="botoncontacto">
                     <input type="reset" name="resetear " value="Resetear campos" class="botonreseteo">
+                    <input type="submit" name="contacto " value="Enviar mensaje" class="botoncontacto">
                 </div>
             </form>
             

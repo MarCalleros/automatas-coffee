@@ -16,6 +16,7 @@ class Mensaje {
     public $leido;
     public $respondido;
     public $identificador; // UUID de 12 caracteres alfanuméricos
+    public $estatus;
 
     public $usuario;
     public $identificador_mensaje; // UUID de 12 caracteres alfanuméricos
@@ -29,6 +30,7 @@ class Mensaje {
         $this->leido = $args['leido'] ?? 0; // 0 = no leído, 1 = leído
         $this->respondido = $args['respondido'] ?? 0; // 0 = no respondido, 1 = respondido
         $this->identificador = $args['identificador'] ?? null; // UUID de 12 caracteres alfanuméricos
+        $this->estatus = $args['estatus'] ?? 1; // 1 = activo, 0 = inactivo
     }
 
     public static function all() {
@@ -68,9 +70,9 @@ class Mensaje {
                 $uuid = strtoupper($uuid); // Convertir a mayúsculas
             } while (self::where('identificador', $uuid)); // Verificar que no exista otro mensaje con el mismo UUID
 
-            $query = "INSERT INTO " . self::$tabla . " (id_mensaje, id_usuario, contenido, fecha, leido, respondido, identificador) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $query = "INSERT INTO " . self::$tabla . " (id_mensaje, id_usuario, contenido, fecha, leido, respondido, identificador, estatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = mysqli_prepare($db, $query);
-            mysqli_stmt_bind_param($stmt, 'iissiis', $this->id_mensaje, $this->id_usuario, $this->contenido, $this->fecha, $this->leido, $this->respondido, $uuid);
+            mysqli_stmt_bind_param($stmt, 'iissiisi', $this->id_mensaje, $this->id_usuario, $this->contenido, $this->fecha, $this->leido, $this->respondido, $uuid, $this->estatus);
             $result = mysqli_stmt_execute($stmt);
 
             if ($result) {
@@ -109,6 +111,25 @@ class Mensaje {
             $query = "UPDATE " . self::$tabla . " SET respondido = ? WHERE id = ?";
             $stmt = mysqli_prepare($db, $query);
             mysqli_stmt_bind_param($stmt, 'ii', $this->respondido, $this->id);
+            $result = mysqli_stmt_execute($stmt);
+
+            if ($result) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    public function changeStatus() {
+        try {
+            require __DIR__ . '/../includes/database.php';
+
+            $query = "UPDATE " . self::$tabla . " SET estatus = ? WHERE id = ?";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'ii', $this->estatus, $this->id);
             $result = mysqli_stmt_execute($stmt);
 
             if ($result) {

@@ -1,4 +1,5 @@
 import { createNotification } from './notification.js';
+import { createAlert } from './alert.js';
 
 (function() {
     const buttons = [
@@ -287,7 +288,10 @@ function messageDetails(container, identifier) {
                     <div class="information-message information-message--separator">
                         <div class="information-message__response">
                             <textarea class="information-message__textarea" placeholder="Escribe tu respuesta"></textarea>
-                            <button class="information-message__button">Responder</button>
+                            <div class="information-message__button-container">
+                                <button class="information-message__button information-message__button--send">Responder</button>
+                                <button class="information-message__button information-message__button--delete">Eliminar Chat</button>
+                            </div>
                         </div>
                     </div>
                     
@@ -313,9 +317,15 @@ function messageDetails(container, identifier) {
             textarea.style.height = textarea.scrollHeight + 'px';
         });
 
-        const button = document.querySelector('.information-message__button');
+        const sendButton = document.querySelector('.information-message__button--send');
+        const deleteButton = document.querySelector('.information-message__button--delete');
 
-        button.addEventListener('click', function() {
+        sendButton.addEventListener('click', function() {
+            if (textarea.value.trim().length < 1) {
+                createNotification("error", "Por favor, ingrese un mensaje");
+                return;
+            }
+
             const identifier = window.location.pathname.split('/')[3];
 
             fetch('/api/message/response', {
@@ -338,6 +348,35 @@ function messageDetails(container, identifier) {
                 }
             })
         });
+
+        deleteButton.addEventListener('click', function() {
+            createAlert("¿Estás seguro de que deseas eliminar este chat? ", "Esta acción no se puede deshacer", "Eliminar", "Cancelar")
+            .then((result) => {
+                if (result) {
+                    const identifier = window.location.pathname.split('/')[3];
+
+                    fetch('/api/message/delete', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            identifier: identifier,
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status == "success") {
+                            createNotification("success", data.message);
+                            window.history.pushState({}, '', '/informacion/mensajes');
+                            messageSent(container);
+                        } else {
+                            createNotification("error", data.message);
+                        }
+                    })
+                }
+            });
+        });
     });
 }
 
@@ -350,22 +389,24 @@ function accountConfirmPassword(container, functionName) {
         </div>
 
         <div class="information-section__content">
-            <form class="information-form">
+            <form class="information-form" method="POST" action="/api/user/check-password">
                     <div class="information-form__input-container">
                     <label for="login-password" class="information-form__label">Ingrese su contraseña para acceder a sus datos personales</label>
                     <input type="password" class="information-form__input" name="login-password" id="information-password">
                 </div>
 
                 <div class="information-form__button-container" id="information-button-login">
-                    <button type="button" class="information-form__button information-form__button--orange">Continuar</button>
+                    <button type="submit" class="information-form__button information-form__button--orange">Continuar</button>
                 </div>
             </form>
         </div>
     `;
     container.innerHTML = html;
 
-    const button = document.querySelector('#information-button-login');
-    button.addEventListener('click', function() {
+    const form = container.querySelector('form');
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        
         const password = document.querySelector('#information-password').value;
         if (password) {
             fetch('/api/user/check-password', {

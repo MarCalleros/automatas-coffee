@@ -13,7 +13,7 @@
 
     <h2 class="login-modal__title">Inicio de Sesion</h2>
 
-    <form class="login-modal__form" id="login-form">
+    <form class="login-modal__form" id="login-form" method="POST" action="/api/user/login">
         <div class="login-modal__input-container">
             <label for="login-username" class="login-modal__label">Usuario</label>
             <input class="login-modal__input" id="login-username" name="login-username">
@@ -25,7 +25,7 @@
         </div>
 
         <div class="login-modal__button-container">
-            <button type="button" class="login-modal__button login-modal__button--login" id="modal-login-button">Iniciar Sesion</button>
+            <button type="submit" class="login-modal__button login-modal__button--login" id="modal-login-button">Iniciar Sesion</button>
             <button type="button" class="login-modal__button login-modal__button--reset" id="modal-login-reset">Resetear Campos</button>
         </div>
     </form>

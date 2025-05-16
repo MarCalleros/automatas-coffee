@@ -20,6 +20,7 @@ use Controller\APIEstadisticas;
 $router = new Router();
 
 // Login
+$router->get('/api/user/logged', [APIUsuario::class, 'logged']);
 $router->post('/api/user/create', [APIUsuario::class, 'create']);
 $router->post('/api/user/update', [APIUsuario::class, 'update']);
 $router->post('/api/user/login', [APIUsuario::class, 'login']);
@@ -86,6 +87,7 @@ $router->post('/api/message/send', [APIMensaje::class, 'send']);
 $router->get('/api/message/sended', [APIMensaje::class, 'getUserMessages']);
 $router->get('/api/message/detail', [APIMensaje::class, 'getDetailMessage']);
 $router->post('/api/message/response', [APIMensaje::class, 'responseMessage']);
+$router->post('/api/message/delete', [APIMensaje::class, 'deleteMessage']);
 
 // API Carrito
 $router->get('/api/carrito/obtener', [APICarrito::class, 'obtener']);

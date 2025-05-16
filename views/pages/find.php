@@ -21,7 +21,7 @@
         </section>
 
         <section class="find__map-container">
-            <div id="map" class="map"></div>
+            <div id="map" class="find__map"></div>
         </section>
     </div>
 

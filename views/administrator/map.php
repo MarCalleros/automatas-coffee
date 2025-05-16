@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/assets/css/styles.css">
     <link rel="shortcut icon" href="/assets/img/logo-coffee.png">
     <title>Mapa</title>
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
 </head>
 <body>
     <div class="admin-panel">
@@ -20,7 +21,7 @@
                 <div class="map__deliverymen">
                     <ul class="map__deliverymen-list">
                         <?php foreach ($repartidores as $repartidor) : ?>
-                            <li class="map__deliveryman" id="<?= $repartidor->id ?>">
+                            <li class="map__deliveryman" data-id="<?= $repartidor->id ?>" <?php if ($repartidor->ubicacion) : echo "data-lat=". $repartidor->ubicacion->latitud; endif ?> <?php if ($repartidor->ubicacion) : echo "data-lng=". $repartidor->ubicacion->longitud; endif ?>>
                                 <div class="map__deliveryman-status <?= $repartidor->estatus_repartiendo ? 'map__deliveryman-status--active' : 'map__deliveryman-status--inactive' ?>"></div>
                                 <p class="map__deliveryman-name"><?= $repartidor->nombre . ' ' . $repartidor->apellido1 . ' ' . $repartidor->apellido2 . ' #' . $repartidor->id ?></p>
                             </li>
