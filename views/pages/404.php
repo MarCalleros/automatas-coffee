@@ -11,8 +11,8 @@
 <body class="page--full-height">
     <?php include_once __DIR__ . "/../templates/navbar.php"; ?>
     
-    <main class="main--full-height"> 
-        <h2>ERROR 404. PÁGINA NO ENCONTRADA</h2>
+    <main class="imgerror"> 
+    <img src="/assets/img/4042.png" alt="404 Not Found">
     </main>
 
     <?php include_once __DIR__ . "/../templates/footer.php"; ?>

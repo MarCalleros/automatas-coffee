@@ -166,54 +166,17 @@ class APICarrito {
     
 
     public static function comprar() {
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            echo json_encode(['status' => 'error', 'message' => 'Método no permitido']);
-            return;
-        }
-
-        if (!isLogged()) {
-            echo json_encode(['status' => 'error', 'message' => 'Debes iniciar sesión para realizar una compra']);
-            return;
-        }
-
-        // Obtener los items del carrito
-        $items = Carrito::obtenerCarritoCompleto($_SESSION['id']);
-        
-        if (empty($items)) {
-            echo json_encode(['status' => 'error', 'message' => 'El carrito está vacío']);
-            return;
-        }
-
-        // Verificar stock antes de procesar la compra
-        foreach ($items as $item) {
-            if ($item->cantidad > $item->stock_disponible) {
-                echo json_encode([
-                    'status' => 'error', 
-                    'message' => "Stock insuficiente para {$item->nombre_producto} {$item->nombre_tamaño}. No hay unidades disponibles."
-                ]);
-                return;
-            }
-        }
-
-        // Actualizar el stock
-        $stockActualizado = Carrito::actualizarStock($items);
-        
-        if (!$stockActualizado) {
-            echo json_encode(['status' => 'error', 'message' => 'Error al actualizar el stock']);
-            return;
-        }
-
-        $carritoVaciado = Carrito::vaciar($_SESSION['id']);
-        
-        if ($carritoVaciado !== true) {
-            echo json_encode(['status' => 'error', 'message' => 'Error al vaciar el carrito']);
-            return;
-        }
-
-        echo json_encode([
-            'status' => 'success', 
-            'message' => '¡Compra realizada con éxito! Gracias por tu compra.'
-        ]);
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        echo json_encode(['status' => 'error', 'message' => 'Método no permitido']);
+        return;
     }
+
+    if (!isLogged()) {
+        echo json_encode(['status' => 'error', 'message' => 'Debes iniciar sesión para realizar una compra']);
+        return;
+    }
+    $resultado = Carrito::comprar($_SESSION['id']);
+    echo json_encode($resultado);
+}
 }
 ?>

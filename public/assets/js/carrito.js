@@ -281,6 +281,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log("respuesta de compra", data)
         callback(data)
       })
       .catch((error) => {

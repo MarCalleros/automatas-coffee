@@ -149,9 +149,6 @@ class Carrito {
         }
     }
     
-    
-    
-
     public function eliminar() {
         try {
             require __DIR__ . '/../includes/database.php';
@@ -296,7 +293,6 @@ class Carrito {
         }
     }
     
-
     private function verificarStock($db) {
         try {
             $query = "SELECT existencia FROM producto_tamaño 
@@ -319,7 +315,6 @@ class Carrito {
         }
     }
     
-
     public static function actualizarStock($items) {
         try {
             require __DIR__ . '/../includes/database.php';
@@ -355,6 +350,84 @@ class Carrito {
                 mysqli_rollback($db);
             }
             return false;
+        }
+    }
+    //Comprar
+    public static function comprar($id_usuario) {
+        try {
+            require __DIR__ . '/../includes/database.php';            
+            mysqli_begin_transaction($db);
+            
+            $items = self::obtenerCarritoCompleto($id_usuario);
+            
+            if (empty($items)) {
+                return ["status" => "error", "message" => "El carrito está vacío"];
+            }
+            
+            $total = self::calcularTotal($id_usuario);
+            
+            // 3. Crear la compra
+            $query = "INSERT INTO compra (id_usuario, fecha, total, estatus) VALUES (?, NOW(), ?, 'A')";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'id', $id_usuario, $total);
+            
+            if (!mysqli_stmt_execute($stmt)) {
+                mysqli_rollback($db);
+                return ["status" => "error", "message" => "Error al crear la compra: " . mysqli_error($db)];
+            }
+            
+            $id_compra = mysqli_insert_id($db);
+            
+            // 4. Crear los detalles de la compra
+            $query = "INSERT INTO detalle_compra (id_compra, id_producto, id_tamaño, cantidad, precio_unitario, subtotal) VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = mysqli_prepare($db, $query);
+            
+            foreach ($items as $item) {
+                $subtotal = $item->cantidad * $item->precio;
+                
+                mysqli_stmt_bind_param(
+                    $stmt, 
+                    'iiiddd', 
+                    $id_compra, 
+                    $item->id_producto, 
+                    $item->id_tamaño, 
+                    $item->cantidad, 
+                    $item->precio, 
+                    $subtotal
+                );
+                
+                if (!mysqli_stmt_execute($stmt)) {
+                    mysqli_rollback($db);
+                    return ["status" => "error", "message" => "Error al guardar detalle de la compra: " . mysqli_error($db)];
+                }
+            }
+            
+            // 5. Actualizar el stock
+            if (!self::actualizarStock($items)) {
+                mysqli_rollback($db);
+                return ["status" => "error", "message" => "Error al actualizar el stock de productos"];
+            }
+            
+            // 6. Vaciar el carrito
+            if (!self::vaciar($id_usuario)) {
+                mysqli_rollback($db);
+                return ["status" => "error", "message" => "Error al vaciar el carrito"];
+            }
+            
+            // Confirmar la transacción
+            mysqli_commit($db);
+            
+            return [
+                "status" => "success", 
+                "message" => "¡Compra realizada con éxito! Tu Compra está en proceso.",
+                "id_compra" => $id_compra
+            ];
+            
+        } catch (\Exception $e) {
+            if (isset($db) && mysqli_connect_errno() === 0) {
+                mysqli_rollback($db);
+            }
+            return ["status" => "error", "message" => "Error: " . $e->getMessage()];
         }
     }
 }

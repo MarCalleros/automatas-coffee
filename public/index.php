@@ -15,6 +15,7 @@ use Controller\APIProducto;
 use Controller\APIUsuario;
 use Controller\APICarrito;
 use Controller\APIMensaje;
+use Controller\APIEstadisticas;
 
 $router = new Router();
 
@@ -52,6 +53,15 @@ $router->get('/admin/message', [AdminMensajeController::class, 'index']);
 $router->post('/admin/message', [AdminMensajeController::class, 'index']);
 $router->get('/admin/message/view', [AdminMensajeController::class, 'view']);
 $router->post('/admin/message/view', [AdminMensajeController::class, 'view']);
+$router->get('/admin/estadisticas', [AdminPagesController::class, 'estadisticas']);
+
+// API Estadísticas
+$router->get('/api/estadisticas/productos_cantidad', [APIEstadisticas::class, 'productosVendidos']);
+$router->get('/api/estadisticas/productos_ingresos', [APIEstadisticas::class, 'productosIngresos']);
+$router->get('/api/estadisticas/clientes_compras', [APIEstadisticas::class, 'clientesCompras']);
+$router->get('/api/estadisticas/clientes_ingresos', [APIEstadisticas::class, 'clientesIngresos']);
+$router->get('/api/estadisticas/ventas_periodo', [APIEstadisticas::class, 'ventasPeriodo']);
+$router->get('/api/estadisticas/graficas', [APIEstadisticas::class, 'graficas']);
 
 // Usuario
 $router->get('/', [PagesController::class, 'home']);
@@ -84,6 +94,7 @@ $router->post('/api/carrito/actualizar', [APICarrito::class, 'actualizar']);
 $router->post('/api/carrito/eliminar', [APICarrito::class, 'eliminar']);
 $router->post('/api/carrito/vaciar', [APICarrito::class, 'vaciar']);
 $router->post('/api/carrito/comprar', [APICarrito::class, 'comprar']);
+
 
 $router->testRoutes();
 ?>
