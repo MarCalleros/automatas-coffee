@@ -64,8 +64,7 @@ class APIMensaje {
 
         if ($mensajes) {
             foreach ($mensajes as $mensaje) {
-                if ($mensaje->id_mensaje) {
-                    // Si es una respuesta, quitarla de la lista
+                if ($mensaje->id_mensaje || $mensaje->estatus == 0) { // Si es una respuesta o el estatus es 0, quitarla de la lista
                     unset($mensajes[array_search($mensaje, $mensajes)]);
                 }
             }
@@ -117,6 +116,11 @@ class APIMensaje {
 
         if ($mensajes) {
             if ($mensajes[0]->id_usuario !== $_SESSION['id']) { // Comprobar si el mensaje pertenece al usuario
+                echo json_encode(['status' => 'error', 'message' => 'No se encontro el mensajes']);
+                return;
+            }
+
+            if ($mensajes[0]->estatus == 0) { // Comprobar si el mensaje esta eliminado
                 echo json_encode(['status' => 'error', 'message' => 'No se encontro el mensajes']);
                 return;
             }
@@ -190,6 +194,41 @@ class APIMensaje {
             echo json_encode(['status' => 'success', 'message' => 'Mensaje enviado exitosamente']);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Error al enviar el mensaje']);
+        }
+    }
+
+    public static function deleteMessage() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
+            return;
+        }
+
+        if (!isLogged()) {
+            echo json_encode(['status' => 'error', 'message' => 'Debes iniciar sesión para enviar un mensaje']);
+            return;
+        }
+    
+        $data = json_decode(file_get_contents('php://input'), true);
+    
+        if (!isset($data['identifier'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Faltan datos requeridos']);
+            return;
+        }
+
+        $mensaje = Mensaje::where('identificador', $data['identifier']);
+
+        if (!$mensaje) {
+            echo json_encode(['status' => 'error', 'message' => 'Mensaje no encontrado']);
+            return;
+        }
+
+        $mensaje[0]->estatus = 0;
+        $result = $mensaje[0]->changeStatus();
+
+        if ($result) {
+            echo json_encode(['status' => 'success', 'message' => 'Mensaje eliminado exitosamente']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Error al eliminar el mensaje']);
         }
     }
 }

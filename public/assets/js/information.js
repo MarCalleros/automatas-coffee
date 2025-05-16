@@ -1,4 +1,5 @@
 import { createNotification } from './notification.js';
+import { createAlert } from './alert.js';
 
 (function() {
     const buttons = [
@@ -287,7 +288,10 @@ function messageDetails(container, identifier) {
                     <div class="information-message information-message--separator">
                         <div class="information-message__response">
                             <textarea class="information-message__textarea" placeholder="Escribe tu respuesta"></textarea>
-                            <button class="information-message__button">Responder</button>
+                            <div class="information-message__button-container">
+                                <button class="information-message__button information-message__button--send">Responder</button>
+                                <button class="information-message__button information-message__button--delete">Eliminar Chat</button>
+                            </div>
                         </div>
                     </div>
                     
@@ -313,9 +317,15 @@ function messageDetails(container, identifier) {
             textarea.style.height = textarea.scrollHeight + 'px';
         });
 
-        const button = document.querySelector('.information-message__button');
+        const sendButton = document.querySelector('.information-message__button--send');
+        const deleteButton = document.querySelector('.information-message__button--delete');
 
-        button.addEventListener('click', function() {
+        sendButton.addEventListener('click', function() {
+            if (textarea.value.trim().length < 1) {
+                createNotification("error", "Por favor, ingrese un mensaje");
+                return;
+            }
+
             const identifier = window.location.pathname.split('/')[3];
 
             fetch('/api/message/response', {
@@ -337,6 +347,35 @@ function messageDetails(container, identifier) {
                     createNotification("error", data.message);
                 }
             })
+        });
+
+        deleteButton.addEventListener('click', function() {
+            createAlert("¿Estás seguro de que deseas eliminar este chat? ", "Esta acción no se puede deshacer", "Eliminar", "Cancelar")
+            .then((result) => {
+                if (result) {
+                    const identifier = window.location.pathname.split('/')[3];
+
+                    fetch('/api/message/delete', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            identifier: identifier,
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status == "success") {
+                            createNotification("success", data.message);
+                            window.history.pushState({}, '', '/informacion/mensajes');
+                            messageSent(container);
+                        } else {
+                            createNotification("error", data.message);
+                        }
+                    })
+                }
+            });
         });
     });
 }
