@@ -367,7 +367,7 @@ class Carrito {
             $total = self::calcularTotal($id_usuario);
             
             // 3. Crear la compra
-            $query = "INSERT INTO compra (id_usuario, fecha, total, estatus) VALUES (?, NOW(), ?, 'A')";
+            $query = "INSERT INTO compra (id_usuario, fecha, total, estatus) VALUES (?, NOW(), ?, 'entregado')";
             $stmt = mysqli_prepare($db, $query);
             mysqli_stmt_bind_param($stmt, 'id', $id_usuario, $total);
             

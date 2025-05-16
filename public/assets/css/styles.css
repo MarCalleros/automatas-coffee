@@ -123,6 +123,14 @@ h3 {
     flex: 1;
 }
 
+.imgerror img {
+    max-width: 66%;
+    height: auto;
+    display: block;
+    margin: auto;
+    margin-top: 100px;
+}
+
 @media (min-width: 1024px) {
     body {
         padding-top: 115px;

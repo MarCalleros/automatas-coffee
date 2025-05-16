@@ -27,5 +27,14 @@ class AdminPagesController {
             'repartidores' => $repartidores
         ]);
     }
+
+    public static function estadisticas(Router $router) {
+        if (!isAdmin()) {
+            header('Location: /');
+            exit;
+        }
+
+        $router->render('administrator/estadisticas', []);
+    }
 }
 ?>
