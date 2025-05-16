@@ -76,6 +76,9 @@ class APIMensaje {
                 return;
             }
 
+            // Reindexar el array
+            $mensajes = array_values($mensajes);
+
             echo json_encode(['status' => 'success', 'user' => $usuario, 'messages' => $mensajes]);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'No se encontraron mensajes']);
