@@ -319,6 +319,81 @@
     background-color: var(--gray);
 }
 
+/* Historial de compras */
+.information-purchase {
+    display: flex;
+    gap: 15px;
+    position: relative;
+    align-items: center;
+}
+
+.information-purchase--separator {
+    border-top: 2px solid var(--color-text);
+    margin-top: 30px;
+    padding-top: 30px;
+}
+
+.information-purchase__title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: var(--text);
+    color: var(--color-text);
+    margin: 0 auto;
+}
+
+.information-purchase__text {
+    font-family: 'Lato', sans-serif;
+    font-size: var(--text-small);
+    color: var(--color-text);
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.information-purchase__price {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Lato', sans-serif;
+    font-size: 1.6rem;
+    color: var(--white);
+    position: absolute;
+    right: 0;
+    top: 20px;
+    border-radius: 10px;
+    height: 45px;
+    width: max-content;
+}
+
+.information-purchase__total {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Lato', sans-serif;
+    font-size: 1.6rem;
+    color: var(--white);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    border-radius: 10px;
+    height: 45px;
+    width: max-content;
+}
+
+.information-purchase__image {
+    width: 250px;
+    border-radius: 10px;
+}
+
+.information-purchase__content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 /* Informacion de mi cuenta */
 .information-form {
     margin: 0 auto;

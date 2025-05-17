@@ -20,7 +20,7 @@ class Estadisticas {
             $query = "SELECT p.nombre, SUM(dc.cantidad) as cantidad_vendida 
                         FROM detalle_compra dc 
                         JOIN producto p ON dc.id_producto = p.id 
-                        JOIN compra c ON dc.id_compra = c.id_compra
+                        JOIN compra c ON dc.id_compra = c.id
                         WHERE c.estatus = 'entregado'
                         GROUP BY p.id 
                         ORDER BY cantidad_vendida DESC 
@@ -54,7 +54,7 @@ class Estadisticas {
             $query = "SELECT p.nombre, SUM(dc.cantidad) as cantidad_vendida 
                         FROM detalle_compra dc 
                         JOIN producto p ON dc.id_producto = p.id 
-                        JOIN compra c ON dc.id_compra = c.id_compra
+                        JOIN compra c ON dc.id_compra = c.id
                         WHERE c.estatus = 'entregado'
                         GROUP BY p.id 
                         ORDER BY cantidad_vendida ASC 
@@ -87,7 +87,7 @@ class Estadisticas {
             $query = "SELECT p.nombre, SUM(dc.subtotal) as ingresos 
                         FROM detalle_compra dc 
                         JOIN producto p ON dc.id_producto = p.id 
-                        JOIN compra c ON dc.id_compra = c.id_compra
+                        JOIN compra c ON dc.id_compra = c.id
                         WHERE c.estatus = 'entregado'
                         GROUP BY p.id 
                         ORDER BY ingresos DESC 
@@ -120,7 +120,7 @@ class Estadisticas {
             $query = "SELECT p.nombre, SUM(dc.subtotal) as ingresos 
                         FROM detalle_compra dc 
                         JOIN producto p ON dc.id_producto = p.id 
-                        JOIN compra c ON dc.id_compra = c.id_compra
+                        JOIN compra c ON dc.id_compra = c.id
                         WHERE c.estatus = 'entregado'
                         GROUP BY p.id 
                         ORDER BY ingresos ASC 
@@ -157,7 +157,7 @@ class Estadisticas {
                         FROM detalle_compra dc 
                         JOIN producto p ON dc.id_producto = p.id 
                         JOIN producto_tamaño pt ON p.id = pt.id_producto AND dc.id_tamaño = pt.id_tamaño
-                        JOIN compra c ON dc.id_compra = c.id_compra
+                        JOIN compra c ON dc.id_compra = c.id
                         WHERE c.estatus = 'entregado'
                         GROUP BY p.id 
                         ORDER BY cantidad_vendida DESC
@@ -177,7 +177,7 @@ class Estadisticas {
             $queryTotal = "SELECT COUNT(DISTINCT p.id) as total 
                             FROM producto p 
                             JOIN detalle_compra dc ON p.id = dc.id_producto 
-                            JOIN compra c ON dc.id_compra = c.id_compra 
+                            JOIN compra c ON dc.id_compra = c.id 
                             WHERE c.estatus = 'entregado'";
             
             $resultTotal = mysqli_query($db, $queryTotal);
@@ -213,7 +213,7 @@ class Estadisticas {
                         SUM(dc.cantidad) as cantidad_vendida 
                         FROM detalle_compra dc 
                         JOIN producto p ON dc.id_producto = p.id 
-                        JOIN compra c ON dc.id_compra = c.id_compra
+                        JOIN compra c ON dc.id_compra = c.id
                         WHERE c.estatus = 'entregado'
                         GROUP BY p.id 
                         ORDER BY ingresos DESC
@@ -233,7 +233,7 @@ class Estadisticas {
             $queryTotal = "SELECT COUNT(DISTINCT p.id) as total 
                             FROM producto p 
                             JOIN detalle_compra dc ON p.id = dc.id_producto 
-                            JOIN compra c ON dc.id_compra = c.id_compra 
+                            JOIN compra c ON dc.id_compra = c.id 
                             WHERE c.estatus = 'entregado'";
             
             $resultTotal = mysqli_query($db, $queryTotal);
@@ -264,7 +264,7 @@ class Estadisticas {
         try {
             mysqli_report(MYSQLI_REPORT_OFF);
 
-            $query = "SELECT u.nombre, COUNT(c.id_compra) as total_compras 
+            $query = "SELECT u.nombre, COUNT(c.id) as total_compras 
                         FROM usuario u 
                         JOIN compra c ON u.id = c.id_usuario 
                         WHERE c.estatus = 'entregado'
@@ -330,7 +330,7 @@ class Estadisticas {
             
             $offset = ($pagina - 1) * $porPagina;
             
-            $query = "SELECT u.id, u.nombre, COUNT(c.id_compra) as total_compras, 
+            $query = "SELECT u.id, u.nombre, COUNT(c.id) as total_compras, 
                         MAX(c.fecha) as ultima_compra 
                         FROM usuario u 
                         JOIN compra c ON u.id = c.id_usuario 
@@ -385,7 +385,7 @@ class Estadisticas {
             $offset = ($pagina - 1) * $porPagina;
             
             $query = "SELECT u.id, u.nombre, SUM(c.total) as total_ingresos, 
-                        COUNT(c.id_compra) as compras_realizadas 
+                        COUNT(c.id) as compras_realizadas 
                         FROM usuario u 
                         JOIN compra c ON u.id = c.id_usuario 
                         WHERE c.estatus = 'entregado'

@@ -1,5 +1,9 @@
 <?php
+
 namespace Model;
+
+use Ramsey\Uuid\Uuid;
+use Model\Compra;
 
 class Carrito {
     private static $tabla = 'carrito';
@@ -355,7 +359,8 @@ class Carrito {
     //Comprar
     public static function comprar($id_usuario) {
         try {
-            require __DIR__ . '/../includes/database.php';            
+            require __DIR__ . '/../includes/database.php';
+
             mysqli_begin_transaction($db);
             
             $items = self::obtenerCarritoCompleto($id_usuario);
@@ -365,11 +370,18 @@ class Carrito {
             }
             
             $total = self::calcularTotal($id_usuario);
+
+            do {
+                // Generar un UUID para el mensaje
+                $uuid = Uuid::uuid4()->toString();
+                $uuid = substr(str_replace('-', '', $uuid), 0, 12); // 12 caracteres alfanuméricos
+                $uuid = strtoupper($uuid); // Convertir a mayúsculas
+            } while (Compra::where('identificador', $uuid)); // Verificar que no exista otro mensaje con el mismo UUID
             
             // 3. Crear la compra
-            $query = "INSERT INTO compra (id_usuario, fecha, total, estatus) VALUES (?, NOW(), ?, 'entregado')";
+            $query = "INSERT INTO compra (id_usuario, fecha, total, identificador, estatus) VALUES (?, NOW(), ?, ?, 0)";
             $stmt = mysqli_prepare($db, $query);
-            mysqli_stmt_bind_param($stmt, 'id', $id_usuario, $total);
+            mysqli_stmt_bind_param($stmt, 'ids', $id_usuario, $total, $uuid);
             
             if (!mysqli_stmt_execute($stmt)) {
                 mysqli_rollback($db);
@@ -387,7 +399,7 @@ class Carrito {
                 
                 mysqli_stmt_bind_param(
                     $stmt, 
-                    'iiiddd', 
+                    'iiiidd', 
                     $id_compra, 
                     $item->id_producto, 
                     $item->id_tamaño, 

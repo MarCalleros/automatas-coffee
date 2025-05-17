@@ -85,7 +85,7 @@ import { createAlert } from './alert.js';
 
             if (item.button == purchaseButtons[0].button) {
                 window.history.pushState({}, '', '/informacion/pedidos');
-                //funcion
+                purchaseHistory(container);
             }
         });
     });
@@ -134,9 +134,9 @@ import { createAlert } from './alert.js';
             buttons[0].options.querySelectorAll('.information-menu__option')[0].classList.add('information-menu__option--selected');
 
             // Si hay un tercer enlace como identificador, entonces mostrar el mensaje
-            const identifier = window.location.pathname.split('/')[3];
-            if (identifier) {
-                messageDetails(document.querySelector('.information-section--content'), identifier);
+            const identifierMessage = window.location.pathname.split('/')[3];
+            if (identifierMessage) {
+                messageDetails(document.querySelector('.information-section--content'), identifierMessage);
             } else {
                 messageSent(document.querySelector('.information-section--content'));
             }
@@ -145,7 +145,14 @@ import { createAlert } from './alert.js';
             buttons[1].options.classList.add('information-menu__options--active');
             buttons[1].button.querySelector('.information-menu__arrow svg').style.transform = 'rotate(180deg)';
             buttons[1].options.querySelectorAll('.information-menu__option')[0].classList.add('information-menu__option--selected');
-            //funcion
+
+            // Si hay un tercer enlace como identificador, entonces mostrar el mensaje
+            const identifierPurchase = window.location.pathname.split('/')[3];
+            if (identifierPurchase) {
+                purchaseDetails(document.querySelector('.information-section--content'), identifierPurchase);
+            } else {
+                purchaseHistory(document.querySelector('.information-section--content'));
+            }
             break;
         case 'cuenta':
             buttons[2].options.classList.add('information-menu__options--active');
@@ -377,6 +384,146 @@ function messageDetails(container, identifier) {
                 }
             });
         });
+    });
+}
+
+function purchaseHistory(container) {
+    container.innerHTML = '';
+    let html = `
+        <div class="information-section__header">
+            <h2 class="information-section__title information-section__title--no-margin">Historial de Pedidos</h2>
+        </div>
+    `;
+
+    fetch('/api/purchase/purchased', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status == "success") {
+            data.purchases.forEach(purchase => {
+                let answerDiv = '';
+
+                if (purchase.estatus == 0) {
+                    answerDiv = `<div class="information-message__status information-message__status--green">Pendiente</div>`;
+                } else {
+                    answerDiv = `<div class="information-message__status information-message__status--orange">Entregado</div>`;
+                }
+
+                html += `
+                    <div class="information-section__content information-section__content--hover">
+                        <div class="information-message">
+                            <p class="information-message__text"><strong>Nombre: </strong>${data.user.nombre}</p>
+                            <p class="information-message__text"><strong>Numero de pedido: </strong>${purchase.identificador}</p>
+                            <p class="information-message__text"><strong>Pedido realizado el: </strong>${purchase.fecha}</p>
+                            <p class="information-message__text"><strong>Monto total: </strong>$${purchase.total}</p>
+                        </div>
+
+                        ${answerDiv}
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+
+            const purchases = document.querySelectorAll('.information-section__content--hover');
+            purchases.forEach(purchase => {
+                purchase.addEventListener('click', function() {
+                    const identifier = this.querySelectorAll('.information-message__text')[1].innerText.split(': ')[1];
+                    window.history.pushState({}, '', '/informacion/pedidos/' + identifier);
+                    purchaseDetails(container, identifier);
+                });
+            });
+        } else {
+            html += `
+                <div class="information-section__content">
+                    <p class="information-message__title">No has realizado ninguna compra aun</p>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+    });
+}
+
+function purchaseDetails(container, identifier) {
+    container.innerHTML = '';
+    let html = `
+        <div class="information-section__header">
+            <h2 class="information-section__title information-section__title--no-margin">Historial de Pedidos</h2>
+        </div>
+    `;
+
+    fetch(`/api/purchase/detail?identifier=${identifier}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status == "success") {
+            let statusDiv = '';
+            let detailDiv = '';
+
+            if (data.purchase[0].estatus == 0) {
+                statusDiv = `<div class="information-message__status information-message__status--green">Pendiente</div>`;
+            } else {
+                statusDiv = `<div class="information-message__status information-message__status--orange">Entregado</div>`;
+            }
+
+            if (data.detail !== null) {
+                data.details.forEach(detail => {
+                    detailDiv += `
+                        <div class="information-purchase information-purchase--separator">
+                            <div>
+                                <img class="information-purchase__image" src="/assets/img/product/${detail.producto.ruta}.jpg" alt="${detail.producto.nombre}">
+                            </div>
+                            <div class="information-purchase__content">
+                                <strong class="information-purchase__text">${detail.producto.nombre}</strong>
+                                <strong class="information-purchase__text">${detail.tamaño.nombre}</strong>
+                                <p class="information-purchase__text">${detail.producto.descripcion}</p>
+
+                                <p class="information-purchase__text"><strong>Cantidad: </strong>${detail.cantidad}</p>
+                                <div class="information-purchase__price">
+                                    <p class="information-purchase__text"><strong>P. Unitario: </strong>$${detail.precio_unitario}</p>
+                                </div>
+
+                                <div class="information-purchase__total">
+                                    <p class="information-purchase__text"><strong>Subtotal: </strong>$${detail.subtotal}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            html += `
+                <div class="information-section__content information-section__content--flex-column">
+                    <div class="information-message">
+                        <p class="information-message__text"><strong>Nombre: </strong>${data.user.nombre}</p>
+                        <p class="information-message__text"><strong>Numero de pedido: </strong>${data.purchase[0].identificador}</p>
+                        <p class="information-message__text"><strong>Pedido realizado el: </strong>${data.purchase[0].fecha}</p>
+                        <p class="information-message__text"><strong>Monto total: </strong>$${data.purchase[0].total}</p>
+                    </div>
+
+                    ${detailDiv}
+                    
+                    ${statusDiv}
+                </div>
+            `;
+        } else {
+            html += `
+                <div class="information-section__content">
+                    <p class="information-message__title">Este pedido no existe</p>
+                </div>
+            `;
+        }
+        
+        container.innerHTML = html;
     });
 }
 
