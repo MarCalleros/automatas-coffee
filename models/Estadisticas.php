@@ -14,8 +14,6 @@ class Estadisticas {
         require __DIR__ . '/../includes/database.php';
 
         try {
-            mysqli_report(MYSQLI_REPORT_OFF);
-
             $query = "SELECT p.nombre, SUM(dc.cantidad) as cantidad_vendida 
                         FROM detalle_compra dc 
                         JOIN producto p ON dc.id_producto = p.id 
@@ -39,7 +37,6 @@ class Estadisticas {
         } catch (\Exception $e) {
             return [];
         } finally {
-            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         }
     }
 
@@ -47,8 +44,6 @@ class Estadisticas {
         require __DIR__ . '/../includes/database.php';
 
         try {
-            mysqli_report(MYSQLI_REPORT_OFF);
-
             $query = "SELECT p.nombre, SUM(dc.cantidad) as cantidad_vendida 
                         FROM detalle_compra dc 
                         JOIN producto p ON dc.id_producto = p.id 
@@ -72,7 +67,6 @@ class Estadisticas {
         } catch (\Exception $e) {
             return [];
         } finally {
-            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         }
     }
 
@@ -80,8 +74,6 @@ class Estadisticas {
         require __DIR__ . '/../includes/database.php';
 
         try {
-            mysqli_report(MYSQLI_REPORT_OFF);
-
             $query = "SELECT p.nombre, SUM(dc.subtotal) as ingresos 
                         FROM detalle_compra dc 
                         JOIN producto p ON dc.id_producto = p.id 
@@ -105,7 +97,6 @@ class Estadisticas {
         } catch (\Exception $e) {
             return [];
         } finally {
-            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         }
     }
 
@@ -113,8 +104,6 @@ class Estadisticas {
         require __DIR__ . '/../includes/database.php';
 
         try {
-            mysqli_report(MYSQLI_REPORT_OFF);
-
             $query = "SELECT p.nombre, SUM(dc.subtotal) as ingresos 
                         FROM detalle_compra dc 
                         JOIN producto p ON dc.id_producto = p.id 
@@ -138,7 +127,6 @@ class Estadisticas {
         } catch (\Exception $e) {
             return [];
         } finally {
-            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         }
     }
 
@@ -146,8 +134,6 @@ class Estadisticas {
         require __DIR__ . '/../includes/database.php';
 
         try {
-            mysqli_report(MYSQLI_REPORT_OFF);
-            
             $offset = ($pagina - 1) * $porPagina;
             
             $query = "SELECT p.id, p.nombre, SUM(dc.cantidad) as cantidad_vendida, 
@@ -195,7 +181,6 @@ class Estadisticas {
                 'pagina_actual' => (int)$pagina
             ];
         } finally {
-            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         }
     }
 
@@ -203,8 +188,6 @@ class Estadisticas {
         require __DIR__ . '/../includes/database.php';
 
         try {
-            mysqli_report(MYSQLI_REPORT_OFF);
-            
             $offset = ($pagina - 1) * $porPagina;
             
             $query = "SELECT p.id, p.nombre, SUM(dc.subtotal) as ingresos, 
@@ -251,7 +234,6 @@ class Estadisticas {
                 'pagina_actual' => (int)$pagina
             ];
         } finally {
-            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         }
     }
 
@@ -260,8 +242,6 @@ class Estadisticas {
         require __DIR__ . '/../includes/database.php';
 
         try {
-            mysqli_report(MYSQLI_REPORT_OFF);
-
             $query = "SELECT u.nombre, COUNT(c.id) as total_compras 
                         FROM usuario u 
                         JOIN compra c ON u.id = c.id_usuario 
@@ -284,7 +264,6 @@ class Estadisticas {
         } catch (\Exception $e) {
             return [];
         } finally {
-            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         }
     }
 
@@ -292,8 +271,6 @@ class Estadisticas {
         require __DIR__ . '/../includes/database.php';
 
         try {
-            mysqli_report(MYSQLI_REPORT_OFF);
-
             $query = "SELECT u.nombre, SUM(c.total) as total_ingresos 
                         FROM usuario u 
                         JOIN compra c ON u.id = c.id_usuario 
@@ -316,7 +293,6 @@ class Estadisticas {
         } catch (\Exception $e) {
             return [];
         } finally {
-            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         }
     }
 
@@ -324,10 +300,8 @@ class Estadisticas {
         require __DIR__ . '/../includes/database.php';
 
         try {
-            mysqli_report(MYSQLI_REPORT_OFF);
-            
+
             $offset = ($pagina - 1) * $porPagina;
-            
             $query = "SELECT u.id, u.nombre, COUNT(c.id) as total_compras, 
                         MAX(c.fecha) as ultima_compra 
                         FROM usuario u 
@@ -370,7 +344,6 @@ class Estadisticas {
                 'pagina_actual' => (int)$pagina
             ];
         } finally {
-            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         }
     }
 
@@ -378,8 +351,6 @@ class Estadisticas {
         require __DIR__ . '/../includes/database.php';
 
         try {
-            mysqli_report(MYSQLI_REPORT_OFF);
-            
             $offset = ($pagina - 1) * $porPagina;
             
             $query = "SELECT u.id, u.nombre, SUM(c.total) as total_ingresos, 
@@ -424,7 +395,6 @@ class Estadisticas {
                 'pagina_actual' => (int)$pagina
             ];
         } finally {
-            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         }
     }
 
@@ -434,8 +404,6 @@ public static function getVentasPeriodoPaginados($periodo = 'dia', $pagina = 1, 
     $db->query("SET SESSION sql_mode = ''");
 
     try {
-        mysqli_report(MYSQLI_REPORT_OFF);
-        
         $offset = ($pagina - 1) * $porPagina;
         $query = "";
         $queryTotal = "";
@@ -589,20 +557,15 @@ public static function getVentasPeriodoPaginados($periodo = 'dia', $pagina = 1, 
             'pagina_actual' => (int)$pagina,
             'periodo' => $periodo
         ];
-    } catch (\Exception $e) {
-        // Registrar el error para depuración
-        error_log("Error en getVentasPeriodoPaginados: " . $e->getMessage());
-        
+    } catch (\Exception $e) {        
         return [
             'items' => [],
             'total' => 0,
             'total_paginas' => 0,
             'pagina_actual' => (int)$pagina,
             'periodo' => $periodo,
-            'error' => $e->getMessage()
         ];
     } finally {
-        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
     }
 }
 }
