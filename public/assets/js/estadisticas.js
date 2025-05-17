@@ -129,12 +129,26 @@ document.addEventListener("DOMContentLoaded", () => {
         paginationContainer = "paginacionClientesIngresos"
         break
       case "ventas":
-        url = `/api/estadisticas/ventas_periodo?pagina=${pagina}&periodo=${periodo}`
-        targetContainer = "tablaVentasPeriodo"
-        paginationContainer = "paginacionVentasPeriodo"
-        if (periodo === 'personalizado' && params.fecha_inicio && params.fecha_fin) {
-        url += `&fecha_inicio=${params.fecha_inicio}&fecha_fin=${params.fecha_fin}`;
+        url = `/api/estadisticas/ventas_periodo?pagina=${pagina}&periodo=${periodo}`;
+        
+        // Obtener parámetros de la URL actual
+        const urlParams = new URLSearchParams(window.location.search);
+        const fechaInicio = urlParams.get('fecha_inicio');
+        const fechaFin = urlParams.get('fecha_fin');
+
+        if (periodo === 'personalizado') {
+            if (fechaInicio && fechaFin) {
+                url += `&fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`;
+            } else {
+                // Si no hay fechas en URL, obtenerlas del formulario
+                const fechaInicioForm = document.getElementById('fecha_inicio').value;
+                const fechaFinForm = document.getElementById('fecha_fin').value;
+                if (fechaInicioForm && fechaFinForm) {
+                    url += `&fecha_inicio=${fechaInicioForm}&fecha_fin=${fechaFinForm}`;
+                }
+            }
         }
+        
         targetContainer = "tablaVentasPeriodo";
         paginationContainer = "paginacionVentasPeriodo";
         break;
@@ -647,9 +661,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function cambiarPeriodo(periodo) {
     // Si ya estamos en este período, no hacer nada, menos para personalizado
     if (currentPeriodo === periodo && periodo !== 'personalizado') return;
-    
-    console.log("Cambiando a período:", periodo);
-    
+        
     // Actualizar clases de los botones de período
     document.querySelectorAll(".period-btn").forEach(btn => {
       btn.classList.remove("active");

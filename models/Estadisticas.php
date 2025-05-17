@@ -14,7 +14,6 @@ class Estadisticas {
         require __DIR__ . '/../includes/database.php';
 
         try {
-            // Desactivar reporte de errores temporalmente
             mysqli_report(MYSQLI_REPORT_OFF);
 
             $query = "SELECT p.nombre, SUM(dc.cantidad) as cantidad_vendida 
@@ -40,7 +39,6 @@ class Estadisticas {
         } catch (\Exception $e) {
             return [];
         } finally {
-            // Reactivar reporte de errores
             mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         }
     }
