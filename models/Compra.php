@@ -16,6 +16,7 @@ class Compra {
     public $estatus;
 
     public $usuario;
+    public $detalle = []; // Array de objetos DetalleCompra
 
     public function __construct($args = []) {
         $this->id = $args['id'] ?? null;
@@ -30,20 +31,16 @@ class Compra {
         try {
             require __DIR__ . '/../includes/database.php';
 
-            //$query = "SELECT * FROM " . self::$tabla . " ORDER BY id ASC";
-            $query = "SELECT m1.*, CASE WHEN m1.id_mensaje IS NULL THEN 'original' ELSE 'respuesta' END AS tipo FROM " . self::$tabla . " m1 LEFT JOIN " . self::$tabla . " m2 ON m1.id_mensaje = m2.id ORDER BY COALESCE(m1.id_mensaje, m1.id), m1.id_mensaje IS NOT NULL, m1.fecha";
+            $query = "SELECT * FROM " . self::$tabla;
             $result = mysqli_query($db, $query);
 
             if ($result) {
                 while ($row = mysqli_fetch_assoc($result)) {
-                    $mensaje = new Mensaje($row);
-
-                    $mensaje->usuario = Usuario::where('id', $mensaje->id_usuario); // Obtener el usuario relacionado
-
-                    $mensajes[] = $mensaje;
+                    $compra = new Compra($row);
+                    $compras[] = $compra;
                 }
 
-                return $mensajes ?? null;
+                return $compras ?? null;
             } else {
                 return null;
             }

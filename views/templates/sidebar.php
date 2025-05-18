@@ -10,7 +10,7 @@
         <a href="/admin/usuario" class="sidebar__button">Usuarios</a>
         <a href="/admin/message" class="sidebar__button">Mensajes</a>
         <a href="/admin/adminproduct" class="sidebar__button">Productos</a>
-        <a href="/admin/deliveries" class="sidebar__button">Pedidos</a>
+        <a href="/admin/delivery" class="sidebar__button">Pedidos</a>
         <a href="/admin/deliveryman" class="sidebar__button">Repartidores</a>
         <a href="/admin/mapa" class="sidebar__button">Ver Mapa</a>
         <a href="/admin/estadisticas" class="sidebar__button">Estadísticas</a>

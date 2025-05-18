@@ -333,6 +333,21 @@
     padding-top: 30px;
 }
 
+.information-purchase--separator-down {
+    border-bottom: 2px solid var(--color-text);
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+}
+
+.information-purchase--separator-down:first-of-type {
+    border-bottom: 2px solid var(--color-text);
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-top: 2px solid var(--color-text);
+    margin-top: 30px;
+    padding-top: 30px;
+}
+
 .information-purchase__title {
     font-family: 'Montserrat', sans-serif;
     font-size: var(--text);

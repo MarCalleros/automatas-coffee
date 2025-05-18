@@ -1,49 +1,12 @@
 import { createNotification } from './notification.js';
 
 (function() {
-    const deliverymanStatusForms = document.querySelectorAll('.admin-deliveryman-status-form');
     const userStatusForms = document.querySelectorAll('.admin-user-status-form');
     const messageStatusForms = document.querySelectorAll('.admin-message-status-form');
+    const deliveryStatusForms = document.querySelectorAll('.admin-delivery-status-form');
+    const deliverymanStatusForms = document.querySelectorAll('.admin-deliveryman-status-form');
     const adminForm = document.querySelector('.admin-form');
     const adminResetButton = document.querySelector('#admin-reset-button');
-
-    if (deliverymanStatusForms) {
-        deliverymanStatusForms.forEach(form => {
-            const button = form.querySelector('button')
-    
-            button.addEventListener('click', async () => {
-                const id = form.dataset.id;
-                const estatus = form.dataset.estatus === "1" ? "0" : "1";
-    
-                const formData = new FormData();
-                formData.append("id", id);
-                formData.append("estatus", estatus);
-    
-                const response = await fetch("/admin/deliveryman", {
-                    method: "POST",
-                    body: formData
-                });
-    
-                if (response.ok) {
-                    form.dataset.estatus = estatus;
-                    button.textContent = estatus === "1" ? "Dar de Baja" : "Dar de Alta";
-                    
-                    const row = form.closest("tr");
-                    const estatusCell = row.querySelectorAll("td")[9];
-                    const div = estatusCell.querySelector("div");
-                    
-                    div.className = estatus === "1"
-                        ? "admin-table__data--active"
-                        : "admin-table__data--inactive";
-                    
-                    div.textContent = estatus === "1" ? "Alta" : "Baja";
-                    createNotification("success", "Estado del repartidor cambiado correctamente");
-                } else {
-                    createNotification("error", "Error al cambiar el estado del repartidor");
-                }
-            });
-        });
-    }
 
     if (userStatusForms) {
         userStatusForms.forEach(form => {
@@ -131,6 +94,96 @@ import { createNotification } from './notification.js';
             textarea.addEventListener("input", () => {
                 textarea.style.height = 'auto';
                 textarea.style.height = textarea.scrollHeight + 'px';
+            });
+        });
+    }
+
+    if (deliveryStatusForms) {
+        deliveryStatusForms.forEach(form => {
+            const button = form.querySelector('button')
+
+            button.addEventListener('click', async () => {
+                const id = form.dataset.id;
+                const estatus = form.dataset.estatus === "1" ? "0" : "1";
+
+                const formData = new FormData();
+                formData.append("id", id);
+                formData.append("estatus", estatus);
+
+                const response = await fetch("/admin/delivery", {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (response.ok) {
+                    form.dataset.estatus = estatus;
+                    button.textContent = estatus === "1" ? "Cancelar Pedido" : "Reactivar Pedido";
+                    
+                    const row = form.closest("tr");
+                    const estatusCell = row.querySelectorAll("td")[6];
+                    const div = estatusCell.querySelector("div");
+                    
+                    div.className = estatus === "1"
+                        ? "admin-table__data--active"
+                        : "admin-table__data--inactive";
+                    
+                    div.textContent = estatus === "1" ? "Entregado" : "Pendiente";
+                    createNotification("success", "Estado del pedido cambiado correctamente");
+                } else {
+                    createNotification("error", "Error al cambiar el estado del pedido");
+                }
+            });
+        });
+
+        const textareas = document.querySelectorAll(".admin-form__area");
+
+        textareas.forEach(textarea => {
+            // Ajustar altura inicial
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+
+            // Si quieres que también se ajuste en tiempo real mientras escriben:
+            textarea.addEventListener("input", () => {
+                textarea.style.height = 'auto';
+                textarea.style.height = textarea.scrollHeight + 'px';
+            });
+        });
+    }
+
+    if (deliverymanStatusForms) {
+        deliverymanStatusForms.forEach(form => {
+            const button = form.querySelector('button')
+    
+            button.addEventListener('click', async () => {
+                const id = form.dataset.id;
+                const estatus = form.dataset.estatus === "1" ? "0" : "1";
+    
+                const formData = new FormData();
+                formData.append("id", id);
+                formData.append("estatus", estatus);
+    
+                const response = await fetch("/admin/deliveryman", {
+                    method: "POST",
+                    body: formData
+                });
+    
+                if (response.ok) {
+                    form.dataset.estatus = estatus;
+                    button.textContent = estatus === "1" ? "Dar de Baja" : "Dar de Alta";
+                    
+                    const row = form.closest("tr");
+                    const estatusCell = row.querySelectorAll("td")[9];
+                    const div = estatusCell.querySelector("div");
+                    
+                    div.className = estatus === "1"
+                        ? "admin-table__data--active"
+                        : "admin-table__data--inactive";
+                    
+                    div.textContent = estatus === "1" ? "Alta" : "Baja";
+                    createNotification("success", "Estado del repartidor cambiado correctamente");
+                } else {
+                    createNotification("error", "Error al cambiar el estado del repartidor");
+                }
             });
         });
     }
