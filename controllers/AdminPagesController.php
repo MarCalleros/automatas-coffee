@@ -3,7 +3,9 @@
 namespace Controller;
 
 use App\Router;
+use Model\Usuario;
 use Model\Repartidor;
+use Model\Mensaje;
 use Model\Ubicacion;
 
 class AdminPagesController {
@@ -13,7 +15,22 @@ class AdminPagesController {
             exit;
         }
 
-        $router->render('administrator/admin', []);
+        $newMessages = Mensaje::where('leido', 0);
+
+        if ($newMessages) {
+            foreach ($newMessages as $message) {
+                $message->usuario = Usuario::where('id', $message->id_usuario);
+            }
+        }
+
+        $usersCount = Usuario::count();
+        $usersConfirmed = Usuario::countConfirmed();
+
+        $router->render('administrator/admin', [
+            'newMessages' => $newMessages,
+            'usersCount' => $usersCount,
+            'usersConfirmed' => $usersConfirmed
+        ]);
     }
 
     public static function map(Router $router) {

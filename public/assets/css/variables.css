@@ -29,6 +29,7 @@
     --color-text: #333333;
     --color-text-black: #222222;
 
+    --primary-light: #FF7744;
     --primary-color: #FF5100;
     --primary-hover: #E63900;
 
@@ -39,6 +40,7 @@
 
     --gray: #f1f1f1;
     --dark-gray: #e1e1e1;
+    --strong-gray: #757575;
     --darker-gray: #4A4A4A;
     
     --success: #28A745;

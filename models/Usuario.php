@@ -382,4 +382,42 @@ class Usuario {
             return false;
         }
     }
+
+    public static function count() {
+        require __DIR__ . '/../includes/database.php';
+
+        try {
+            $query = "SELECT COUNT(*) as total FROM " . self::$tabla;
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+
+            if ($result->num_rows > 0) {
+                return mysqli_fetch_assoc($result)['total'];
+            } else {
+                return 0;
+            }
+        } catch (\Exception $e) {
+            return 0;
+        }
+    }
+
+    public static function countConfirmed() {
+        require __DIR__ . '/../includes/database.php';
+
+        try {
+            $query = "SELECT COUNT(*) as total FROM " . self::$tabla . " WHERE confirmado = 1";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+
+            if ($result->num_rows > 0) {
+                return mysqli_fetch_assoc($result)['total'];
+            } else {
+                return 0;
+            }
+        } catch (\Exception $e) {
+            return 0;
+        }
+    }
 }

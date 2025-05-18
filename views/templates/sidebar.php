@@ -6,7 +6,7 @@
     </div>
 
     <div class="sidebar__buttons">
-        <a href="#" class="sidebar__button">Inicio</a>
+        <a href="/admin" class="sidebar__button">Inicio</a>
         <a href="/admin/usuario" class="sidebar__button">Usuarios</a>
         <a href="/admin/message" class="sidebar__button">Mensajes</a>
         <a href="/admin/adminproduct" class="sidebar__button">Productos</a>

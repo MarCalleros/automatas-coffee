@@ -81,6 +81,8 @@ $router->get('/carrito', [PagesController::class, 'carrito']);
 $router->get('/productos', [ProductoController::class, 'index']);
 
 // API
+$router->get('/api/user/count', [APIUsuario::class, 'countUsers']);
+$router->get('/api/user/confirmed', [APIUsuario::class, 'countConfirmedUsers']);
 $router->get('/api/productos', [APIProducto::class, 'listPagination']);
 $router->get('/api/list', [APIProducto::class, 'list']);
 $router->get('/api/filter', [APIProducto::class, 'filter']);

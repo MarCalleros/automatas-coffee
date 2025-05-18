@@ -229,5 +229,37 @@ class APIUsuario {
             echo json_encode(['status' => 'error', 'message' => 'Error al obtener los datos del usuario']);
         }
     }
+
+    public static function countUsers() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+            echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
+            return;
+        }
+
+        $usuario = new Usuario();
+        $count = $usuario->count();
+
+        if ($count) {
+            echo json_encode(['status' => 'success', 'data' => $count]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Error al contar los usuarios']);
+        }
+    }
+
+    public static function countConfirmedUsers() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+            echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
+            return;
+        }
+
+        $usuario = new Usuario();
+        $count = $usuario->countConfirmed();
+
+        if ($count) {
+            echo json_encode(['status' => 'success', 'data' => $count]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Error al contar los usuarios confirmados']);
+        }
+    }
 }
 ?>
