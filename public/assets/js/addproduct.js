@@ -25,6 +25,16 @@ document.getElementById('agregar').onclick = async function() {
             error = true;
             return;
         }
+        if (isNaN(precio) || parseFloat(precio) <= 0) {
+            createNotification('error', 'El precio debe ser un número mayor a 0 para el tamaño: ' + cb.nextElementSibling.textContent);
+            error = true;
+            return;
+        }
+        if (isNaN(stock) || parseInt(stock) < 0) {
+            createNotification('error', 'El stock debe ser un número mayor o igual a 0 para el tamaño: ' + cb.nextElementSibling.textContent);
+            error = true;
+            return;
+        }
         tamanos.push({ tamano: cb.value, precio: precio , stock: stock });
     });
 
