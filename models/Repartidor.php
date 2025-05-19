@@ -18,6 +18,8 @@ class Repartidor {
     public $estatus_repartiendo;
     public $estatus;
 
+    public $ubicacion; // Relacion con la tabla ubicacion
+
     public function __construct($args = []) {
         $this->id = $args['id'] ?? null;
         $this->nombre = $args['nombre'] ?? '';

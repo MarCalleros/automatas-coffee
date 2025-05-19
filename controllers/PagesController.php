@@ -3,6 +3,7 @@
 namespace Controller;
 
 use App\Router;
+use Model\Usuario;
 use Model\Producto;
 
 class PagesController {
@@ -12,6 +13,10 @@ class PagesController {
         $router->render('pages/home', [
             'products' => $products
         ]);
+    }
+
+    public static function find(Router $router) {
+        $router->render('pages/find', []);
     }
 
     public static function contact(Router $router) {
@@ -36,13 +41,34 @@ class PagesController {
         $router->render('pages/carrito', []);
     }
 
-    public static function information(Router $router) {
+    public static function information(Router $router, $section = null, $identifier = null) {
         if (!isLogged()) {
             header('Location: /');
             return;
         }
         
-        $router->render('pages/information', []);
+        $router->render('pages/information', [
+            'section' => $section,
+            'identifier' => $identifier
+        ]);
+    }
+
+    public static function confirmation(Router $router) {
+        if (isset($_GET['token'])) {
+            $token = $_GET['token'];
+        } else {
+            $token = null;
+        }
+
+        if (Usuario::where('token', $token)) {
+            Usuario::confirm($token);
+        } else {
+            $token = null;
+        }
+
+        $router->render('pages/confirmation', [
+            'token' => $token
+        ]);
     }
 }
 ?>

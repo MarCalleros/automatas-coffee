@@ -1,0 +1,112 @@
+<?php
+
+namespace Controller;
+
+use Model\Compra;
+use Model\DetalleCompra;
+use Model\Producto;
+use Model\Tamaño;
+use Model\Usuario;
+
+class APIPedido {
+    public static function getUserPurchases() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+            echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
+            return;
+        }
+
+        if (!isLogged()) {
+            echo json_encode(['status' => 'error', 'message' => 'Debes iniciar sesión para ver las compras']);
+            return;
+        }
+
+        $usuario = Usuario::where('id', $_SESSION['id']);
+
+        if (!$usuario) {
+            echo json_encode(['status' => 'error', 'message' => 'Usuario no encontrado']);
+            return;
+        }
+
+        $usuario->id_tipo_usuario = null;
+        $usuario->edad = null;
+        $usuario->usuario = null;
+        $usuario->contraseña = null;
+
+        $compras = Compra::where('id_usuario', $_SESSION['id']);
+
+        if ($compras) {
+            // Checar si quedo vacio el array
+            if (empty($compras)) {
+                echo json_encode(['status' => 'error', 'message' => 'No se encontraron compras']);
+                return;
+            }
+
+            // Reindexar el array
+            $compras = array_values($compras);
+
+            echo json_encode(['status' => 'success', 'user' => $usuario, 'purchases' => $compras]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'No se encontraron compras']);
+        }
+    }
+
+    public static function getDetailPurchase() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+            echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
+            return;
+        }
+
+        if (!isLogged()) {
+            echo json_encode(['status' => 'error', 'message' => 'Debes iniciar sesión para ver las compras']);
+            return;
+        }
+
+        if (!isset($_GET['identifier'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Faltan datos requeridos']);
+            return;
+        }
+
+        $usuario = Usuario::where('id', $_SESSION['id']);
+
+        if (!$usuario) {
+            echo json_encode(['status' => 'error', 'message' => 'Usuario no encontrado']);
+            return;
+        }
+
+        $usuario->id_tipo_usuario = null;
+        $usuario->edad = null;
+        $usuario->usuario = null;
+        $usuario->contraseña = null;
+
+        $compra = Compra::where('identificador', $_GET['identifier']);
+
+        if ($compra) {
+            if ($compra[0]->id_usuario !== $_SESSION['id']) { // Comprobar si el mensaje pertenece al usuario
+                echo json_encode(['status' => 'error', 'message' => 'No se encontro la compra']);
+                return;
+            }
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'No se encontro la compra']);
+            return;
+        }
+
+        $detalles = DetalleCompra::where('id_compra', $compra[0]->id);
+
+        if ($detalles) {
+            foreach ($detalles as $detalle) {
+                $detalle->producto = Producto::findById($detalle->id_producto);
+                $detalle->tamaño = Tamaño::where('id', $detalle->id_tamaño);
+            }
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'No se encontro la compra']);
+            return;
+        }
+
+        if ($compra) {
+            echo json_encode(['status' => 'success', 'user' => $usuario, 'purchase' => $compra, 'details' => $detalles]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'No se encontro la compra']);
+        }
+    }
+}
+?>

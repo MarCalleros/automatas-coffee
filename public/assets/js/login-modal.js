@@ -140,14 +140,16 @@
         }
     });
 
-    profileButton.addEventListener('click', function() {
-        scrollY = window.scrollY;
-        profileModal.classList.add('profile-modal--active');
-        backgroundShadow.classList.add('background__shadow--active');
-        backgroundShadow.classList.add('background__blur--active');
+    if (profileButton) {
+        profileButton.addEventListener('click', function() {
+            scrollY = window.scrollY;
+            profileModal.classList.add('profile-modal--active');
+            backgroundShadow.classList.add('background__shadow--active');
+            backgroundShadow.classList.add('background__blur--active');
 
-        document.body.style.position = 'fixed';
-        document.body.style.top = `-${scrollY}px`;
-        document.body.style.width = '100%';
-    });
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.width = '100%';
+        });
+    }
 })();

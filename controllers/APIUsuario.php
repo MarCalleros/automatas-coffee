@@ -5,6 +5,19 @@ namespace Controller;
 use Model\Usuario;
 
 class APIUsuario {
+    public static function logged() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+            echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
+            return;
+        }
+    
+        if (isLogged()) {
+            echo json_encode(['status' => 'success', 'message' => 'Usuario logueado']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'No hay sesión activa']);
+        }
+    }
+
     public static function create() {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
@@ -40,7 +53,7 @@ class APIUsuario {
         $result = $usuario->create();
     
         if ($result) {
-            echo json_encode(['status' => 'success', 'message' => 'Usuario creado exitosamente']);
+            echo json_encode(['status' => 'success', 'message' => 'Hemos enviado un correo de confirmación, por favor verifica tu correo']);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Error al crear el usuario']);
         }
@@ -149,7 +162,7 @@ class APIUsuario {
         if ($result) {
             echo json_encode(['status' => 'success', 'message' => 'Inicio de sesion exitoso']);
         } else {
-            echo json_encode(['status' => 'error', 'message' => 'Usuario o contraseña incorrectos']);
+            echo json_encode(['status' => 'error', 'message' => 'Los datos son incorrectos o la cuenta no se ha confirmado']);
         }
     }
 
@@ -214,6 +227,38 @@ class APIUsuario {
             echo json_encode(['status' => 'success', 'data' => $usuario]);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Error al obtener los datos del usuario']);
+        }
+    }
+
+    public static function countUsers() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+            echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
+            return;
+        }
+
+        $usuario = new Usuario();
+        $count = $usuario->count();
+
+        if ($count) {
+            echo json_encode(['status' => 'success', 'data' => $count]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Error al contar los usuarios']);
+        }
+    }
+
+    public static function countConfirmedUsers() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+            echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
+            return;
+        }
+
+        $usuario = new Usuario();
+        $count = $usuario->countConfirmed();
+
+        if ($count) {
+            echo json_encode(['status' => 'success', 'data' => $count]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Error al contar los usuarios confirmados']);
         }
     }
 }

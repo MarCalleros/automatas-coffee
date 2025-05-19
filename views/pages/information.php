@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="information-menu__options" id="information-messages-options">
-                        <div class="information-menu__option">
+                        <div class="information-menu__option" id="information-messages-sent">
                             <div class="information-option__icon">
                                 <svg class="information-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -48,7 +48,7 @@
                             </div>
                         </div>
 
-                        <div class="information-menu__option">
+                        <div class="information-menu__option" id="information-messages-received">
                             <div class="information-option__icon">
                                 <svg class="information-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -69,7 +69,7 @@
 
                 <div class="information-menu__item">
                     <div class="information-menu__button" id="information-purchases">
-                        <h3 class="information-menu__title">Historial de Compras</h3>
+                        <h3 class="information-menu__title">Pedidos</h3>
 
                         <div class="information-menu__arrow">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -82,7 +82,7 @@
                     </div>
 
                     <div class="information-menu__options" id="information-purchases-options">
-                        <div class="information-menu__option">
+                        <div class="information-menu__option" id="information-purchases-history">
                             <div class="information-option__icon">
                                 <svg class="information-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -94,8 +94,8 @@
                             </div>
                             
                             <div class="information-option__text">
-                                <h4 class="information-option__title">Consultar mi historial de compras</h4>
-                                <p class="information-option__description">Consulta tus compras realizadas hasta el dia de hoy</p>
+                                <h4 class="information-option__title">Historial de Pedidos</h4>
+                                <p class="information-option__description">Consulta tus pedidos realizados hasta el dia de hoy</p>
                             </div>
                         </div>
                     </div>
@@ -173,14 +173,17 @@
         </section>
 
         <section class="information-section information-section--content">
-            <h2 class="information-section__title">Titulo de la seccion</h2>
+            <div class="information-section__header">
+                <h2 class="information-section__title information-section__title--no-margin">Titulo de la seccion</h2>
+            </div>
+            
         </section>
     </main>
 
     <?php include_once __DIR__ . "/../templates/footer.php"; ?>
 
-    <script src="assets/js/navbar.js"></script>
-    <script type="module" src="assets/js/information.js"></script>
+    <script src="/assets/js/navbar.js"></script>
+    <script type="module" src="/assets/js/information.js"></script>
     <script type="module" src="/assets/js/configuration.js"></script>
 </body>
 </html>

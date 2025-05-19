@@ -289,31 +289,3 @@ inputs.forEach((input, index) => {
         }
     })
 })
-
-/* Eliminar posteriormente */
-const deleteButton = document.querySelector('#register-delete');
-const showButton = document.querySelector('#register-show');
-
-deleteButton.addEventListener('click', function(event) {
-    event.preventDefault();
-    // Establecer la cookie logged a false para cerrar sesión
-    setCookie('logged', 'false', 365);
-    deleteAllCookies();
-});
-
-showButton.addEventListener('click', function(event) {
-    event.preventDefault();
-    const users = JSON.parse(getCookie('users')) || [];
-    
-    if (users.length === 0) {
-        alert("No hay usuarios registrados.");
-    } else {
-        let userList = "Usuarios registrados:\n";
-        users.forEach(user => {
-            userList += `Usuario: ${user.username}, Contraseña: ${user.password}, Contraseña Encriptada: ${user.encrpytedPassword}\n\n`;
-        });
-        alert(userList);
-    }
-});
-
-/* Eliminar posteriormente */

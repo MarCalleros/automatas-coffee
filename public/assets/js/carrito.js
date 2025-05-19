@@ -4,25 +4,25 @@ document.addEventListener("DOMContentLoaded", () => {
   cargarProductosCarrito()
 
   function cargarProductosCarrito() {
-    const cartContainer = document.querySelector('.cart-items');
+    const cartContainer = document.querySelector(".cart-items")
     if (!cartContainer) {
-      console.error("No se encontró el contenedor del carrito.");
-      return;
+      console.error("No se encontró el contenedor del carrito.")
+      return
     }
-  
+
     fetch("/api/carrito/obtener")
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         if (data.status == "success" && data.items.length === 0) {
-          cartContainer.innerHTML = '<div class="empty-cart">Tu carrito está vacío</div>';
-          document.querySelector(".buy-btn").disabled = true;
-          document.querySelector(".total-price").textContent = "$0.00";
-          return;
+          cartContainer.innerHTML = '<div class="empty-cart">Tu carrito está vacío</div>'
+          document.querySelector(".buy-btn").disabled = true
+          document.querySelector(".total-price").textContent = "$0.00"
+          return
         }
-  
-        cartContainer.innerHTML = '';
-  
-        data.items.forEach(product => {
+
+        cartContainer.innerHTML = ""
+
+        data.items.forEach((product) => {
           const productHTML = `
             <div class="cart-item" data-id="${product.id_producto}" data-idcarrito="${product.id}">
               <div class="cart-item__image">
@@ -56,18 +56,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
               </div>
             </div>
-          `;
-          cartContainer.innerHTML += productHTML;
-        });
+          `
+          cartContainer.innerHTML += productHTML
+        })
 
         inicializarEventosCarrito()
-        document.querySelector(".total-price").textContent = `$${data.total.toFixed(2)}`;
+        document.querySelector(".total-price").textContent = `$${data.total.toFixed(2)}`
       })
-      .catch(error => {
-        console.error("Error al cargar el carrito:", error);
-      });
+      .catch((error) => {
+        console.error("Error al cargar el carrito:", error)
+      })
   }
-  
+
   function inicializarEventosCarrito() {
     if (!document.querySelector(".cart-items")) {
       return
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
             cartItem.querySelector(".item-price").textContent = "$" + (precioUnitario * cantidad).toFixed(2)
             // Actualizar total
             if (typeof response.total === "number") {
-            document.querySelector(".total-price").textContent = "$" + response.total.toFixed(2)
+              document.querySelector(".total-price").textContent = "$" + response.total.toFixed(2)
             }
             // Verificar si se alcanzó el stock máximo
             const stockDisponible = obtenerStockDisponible(cartItem)
@@ -113,33 +113,33 @@ document.addEventListener("DOMContentLoaded", () => {
       })
     })
 
-  function actualizarContadorCarrito(count) {
-  const contadorElement = document.querySelector(".cart-count");
-  if (!contadorElement) return;
+    function actualizarContadorCarrito(count) {
+      const contadorElements = document.querySelectorAll(".cart-indicator, .cart-count")
+      if (contadorElements.length === 0) return
 
-  if (count !== undefined) {
-    contadorElement.textContent = count;
-    contadorElement.style.display = count > 0 ? "block" : "none";
-    return;
-  }
-
-  fetch("/api/carrito/obtener")
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.status === "success") {
-        const totalItems = data.items.reduce(
-          (total, item) => total + Number.parseInt(item.cantidad),
-          0
-        );
-        contadorElement.textContent = totalItems;
-        contadorElement.style.display = totalItems > 0 ? "block" : "none";
+      if (count !== undefined) {
+        contadorElements.forEach((element) => {
+          element.textContent = count
+          element.style.display = count > 0 ? "flex" : "none"
+        })
+        return
       }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-}
 
+      fetch("/api/carrito/obtener")
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === "success") {
+            const totalItems = data.items.reduce((total, item) => total + Number.parseInt(item.cantidad), 0)
+            contadorElements.forEach((element) => {
+              element.textContent = totalItems
+              element.style.display = totalItems > 0 ? "flex" : "none"
+            })
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error)
+        })
+    }
 
     // Botones de disminuir cantidad
     document.querySelectorAll(".quantity-btn.minus").forEach((btn) => {
@@ -281,6 +281,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log("respuesta de compra", data)
         callback(data)
       })
       .catch((error) => {

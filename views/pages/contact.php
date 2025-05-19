@@ -40,11 +40,11 @@
                 <div class="entradas"> 
                     <div class="grupocontacto">
                         <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="Nombre" class ="inputs"  >
+                        <input type="text" id="nombre" name="Nombre" class ="inputs" disabled value="<?php if (isLogged()) echo $_SESSION['nombre'] ?>">
                     </div>
                     <div class="grupocontacto">
                         <label for="correo">Correo</label>
-                        <input type="email" id="correo" name="Correo" class="inputs" >
+                        <input type="email" id="correo" name="Correo" class="inputs" disabled value="<?php if (isLogged()) echo $_SESSION['correo'] ?>">
                     </div>
                 </div>
                 <div class="entradas mensaje">
@@ -53,8 +53,8 @@
     
                 </div>
                 <div class="botonescontacto">
-                    <input type="submit" name="contacto " value="Enviar mensaje" class="botoncontacto">
                     <input type="reset" name="resetear " value="Resetear campos" class="botonreseteo">
+                    <input type="submit" name="contacto " value="Enviar mensaje" class="botoncontacto">
                 </div>
             </form>
             
