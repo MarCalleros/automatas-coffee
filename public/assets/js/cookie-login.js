@@ -103,7 +103,7 @@ loginButton.addEventListener('click', function(event) {
                 
                 document.body.style.position = '';
                 document.body.style.top = '';
-                window.location.reload(); // Recargar la página para reflejar el cambio de estado de inicio de sesión
+                window.location.href = '/'; // Redirigir a la página de inicio
             }, 1000);
         } else {
             createNotification("error", data.message);
