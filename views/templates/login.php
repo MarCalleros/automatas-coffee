@@ -27,6 +27,9 @@
         <div class="login-modal__button-container">
             <button type="submit" class="login-modal__button login-modal__button--login" id="modal-login-button">Iniciar Sesion</button>
             <button type="button" class="login-modal__button login-modal__button--reset" id="modal-login-reset">Resetear Campos</button>
+            <button type="button" class="login-modal__button login-modal__button--NFC" id="modal-login-NFC"> NFC
+                <img src="/assets/img/NFC.png" alt="NFC	">
+            </button>
         </div>
     </form>
 

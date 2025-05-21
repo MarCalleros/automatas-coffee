@@ -100,6 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Función para cargar datos de la tabla
   async function cargarDatos(tab, pagina = 1, periodo = "dia", params = {}) {
+    const scrollPosition = window.scrollY || document.documentElement.scrollTop;
     if (isLoading) return
     isLoading = true
 
@@ -196,6 +197,13 @@ document.addEventListener("DOMContentLoaded", () => {
       if (paginationElement) {
         updatePagination(paginationElement, data.total_paginas, pagina, data.items.length === 0)
       }
+
+      window.requestAnimationFrame(() => {
+            window.scrollTo({
+                top: scrollPosition,
+                behavior: 'instant'
+            });
+        });
 
       isLoading = false
     } catch (error) {
@@ -713,9 +721,17 @@ document.addEventListener("DOMContentLoaded", () => {
     cargarDatos("ventas", 1, periodo);
   }
 
+      document.addEventListener('click', function(e) {
+      if (e.target.closest('.pagination__button')) {
+        e.preventDefault();
+      }
+    }, true);
+
     // Manejar eventos de paginación
     document.querySelectorAll(".pagination").forEach((pagination) => {
       pagination.addEventListener("click", function (e) {
+        e.preventDefault()
+        e.stopPropagation()
         if (e.target.closest(".pagination__button")) {
           if (isLoading) return
 
@@ -762,7 +778,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Actualizar pestaña activa
         document.querySelectorAll(".tab").forEach((t) => t.classList.remove("active"))
         this.classList.add("active")
-
+        
         currentTab = tabName
 
         // Cargar datos de la nueva pestaña

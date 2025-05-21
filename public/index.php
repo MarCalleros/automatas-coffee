@@ -18,6 +18,8 @@ use Controller\APICarrito;
 use Controller\APIMensaje;
 use Controller\APIPedido;
 use Controller\APIEstadisticas;
+use Controller\RegisterController;
+use Controller\APIHistoryregister;
 
 $router = new Router();
 
@@ -61,7 +63,8 @@ $router->get('/admin/message/view', [AdminMensajeController::class, 'view']);
 $router->post('/admin/message/view', [AdminMensajeController::class, 'view']);
 $router->get('/admin/estadisticas', [AdminPagesController::class, 'statistics']);
 $router->get('/admin/estadisticas/:section', [AdminPagesController::class, 'statistics']);
-//$router->get('/admin/estadisticas/:section/:identifier', [AdminPagesController::class, 'statistics']);
+$router->get('/admin/historyregister', [RegisterController::class, 'historial']);
+$router->post('/admin/historyregister', [RegisterController::class, 'historial']);
 
 // API Estadísticas
 $router->get('/api/estadisticas/productos_cantidad', [APIEstadisticas::class, 'productosVendidos']);

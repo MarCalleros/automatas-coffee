@@ -1,0 +1,100 @@
+body {
+    padding-top: 0 !important;
+}
+
+.period-selector {
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    margin-bottom: 20px;
+    margin-left: 30px;
+    gap: 10px;
+    font-size: var(--text-small);
+}
+
+.period-btn {
+    padding: 8px 15px;
+    background-color: white;
+    border: 5px solid #e4e4e7;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+.text-center {
+    font-family: 'Montserrat', sans-serif;
+    font-size: var(--text-small);
+}
+
+.period-btn:hover {
+    background-color: #f5f5f5;
+}
+
+.period-btn.active {
+    background-color: #ff5100;
+    color: white;
+    border-color: #ff5100;
+}
+
+.fecha-personalizada {
+        font-family: 'Montserrat', sans-serif;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 15px;
+    }
+    
+    .fecha-container {
+        font-size: var(--text-small);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    .fecha-container label {
+        font-weight: 500;
+    }
+    
+    .fecha-container input[type="date"] {
+        padding: 5px 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-family: 'Montserrat', sans-serif;
+    }
+    
+    .btn-aplicar {
+        background-color: #ff5100;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 500;
+        font-size: var(--text-small);
+    }
+    
+    .btn-aplicar:hover {
+        background-color: #e64a00;
+    }
+    
+    .btn-container {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .btn-delete {
+        background-color: #ff5100;
+        color: white;
+        border: none;
+        padding: 15px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 500;
+        font-size: var(--text-small);
+    }
+
+    .btn-delete:hover {
+        background-color: #e64a00;
+    }
