@@ -47,7 +47,7 @@ import { createNotification } from './notification.js';
         });
     }
 
-        if (userConfirmedForms) {
+    if (userConfirmedForms) {
         userConfirmedForms.forEach(form => {
             const button = form.querySelector('button')
     
@@ -407,6 +407,9 @@ function validateDeliverymanForm() {
 }
 
 function validateUserForm() {
+    // Mirar por el enlace y ver si contiene /edit
+    const isEdit = window.location.href.includes('/edit');
+
     let error = false;
 
     const nombre = document.querySelector('#nombre').value;
@@ -470,12 +473,24 @@ function validateUserForm() {
         errorUsuario.classList.remove('admin-form__error--active');
     }
 
-    if (!password || !regexPassword.test(password)) {
-        errorPassword.textContent = password ? mensajePassword : mensajeVacio;
-        errorPassword.classList.add('admin-form__error--active');
-        error = true;
+    if (!isEdit) {
+        if (!password || !regexPassword.test(password)) {
+            errorPassword.textContent = password ? mensajePassword : mensajeVacio;
+            errorPassword.classList.add('admin-form__error--active');
+            error = true;
+        } else {
+            errorPassword.classList.remove('admin-form__error--active');
+        }
     } else {
-        errorPassword.classList.remove('admin-form__error--active');
+        if (password) {
+            if (!regexPassword.test(password)) {
+                errorPassword.textContent = mensajePassword;
+                errorPassword.classList.add('admin-form__error--active');
+                error = true;
+            } else {
+                errorPassword.classList.remove('admin-form__error--active');
+            }
+        }
     }
 
     if (!tipoUsuario) {
