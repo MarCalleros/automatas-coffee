@@ -26,19 +26,36 @@ class AdminMensajeController {
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $mensaje = new Mensaje();
+            if (isset($_POST['estatus'])) {
+                $mensaje = new Mensaje();
             
-            $mensaje->id = $_POST['id'];
-            $mensaje->leido = $_POST['leido'];
-        
-            if ($mensaje->changeView()) {
-                header('Content-Type: application/json');
-                echo json_encode(['success' => true]);
-                exit;
-            } else {
-                header('Content-Type: application/json');
-                echo json_encode(['success' => false, 'error' => 'Error en la base de datos']);
-                exit;
+                $mensaje->id = $_POST['id'];
+                $mensaje->estatus = $_POST['estatus'];
+            
+                if ($mensaje->changeStatus()) {
+                    header('Content-Type: application/json');
+                    echo json_encode(['success' => true]);
+                    exit;
+                } else {
+                    header('Content-Type: application/json');
+                    echo json_encode(['success' => false, 'error' => 'Error en la base de datos']);
+                    exit;
+                }
+            } else if (isset($_POST['leido'])){
+                $mensaje = new Mensaje();
+            
+                $mensaje->id = $_POST['id'];
+                $mensaje->leido = $_POST['leido'];
+            
+                if ($mensaje->changeView()) {
+                    header('Content-Type: application/json');
+                    echo json_encode(['success' => true]);
+                    exit;
+                } else {
+                    header('Content-Type: application/json');
+                    echo json_encode(['success' => false, 'error' => 'Error en la base de datos']);
+                    exit;
+                }
             }
         }
 

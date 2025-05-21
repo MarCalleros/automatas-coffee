@@ -26,6 +26,7 @@
                                 <th class="admin-table__head">Usuario</th>
                                 <th class="admin-table__head">T. de Usuario</th>
                                 <th class="admin-table__head">Estatus</th>
+                                <th class="admin-table__head">Confirmado</th>
                                 <th class="admin-table__head">Acciones</th>
                             </tr>
                         </thead>
@@ -48,11 +49,21 @@
                                         </div>
                                     </td>
                                     <td class="admin-table__data">
+                                        <div class="<?= $usuario->confirmado ? 'admin-table__data--active' : 'admin-table__data--inactive' ?>">
+                                            <?= $usuario->confirmado ? 'Confirmado' : 'Sin Confirmar' ?>
+                                        </div>
+                                    </td>
+                                    <td class="admin-table__data">
                                         <div class="admin-table__actions">
                                             <a href="<?php echo '/admin/usuario/edit?id=' . $usuario->id ?>"><button type="button" class="admin-table__action admin-table__action--edit">Editar</button></a>
-                                            <form class="admin-user-status-form" data-id="<?= $usuario->id ?>" data-estatus="<?= $usuario->estatus ?>">
+                                            <form class="admin-user-status-form admin-user-status-form--status" data-id="<?= $usuario->id ?>" data-estatus="<?= $usuario->estatus ?>">
                                                 <button type="button" class="admin-table__action admin-table__action--delete">
                                                     <?= $usuario->estatus ? 'Dar de Baja' : 'Dar de Alta' ?>
+                                                </button>
+                                            </form>
+                                            <form class="admin-user-status-form admin-user-status-form--confirmed" data-id="<?= $usuario->id ?>" data-confirmed="<?= $usuario->confirmado ?>">
+                                                <button type="button" class="admin-table__action admin-table__action--edit">
+                                                    <?= $usuario->confirmado ? 'Desconfirmar' : 'Confirmar' ?>
                                                 </button>
                                             </form>
                                         </div>

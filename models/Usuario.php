@@ -131,9 +131,9 @@ class Usuario {
             $this->contraseña = password_hash($this->contraseña, PASSWORD_BCRYPT);
     
             // Preparar la consulta para insertar un nuevo usuario
-            $query = "INSERT INTO " . static::$tabla . " (id_tipo_usuario, nombre, edad, correo, usuario, contraseña, estatus) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $query = "INSERT INTO " . static::$tabla . " (id_tipo_usuario, nombre, edad, correo, usuario, contraseña, estatus, confirmado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = mysqli_prepare($db, $query);
-            mysqli_stmt_bind_param($stmt, 'isssssi', $this->id_tipo_usuario, $this->nombre, $this->edad, $this->correo, $this->usuario, $this->contraseña, $this->estatus);
+            mysqli_stmt_bind_param($stmt, 'isssssii', $this->id_tipo_usuario, $this->nombre, $this->edad, $this->correo, $this->usuario, $this->contraseña, $this->estatus, $this->confirmado);
             $executed = mysqli_stmt_execute($stmt);
     
             return $executed && mysqli_stmt_affected_rows($stmt) > 0;
@@ -205,6 +205,27 @@ class Usuario {
             $query = "UPDATE " . static::$tabla . " SET estatus = ? WHERE id = ?";
             $stmt = mysqli_prepare($db, $query);
             mysqli_stmt_bind_param($stmt, 'ii', $this->estatus, $this->id);
+            $executed = mysqli_stmt_execute($stmt);
+            
+            return $executed && mysqli_stmt_affected_rows($stmt) > 0;
+        } finally {
+            // Reactivar reporte de errores y cerrar la conexión
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            //mysqli_close($db);
+        }
+    }
+
+    // Funcion para cambiar la confirmacion de un usuario
+    public function changeConfirmation() {
+        require __DIR__ . '/../includes/database.php';
+
+        try {
+            // Desactivar reporte de errores temporalmente
+            mysqli_report(MYSQLI_REPORT_OFF);
+            
+            $query = "UPDATE " . static::$tabla . " SET confirmado = ? WHERE id = ?";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'ii', $this->confirmado, $this->id);
             $executed = mysqli_stmt_execute($stmt);
             
             return $executed && mysqli_stmt_affected_rows($stmt) > 0;

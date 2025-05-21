@@ -84,7 +84,7 @@ class Email {
                         <h2 style="text-align: center;">¡Hola ' . htmlspecialchars($this->nombre) . '!</h2>
                         <p>Gracias por crear tu cuenta en <strong>Automatas Coffee</strong>. Solo debes confirmarla haciendo clic en el siguiente botón:</p>
                         <p style="text-align: center;">
-                            <a class="btn" href="http://localhost:3000/confirmacion?token=' . urlencode($this->token) . '">Confirmar cuenta</a>
+                            <a class="btn" href="https://automatascoffee.mnz.dom.my.id/confirmacion?token=' . urlencode($this->token) . '">Confirmar cuenta</a>
                         </p>
                         <p>Si tú no solicitaste esta cuenta, puedes ignorar este mensaje.</p>
                         <div class="footer">

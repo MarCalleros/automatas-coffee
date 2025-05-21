@@ -147,6 +147,13 @@ class APIMensaje {
                 $respuesta->usuario->edad = null;
                 $respuesta->usuario->usuario = null;
                 $respuesta->usuario->contraseña = null;
+
+                if ($respuesta->estatus == 0) { // Si esta eliminado, quitarla de la lista
+                    unset($respuestas[array_search($respuesta, $respuestas)]);
+                }
+
+                // Reindexar el array
+                $respuestas = array_values($respuestas);
             }
         }
 

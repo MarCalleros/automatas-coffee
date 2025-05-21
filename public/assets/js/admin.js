@@ -1,12 +1,34 @@
 import { createNotification } from './notification.js';
 
 (function() {
-    const userStatusForms = document.querySelectorAll('.admin-user-status-form');
-    const messageStatusForms = document.querySelectorAll('.admin-message-status-form');
+    const userStatusForms = document.querySelectorAll('.admin-user-status-form--status');
+    const userConfirmedForms = document.querySelectorAll('.admin-user-status-form--confirmed');
+    const messageStatusForms = document.querySelectorAll('.admin-message-status-form--status');
+    const messageReadForms = document.querySelectorAll('.admin-message-status-form--read');
     const deliveryStatusForms = document.querySelectorAll('.admin-delivery-status-form');
     const deliverymanStatusForms = document.querySelectorAll('.admin-deliveryman-status-form');
     const adminForm = document.querySelector('.admin-form');
     const adminResetButton = document.querySelector('#admin-reset-button');
+
+    const eyeContainerPasswordLogin = document.querySelector('#login-eye-container-password');
+    const eyeIconPasswordLogin = document.querySelector('#login-eye-password');
+    const slashIconPasswordLogin = document.querySelector('#login-slash-password');
+
+    if (eyeContainerPasswordLogin) {
+        eyeContainerPasswordLogin.addEventListener('click', function() {
+            const passwordInput = document.querySelector('#password');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIconPasswordLogin.style.display = 'none';
+                slashIconPasswordLogin.style.display = 'block';
+            } else {
+                passwordInput.type = 'password';
+                eyeIconPasswordLogin.style.display = 'block';
+                slashIconPasswordLogin.style.display = 'none';
+            }
+        });
+    }
 
     if (userStatusForms) {
         userStatusForms.forEach(form => {
@@ -46,8 +68,98 @@ import { createNotification } from './notification.js';
         });
     }
 
-    if (messageStatusForms) {
+    if (userConfirmedForms) {
+        userConfirmedForms.forEach(form => {
+            const button = form.querySelector('button')
+    
+            button.addEventListener('click', async () => {
+                const id = form.dataset.id;
+                let confirmed = form.dataset.confirmed === "1" ? "0" : "1";
+    
+                const formData = new FormData();
+                formData.append("id", id);
+                formData.append("confirmed", confirmed);
+    
+                const response = await fetch("/admin/usuario", {
+                    method: "POST",
+                    body: formData
+                });
+    
+                if (response.ok) {
+                    form.dataset.confirmed = confirmed;
+                    button.textContent = confirmed === "1" ? "Desconfirmar" : "Confirmar";
+                    
+                    const row = form.closest("tr");
+                    const confirmedCell = row.querySelectorAll("td")[7];
+                    const div = confirmedCell.querySelector("div");
+                    
+                    div.className = confirmed === "1"
+                        ? "admin-table__data--active"
+                        : "admin-table__data--inactive";
+                    
+                    div.textContent = confirmed === "1" ? "Confirmado" : "Sin Confirmar";
+                    createNotification("success", "Estado del usuario cambiado correctamente");
+                } else {
+                    createNotification("error", "Error al cambiar el estado del usuario");
+                }
+            });
+        });
+    }
+
+        if (messageStatusForms) {
         messageStatusForms.forEach(form => {
+            const button = form.querySelector('button')
+
+            button.addEventListener('click', async () => {
+                const id = form.dataset.id;
+                const estatus = form.dataset.estatus === "1" ? "0" : "1";
+
+                const formData = new FormData();
+                formData.append("id", id);
+                formData.append("estatus", estatus);
+
+                const response = await fetch("/admin/message", {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (response.ok) {
+                    form.dataset.estatus = estatus;
+                    button.textContent = estatus === "1" ? "Dar de Baja" : "Dar de Alta";
+                    
+                    const row = form.closest("tr");
+                    const estatusCell = row.querySelectorAll("td")[9];
+                    const div = estatusCell.querySelector("div");
+                    
+                    div.className = estatus === "1"
+                        ? "admin-table__data--active"
+                        : "admin-table__data--inactive";
+                    
+                    div.textContent = estatus === "1" ? "Alta" : "Baja";
+                    createNotification("success", "Estado del mensaje cambiado correctamente");
+                } else {
+                    createNotification("error", "Error al cambiar el estado del mensaje");
+                }
+            });
+        });
+
+        const textareas = document.querySelectorAll(".admin-form__area");
+
+        textareas.forEach(textarea => {
+            // Ajustar altura inicial
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+
+            // Si quieres que también se ajuste en tiempo real mientras escriben:
+            textarea.addEventListener("input", () => {
+                textarea.style.height = 'auto';
+                textarea.style.height = textarea.scrollHeight + 'px';
+            });
+        });
+    }
+
+    if (messageReadForms) {
+        messageReadForms.forEach(form => {
             const button = form.querySelector('button')
 
             button.addEventListener('click', async () => {
@@ -368,6 +480,9 @@ function validateDeliverymanForm() {
 }
 
 function validateUserForm() {
+    // Mirar por el enlace y ver si contiene /edit
+    const isEdit = window.location.href.includes('/edit');
+
     let error = false;
 
     const nombre = document.querySelector('#nombre').value;
@@ -431,12 +546,24 @@ function validateUserForm() {
         errorUsuario.classList.remove('admin-form__error--active');
     }
 
-    if (!password || !regexPassword.test(password)) {
-        errorPassword.textContent = password ? mensajePassword : mensajeVacio;
-        errorPassword.classList.add('admin-form__error--active');
-        error = true;
+    if (!isEdit) {
+        if (!password || !regexPassword.test(password)) {
+            errorPassword.textContent = password ? mensajePassword : mensajeVacio;
+            errorPassword.classList.add('admin-form__error--active');
+            error = true;
+        } else {
+            errorPassword.classList.remove('admin-form__error--active');
+        }
     } else {
-        errorPassword.classList.remove('admin-form__error--active');
+        if (password) {
+            if (!regexPassword.test(password)) {
+                errorPassword.textContent = mensajePassword;
+                errorPassword.classList.add('admin-form__error--active');
+                error = true;
+            } else {
+                errorPassword.classList.remove('admin-form__error--active');
+            }
+        }
     }
 
     if (!tipoUsuario) {
