@@ -9,6 +9,26 @@ import { createNotification } from './notification.js';
     const adminForm = document.querySelector('.admin-form');
     const adminResetButton = document.querySelector('#admin-reset-button');
 
+    const eyeContainerPasswordLogin = document.querySelector('#login-eye-container-password');
+    const eyeIconPasswordLogin = document.querySelector('#login-eye-password');
+    const slashIconPasswordLogin = document.querySelector('#login-slash-password');
+
+    if (eyeContainerPasswordLogin) {
+        eyeContainerPasswordLogin.addEventListener('click', function() {
+            const passwordInput = document.querySelector('#password');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIconPasswordLogin.style.display = 'none';
+                slashIconPasswordLogin.style.display = 'block';
+            } else {
+                passwordInput.type = 'password';
+                eyeIconPasswordLogin.style.display = 'block';
+                slashIconPasswordLogin.style.display = 'none';
+            }
+        });
+    }
+
     if (userStatusForms) {
         userStatusForms.forEach(form => {
             const button = form.querySelector('button')

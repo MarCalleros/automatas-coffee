@@ -15,6 +15,10 @@
     const registerLink = document.querySelector('#modal-login-register');
     const loginLink = document.querySelector('#register-login');
 
+    const eyeContainerPasswordLogin = document.querySelector('#login-eye-container-password');
+    const eyeIconPasswordLogin = document.querySelector('#login-eye-password');
+    const slashIconPasswordLogin = document.querySelector('#login-slash-password');
+
     const eyeContainerPassword = document.querySelector('#register-eye-container-password');
     const eyeIconPassword = document.querySelector('#register-eye-password');
     const slashIconPassword = document.querySelector('#register-slash-password');
@@ -110,6 +114,20 @@
         document.body.style.position = '';
         document.body.style.top = '';
         window.scrollTo(0, scrollY);
+    });
+
+    eyeContainerPasswordLogin.addEventListener('click', function() {
+        const passwordInput = document.querySelector('#login-password');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIconPasswordLogin.style.display = 'none';
+            slashIconPasswordLogin.style.display = 'block';
+        } else {
+            passwordInput.type = 'password';
+            eyeIconPasswordLogin.style.display = 'block';
+            slashIconPasswordLogin.style.display = 'none';
+        }
     });
 
     eyeContainerPassword.addEventListener('click', function() {
