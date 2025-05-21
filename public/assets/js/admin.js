@@ -1,7 +1,8 @@
 import { createNotification } from './notification.js';
 
 (function() {
-    const userStatusForms = document.querySelectorAll('.admin-user-status-form');
+    const userStatusForms = document.querySelectorAll('.admin-user-status-form--status');
+    const userConfirmedForms = document.querySelectorAll('.admin-user-status-form--confirmed');
     const messageStatusForms = document.querySelectorAll('.admin-message-status-form');
     const deliveryStatusForms = document.querySelectorAll('.admin-delivery-status-form');
     const deliverymanStatusForms = document.querySelectorAll('.admin-deliveryman-status-form');
@@ -38,6 +39,44 @@ import { createNotification } from './notification.js';
                         : "admin-table__data--inactive";
                     
                     div.textContent = estatus === "1" ? "Alta" : "Baja";
+                    createNotification("success", "Estado del usuario cambiado correctamente");
+                } else {
+                    createNotification("error", "Error al cambiar el estado del usuario");
+                }
+            });
+        });
+    }
+
+        if (userConfirmedForms) {
+        userConfirmedForms.forEach(form => {
+            const button = form.querySelector('button')
+    
+            button.addEventListener('click', async () => {
+                const id = form.dataset.id;
+                let confirmed = form.dataset.confirmed === "1" ? "0" : "1";
+    
+                const formData = new FormData();
+                formData.append("id", id);
+                formData.append("confirmed", confirmed);
+    
+                const response = await fetch("/admin/usuario", {
+                    method: "POST",
+                    body: formData
+                });
+    
+                if (response.ok) {
+                    form.dataset.confirmed = confirmed;
+                    button.textContent = confirmed === "1" ? "Desconfirmar" : "Confirmar";
+                    
+                    const row = form.closest("tr");
+                    const confirmedCell = row.querySelectorAll("td")[7];
+                    const div = confirmedCell.querySelector("div");
+                    
+                    div.className = confirmed === "1"
+                        ? "admin-table__data--active"
+                        : "admin-table__data--inactive";
+                    
+                    div.textContent = confirmed === "1" ? "Confirmado" : "Sin Confirmar";
                     createNotification("success", "Estado del usuario cambiado correctamente");
                 } else {
                     createNotification("error", "Error al cambiar el estado del usuario");
