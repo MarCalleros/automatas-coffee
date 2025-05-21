@@ -28,6 +28,7 @@
                                 <th class="admin-table__head">Leido</th>
                                 <th class="admin-table__head">Respondido</th>
                                 <th class="admin-table__head">Tipo</th>
+                                <th class="admin-table__head">Estatus</th>
                                 <th class="admin-table__head">Acciones</th>
                             </tr>
                         </thead>
@@ -56,10 +57,20 @@
                                         </div>
                                     </td>
                                     <td class="admin-table__data">
+                                        <div class="<?= $mensaje->estatus ? 'admin-table__data--active' : 'admin-table__data--inactive' ?>">
+                                            <?= $mensaje->estatus ? 'Alta' : 'Baja' ?>
+                                        </div>
+                                    </td>
+                                    <td class="admin-table__data">
                                         <div class="admin-table__actions">
                                             <a href="<?php echo '/admin/message/view?id=' . $mensaje->id ?>"><button type="button" class="admin-table__action admin-table__action--edit">Ver</button></a>
-                                            <form class="admin-message-status-form" data-id="<?= $mensaje->id ?>" data-leido="<?= $mensaje->leido ?>">
+                                            <form class="admin-message-status-form admin-message-status-form--status" data-id="<?= $mensaje->id ?>" data-estatus="<?= $mensaje->estatus ?>">
                                                 <button type="button" class="admin-table__action admin-table__action--delete">
+                                                    <?= $mensaje->estatus ? 'Dar de Baja' : 'Dar de Alta' ?>
+                                                </button>
+                                            </form>
+                                            <form class="admin-message-status-form admin-message-status-form--read" data-id="<?= $mensaje->id ?>" data-leido="<?= $mensaje->leido ?>">
+                                                <button type="button" class="admin-table__action admin-table__action--edit">
                                                     <?= $mensaje->leido ? 'Marcar como no Leído' : 'Marcar como Leído' ?>
                                                 </button>
                                             </form>
