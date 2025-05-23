@@ -106,7 +106,7 @@ import { createNotification } from './notification.js';
         });
     }
 
-        if (messageStatusForms) {
+    if (messageStatusForms) {
         messageStatusForms.forEach(form => {
             const button = form.querySelector('button')
 

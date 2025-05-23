@@ -63,7 +63,7 @@
                         <div class="admin-messages__list">
                             <?php if ($newMessages): ?>
                                 <?php foreach ($newMessages as $message): ?>
-                                    <div class="admin-messages__item">
+                                    <div class="admin-messages__item" data-id="<?php echo $message->id ?>">
                                         <p class="admin-messages__text"><strong>Nombre: </strong><?php echo $message->usuario->nombre ?></p>
                                         <p class="admin-messages__text"><strong>Correo: </strong><?php echo $message->usuario->correo ?></p>
                                         <p class="admin-messages__text"><strong>Mensaje enviado el: </strong><?php echo $message->fecha ?></p>

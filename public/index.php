@@ -84,6 +84,7 @@ $router->get('/informacion', [PagesController::class, 'information']);
 $router->get('/informacion/:section', [PagesController::class, 'information']);
 $router->get('/informacion/:section/:identifier', [PagesController::class, 'information']);
 $router->get('/carrito', [PagesController::class, 'carrito']);
+$router->get('/pedido', [PagesController::class, 'delivery']);
 
 $router->get('/productos', [ProductoController::class, 'index']);
 

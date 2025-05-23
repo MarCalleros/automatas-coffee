@@ -1,6 +1,17 @@
 (function() {
     createUsersChart();
     createConfirmedChart();
+
+    const messages = document.querySelectorAll('.admin-messages__item');
+
+    if (messages) {
+        messages.forEach(message => {
+            message.addEventListener('click', () => {
+                const id = message.getAttribute('data-id');
+                window.open(`/admin/message/view?id=${id}`, '_blank');
+            });
+        });
+    }
 })();
 
 function createUsersChart() {
