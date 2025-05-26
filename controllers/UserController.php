@@ -53,7 +53,52 @@ class UserController {
             'Usuario' => $Usuario
         ]);
     }
+    public static function indexe(Router $router) {
+        if (!isAdmin()) {
+            header('Location: /');
+            exit;
+        }
 
+        $Usuario = Usuario::all();
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['estatus'])) {
+                $Usuario = new Usuario();
+                
+                $Usuario->id = $_POST['id'];
+                $Usuario->estatus = $_POST['estatus'];
+            
+                if ($Usuario->changeStatus()) {
+                    header('Content-Type: application/json');
+                    echo json_encode(['success' => true]);
+                    exit;
+                } else {
+                    header('Content-Type: application/json');
+                    echo json_encode(['success' => false, 'error' => 'Error en la base de datos']);
+                    exit;
+                }
+            } else if (isset($_POST['confirmed'])) {
+                $Usuario = new Usuario();
+                
+                $Usuario->id = $_POST['id'];
+                $Usuario->confirmado = $_POST['confirmed'];
+            
+                if ($Usuario->changeConfirmation()) {
+                    header('Content-Type: application/json');
+                    echo json_encode(['success' => true]);
+                    exit;
+                } else {
+                    header('Content-Type: application/json');
+                    echo json_encode(['success' => false, 'error' => 'Error en la base de datos']);
+                    exit;
+                }
+            }
+        }
+
+        $router->render('administrator/employee', [
+            'Usuario' => $Usuario
+        ]);
+    }
     public static function create(Router $router) {
         if (!isAdmin()) {
             header('Location: /');

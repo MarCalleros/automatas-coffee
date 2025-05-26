@@ -17,6 +17,7 @@ class Usuario {
     public $estatus;
     public $confirmado;
     public $token; // UUID de 12 caracteres alfanuméricos
+    public $nfc_id;
 
     public $tipo_usuario;
 
@@ -31,6 +32,7 @@ class Usuario {
         $this->estatus = $args['estatus'] ?? 1;
         $this->confirmado = $args['confirmado'] ?? 0;
         $this->token = $args['token'] ?? null;
+        $this->nfc_id = $args['nfc_id'] ?? null;
     }
     public static function all() {
         require __DIR__ . '/../includes/database.php';

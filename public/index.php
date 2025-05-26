@@ -65,6 +65,8 @@ $router->get('/admin/estadisticas', [AdminPagesController::class, 'statistics'])
 $router->get('/admin/estadisticas/:section', [AdminPagesController::class, 'statistics']);
 $router->get('/admin/historyregister', [RegisterController::class, 'historial']);
 $router->post('/admin/historyregister', [RegisterController::class, 'historial']);
+$router->get('/admin/empleado', [UserController::class, 'indexe']);
+$router->post('/admin/empleado', [UserController::class, 'indexe']);
 
 // API Estadísticas
 $router->get('/api/estadisticas/productos_cantidad', [APIEstadisticas::class, 'productosVendidos']);
