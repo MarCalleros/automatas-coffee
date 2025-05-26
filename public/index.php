@@ -114,6 +114,8 @@ $router->post('/api/carrito/eliminar', [APICarrito::class, 'eliminar']);
 $router->post('/api/carrito/vaciar', [APICarrito::class, 'vaciar']);
 $router->post('/api/carrito/comprar', [APICarrito::class, 'comprar']);
 
+// API App Móvil
+$router->post('/api/mobile/login', [APIUsuario::class, 'loginMobile']);
 
 $router->testRoutes();
 ?>
