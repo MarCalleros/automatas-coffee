@@ -441,4 +441,28 @@ class Usuario {
             return 0;
         }
     }
+
+    public static function getdeliveryman(String $usuario, String $password) {
+        require __DIR__ . '/../includes/database.php';
+
+    
+        try {
+            $query = "SELECT * FROM " .self::$tabla . "WHERE usuario =  AND id_tipo_usuario = 3";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 's', $usuario);
+            mysqli_stmt_execute($stmt);
+
+            $result = mysqli_stmt_get_result($stmt);
+            if ($result->num_rows > 0) {
+                $user = new Usuario(mysqli_fetch_assoc($result));
+                if (password_verify($password, $user->contraseña)) {
+                    return $user;
+                } else {
+                    return null; // Contraseña incorrecta
+                }
+            } else {
+                return null; // Usuario no encontrado
+            }
+        }
+    }
 }

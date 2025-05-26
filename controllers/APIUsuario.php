@@ -261,5 +261,31 @@ class APIUsuario {
             echo json_encode(['status' => 'error', 'message' => 'Error al contar los usuarios confirmados']);
         }
     }
+
+<?php
+public static function loginmobile() {
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
+        return;
+    }
+    
+    $data = json_decode(file_get_contents('php://input'), true);
+
+    if (!isset($data['username'], $data['password'])) {
+        echo json_encode(['status' => 'error', 'message' => 'Faltan datos']);
+        return;
+    }
+
+    // Llama al método del modelo que verifica usuario, contraseña y tipo
+    $result = Usuario::getdeliveryman($data['username'], $data['password']);
+
+    if ($result) {
+        echo json_encode(['status' => 'success', 'data' => true]);
+    } else {
+        echo json_encode(['status' => 'error', 'data' => false]);
+    }
+}
+
+
 }
 ?>
