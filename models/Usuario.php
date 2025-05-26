@@ -442,7 +442,7 @@ class Usuario {
         }
     }
 
-    public static function getdeliveryman(String $usuario, String $password) {
+    public static function verifyDeliverymanCredentials(String $usuario, String $password) {
         require __DIR__ . '/../includes/database.php';
 
     
