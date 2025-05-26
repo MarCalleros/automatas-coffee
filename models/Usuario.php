@@ -463,6 +463,8 @@ class Usuario {
             } else {
                 return null; // Usuario no encontrado
             }
+        } catch (\Exception $e) {
+            return 0; // Error en la consulta
         }
     }
 }
