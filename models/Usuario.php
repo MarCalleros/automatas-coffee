@@ -442,26 +442,26 @@ class Usuario {
         }
     }
 
-    public static function verifyDeliverymanCredentials(String $usuario, String $password) {
+    public static function verifyDeliverymanCredentials(String $user, String $pass) {
         require __DIR__ . '/../includes/database.php';
 
     
         try {
-            $query = "SELECT * FROM " .self::$tabla . "WHERE usuario =  AND id_tipo_usuario = 3";
+            $query = "SELECT * FROM " .self::$tabla . " WHERE usuario = ? AND id_tipo_usuario = 3";
             $stmt = mysqli_prepare($db, $query);
-            mysqli_stmt_bind_param($stmt, 's', $usuario);
+            mysqli_stmt_bind_param($stmt, 's', $user);
             mysqli_stmt_execute($stmt);
 
             $result = mysqli_stmt_get_result($stmt);
             if ($result->num_rows > 0) {
-                $user = new Usuario(mysqli_fetch_assoc($result));
-                if (password_verify($password, $user->contraseña)) {
-                    return $user;
+                $row = mysqli_fetch_assoc($result);
+                if (password_verify($pass, $row['contraseña'])) {
+                    return true;
                 } else {
-                    return null; // Contraseña incorrecta
+                    return false; // Contraseña incorrecta
                 }
             } else {
-                return null; // Usuario no encontrado
+                return false; //Usuario no encontrado
             }
         } catch (\Exception $e) {
             return 0; // Error en la consulta
