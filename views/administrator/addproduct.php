@@ -17,6 +17,7 @@
 
         <div class="taker">
             <div class="seccion1">
+
                 <div class="seccion11">
                     <div class="item">
                         <label for="nombre">Nombre del producto</label>
@@ -31,6 +32,7 @@
                         <input type="file" id="imagen" accept="image/*">
                     </div>
                 </div>
+
                 <div class="seccion12">
                     <div class="item">
                         <label for="categoria1">Categoría 1</label>
@@ -53,55 +55,64 @@
                         </select>
                     </div>
                     <div class="item">
-                        <label for="tamano">Tamaño del producto</label>
+                        <label for="tamano" class="labeltamanio">Tamaño del producto</label>
                         <div class="opciones">
                             <div class="opcion">
                                 <input type="checkbox" id="tamano-ch" name="tamano" value="1">
-                                <span>Chico</span>
-                                <input type="number" id="precio-1" class="precio-tamano" placeholder="Precio chico" min="0" step="0.01" style="visibility:hidden;">
-                                <input type="number" id="stock-1" class="stock-tamano" placeholder="Ingresar stock" min="0" style="visibility:hidden;">
+                                <span>Chico (300ml)</span>
+                                <input type="number" id="precio-1" class="precio-tamano" placeholder="Precio" min="0" step="0.01" style="visibility:hidden;">
+                                <input type="number" id="stock-1" class="stock-tamano" placeholder="Stock" min="0" style="visibility:hidden;">
                             </div>
                             <div class="opcion">
                                 <input type="checkbox" id="tamano-md" name="tamano" value="2">
-                                <span>Mediano</span>
-                                <input type="number" id="precio-2" class="precio-tamano" placeholder="Precio mediano" min="0" step="0.01" style="visibility:hidden;">
-                                <input type="number" id="stock-2" class="stock-tamano" placeholder="Ingresar stock" min="0" style="visibility:hidden;">
+                                <span>Mediano (600ml)</span>
+                                <input type="number" id="precio-2" class="precio-tamano" placeholder="Precio" min="0" step="0.01" style="visibility:hidden;">
+                                <input type="number" id="stock-2" class="stock-tamano" placeholder="Stock" min="0" style="visibility:hidden;">
                             </div>
                             <div class="opcion">
-                                <input type="checkbox" id="tamano-gr" name="tamano" value="3">
-                                <span>Grande</span>
-                                <input type="number" id="precio-3" class="precio-tamano" placeholder="Precio grande" min="0" step="0.01" style="visibility:hidden;">
-                                <input type="number" id="stock-3" class="stock-tamano" placeholder="Ingresar stock" min="0" style="visibility:hidden;">
+                                <input type="checkbox" id="tamano-gr" name="tamano" value="3">  
+                                <span>Grande (850ml)</span>
+                                <input type="number" id="precio-3" class="precio-tamano" placeholder="Precio" min="0" step="0.01" style="visibility:hidden;">
+                                <input type="number" id="stock-3" class="stock-tamano" placeholder="Stock" min="0" style="visibility:hidden;">
                             </div>
                         </div>
                     </div>
                 </div>
+
+
             </div>
             <div class="seccion2">
-                <img id="preview-imagen" src="/assets/img/product/<?= $product['ruta'] ?>.jpg" alt="Sin imagen cargada" style="max-width:150px;">
+                <label for="preview">Previsualización de la imagen del producto</label>
+                <img id="preview-imagen" src="/assets/img/product/<?= $product['ruta'] ?>.jpg" alt="Sin imagen cargada" style="color: #ff0000">
             </div>
+
+            
             <div class="seccion3">
-                <div id="agregar">
-                    <label for="">Agregar producto</label>
-                </div>
                 <div id="cancelar">
                     <label for="">Cancelar</label>
+                </div>
+                <div id="agregar">
+                    <label for="">Agregar producto</label>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="sidebar2">
-            
+
+
+    <div class="panelderecho"> 
+        <img id="logo2" src="../assets/img/logo_white.png" alt="">
     </div>
+
 </div>
 
+
     <script>
-        document.querySelectorAll('input[name="tamano"]').forEach(cb => {
-            cb.addEventListener('change', function() {
-                const precioInput = document.getElementById('precio-' + this.value);
-                const stockInput = document.getElementById('stock-' + this.value);
-                if (this.checked) {
+        function actualizarInputsTamanos() {
+            document.querySelectorAll('input[name="tamano"]').forEach(cb => {
+                const precioInput = document.getElementById('precio-' + cb.value);
+                const stockInput = document.getElementById('stock-' + cb.value);
+                if (cb.checked) {
                     precioInput.style.visibility = 'visible';
                     stockInput.style.visibility = 'visible';
                 } else {
@@ -110,6 +121,14 @@
                     stockInput.style.visibility = 'hidden';
                     stockInput.value = '';
                 }
+            });
+        }
+
+        // Ejecutar al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            actualizarInputsTamanos();
+            document.querySelectorAll('input[name="tamano"]').forEach(cb => {
+                cb.addEventListener('change', actualizarInputsTamanos);
             });
         });
     </script>
