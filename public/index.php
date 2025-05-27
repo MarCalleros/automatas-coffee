@@ -21,6 +21,7 @@ use Controller\APIUbicacion;
 use Controller\APIEstadisticas;
 use Controller\RegisterController;
 use Controller\APIHistoryregister;
+use Controller\APIProductSearch;
 
 $router = new Router();
 
@@ -76,6 +77,10 @@ $router->get('/api/estadisticas/clientes_compras', [APIEstadisticas::class, 'cli
 $router->get('/api/estadisticas/clientes_ingresos', [APIEstadisticas::class, 'clientesIngresos']);
 $router->get('/api/estadisticas/ventas_periodo', [APIEstadisticas::class, 'ventasPeriodo']);
 $router->get('/api/estadisticas/graficas', [APIEstadisticas::class, 'graficas']);
+$router->get('/api/estadisticas/buscarProductos', [APIProductSearch::class, 'buscarProductos']);
+$router->get('/api/estadisticas/producto/:id', [APIProductSearch::class, 'getProductStats']);
+
+
 
 // Usuario
 $router->get('/', [PagesController::class, 'home']);

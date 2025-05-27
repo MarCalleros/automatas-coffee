@@ -6,6 +6,7 @@
     <title>Estadísticas</title>
     <link rel="stylesheet" href="/assets/css/styles.css">
     <link rel="stylesheet" href="/assets/css/estadisticas.css">
+    <link rel="stylesheet" href="/assets/css/product-search-modal.css">
     <link rel="shortcut icon" href="/assets/img/logo-coffee.png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -28,6 +29,8 @@ $periodo = isset($_GET['periodo']) ? $_GET['periodo'] : 'dia';
 
     <div class="admin">
         <h2 class="admin__title">ESTADISTICAS</h2>
+            <?php include_once __DIR__ . '/product-search-modal.php'; ?>
+            
         <div class="tabs">
             <a href="/admin/estadisticas/productos" data-tab="productos" class="tab <?php echo $tab == 'productos' ? 'active' : ''; ?>">Productos Vendidos</a>
             <a href="/admin/estadisticas/ingresos" data-tab="ingresos" class="tab <?php echo $tab == 'ingresos' ? 'active' : ''; ?>">Ingresos por Producto</a>
@@ -209,6 +212,7 @@ $periodo = isset($_GET['periodo']) ? $_GET['periodo'] : 'dia';
     </div>
 </div>
 
+<script src="/assets/js/product-search-modal.js"></script>
 <script src="/assets/js/estadisticas.js"></script>
 </body>
 </html> 
