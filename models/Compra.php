@@ -10,7 +10,12 @@ class Compra {
     
     public $id;
     public $id_usuario;
+    public $id_repartidor;
     public $fecha;
+    public $id_direccion;
+    public $latitud;
+    public $longitud;
+    public $id_tarjeta;
     public $total;
     public $identificador; // UUID de 12 caracteres alfanuméricos
     public $estatus;
@@ -21,7 +26,12 @@ class Compra {
     public function __construct($args = []) {
         $this->id = $args['id'] ?? null;
         $this->id_usuario = $args['id_usuario'] ?? null;
+        $this->id_repartidor = $args['id_repartidor'] ?? null;
         $this->fecha = $args['fecha'] ?? date('Y-m-d H:i:s');
+        $this->id_direccion = $args['id_direccion'] ?? null;
+        $this->latitud = $args['latitud'] ?? null;
+        $this->longitud = $args['longitud'] ?? null;
+        $this->id_tarjeta = $args['id_tarjeta'] ?? null;
         $this->total = $args['total'] ?? null;
         $this->identificador = $args['identificador'] ?? null; // UUID de 12 caracteres alfanuméricos
         $this->estatus = $args['estatus'] ?? 0; // 1 = entregado, 0 = pendiente

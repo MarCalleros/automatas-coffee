@@ -373,6 +373,7 @@ function validateDeliverymanForm() {
     const nss = document.querySelector('#nss').value;
     const tipoSangre = document.querySelector('#tipo_sangre').value;
     const vigencia = document.querySelector('#vigencia').value;
+    const usuario = document.querySelector('#id_usuario').value;
 
     const errorNombre = document.querySelector('#error-nombre');
     const errorApellido1 = document.querySelector('#error-apellido1');
@@ -383,6 +384,7 @@ function validateDeliverymanForm() {
     const errorNss = document.querySelector('#error-nss');
     const errorTipoSangre = document.querySelector('#error-tipo-sangre');
     const errorVigencia = document.querySelector('#error-vigencia');
+    const errorUsuario = document.querySelector('#error-usuario');
 
     const regexNombre = /^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]{1,30}$/
     const regexApellido = /^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]{1,20}$/
@@ -399,6 +401,7 @@ function validateDeliverymanForm() {
     const mensajeNss = "El NSS no es valido";
     const mensajeTipoSangre = "Seleccione un tipo de sangre";
     const mensajeVigencia = "Seleccione una fecha valida";
+    const mensajeUsuario = "Seleccione un usuario";
 
     if (!nombre || !regexNombre.test(nombre)) {
         errorNombre.textContent = nombre ? mensajeNombre : mensajeVacio;
@@ -470,6 +473,14 @@ function validateDeliverymanForm() {
         error = true;
     } else {
         errorVigencia.classList.remove('admin-form__error--active');
+    }
+
+    if (!usuario) {
+        errorUsuario.textContent = mensajeUsuario;
+        errorUsuario.classList.add('admin-form__error--active');
+        error = true;
+    } else {
+        errorUsuario.classList.remove('admin-form__error--active');
     }
 
     if (error) {

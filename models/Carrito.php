@@ -357,7 +357,7 @@ class Carrito {
         }
     }
     //Comprar
-    public static function comprar($id_usuario) {
+    public static function comprar($id_usuario, $address, $id_direccion = null, $latitud = null, $longitud = null, $id_tarjeta = null) {
         try {
             require __DIR__ . '/../includes/database.php';
 
@@ -379,9 +379,13 @@ class Carrito {
             } while (Compra::where('identificador', $uuid)); // Verificar que no exista otro mensaje con el mismo UUID
             
             // 3. Crear la compra
-            $query = "INSERT INTO compra (id_usuario, fecha, total, identificador, estatus) VALUES (?, NOW(), ?, ?, 0)";
+            if ($address == "home" || $address == "gps") {
+                $query = "INSERT INTO compra (id_usuario, fecha, id_direccion, latitud, longitud, id_tarjeta, total, identificador, estatus) VALUES (?, NOW(), ?, ?, ?, ?, ?, ?, 0)";
+            } else {
+                $query = "INSERT INTO compra (id_usuario, fecha, id_sucursal, latitud, longitud, id_tarjeta, total, identificador, estatus) VALUES (?, NOW(), ?, ?, ?, ?, ?, ?, 0)";
+            }
             $stmt = mysqli_prepare($db, $query);
-            mysqli_stmt_bind_param($stmt, 'ids', $id_usuario, $total, $uuid);
+            mysqli_stmt_bind_param($stmt, 'iissids', $id_usuario, $id_direccion, $latitud, $longitud, $id_tarjeta, $total, $uuid);
             
             if (!mysqli_stmt_execute($stmt)) {
                 mysqli_rollback($db);

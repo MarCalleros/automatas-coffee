@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrito de Compras</title>
+    <title>Complete su Pedido</title>
     <link rel="stylesheet" href="/assets/css/variables.css">
     <link rel="stylesheet" href="/assets/css/styles.css">
     <link rel="shortcut icon" href="/assets/img/logo-coffee.png">
@@ -60,13 +60,19 @@
                 <div class="delivery-receive__card delivery-receive__card--subsidiary">
                     <div class="delivery-receive__separator"></div>
 
-                    <div class="delivery-receive__info-container">
-                        <img class="delivery-receive__image" src="/assets/img/logo-coffee.png" alt="Sucursal">
-                        <div class="delivery-receive__info">
-                            <strong class="delivery-receive__text">Sucursal Principal Automatas Coffee</strong>
-                            <p class="delivery-receive__text">Fuentes de Poseidon, 81210 Los Mochis, Sinaloa</p>
-                            <a class="delivery-receive__text" target="_blank" href="https://www.google.com/maps/place/Facultad+De+Ingenieria+Mochis/@25.8145063,-108.9797897,19z/data=!4m14!1m7!3m6!1s0x86ba28b9f818dc49:0xbe7faef935f982f0!2sFacultad+De+Ingenieria+Mochis!8m2!3d25.8146408!4d-108.9798737!16s%2Fg%2F1tdcxjgm!3m5!1s0x86ba28b9f818dc49:0xbe7faef935f982f0!8m2!3d25.8146408!4d-108.9798737!16s%2Fg%2F1tdcxjgm?hl=es&entry=ttu&g_ep=EgoyMDI1MDUyMS4wIKXMDSoASAFQAw%3D%3D">Encuentranos</a>
-                        </div>
+                    <div class="delivery-method__card">
+                        <?php foreach ($subsidiaries as $subsidiary) : ?>
+                            <div class="delivery-receive__info">
+                                <div class="delivery-receive__info-container" data-id="<?php echo $subsidiary->id ?>" data-address="subsidiary">
+                                    <img class="delivery-receive__image" src="/assets/img/logo-coffee.png" alt="Sucursal">
+                                    <div class="delivery-receive__info">
+                                        <strong class="delivery-receive__text"><?php echo $subsidiary->nombre ?></strong>
+                                        <p class="delivery-receive__text"><?php echo $subsidiary->calle . " " . $subsidiary->numero . ", " . $subsidiary->colonia . " " . $subsidiary->cp . ", " . $subsidiary->ciudad . ", Sinaloa"?></p>
+                                        <a class="delivery-receive__text" target="_blank" href="<?php echo 'https://www.google.com/maps/@' . $subsidiary->latitud . ',' . $subsidiary->longitud . ',16.75z?hl=es&entry=ttu&g_ep=EgoyMDI1MDUyMS4wIKXMDSoASAFQAw%3D%3D' ?>">Encuentranos</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
 
                     <div class="delivery-receive__separator"></div>
@@ -75,7 +81,7 @@
                 <div class="delivery-receive__card delivery-receive__card--address">
                     <div class="delivery-receive__separator"></div>
 
-                    <div class="delivery-receive__info-container">
+                    <div class="delivery-receive__info-container" data-address="gps">
                         <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path class="receive-path" d="M50 25H50.0417M37.5 83.3333L12.5 70.8333V16.6667L20.8333 20.8333M37.5 83.3333L62.5 70.8333M37.5 83.3333V58.3333M62.5 70.8333L87.5 83.3333V29.1667L79.1667 25M62.5 70.8333V58.3333M62.5 25.8333C62.5 33.1971 56.25 39.1667 50 45.8333C43.75 39.1667 37.5 33.1971 37.5 25.8333C37.5 18.4695 43.0962 12.5 50 12.5C56.9037 12.5 62.5 18.4695 62.5 25.8333Z" stroke="#333333" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -89,16 +95,26 @@
 
                     <div class="delivery-receive__separator"></div>
 
-                    <div class="delivery-receive__info">
-                        <div class="delivery-receive__info-container">
-                            <img class="delivery-receive__image" src="/assets/img/logo-coffee.png" alt="Sucursal">
+                    <?php if ($addresses) : ?>
+                        <div class="delivery-method__card">
+                        <?php foreach ($addresses as $address) : ?>
                             <div class="delivery-receive__info">
-                                <strong class="delivery-receive__text">Casa Viñedos</strong>
-                                <p class="delivery-receive__text">Fuentes de Poseidon, 81210 Los Mochis, Sinaloa</p>
-                                <a class="delivery-receive__text" target="_blank" href="https://www.google.com/maps/place/Facultad+De+Ingenieria+Mochis/@25.8145063,-108.9797897,19z/data=!4m14!1m7!3m6!1s0x86ba28b9f818dc49:0xbe7faef935f982f0!2sFacultad+De+Ingenieria+Mochis!8m2!3d25.8146408!4d-108.9798737!16s%2Fg%2F1tdcxjgm!3m5!1s0x86ba28b9f818dc49:0xbe7faef935f982f0!8m2!3d25.8146408!4d-108.9798737!16s%2Fg%2F1tdcxjgm?hl=es&entry=ttu&g_ep=EgoyMDI1MDUyMS4wIKXMDSoASAFQAw%3D%3D">Encuentranos</a>
+                                <div class="delivery-receive__info-container" data-id="<?php echo $address->id ?>" data-address="home">
+                                    <img class="delivery-receive__image" src="/assets/img/logo-coffee.png" alt="Sucursal">
+                                    <div class="delivery-receive__info">
+                                        <strong class="delivery-receive__text"><?php echo $address->nombre ?></strong>
+                                        <p class="delivery-receive__text"><?php echo $address->calle . " " . $address->numero . ", " . $address->colonia . " " . $address->cp . ", " . $address->ciudad . ", Sinaloa"?></p>
+                                        <a class="delivery-receive__text" target="_blank" href="https://www.google.com/maps/place/Facultad+De+Ingenieria+Mochis/@25.8145063,-108.9797897,19z/data=!4m14!1m7!3m6!1s0x86ba28b9f818dc49:0xbe7faef935f982f0!2sFacultad+De+Ingenieria+Mochis!8m2!3d25.8146408!4d-108.9798737!16s%2Fg%2F1tdcxjgm!3m5!1s0x86ba28b9f818dc49:0xbe7faef935f982f0!8m2!3d25.8146408!4d-108.9798737!16s%2Fg%2F1tdcxjgm?hl=es&entry=ttu&g_ep=EgoyMDI1MDUyMS4wIKXMDSoASAFQAw%3D%3D">Encuentranos</a>
+                                    </div>
+                                </div>
                             </div>
+                        <?php endforeach; ?>
                         </div>
-                    </div>
+                    <?php else : ?>
+                        <div class="delivery-receive__info">
+                            <p class="delivery-receive__text">No tienes direcciones guardadas</p>
+                        </div>
+                    <?php endif; ?>
 
                     <div class="delivery-receive__separator"></div>
                 </div>
@@ -195,25 +211,24 @@
 
                     <div class="delivery-receive__separator"></div>
 
+                    <?php if ($cards) : ?>
                     <div class="delivery-method__card">
-                        <div class="delivery-method__card-container">
-                            <img class="delivery-receive__image" src="/assets/img/logo-coffee.png" alt="Sucursal">
-                            <div class="delivery-receive__info">
-                                <strong class="delivery-receive__text">Tarjeta con Terminación XXXX-XXXX-XXXX-2812</strong>
-                                <p class="delivery-receive__text">Martin Alejandro Calleros Camarillo</p>
-                                <p class="delivery-receive__text">10 / 28</p>
+                        <?php foreach ($cards as $card) : ?>
+                            <div class="delivery-method__card-container" data-id="<?php echo $card->id ?>" data-card="card" data-number="<?php echo substr($card->numero, 12) ?>">
+                                <img class="delivery-receive__image" src="/assets/img/logo-coffee.png" alt="Sucursal">
+                                <div class="delivery-receive__info">
+                                    <strong class="delivery-receive__text">Tarjeta con Terminación <?php echo substr($card->numero, 12) ?></strong>
+                                    <p class="delivery-receive__text"><?php echo $card->titular ?></p>
+                                    <p class="delivery-receive__text"><?php echo $card->mes . " / " . $card->año ?></p>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="delivery-method__card-container">
-                            <img class="delivery-receive__image" src="/assets/img/logo-coffee.png" alt="Sucursal">
-                            <div class="delivery-receive__info">
-                                <strong class="delivery-receive__text">Tarjeta con Terminación XXXX-XXXX-XXXX-2812</strong>
-                                <p class="delivery-receive__text">Martin Alejandro Calleros Camarillo</p>
-                                <p class="delivery-receive__text">10 / 28</p>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
+                    <?php else : ?>
+                        <div class="delivery-receive__info">
+                            <p class="delivery-receive__text">No tienes tarjetas guardadas</p>
+                        </div>
+                    <?php endif; ?>
 
                     <div class="delivery-receive__separator"></div>
                 </div>
@@ -241,22 +256,30 @@
             <div></div>
 
             <div class="delivery__content delivery__content--delivery">
+                <p class="delivery-receive__title">Información del Pedido</p>
                 <div class="delivery-receive__info">
-                    <div class="delivery-receive__info-container">
+                    <div class="delivery-delivery__info-container">
                         <div class="delivery-receive__info">
                             <p class="delivery-receive__text delivery-delivery__text"><strong>Pago: </strong></p>
                             <p class="delivery-receive__text delivery-delivery__text"><strong>Dirección: </strong></p>
-                            <p class="delivery-receive__text delivery-delivery__text"><strong>Total a pagar: </strong>$</p>
+                            <p class="delivery-receive__text delivery-delivery__text"><strong>Total a pagar: </strong>$<?php echo $total ?></p>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div></div>
+            
+            <div class="delivery__buttons">
+                <a href="/carrito" class="delivery__button delivery__button--return">Regresar</a>
+                <button class="delivery__button delivery__button--return" id="buy-btn">Confirmar</button>
             </div>
         </div>
     </main>
     
     <?php include_once __DIR__ . "/../templates/footer.php"; ?>   
-    <script type="module" src="/assets/js/carrito.js"></script>    
     <script type="module" src="/assets/js/delivery.js"></script>    
+    <script type="module" src="/assets/js/address.js"></script>    
     <script type="module" src="/assets/js/configuration.js"></script>
 </body>
 </html>

@@ -6,6 +6,7 @@ class Repartidor {
     protected static $tabla = 'repartidor';
 
     public $id;
+    public $id_usuario;
     public $nombre;
     public $apellido1;
     public $apellido2;
@@ -19,9 +20,11 @@ class Repartidor {
     public $estatus;
 
     public $ubicacion; // Relacion con la tabla ubicacion
+    public $usuario;
 
     public function __construct($args = []) {
         $this->id = $args['id'] ?? null;
+        $this->id_usuario = $args['id_usuario'] ?? null;
         $this->nombre = $args['nombre'] ?? '';
         $this->apellido1 = $args['apellido1'] ?? '';
         $this->apellido2 = $args['apellido2'] ?? '';
@@ -123,9 +126,9 @@ class Repartidor {
                 return "El NSS ya se encuentra registrado"; // Ya existe un repartidor con el mismo NSS
             }
 
-            $query = "INSERT INTO " . static::$tabla . " (nombre, apellido1, apellido2, telefono, curp, rfc, tipo_sangre, nss, vigencia_licencia, estatus_repartiendo, estatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $query = "INSERT INTO " . static::$tabla . " (id_usuario, nombre, apellido1, apellido2, telefono, curp, rfc, tipo_sangre, nss, vigencia_licencia, estatus_repartiendo, estatus) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = mysqli_prepare($db, $query);
-            mysqli_stmt_bind_param($stmt, 'sssssssssii', $this->nombre, $this->apellido1, $this->apellido2, $this->telefono, $this->curp, $this->rfc, $this->tipo_sangre, $this->nss, $this->vigencia_licencia, $this->estatus_repartiendo, $this->estatus);
+            mysqli_stmt_bind_param($stmt, 'isssssssssii', $this->id_usuario, $this->nombre, $this->apellido1, $this->apellido2, $this->telefono, $this->curp, $this->rfc, $this->tipo_sangre, $this->nss, $this->vigencia_licencia, $this->estatus_repartiendo, $this->estatus);
             $executed = mysqli_stmt_execute($stmt);
             
             return $executed && mysqli_stmt_affected_rows($stmt) > 0;
@@ -159,9 +162,9 @@ class Repartidor {
                 return "El NSS ya se encuentra registrado"; // Ya existe un repartidor con el mismo NSS
             }
             
-            $query = "UPDATE " . static::$tabla . " SET nombre = ?, apellido1 = ?, apellido2 = ?, telefono = ?, curp = ?, rfc = ?, tipo_sangre = ?, nss = ?, vigencia_licencia = ? WHERE id = ?";
+            $query = "UPDATE " . static::$tabla . " SET id_usuario = ?, nombre = ?, apellido1 = ?, apellido2 = ?, telefono = ?, curp = ?, rfc = ?, tipo_sangre = ?, nss = ?, vigencia_licencia = ? WHERE id = ?";
             $stmt = mysqli_prepare($db, $query);
-            mysqli_stmt_bind_param($stmt, 'sssssssssi', $this->nombre, $this->apellido1, $this->apellido2, $this->telefono, $this->curp, $this->rfc, $this->tipo_sangre, $this->nss, $this->vigencia_licencia, $this->id);
+            mysqli_stmt_bind_param($stmt, 'isssssssssi', $this->id_usuario, $this->nombre, $this->apellido1, $this->apellido2, $this->telefono, $this->curp, $this->rfc, $this->tipo_sangre, $this->nss, $this->vigencia_licencia, $this->id);
             $executed = mysqli_stmt_execute($stmt);
             
             return $executed && mysqli_stmt_affected_rows($stmt) > 0;

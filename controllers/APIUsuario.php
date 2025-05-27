@@ -278,10 +278,11 @@ class APIUsuario {
         // Llama al método del modelo que verifica usuario, contraseña y tipo
         $result = Usuario::verifyDeliverymanCredentials($data['username'], $data['password']);
 
-        if ($result) {
-            echo json_encode(['status' => 'success', 'data' => true]);
+        if ($result === true) {
+            echo json_encode(['success' => true, 'status' => 'Autenticación correcta']);
+
         } else {
-            echo json_encode(['status' => 'error', 'data' => false]);
+            echo json_encode(['success' => false, 'status' => 'Usuario o contraseña incorrectos']);
         }
     }
 

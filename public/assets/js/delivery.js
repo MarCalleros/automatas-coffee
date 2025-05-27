@@ -1,12 +1,17 @@
+import { createNotification } from './notification.js';
+
 let information = {
     receive: {
+        id: '',
+        lat: '',
+        lng: '',
         address: '',
+        text: '',
         },
     pay: {
+        id: '',
         method: '',
-        },
-    amount: {
-        total: '120.00',
+        text: '',
         },
     };
 
@@ -21,6 +26,8 @@ let information = {
     const methodCards = document.querySelectorAll('.delivery-method__card-container');
     const methodInputs = document.querySelectorAll('.delivery-method__input');
     const methodNumberInputs = document.querySelectorAll('.delivery-method__input--short');
+
+    const buyBtn = document.querySelector("#buy-btn")
 
     deliveryReceiveButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -42,6 +49,27 @@ let information = {
     
     receiveCards.forEach(card => {
         card.addEventListener('click', function() {
+            if (card.getAttribute('data-address') == 'gps') {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        function(position) {
+                            information.receive.lat = position.coords.latitude;
+                            information.receive.lng = position.coords.longitude;
+                            console.log("Latitud:", information.receive.lat, "Longitud:", information.receive.lng);
+                            createNotification("success", "Ubicación obtenida correctamente");
+                        },
+                        function(error) {
+                            console.error("Error al obtener ubicación:", error);
+                            createNotification("error", "No se pudo obtener la ubicación actual");
+                            return;
+                        }
+                    );
+                } else {
+                    createNotification("error", "La geolocalización no es compatible con este navegador");
+                    return;
+                }
+            }
+
             receiveCards.forEach(c => {
                 c.classList.remove('delivery-receive__info-container--selected');
             });
@@ -57,7 +85,18 @@ let information = {
                 method.classList.add('delivery__content--active');
             }
 
-            information.receive.address = "address";
+            information.receive.address = card.getAttribute('data-address');
+            if (information.receive.address == 'gps') {
+                information.receive.id = '';
+                information.receive.text = "Entregar a mi ubicación actual";
+            } else if (information.receive.address == 'home') {
+                information.receive.id = card.getAttribute('data-id');
+                information.receive.text = "Entregar al domicilio " + card.querySelectorAll('.delivery-receive__text')[1].textContent;
+            } else if (information.receive.address == 'subsidiary') {
+                information.receive.id = card.getAttribute('data-id');
+                information.receive.text = "Recibir en la sucursal " + card.querySelectorAll('.delivery-receive__text')[1].textContent;
+            }
+            putInformation();
         });
     });
 
@@ -90,7 +129,11 @@ let information = {
                 }
 
                 information.pay.method = "money";
+                information.pay.id = '';
+                information.pay.text = "Pago con efectivo";
                 putInformation();
+                buyBtn.classList.remove("delivery__button--return")
+                buyBtn.classList.add("delivery__button--confirm")
             }
         });
     });
@@ -112,8 +155,12 @@ let information = {
                 delivery.classList.add('delivery__content--active');
             }
 
-            information.pay.method = "card";
+            information.pay.method = card.getAttribute('data-card');
+            information.pay.id = card.getAttribute('data-id');
+            information.pay.text = "Pago con tarjeta con terminación " + card.getAttribute('data-number');
             putInformation();
+            buyBtn.classList.remove("delivery__button--return")
+            buyBtn.classList.add("delivery__button--confirm")
         });
     });
 
@@ -176,11 +223,83 @@ let information = {
             }
         });
     });
+
+    //Botón de comprar
+    buyBtn.addEventListener("click", function () {
+        if (buyBtn.classList.contains("delivery__button--confirm")) {
+            realizarCompra((response) => {
+            if (response.status === "success") {
+                //Actualizar el contador del carrito
+                actualizarContadorCarrito(0)
+                buyBtn.classList.remove("delivery__button--confirm")
+                buyBtn.classList.add("delivery__button--return")
+                createNotification("success", "Compra realizada con éxito, puedes ver tu pedido en tu historial de pedidos")
+
+                // Eliminar todos los eventos de click
+            } else {
+                createNotification("error", response.message)
+            }
+            })
+        }
+    })
 })();
 
 function putInformation() {
     const text = document.querySelectorAll('.delivery-delivery__text');
-    text[0].innerHTML = `<strong>Pago: </strong>${information.pay.method}`;
-    text[1].innerHTML = `<strong>Dirección: </strong>${information.receive.address}`;
-    text[2].innerHTML = `<strong>Total a pagar: </strong>$${information.amount.total}`;
+    text[0].innerHTML = `${information.pay.text}`;
+    text[1].innerHTML = `${information.receive.text}`;
+}
+
+function realizarCompra(callback) {
+    fetch("/api/carrito/comprar", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            addressId: information.receive.id,
+            lat: information.receive.lat,
+            lng: information.receive.lng,
+            address: information.receive.address,
+            cardId: information.pay.id,
+            method: information.pay.method
+        })
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("respuesta de compra", data)
+            callback(data)
+    })
+        .catch((error) => {
+            console.error("Error:", error)
+            callback({ status: "error", message: "Error de conexión" })
+    })
+}
+
+function actualizarContadorCarrito(count) {
+      const contadorElements = document.querySelectorAll(".cart-indicator, .cart-count")
+      if (contadorElements.length === 0) return
+
+      if (count !== undefined) {
+        contadorElements.forEach((element) => {
+          element.textContent = count
+          element.style.display = count > 0 ? "flex" : "none"
+        })
+        return
+      }
+
+      fetch("/api/carrito/obtener")
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === "success") {
+            const totalItems = data.items.reduce((total, item) => total + Number.parseInt(item.cantidad), 0)
+            contadorElements.forEach((element) => {
+              element.textContent = totalItems
+              element.style.display = totalItems > 0 ? "flex" : "none"
+            })
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error)
+        })
 }
