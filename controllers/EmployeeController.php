@@ -6,7 +6,7 @@ use App\Router;
 use Model\Usuario;
 use Model\TipoUsuario;
 
-class UserController {
+class EmployeeController {
     public static function index(Router $router) {
         if (!isAdmin()) {
             header('Location: /');
@@ -49,7 +49,7 @@ class UserController {
             }
         }
 
-        $router->render('administrator/user', [
+        $router->render('administrator/employee', [
             'Usuario' => $Usuario
         ]);
     }
@@ -74,9 +74,10 @@ class UserController {
             $Usuario->correo = $_POST['correo'] ;
             $Usuario->usuario = $_POST['usuario'] ;
             $Usuario->contraseña = $_POST['contraseña'] ;
-            $Usuario->id_tipo_usuario = $_POST['id_tipo_usuario'] ?? 2 ;
+            $Usuario->id_tipo_usuario = $_POST['id_tipo_usuario'] ?? 4 ;
             $Usuario->estatus = $_POST['estatus'] ?? 1;
-
+            $Usuario->nfc_id = $_POST['nfc_id'] ?? null;
+            
             $result = $Usuario->save();
         
             if ($result === true) {
@@ -90,7 +91,7 @@ class UserController {
             }
         }
 
-        $router->render('administrator/user-create', [
+        $router->render('administrator/employee-create', [
             'tiposUsuario' => $tiposUsuario
         ]);
     }
@@ -126,6 +127,7 @@ class UserController {
             $usuarioBD->correo = $_POST['correo'] ?? $usuarioBD->correo;
             $usuarioBD->usuario = $_POST['usuario'] ?? $usuarioBD->usuario;
             $usuarioBD->id_tipo_usuario = $_POST['id_tipo_usuario'] ?? $usuarioBD->id_tipo_usuario;
+            $usuarioBD->estatus = $_POST['nfc_id'] ?? $usuarioBD->nfc_id;
 
             // Solo actualizar la contraseña si se proporciona una nueva
             if (!empty($_POST['contraseña'])) {
@@ -176,7 +178,7 @@ class UserController {
             }
         }
 
-        $router->render('administrator/user-edit', [
+        $router->render('administrator/employee-edit', [
             'usuarioBD' => $usuarioBD,
             'tiposUsuario' => $tiposUsuario
         ]);

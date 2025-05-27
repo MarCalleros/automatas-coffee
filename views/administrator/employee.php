@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/assets/css/styles.css">
     <link rel="shortcut icon" href="/assets/img/logo-coffee.png">
     <title>Empleados</title>
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
 </head>
 <body>
     <div class="admin-panel">
@@ -19,13 +20,12 @@
                     <table class="admin__table">
                         <thead class="admin-table__header">
                             <tr class="admin-table__row">
-                                <th class="admin-table__head">ID</th>
+                                <th class="admin-table__head">ID Usuario</th>
+                                <th class="admin-table__head">NDC ID</th>
                                 <th class="admin-table__head">Nombre</th>
                                 <th class="admin-table__head">Edad</th>
                                 <th class="admin-table__head">Email</th>
                                 <th class="admin-table__head">Usuario</th>
-                                <th class="admin-table__head">T. de Usuario</th>
-                                <th class="admin-table__head">NDC ID</th>
                                 <th class="admin-table__head">Estatus</th>
                                 <th class="admin-table__head">Confirmado</th>
                                 <th class="admin-table__head">Acciones</th>
@@ -33,22 +33,19 @@
                         </thead>
                         <tbody class="admin-table__body">
                             <?php foreach ($Usuario as $usuario) : ?>
-                                <?php if (!empty($usuario->nfc_id)) : ?>
+                                <?php if ($usuario->id_tipo_usuario == 4) : ?>
                                 <tr class="admin-table__row admin-table__row--data">
                                     <td class="admin-table__data"><?= $usuario->id ?></td>
-                                    <td class="admin-table__data"><?= $usuario->nombre ?></td>
-                                    <td class="admin-table__data"><?= $usuario->edad ?></td>
-                                    <td class="admin-table__data"><?= $usuario->correo ?></td>
-                                    <td class="admin-table__data"><?= $usuario->usuario ?></td>
-                                    <td class="admin-table__data">
-                                        <div class="admin-table__data--<?php echo $usuario->tipo_usuario ?>">
-                                            <?= $usuario->tipo_usuario ?>
-                                        </div>
-                                    </td>
                                     <td class="admin-table__data">
                                             <?= $usuario->nfc_id ?>
                                         
                                     </td>
+                                    <td class="admin-table__data"><?= $usuario->nombre ?></td>
+                                    <td class="admin-table__data"><?= $usuario->edad ?></td>
+                                    <td class="admin-table__data"><?= $usuario->correo ?></td>
+                                    <td class="admin-table__data"><?= $usuario->usuario ?></td>
+                                    
+                                    
                                     <td class="admin-table__data">
                                         <div class="<?= $usuario->estatus ? 'admin-table__data--active' : 'admin-table__data--inactive' ?>">
                                             <?= $usuario->estatus ? 'Alta' : 'Baja' ?>
@@ -61,7 +58,7 @@
                                     </td>
                                     <td class="admin-table__data">
                                         <div class="admin-table__actions">
-                                            <a href="<?php echo '/admin/usuario/edit?id=' . $usuario->id ?>"><button type="button" class="admin-table__action admin-table__action--edit">Editar</button></a>
+                                            <a href="<?php echo '/admin/empleado/edit?id=' . $usuario->id ?>"><button type="button" class="admin-table__action admin-table__action--edit">Editar</button></a>
                                             <form class="admin-user-status-form admin-user-status-form--status" data-id="<?= $usuario->id ?>" data-estatus="<?= $usuario->estatus ?>">
                                                 <button type="button" class="admin-table__action admin-table__action--delete">
                                                     <?= $usuario->estatus ? 'Dar de Baja' : 'Dar de Alta' ?>
@@ -82,12 +79,12 @@
                 </div>
                 
                 <div class="admin__actions">
-                    <a href="/admin/usuario/create"><button type="button" class="admin__button">Agregar empleado</button></a>
+                    <a href="/admin/empleado/create"><button type="button" class="admin__button">Agregar empleado</button></a>
                 </div>
             </div>
         </main>
     </div>
-
+    <script src="/assets/js/nfc.js"></script>
     <script src="/assets/js/navbar.js"></script>
     <script type="module" src="/assets/js/admin.js"></script>
 </body>

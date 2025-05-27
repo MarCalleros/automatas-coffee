@@ -20,6 +20,7 @@ use Controller\APIPedido;
 use Controller\APIEstadisticas;
 use Controller\RegisterController;
 use Controller\APIHistoryregister;
+use Controller\EmployeeController;
 
 $router = new Router();
 
@@ -56,6 +57,7 @@ $router->get('/admin/usuario/create', [UserController::class, 'create']);
 $router->post('/admin/usuario/create', [UserController::class, 'create']);
 $router->get('/admin/usuario/edit', [UserController::class, 'edit']);
 $router->post('/admin/usuario/edit', [UserController::class, 'edit']);
+
 $router->get('/admin/mapa', [AdminPagesController::class, 'map']);
 $router->get('/admin/message', [AdminMensajeController::class, 'index']);
 $router->post('/admin/message', [AdminMensajeController::class, 'index']);
@@ -65,8 +67,12 @@ $router->get('/admin/estadisticas', [AdminPagesController::class, 'statistics'])
 $router->get('/admin/estadisticas/:section', [AdminPagesController::class, 'statistics']);
 $router->get('/admin/historyregister', [RegisterController::class, 'historial']);
 $router->post('/admin/historyregister', [RegisterController::class, 'historial']);
-$router->get('/admin/empleado', [UserController::class, 'indexe']);
-$router->post('/admin/empleado', [UserController::class, 'indexe']);
+$router->get('/admin/empleado', [EmployeeController::class, 'index']);
+$router->post('/admin/empleado', [EmployeeController::class, 'index']);
+$router->get('/admin/empleado/create', [EmployeeController::class, 'create']);
+$router->post('/admin/empleado/create', [EmployeeController::class, 'create']);
+$router->get('/admin/empleado/edit', [EmployeeController::class, 'edit']);
+$router->post('/admin/empleado/edit', [EmployeeController::class, 'edit']);
 
 // API Estadísticas
 $router->get('/api/estadisticas/productos_cantidad', [APIEstadisticas::class, 'productosVendidos']);

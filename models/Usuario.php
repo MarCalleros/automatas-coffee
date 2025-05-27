@@ -133,9 +133,9 @@ class Usuario {
             $this->contraseña = password_hash($this->contraseña, PASSWORD_BCRYPT);
     
             // Preparar la consulta para insertar un nuevo usuario
-            $query = "INSERT INTO " . static::$tabla . " (id_tipo_usuario, nombre, edad, correo, usuario, contraseña, estatus, confirmado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            $query = "INSERT INTO " . static::$tabla . " (id_tipo_usuario, nombre, edad, correo, usuario, contraseña, estatus, confirmado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = mysqli_prepare($db, $query);
-            mysqli_stmt_bind_param($stmt, 'isssssii', $this->id_tipo_usuario, $this->nombre, $this->edad, $this->correo, $this->usuario, $this->contraseña, $this->estatus, $this->confirmado);
+            mysqli_stmt_bind_param($stmt, 'isssssiis', $this->id_tipo_usuario, $this->nombre, $this->edad, $this->correo, $this->usuario, $this->contraseña, $this->estatus, $this->confirmado , $this->nfc_id);
             $executed = mysqli_stmt_execute($stmt);
     
             return $executed && mysqli_stmt_affected_rows($stmt) > 0;
