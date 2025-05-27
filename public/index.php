@@ -117,6 +117,7 @@ $router->post('/api/message/response', [APIMensaje::class, 'responseMessage']);
 $router->post('/api/message/delete', [APIMensaje::class, 'deleteMessage']);
 $router->get('/api/purchase/purchased', [APIPedido::class, 'getUserPurchases']);
 $router->get('/api/purchase/detail', [APIPedido::class, 'getDetailPurchase']);
+$router->get('/api/purchase/delivery', [APIPedido::class, 'getDeliveryPurchases']);
 $router->get('/api/subsidiaries', [APIUbicacion::class, 'subsidiaries']);
 
 // API Carrito

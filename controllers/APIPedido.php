@@ -108,5 +108,43 @@ class APIPedido {
             echo json_encode(['status' => 'error', 'message' => 'No se encontro la compra']);
         }
     }
+
+    public static function getDeliveryPurchases() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+            echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
+            return;
+        }
+
+        if (!isset($_GET['id'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Faltan datos requeridos']);
+            return;
+        }
+
+        if (!isset($_GET['max'])) {
+            $max = 5; // Valor por defecto
+        } else {
+            $max = (int)$_GET['max'];
+            if ($max <= 0) {
+                echo json_encode(['status' => 'error', 'message' => 'El valor maximo debe ser mayor a 0']);
+                return;
+            }
+        }
+
+        $compras = Compra::getPurchases($max);
+
+        // Obtener unicamente los id de las compras
+        if ($compras) {
+            foreach ($compras as $compra) {
+                $deliveries[] = $compra->id;
+                Compra::asignDelivery($compra->id, $_GET['id']);
+            }
+        }
+
+        if ($compras) {
+            echo json_encode(['status' => 'success', 'deliveries' => $deliveries]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'No hay pedidos disponibles']);
+        }
+    }
 }
 ?>

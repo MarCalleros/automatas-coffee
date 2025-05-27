@@ -102,5 +102,49 @@ class Compra {
             return null;
         }
     }
+
+    public static function getPurchases($max) {
+        try {
+            require __DIR__ . '/../includes/database.php';
+
+            $query = "SELECT * FROM " . self::$tabla . " WHERE estatus = 0 AND id_sucursal IS NULL AND id_repartidor IS NULL ORDER BY fecha ASC LIMIT ?";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'i', $max);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+
+            if ($result) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $compra = new Compra($row);
+                    $compras[] = $compra;
+                }
+
+                return $compras ?? null;
+            } else {
+                return null;
+            }
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    public static function asignDelivery($id_compra, $id_repartidor) {
+        try {
+            require __DIR__ . '/../includes/database.php';
+
+            $query = "UPDATE " . self::$tabla . " SET id_repartidor = ? WHERE id = ?";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'ii', $id_repartidor, $id_compra);
+            $result = mysqli_stmt_execute($stmt);
+
+            if ($result) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
 }
 ?>
