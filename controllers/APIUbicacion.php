@@ -4,6 +4,7 @@ namespace Controller;
 
 use Model\Ubicacion;
 use Model\Repartidor;
+use Model\Sucursal;
 
 class APIUbicacion {
     public static function send() {
@@ -37,6 +38,19 @@ class APIUbicacion {
         }
     }
 
-    //public static function 
+    public static function subsidiaries() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+            echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
+            return;
+        }
+
+        $subsidiaries = Sucursal::all();
+
+        if ($subsidiaries) {
+            echo json_encode(['status' => 'success', 'subsidiaries' => $subsidiaries]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Error al obtener las sucursales']);
+        }
+    }
 }
 ?>

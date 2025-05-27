@@ -3,6 +3,20 @@ import { createNotification } from "./notification.js"
 document.addEventListener("DOMContentLoaded", () => {
   cargarProductosCarrito()
 
+    //Botón de comprar
+    const buyBtn = document.querySelector(".buy-btn")
+    if (buyBtn) {
+      buyBtn.addEventListener("click", function () {
+        const empty = document.querySelector(".empty-cart")
+        if (empty) {
+          createNotification("error", "No hay productos en el carrito")
+          return
+        } else {
+          window.location.href = "/pedido"
+        }
+      })
+    }
+
   function cargarProductosCarrito() {
     const cartContainer = document.querySelector(".cart-items")
     if (!cartContainer) {
@@ -15,7 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((data) => {
         if (data.status == "success" && data.items.length === 0) {
           cartContainer.innerHTML = '<div class="empty-cart">Tu carrito está vacío</div>'
-          document.querySelector(".buy-btn").disabled = true
           document.querySelector(".total-price").textContent = "$0.00"
           return
         }
@@ -200,7 +213,6 @@ document.addEventListener("DOMContentLoaded", () => {
             // Verificar si el carrito quedó vacío
             if (response.total === 0) {
               document.querySelector(".cart-items").innerHTML = '<div class="empty-cart">Tu carrito está vacío</div>'
-              document.querySelector(".buy-btn").disabled = true
             }
 
             // Actualizar contador del carrito
@@ -213,27 +225,6 @@ document.addEventListener("DOMContentLoaded", () => {
         })
       })
     })
-
-    //Botón de comprar
-    const buyBtn = document.querySelector(".buy-btn")
-    if (buyBtn && !buyBtn.disabled) {
-      buyBtn.addEventListener("click", function () {
-        realizarCompra((response) => {
-          if (response.status === "success") {
-            document.querySelector(".cart-items").innerHTML = '<div class="empty-cart">Tu carrito está vacío</div>'
-            document.querySelector(".total-price").textContent = "$0.00"
-            this.disabled = true
-
-            //Actualizar el contador del carrito
-            actualizarContadorCarrito(0)
-
-            createNotification("success", response.message)
-          } else {
-            createNotification("error", response.message)
-          }
-        })
-      })
-    }
   }
 
   function actualizarCantidadEnServidor(id, cantidad, callback) {

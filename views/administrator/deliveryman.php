@@ -21,6 +21,7 @@
                             <tr class="admin-table__row">
                                 <th class="admin-table__head">ID</th>
                                 <th class="admin-table__head">Nombre</th>
+                                <th class="admin-table__head">Usuario</th>
                                 <th class="admin-table__head">Teléfono</th>
                                 <th class="admin-table__head">CURP</th>
                                 <th class="admin-table__head">RFC</th>
@@ -37,6 +38,7 @@
                                 <tr class="admin-table__row admin-table__row--data">
                                     <td class="admin-table__data"><?= $repartidor->id ?></td>
                                     <td class="admin-table__data"><?= $repartidor->nombre . ' ' . $repartidor->apellido1 . ' ' . $repartidor->apellido2 ?></td>
+                                    <td class="admin-table__data"><?= $repartidor->usuario ?></td>
                                     <td class="admin-table__data"><?= $repartidor->telefono ?></td>
                                     <td class="admin-table__data"><?= $repartidor->curp ?></td>
                                     <td class="admin-table__data"><?= $repartidor->rfc ?></td>

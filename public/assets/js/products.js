@@ -415,6 +415,15 @@ import { createNotification } from "./notification.js"
         const productContainer = selectedOption.closest(".product")
         const prices = productContainer.querySelectorAll(".product__price")
         const selectedSizeValue = selectedOption.getAttribute("value")
+        const sizeText = productContainer.querySelector(".product__description--size")
+
+        if (selectedSizeValue == "chico") {
+          sizeText.textContent = "Chico - 300ml"
+        } else if (selectedSizeValue == "mediano") {
+          sizeText.textContent = "Mediano - 600 ml"
+        } else if (selectedSizeValue == "grande") {
+          sizeText.textContent = "Grande - 850 ml"
+        }
 
         prices.forEach((price) => {
           if (price.getAttribute("value") === selectedSizeValue) {
@@ -465,6 +474,7 @@ function updateHTML(container, products, notFound = false) {
     products.forEach((product) => {
       const sizes = ["chico", "mediano", "grande"]
       let firstSizeSet = false
+      let firstSize = ""
       let priceHTML = ""
       let sizeHTML = ""
 
@@ -475,12 +485,22 @@ function updateHTML(container, products, notFound = false) {
             priceHTML += `<p value="${size}" class="product__price">$${product[size]}</p>`
             sizeHTML += `<div value="${size}" class="product__footer-size-option product__footer-size-option--${size} product__footer-size-option--selected">${size.charAt(0).toUpperCase()}</div>`
             firstSizeSet = true
+
+            if (size == "chico") {
+              firstSize = "Chico - 300ml"
+            } else if (size == "mediano") {
+              firstSize = "Mediano - 600 ml"
+            } else if (size == "grande") {
+              firstSize = "Grande - 850 ml"
+            }
           } else {
             // Otros tamaños disponibles: ocultos o no seleccionados
             priceHTML += `<p value="${size}" class="product__price product__price--hidden">$${product[size]}</p>`
             sizeHTML += `<div value="${size}" class="product__footer-size-option product__footer-size-option--${size}">${size.charAt(0).toUpperCase()}</div>`
           }
         }
+
+        console.log("Tamaño:", size, "Precio:", product[size])
       })
 
       const productHTML = `
@@ -492,6 +512,7 @@ function updateHTML(container, products, notFound = false) {
                   <div class="product__information">
                     <h3 class="product__title">${product.nombre}</h3>
                     ${priceHTML}
+                    <p class="product__description product__description--size">${firstSize}</p>
                     <p class="product__description">${product.descripcion}</p>
                   </div>
                 </div>

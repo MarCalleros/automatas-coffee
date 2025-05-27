@@ -5,6 +5,10 @@ namespace Controller;
 use App\Router;
 use Model\Usuario;
 use Model\Producto;
+use Model\Sucursal;
+use Model\Direccion;
+use Model\Tarjeta;
+use Model\Carrito;
 
 class PagesController {
     public static function home(Router $router) {
@@ -16,7 +20,11 @@ class PagesController {
     }
 
     public static function find(Router $router) {
-        $router->render('pages/find', []);
+        $subsidiaries = Sucursal::where('estatus', 1);
+
+        $router->render('pages/find', [
+            'subsidiaries' => $subsidiaries
+        ]);
     }
 
     public static function contact(Router $router) {
@@ -47,7 +55,22 @@ class PagesController {
             return;
         }
 
-        $router->render('pages/delivery', []);
+        if (Carrito::contarItems($_SESSION['id']) == 0) {
+            header('Location: /carrito');
+            return;
+        }
+
+        $subsidiaries = Sucursal::where('estatus', 1);
+        $addresses = Direccion::where('id_usuario', $_SESSION['id']);
+        $cards = Tarjeta::where('id_usuario', $_SESSION['id']);
+        $total = Carrito::calcularTotal($_SESSION['id']);
+
+        $router->render('pages/delivery', [
+            'subsidiaries' => $subsidiaries,
+            'addresses' => $addresses,
+            'cards' => $cards,
+            'total' => $total
+        ]);
     }
 
     public static function information(Router $router, $section = null, $identifier = null) {

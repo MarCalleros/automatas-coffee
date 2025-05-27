@@ -8,6 +8,7 @@
     <div class="sidebar__buttons">
         <a href="/admin" class="sidebar__button">Inicio</a>
         <a href="/admin/usuario" class="sidebar__button">Usuarios</a>
+        <a href="/admin/empleado" class="sidebar__button">Empleados</a>
         <a href="/admin/message" class="sidebar__button">Mensajes</a>
         <a href="/admin/adminproduct" class="sidebar__button">Productos</a>
         <a href="/admin/delivery" class="sidebar__button">Pedidos</a>

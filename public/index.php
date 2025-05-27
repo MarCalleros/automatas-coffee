@@ -17,6 +17,7 @@ use Controller\APIUsuario;
 use Controller\APICarrito;
 use Controller\APIMensaje;
 use Controller\APIPedido;
+use Controller\APIUbicacion;
 use Controller\APIEstadisticas;
 use Controller\RegisterController;
 use Controller\APIHistoryregister;
@@ -65,6 +66,8 @@ $router->get('/admin/estadisticas', [AdminPagesController::class, 'statistics'])
 $router->get('/admin/estadisticas/:section', [AdminPagesController::class, 'statistics']);
 $router->get('/admin/historyregister', [RegisterController::class, 'historial']);
 $router->post('/admin/historyregister', [RegisterController::class, 'historial']);
+$router->get('/admin/empleado', [UserController::class, 'indexe']);
+$router->post('/admin/empleado', [UserController::class, 'indexe']);
 
 // API Estadísticas
 $router->get('/api/estadisticas/productos_cantidad', [APIEstadisticas::class, 'productosVendidos']);
@@ -103,6 +106,7 @@ $router->post('/api/message/response', [APIMensaje::class, 'responseMessage']);
 $router->post('/api/message/delete', [APIMensaje::class, 'deleteMessage']);
 $router->get('/api/purchase/purchased', [APIPedido::class, 'getUserPurchases']);
 $router->get('/api/purchase/detail', [APIPedido::class, 'getDetailPurchase']);
+$router->get('/api/subsidiaries', [APIUbicacion::class, 'subsidiaries']);
 
 // API Carrito
 $router->get('/api/carrito/obtener', [APICarrito::class, 'obtener']);

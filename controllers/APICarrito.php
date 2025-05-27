@@ -2,6 +2,8 @@
 namespace Controller;
 
 use Model\Carrito;
+use Model\Direccion;
+use Model\Sucursal;
 
 class APICarrito {
 
@@ -166,17 +168,45 @@ class APICarrito {
     
 
     public static function comprar() {
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        echo json_encode(['status' => 'error', 'message' => 'Método no permitido']);
-        return;
-    }
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['status' => 'error', 'message' => 'Método no permitido']);
+            return;
+        }
 
-    if (!isLogged()) {
-        echo json_encode(['status' => 'error', 'message' => 'Debes iniciar sesión para realizar una compra']);
-        return;
+        if (!isLogged()) {
+            echo json_encode(['status' => 'error', 'message' => 'Debes iniciar sesión para realizar una compra']);
+            return;
+        }
+
+        // Obtener los datos que se pasaron por POST del json
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $address = $data['address'] ?? null;
+        if ($address == "gps") {
+            $addresId = 9999; // ID para GPS
+            $lat = $data['lat'] ?? null;
+            $lng = $data['lng'] ?? null;
+        } else if ($address == "home") {
+            $addresId = intval($data['addressId']) ?? null;
+            $dir = Direccion::where('id', $addresId);
+            $lat = $dir[0]->latitud ?? null;
+            $lng = $dir[0]->longitud ?? null;
+        } else if ($address == "subsidiary") {
+            $addresId = intval($data['addressId']) ?? null;
+            $dir = Sucursal::where('id', $addresId);
+            $lat = $dir[0]->latitud ?? null;
+            $lng = $dir[0]->longitud ?? null;
+        }
+
+        $method = $data['method'] ?? null;
+        if ($method == "money") {
+            $cardId = 9999; // ID para pago en efectivo
+        } else {
+            $cardId = intval($data['cardId']) ?? null;
+        }
+
+        $resultado = Carrito::comprar($_SESSION['id'], $address, $addresId, $lat, $lng, $cardId);
+        echo json_encode($resultado);
     }
-    $resultado = Carrito::comprar($_SESSION['id']);
-    echo json_encode($resultado);
-}
 }
 ?>
