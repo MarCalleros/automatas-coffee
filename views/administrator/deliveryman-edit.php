@@ -92,6 +92,21 @@
                         </div>
                     </div>
 
+                    <div class="admin-form__group-container">
+                        <div class="admin-form__group">
+                            <label class="admin-form__label" for="id_usuario">Cuenta de Usuario</label>
+                            <div class="admin-form__select-container">
+                                <select class="admin-form__input" name="id_usuario" id="id_usuario">
+                                    <option value="" disabled selected>Seleccione un usuario</option>
+                                    <?php foreach ($users as $user): ?>
+                                        <option value="<?php echo $user->id; ?>" <?= $repartidorBD->id_usuario == $user->id ? 'selected' : '' ?> ><?php echo $user->usuario . " / " . $user->nombre ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <span id="error-usuario" class="admin-form__error">Error</span>
+                        </div>
+                    </div>
+
                     <div class="admin-form__buttons-container">
                         <a href="/admin/deliveryman"><button class="admin-form__button admin-form__button--return" type="button">Regresar</button></a>
                         <div class="admin-form__buttons-action">

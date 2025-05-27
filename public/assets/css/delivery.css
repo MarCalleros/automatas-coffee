@@ -47,6 +47,10 @@
     transition: max-height 0.3s ease-out, opacity 0.2s ease;
 }
 
+.delivery__content--delivery {
+    margin-top: 20px;
+}
+
 .delivery__content--active {
     max-height: 210px;
     opacity: 1;
@@ -132,7 +136,8 @@
 }
 
 .delivery-receive__info-container,
-.delivery-method__card-container {
+.delivery-method__card-container,
+.delivery-delivery__info-container {
     border: 1px solid var(--color-text);
     border-radius: 12px;
     display: flex;
@@ -190,11 +195,13 @@
 .delivery-receive__card--active {
     max-height: 600px;
     opacity: 1;
+    overflow: auto;
 }
 
 .delivery-receive__card--full {
-    max-height: 1000px;
+    max-height: 950px;
     opacity: 1;
+    overflow: auto;
 }
 
 .delivery-method__info-container {
@@ -282,4 +289,42 @@
 .delivery-method__save {
     margin-top: 20px;
     justify-content: center;
+}
+
+.delivery__buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.delivery__button {
+    width: 250px;
+    border-radius: 10px;
+    border: none;
+    padding: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.6rem;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+}
+
+.delivery__button--confirm {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.delivery__button--confirm:hover {
+    background-color: var(--primary-hover);
+}
+
+.delivery__button--return {
+    background-color: var(--white);
+    color: var(--dark-black);
+    border: 1px solid var(--black);
+}
+
+.delivery__button--return:hover {
+    background-color: var(--gray);
 }

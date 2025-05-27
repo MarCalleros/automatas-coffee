@@ -389,7 +389,59 @@ class Usuario {
         } catch (\Exception $e) {
             return null;
         }
-    } 
+    }
+    
+    public static function getDeliverymanUsersAvaiable($id = null) {
+        require __DIR__ . '/../includes/database.php';
+
+        try {
+            // Primero obtener todos los usuarios que son repartidores
+            $query = "SELECT * FROM " . self::$tabla . " WHERE id_tipo_usuario = 3";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+
+            if ($result->num_rows > 0) {
+                $deliverymen = [];
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $deliverymen[] = new Usuario($row);
+                }
+
+                // Ahora obtener los repartidores, los cuales tienen un usuario asociado
+                if ($id != null) {
+                    $query = "SELECT id_usuario FROM repartidor WHERE id != ? AND id_usuario IS NOT NULL";
+                    $stmt = mysqli_prepare($db, $query);
+                    mysqli_stmt_bind_param($stmt, 'i', $id);
+                } else {
+                    $query = "SELECT id_usuario FROM repartidor WHERE id_usuario IS NOT NULL";
+                    $stmt = mysqli_prepare($db, $query);
+                }
+                mysqli_stmt_execute($stmt);
+                $result = mysqli_stmt_get_result($stmt);
+
+                $usedUserIds = [];
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $usedUserIds[] = $row['id_usuario'];
+                }
+
+                // Filtrar los usuarios que no están en la lista de repartidores
+                $deliverymen = array_filter($deliverymen, function($user) use ($usedUserIds) {
+                    return !in_array($user->id, $usedUserIds);
+                });
+
+                // Devolver los usuarios que no están en la lista de repartidores
+                if (count($deliverymen) > 0) {
+                    return $deliverymen;
+                } else {
+                    return []; // No hay usuarios disponibles
+                }
+            } else {
+                return [];
+            }
+        } catch (\Exception $e) {
+            return [];
+        }
+    }
 
     public static function confirm($token) {
         try {

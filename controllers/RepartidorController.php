@@ -4,6 +4,7 @@ namespace Controller;
 
 use App\Router;
 use Model\Repartidor;
+use Model\Usuario;
 
 class RepartidorController {
     public static function index(Router $router) {
@@ -13,6 +14,11 @@ class RepartidorController {
         }
 
         $repartidores = Repartidor::all();
+
+        foreach ($repartidores as $repartidor) {
+            $usuario = Usuario::findById($repartidor->id_usuario);
+            $repartidor->usuario = $usuario ? $usuario->nombre : 'Usuario no encontrado';
+        }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $repartidor = new Repartidor();
@@ -42,10 +48,13 @@ class RepartidorController {
             exit;
         }
 
+        $users = Usuario::getDeliverymanUsersAvaiable();
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $repartidor = new Repartidor();
             
             $repartidor->nombre = $_POST['nombre'];
+            $repartidor->id_usuario = $_POST['id_usuario'];
             $repartidor->apellido1 = $_POST['apellido1'];
             $repartidor->apellido2 = $_POST['apellido2'];
             $repartidor->telefono = $_POST['telefono'];
@@ -68,7 +77,9 @@ class RepartidorController {
             }
         }
 
-        $router->render('administrator/deliveryman-create', []);
+        $router->render('administrator/deliveryman-create', [
+            'users' => $users
+        ]);
     }
 
     public static function edit(Router $router) {
@@ -84,11 +95,14 @@ class RepartidorController {
         
         $repartidorBD = new Repartidor();
         $repartidorBD = $repartidorBD::findById($_GET['id']);
+
+        $users = Usuario::getDeliverymanUsersAvaiable($_GET['id']);
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $repartidor = new Repartidor();
             
             $repartidor->id = $_POST['id'];
+            $repartidor->id_usuario = $_POST['id_usuario'];
             $repartidor->nombre = $_POST['nombre'];
             $repartidor->apellido1 = $_POST['apellido1'];
             $repartidor->apellido2 = $_POST['apellido2'];
@@ -107,6 +121,7 @@ class RepartidorController {
                     'success' => true,
                     'updatedData' => [
                         'nombre' => $repartidor->nombre,
+                        'id_usuario' => $repartidor->id_usuario,
                         'apellido1' => $repartidor->apellido1,
                         'apellido2' => $repartidor->apellido2,
                         'telefono' => $repartidor->telefono,
@@ -130,7 +145,8 @@ class RepartidorController {
         }
 
         $router->render('administrator/deliveryman-edit', [
-            'repartidorBD' => $repartidorBD
+            'repartidorBD' => $repartidorBD,
+            'users' => $users
         ]);
     }
 }
