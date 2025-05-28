@@ -65,5 +65,14 @@ class AdminPagesController {
             'section' => $section
         ]);
     }
+
+    public static function reporte(Router $router) {
+        if (!isAdmin()) {
+            header('Location: /');
+            exit;
+        }
+
+        $router->render('administrator/reporte', []);
+    }
 }
 ?>

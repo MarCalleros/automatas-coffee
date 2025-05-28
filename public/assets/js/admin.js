@@ -14,6 +14,8 @@ import { createNotification } from './notification.js';
     const eyeIconPasswordLogin = document.querySelector('#login-eye-password');
     const slashIconPasswordLogin = document.querySelector('#login-slash-password');
 
+    const btnReporte = document.querySelector('#btn-reporte');
+
     if (eyeContainerPasswordLogin) {
         eyeContainerPasswordLogin.addEventListener('click', function() {
             const passwordInput = document.querySelector('#password');
@@ -357,6 +359,61 @@ import { createNotification } from './notification.js';
             errorElements.forEach(element => {
                 element.classList.remove('admin-form__error--active');
             });
+        });
+    }
+
+    if (btnReporte) {
+        btnReporte.addEventListener('click', async () => {
+            let fechaInicio = document.querySelector('#reporte_inicio').value;
+            let fechaFin = document.querySelector('#reporte_fin').value;
+            console.log('Generando reporte...');
+            console.log(`Fecha Inicio: ${fechaInicio}, Fecha Fin: ${fechaFin}`);
+
+            if (!fechaInicio || !fechaFin) {
+                createNotification('error', 'Por favor, selecciona ambas fechas para generar el reporte');
+                return;
+            }
+
+            if (fechaInicio > fechaFin) {
+                createNotification('error', 'La fecha de inicio no puede ser mayor que la fecha de fin');
+                return;
+            }
+
+            fechaInicio += ' 00:00:00';
+            fechaFin += ' 23:59:59';
+
+            const response = await fetch(`/api/purchase/between?desde=${fechaInicio}&hasta=${fechaFin}`, {
+                method: 'GET'
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.status === 'success') {
+                    createNotification('success', 'Reporte generado correctamente');
+
+                    const body = document.querySelector('.admin-table__body');
+                    body.innerHTML = ''; // Limpiar la tabla antes de agregar los nuevos datos
+                    data.deliveries.forEach(delivery => {
+                        const row = document.createElement('tr');
+                        row.classList.add('admin-table__row', 'admin-table__row--data');
+
+                        row.innerHTML = `
+                            <td class="admin-table__data">${delivery.identificador}</td>
+                            <td class="admin-table__data">${delivery.usuario}</td>
+                            <td class="admin-table__data">${delivery.repartidor}</td>
+                            <td class="admin-table__data">${delivery.fecha}</td>
+                            <td class="admin-table__data">${delivery.entregado}</td>
+                            <td class="admin-table__data">$${delivery.total}</td>
+                            <td class="admin-table__data">${delivery.estatus}</td>
+                        `;
+                        body.appendChild(row);
+                    });
+                } else {
+                    createNotification('error', data.message || 'Error al generar el reporte');
+                }
+            } else {
+                createNotification('error', 'Error al generar el reporte');
+            }
         });
     }
 })();

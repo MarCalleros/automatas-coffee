@@ -75,6 +75,7 @@ $router->get('/admin/empleado/create', [EmployeeController::class, 'create']);
 $router->post('/admin/empleado/create', [EmployeeController::class, 'create']);
 $router->get('/admin/empleado/edit', [EmployeeController::class, 'edit']);
 $router->post('/admin/empleado/edit', [EmployeeController::class, 'edit']);
+$router->get('/admin/reporte', [AdminPagesController::class, 'reporte']);
 
 // API Estadísticas
 $router->get('/api/estadisticas/productos_cantidad', [APIEstadisticas::class, 'productosVendidos']);
@@ -118,6 +119,7 @@ $router->post('/api/message/delete', [APIMensaje::class, 'deleteMessage']);
 $router->get('/api/purchase/purchased', [APIPedido::class, 'getUserPurchases']);
 $router->get('/api/purchase/detail', [APIPedido::class, 'getDetailPurchase']);
 $router->get('/api/purchase/delivery', [APIPedido::class, 'getDeliveryPurchases']);
+$router->get('/api/purchase/between', [APIPedido::class, 'getDeliveriesBetweenDates']);
 $router->get('/api/subsidiaries', [APIUbicacion::class, 'subsidiaries']);
 
 // API Carrito

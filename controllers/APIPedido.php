@@ -7,6 +7,7 @@ use Model\DetalleCompra;
 use Model\Producto;
 use Model\Tamaño;
 use Model\Usuario;
+use Model\Repartidor;
 
 class APIPedido {
     public static function getUserPurchases() {
@@ -144,6 +145,55 @@ class APIPedido {
             echo json_encode(['status' => 'success', 'deliveries' => $deliveries]);
         } else {
             echo json_encode(['status' => 'error', 'message' => 'No hay pedidos disponibles']);
+        }
+    }
+
+    public static function getDeliveriesBetweenDates() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+            echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
+            return;
+        }
+
+        if (!isLogged()) {
+            echo json_encode(['status' => 'error', 'message' => 'Debes iniciar sesión para ver las compras']);
+            return;
+        }
+
+        if (!isset($_GET['desde']) || !isset($_GET['hasta'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Faltan datos requeridos']);
+            return;
+        }
+
+        $desde = $_GET['desde'];
+        $hasta = $_GET['hasta'];
+
+        $compras = Compra::betweenDates($desde, $hasta);
+
+        foreach ($compras as $compra) {
+            $compra->usuario = Usuario::where('id', $compra->id_usuario)->nombre;
+
+            if ($compra->id_repartidor) {
+                $repartidor = Repartidor::findById($compra->id_repartidor);
+                $compra->repartidor = $repartidor->nombre . " " . $repartidor->apellido1 . " " . $repartidor->apellido2;
+            } else {
+                $compra->repartidor = "No asignado";
+            }
+
+            if (!$compra->entregado) {
+                $compra->entregado = "Sin entregar";
+            }
+
+            if ($compra->estatus) {
+                $compra->estatus = "Entregado";
+            } else {
+                $compra->estatus = "Pendiente";
+            }
+        }
+
+        if ($compras) {
+            echo json_encode(['status' => 'success', 'deliveries' => $compras]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'No se encontraron entregas en el periodo especificado']);
         }
     }
 }
