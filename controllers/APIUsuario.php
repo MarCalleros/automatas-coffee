@@ -309,6 +309,51 @@ class APIUsuario {
         }
     }
 
+    public static function logoutDeliveryman() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
+            return;
+        }
+
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if (!isset($data['id'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Faltan datos requeridos']);
+            return;
+        }
+
+        $repartidor = new \Model\Repartidor();
+        $result = $repartidor->unasignDelivery($data['id']);
+
+        if ($result) {
+            echo json_encode(['status' => 'success', 'message' => 'Sesión de repartidor cerrada exitosamente']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Error al cerrar la sesión del repartidor']);
+        }
+    }
+
+    public static function completeDelivery() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
+            return;
+        }
+
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if (!isset($data['id'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Faltan datos requeridos']);
+            return;
+        }
+
+        $repartidor = new \Model\Repartidor();
+        $result = $repartidor->completeDelivery($data['id']);
+
+        if ($result) {
+            echo json_encode(['status' => 'success', 'message' => 'Entrega completada exitosamente']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Error al completar la entrega']);
+        }
+    }
 
 }
 ?>

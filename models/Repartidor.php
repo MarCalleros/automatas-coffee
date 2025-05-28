@@ -272,5 +272,47 @@ class Repartidor {
             return null; // Error en la consulta
         }
     }
+
+
+    public function unasignDelivery($idRepartidor) {
+        require __DIR__ . '/../includes/database.php';
+
+        try {
+            // Desactivar reporte de errores temporalmente
+            mysqli_report(MYSQLI_REPORT_OFF);
+        
+            $query = "UPDATE compra SET id_repartidor = NULL WHERE id_repartidor = ?";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'i', $idRepartidor);
+            $executed = mysqli_stmt_execute($stmt);
+            return $executed && mysqli_stmt_affected_rows($stmt) > 0;
+
+        } finally {
+            // Reactivar reporte de errores y cerrar la conexión
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            //mysqli_close($db);
+        }
+
+    }
+
+    public function completeDelivery($id_compra) {
+        require __DIR__ . '/../includes/database.php';
+
+        try {
+            // Desactivar reporte de errores temporalmente
+            mysqli_report(MYSQLI_REPORT_OFF);
+        
+            $query = "UPDATE compra SET estatus = 1 WHERE id = ?";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'i', $id_compra);
+            $executed = mysqli_stmt_execute($stmt);
+            return $executed && mysqli_stmt_affected_rows($stmt) > 0;
+
+        } finally {
+            // Reactivar reporte de errores y cerrar la conexión
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            //mysqli_close($db);
+        }
+    }
 }
 ?>
