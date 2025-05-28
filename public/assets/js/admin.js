@@ -392,6 +392,10 @@ import { createNotification } from './notification.js';
                 if (data.status === 'success') {
                     createNotification('success', 'Reporte generado correctamente');
 
+                    const subtitle = document.querySelector('.admin__subtitle');
+                    subtitle.textContent = `Reporte de entregas del ${fechaInicio.split(' ')[0]} al ${fechaFin.split(' ')[0]}`;
+                    let total = 0;
+
                     const body = document.querySelector('.admin-table__body');
                     body.innerHTML = ''; // Limpiar la tabla antes de agregar los nuevos datos
                     data.deliveries.forEach(delivery => {
@@ -409,7 +413,11 @@ import { createNotification } from './notification.js';
                             <td class="admin-table__data">${delivery.estatus}</td>
                         `;
                         body.appendChild(row);
+                        total += parseFloat(delivery.total);
                     });
+
+                    const price = document.querySelector('.admin__subtitle--price');
+                    price.textContent = `Monto Total: $${total.toFixed(2)}`;
                 } else {
                     createNotification('error', data.message || 'Error al generar el reporte');
                 }

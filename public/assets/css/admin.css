@@ -498,6 +498,19 @@
     height: 40px;
 }
 
+.admin__subtitle {
+    margin: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.admin__subtitle--price {
+    margin: 0;
+    text-align: right;
+    font-size: 2.4rem;
+    margin-right: 20px;
+}
+
 .admin__subtitles a {
     font-family: 'Montserrat';
     font-size: 20px;

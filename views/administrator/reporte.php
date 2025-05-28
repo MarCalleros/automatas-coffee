@@ -31,6 +31,8 @@
                     </div>
 
                 <div class="admin__table-container" id="pdf-table">
+                    <h3 class="admin__subtitle"></h3>
+
                     <table class="admin__table">
                         <thead class="admin-table__header">
                             <tr class="admin-table__row">
@@ -57,6 +59,8 @@
                                 </tr>
                         </tbody>
                     </table>
+
+                    <h3 class="admin__subtitle admin__subtitle--price"></h3>
                 </div>
             </div>
         </main>
