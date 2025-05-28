@@ -15,6 +15,7 @@ import { createNotification } from './notification.js';
     const slashIconPasswordLogin = document.querySelector('#login-slash-password');
 
     const btnReporte = document.querySelector('#btn-reporte');
+    const btnPdf = document.querySelector('#btn-pdf');
 
     if (eyeContainerPasswordLogin) {
         eyeContainerPasswordLogin.addEventListener('click', function() {
@@ -403,6 +404,7 @@ import { createNotification } from './notification.js';
                             <td class="admin-table__data">${delivery.repartidor}</td>
                             <td class="admin-table__data">${delivery.fecha}</td>
                             <td class="admin-table__data">${delivery.entregado}</td>
+                            <td class="admin-table__data">${delivery.pago}</td>
                             <td class="admin-table__data">$${delivery.total}</td>
                             <td class="admin-table__data">${delivery.estatus}</td>
                         `;
@@ -414,6 +416,22 @@ import { createNotification } from './notification.js';
             } else {
                 createNotification('error', 'Error al generar el reporte');
             }
+        });
+    }
+
+    if (btnPdf) {
+        btnPdf.addEventListener('click', () => {
+            console.log('Generando PDF...');
+            const table = document.querySelector('#pdf-table');
+            const opciones = {
+                margin:       0.5,
+                filename:     'reporte.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
+            };
+
+            html2pdf().set(opciones).from(table).save();
         });
     }
 })();

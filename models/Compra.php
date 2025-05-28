@@ -13,6 +13,7 @@ class Compra {
     public $id_repartidor;
     public $fecha;
     public $entregado;
+    public $id_sucursal;
     public $id_direccion;
     public $latitud;
     public $longitud;
@@ -23,6 +24,7 @@ class Compra {
 
     public $usuario;
     public $repartidor;
+    public $pago;
     public $detalle = []; // Array de objetos DetalleCompra
 
     public function __construct($args = []) {
@@ -31,6 +33,7 @@ class Compra {
         $this->id_repartidor = $args['id_repartidor'] ?? null;
         $this->fecha = $args['fecha'] ?? date('Y-m-d H:i:s');
         $this->entregado = $args['entregado'] ?? null; 
+        $this->id_sucursal = $args['id_sucursal'] ?? null;
         $this->id_direccion = $args['id_direccion'] ?? null;
         $this->latitud = $args['latitud'] ?? null;
         $this->longitud = $args['longitud'] ?? null;

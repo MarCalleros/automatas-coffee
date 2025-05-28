@@ -188,6 +188,12 @@ class APIPedido {
             } else {
                 $compra->estatus = "Pendiente";
             }
+
+            if ($compra->id_tarjeta == 9999) {
+                $compra->pago = "Efectivo";
+            } else {
+                $compra->pago = "Tarjeta";
+            }
         }
 
         if ($compras) {
