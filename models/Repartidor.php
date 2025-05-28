@@ -251,5 +251,26 @@ class Repartidor {
             //mysqli_close($db);
         }
     }
+
+    // Funcion para buscar un repartidor por su id de usuario
+    public static function getDeliverymanByUserId($userId) {
+        require __DIR__ . '/../includes/database.php';
+
+        try {
+            $query = "SELECT * FROM repartidor WHERE id_usuario = ?";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'i', $userId);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+
+            if ($result->num_rows > 0) {
+                return new Repartidor(mysqli_fetch_assoc($result));
+            } else {
+                return null; // No se encontró el repartidor
+            }
+        } catch (\Exception $e) {
+            return null; // Error en la consulta
+        }
+    }
 }
 ?>

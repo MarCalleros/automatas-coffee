@@ -553,7 +553,7 @@ class Usuario {
             if ($result->num_rows > 0) {
                 $row = mysqli_fetch_assoc($result);
                 if (password_verify($pass, $row['contraseña'])) {
-                    return true;
+                    return $row; // Credenciales correctas, devolver los datos del usuario
                 } else {
                     return false; // Contraseña incorrecta
                 }

@@ -133,6 +133,8 @@ $router->post('/api/carrito/comprar', [APICarrito::class, 'comprar']);
 
 // API App Móvil
 $router->post('/api/mobile/login', [APIUsuario::class, 'loginMobile']);
+$router->post('/api/mobile/data', [APIUsuario::class, 'getDeliverymanData']);
+$router->get('/api/mobile/details', [APIPedido::class, 'getDeliveryDetails']);
 
 $router->testRoutes();
 ?>
