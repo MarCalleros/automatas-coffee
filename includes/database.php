@@ -1,9 +1,9 @@
 <?php
 $host = "localhost";
 $port = "3306";
-$usuario = "root";
-$password = "Kevin0224";
-$base_datos = "db_automatas_coffee";
+$usuario = "automatascoffee";
+$password = "admin1234";
+$base_datos = "automatascoffee_db_automatas_coffee";
 
 $db = mysqli_connect($host, $usuario, $password, $base_datos, $port);
 

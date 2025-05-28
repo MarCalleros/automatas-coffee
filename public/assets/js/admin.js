@@ -287,7 +287,7 @@ import { createNotification } from './notification.js';
                     button.textContent = estatus === "1" ? "Dar de Baja" : "Dar de Alta";
                     
                     const row = form.closest("tr");
-                    const estatusCell = row.querySelectorAll("td")[9];
+                    const estatusCell = row.querySelectorAll("td")[10];
                     const div = estatusCell.querySelector("div");
                     
                     div.className = estatus === "1"

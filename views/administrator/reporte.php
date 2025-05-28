@@ -17,7 +17,7 @@
 
             <div class="admin__content">
                 
-                    <div id="fecha-personalizada" class="fecha-personalizada" style="display: <?php echo $periodo == 'personalizado' ? 'flex' : 'none'; ?>;">
+                    <div id="fecha-personalizada" class="fecha-personalizada">
                         <div class="fecha-container">
                             <label for="reporte_inicio">Desde:</label>
                             <input type="date" id="reporte_inicio" name="reporte_inicio" value="<?php echo $filtros['desde'] ?? ''; ?>">

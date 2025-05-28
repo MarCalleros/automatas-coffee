@@ -16,6 +16,7 @@ class Repartidor {
     public $tipo_sangre;
     public $nss;
     public $vigencia_licencia;
+    public $id_compra;
     public $estatus_repartiendo;
     public $estatus;
 
@@ -34,6 +35,7 @@ class Repartidor {
         $this->tipo_sangre = $args['tipo_sangre'] ?? '';
         $this->nss = $args['nss'] ?? '';
         $this->vigencia_licencia = $args['vigencia_licencia'] ?? '';
+        $this->id_compra = $args['id_compra'] ?? null; // Relacion con la tabla compra
         $this->estatus_repartiendo = $args['estatus_repartiendo'] ?? 0;
         $this->estatus = $args['estatus'] ?? 1;
     }

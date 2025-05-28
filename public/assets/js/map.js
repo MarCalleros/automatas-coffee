@@ -74,6 +74,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const lng = parseFloat(deliveryman.getAttribute("data-lng"));
             const position = { lat: lat, lng: lng };
             const name = deliveryman.querySelector(".map__deliveryman-name").textContent;
+            let delivery = deliveryman.getAttribute("data-delivery");
+            if (delivery === "null") {
+                delivery = "No hay pedido asignado";
+            }
 
             if (lat && lng) {
                 deliveryman.classList.add("map__deliveryman--selected");
@@ -103,9 +107,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     const div = document.querySelector(".map__deliverymen-container--fixed");
                     let html = `
                         <span class="map__title map__title--without-margin">Siguiendo al repartidor:</span>
-                        <span class="map__title map__title--without-margin">Martin Calleros Camarillo</span>
+                        <span class="map__title map__title--without-margin">${name}</span>
                         <span class="map__title map__title--without-margin">Pedido actual del repartidor:</span>
-                        <span class="map__title map__title--without-margin">AAEDG9D7129C</span>
+                        <span class="map__title map__title--without-margin">${delivery}</span>
                         <button type="button" class="map__button">Dejar de seguir</button>
                     `;
                     div.innerHTML = html;
