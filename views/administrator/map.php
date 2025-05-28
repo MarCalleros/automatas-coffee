@@ -15,6 +15,10 @@
         <main class="admin">
             <div class="admin__map-container" id="map"></div>
 
+            <div class="map__deliverymen-container--fixed" data-id="null">
+                
+            </div>
+
             <div class="map__deliverymen-container">
                 <span class="map__title">Repartidores activos:</span>
 

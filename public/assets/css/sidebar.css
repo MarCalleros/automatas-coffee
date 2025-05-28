@@ -10,12 +10,13 @@
     display: flex;
     width: 250px;
     margin-bottom: 30px;
+    margin-top: 10px;
 }
 
 .sidebar__buttons {
     display: flex;
     flex-direction: column;
-    gap: 50px;
+    gap: 20px;
 }
 
 .sidebar__button {

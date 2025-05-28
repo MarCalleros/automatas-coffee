@@ -16,5 +16,6 @@
         <a href="/admin/mapa" class="sidebar__button">Ver Mapa</a>
         <a href="/admin/estadisticas" class="sidebar__button">Estadísticas</a>
         <a href="/admin/historyregister" class="sidebar__button">Registro de Entrada/Salida</a>
+        <a href="/admin/reporte" class="sidebar__button">Generar Reporte</a>
     </div>
 </aside>

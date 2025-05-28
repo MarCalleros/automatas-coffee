@@ -21,13 +21,67 @@
     left: 280px;
 }
 
+.map__deliverymen-container--fixed {
+    display: none;
+    flex-direction: column;
+    font-family: 'Lato', sans-serif;
+    font-size: var(--text-small);
+    background-color: rgba(44, 44, 44, 85%);
+    color: var(--white);
+    padding: 10px;
+    border-radius: 10px;
+    width: 250px;
+    height: auto;
+    overflow: auto;
+    gap: 5px;
+
+    position: absolute;
+    bottom: 350px;
+    left: 280px;
+}
+
+.map__deliverymen-container--active {
+    display: flex;
+}
+
+.map__button {
+    width: 100%;
+    height: 40px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    font-family: 'Lato', sans-serif;
+    font-size: var(--text-small);
+}
+
+.map__button:hover {
+    cursor: pointer;
+    background-color: var(--primary-hover);
+}
+
 .map__title {
     margin-bottom: 15px;
+}
+
+.map__title--without-margin {
+    margin-bottom: 0;
 }
 
 .map__deliveryman {
     display: flex;
     align-items: center;
+}
+
+.map__deliveryman:hover {
+    cursor: pointer;
+    background-color: var(--strong-gray);
+    border-radius: 5px;
+}
+
+.map__deliveryman--selected {
+    background-color: var(--strong-gray);
+    border-radius: 5px;
 }
 
 .map__deliveryman-status {
