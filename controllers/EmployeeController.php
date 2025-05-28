@@ -54,6 +54,7 @@ class EmployeeController {
         ]);
     }
     public static function create(Router $router) {
+        require __DIR__ . '/../includes/database.php';
         if (!isAdmin()) {
             header('Location: /');
             exit;
@@ -74,10 +75,34 @@ class EmployeeController {
             $Usuario->correo = $_POST['correo'] ;
             $Usuario->usuario = $_POST['usuario'] ;
             $Usuario->contraseña = $_POST['contraseña'] ;
-            $Usuario->id_tipo_usuario = $_POST['id_tipo_usuario'] ?? 4 ;
+            $Usuario->id_tipo_usuario = 4 ;
             $Usuario->estatus = $_POST['estatus'] ?? 1;
-            $Usuario->nfc_id = $_POST['nfc_id'] ?? null;
             
+            // Generar NFC ID único
+            function generateNfcId($length = 8) {
+                $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                $nfc = '';
+                for ($i = 0; $i < $length; $i++) {
+                    $nfc .= $chars[random_int(0, strlen($chars) - 1)];
+                }
+                return $nfc;
+            }
+
+            do {
+                $nfc_id = generateNfcId();
+                $query = "SELECT COUNT(*) FROM usuario WHERE nfc_id = ?";
+                $stmt = mysqli_prepare($db, $query);
+                mysqli_stmt_bind_param($stmt, 's',$nfc_id);
+                mysqli_stmt_execute($stmt);
+                $result = mysqli_stmt_get_result($stmt);
+                $row = mysqli_fetch_array($result);
+                $exists = $row[0] > 0;
+            } while ($exists);
+
+            $Usuario->nfc_id = $nfc_id;
+
+            $Usuario->id_tipo_usuario =4;
+
             $result = $Usuario->save();
         
             if ($result === true) {

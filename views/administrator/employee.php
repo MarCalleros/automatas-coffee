@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="/assets/css/styles.css">
     <link rel="shortcut icon" href="/assets/img/logo-coffee.png">
     <title>Empleados</title>
-    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
 </head>
 <body>
     <div class="admin-panel">
@@ -21,7 +20,7 @@
                         <thead class="admin-table__header">
                             <tr class="admin-table__row">
                                 <th class="admin-table__head">ID Usuario</th>
-                                <th class="admin-table__head">NDC ID</th>
+                                <th class="admin-table__head">NFC ID</th>
                                 <th class="admin-table__head">Nombre</th>
                                 <th class="admin-table__head">Edad</th>
                                 <th class="admin-table__head">Email</th>
@@ -84,7 +83,6 @@
             </div>
         </main>
     </div>
-    <script src="/assets/js/nfc.js"></script>
     <script src="/assets/js/navbar.js"></script>
     <script type="module" src="/assets/js/admin.js"></script>
 </body>

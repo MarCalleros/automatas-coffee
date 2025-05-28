@@ -71,6 +71,7 @@ $router->get('/admin/historyregister', [RegisterController::class, 'historial'])
 $router->post('/admin/historyregister', [RegisterController::class, 'historial']);
 $router->get('/admin/empleado', [EmployeeController::class, 'index']);
 $router->post('/admin/empleado', [EmployeeController::class, 'index']);
+
 $router->get('/admin/empleado/create', [EmployeeController::class, 'create']);
 $router->post('/admin/empleado/create', [EmployeeController::class, 'create']);
 $router->get('/admin/empleado/edit', [EmployeeController::class, 'edit']);

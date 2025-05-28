@@ -151,6 +151,11 @@
     font-style: italic;
 }
 
+.admin-form__button--nfc_id{
+    margin-top: 5px;
+    font-size: 13px !important;
+}
+
 @media (min-width: 768px) {
     .login-modal__logo {
         width: 390px;

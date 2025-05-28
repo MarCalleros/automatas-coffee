@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/assets/css/styles.css">
     <link rel="shortcut icon" href="/assets/img/logo-coffee.png">
     <title>Empleado</title>
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
 </head>
 <body>
 <div class="admin-panel">
@@ -15,7 +16,7 @@
             <h2 class="admin__title">MODIFICAR EMPLEADO</h2>
 
             <div class="admin-form__container">
-            <form action="/admin/usuario/edit?id=<?php echo $usuarioBD->id ?>" id="admin-user-form" class="admin-form" method="POST">
+            <form action="/admin/empleado/edit?id=<?php echo $usuarioBD->id ?>" id="admin-user-form" class="admin-form" method="POST">
                 <input type="hidden" name="id" id="id" value="<?php echo $usuarioBD->id; ?>">
 
                 <div class="admin-form__group-container">
@@ -71,7 +72,14 @@
                                     </svg>
                                 </div>
                             </div>
-                            <span id="error-password" class="admin-form__error">Error</span>
+                            <span id="error-password" class="admin-form__error">Error</span>   
+                    </div>
+                    <div class="admin-form__group">
+                        <label class="admin-form__label" for="usuario">Nfc_id</label>
+                        <input class="admin-form__input" type="text" name="nfc_id" id="nfc_id" disabled value="<?php echo $usuarioBD->nfc_id; ?>">
+                        <span id="error-usuario" class="admin-form__error">Error</span>
+                        <button id="admin-nfc_id-button" class="admin-form__button admin-form__button--nfc_id" type="button">Guardar en tarjeta</button>
+                        <button id="admin-nfc_id-leer" class="admin-form__button admin-form__button--nfc_id" type="button">Leer</button>
                     </div>
                 </div>
 

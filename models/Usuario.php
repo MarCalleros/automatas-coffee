@@ -132,8 +132,7 @@ class Usuario {
             // Hashear la contraseña antes de guardar
             $this->contraseña = password_hash($this->contraseña, PASSWORD_BCRYPT);
     
-            // Preparar la consulta para insertar un nuevo usuario
-            $query = "INSERT INTO " . static::$tabla . " (id_tipo_usuario, nombre, edad, correo, usuario, contraseña, estatus, confirmado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $query = "INSERT INTO " . static::$tabla . " (id_tipo_usuario, nombre, edad, correo, usuario, contraseña, estatus, confirmado,nfc_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = mysqli_prepare($db, $query);
             mysqli_stmt_bind_param($stmt, 'isssssiis', $this->id_tipo_usuario, $this->nombre, $this->edad, $this->correo, $this->usuario, $this->contraseña, $this->estatus, $this->confirmado , $this->nfc_id);
             $executed = mysqli_stmt_execute($stmt);
@@ -341,7 +340,7 @@ class Usuario {
                 if ($user->confirmado == 0) {
                     return false; // Usuario inactivo
                 }
-
+                
                 if (password_verify($this->contraseña, $user->contraseña)) {
                     // Crear la variable de sesión
                     if (!isset($_SESSION)) {
@@ -370,7 +369,51 @@ class Usuario {
             return false;
         }
     }
+    public function loginnfc() {
+        try {
+            require __DIR__ . '/../includes/database.php';
 
+            $query = "SELECT * FROM " . self::$tabla . " WHERE usuario = ? LIMIT 1";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 's', $this->usuario);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+
+            if ($result->num_rows > 0) {
+                $user = new Usuario(mysqli_fetch_assoc($result));
+
+                if ($user->confirmado == 0) {
+                    return false; // Usuario inactivo
+                }
+                
+                    if (password_verify($this->contraseña, $user->contraseña)) {
+                        // Crear la variable de sesión
+                        if (!isset($_SESSION)) {
+                            session_start();
+                        }
+
+                        // Guardar los datos del usuario en la sesión
+                        $_SESSION['id'] = $user->id;
+                        $_SESSION['nombre'] = $user->nombre;
+                        $_SESSION['edad'] = $user->edad;
+                        $_SESSION['correo'] = $user->correo;
+                        $_SESSION['usuario'] = $user->usuario;
+                        $_SESSION['id_tipo_usuario'] = $user->id_tipo_usuario;
+                        $_SESSION['estatus'] = $user->estatus;
+                        $_SESSION['confirmado'] = $user->confirmado;
+                        $_SESSION['login'] = true;
+
+                        return true;
+                    } else {
+                        return false;
+                    }
+            } else {
+                return false;
+            }
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
     public static function where($column, $value) {
         try {
             require __DIR__ . '/../includes/database.php';

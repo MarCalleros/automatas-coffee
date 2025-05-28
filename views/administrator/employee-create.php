@@ -15,7 +15,7 @@
             <h2 class="admin__title">AGREGAR EMPLEADO</h2>
 
             <div class="admin-form__container">
-                <form action="/admin/usuario/create" id="admin-user-form" class="admin-form" method="POST">
+                <form action="/admin/empleado/create" id="admin-user-form" class="admin-form" method="POST">
 
                     <div class="admin-form__group-container">
                         <div class="admin-form__group">
@@ -72,9 +72,7 @@
                             </div>
                             <span id="error-password" class="admin-form__error">Error</span>
                         </div>
-
                     </div>
-
                     <div class="admin-form__buttons-container">
                         <a href="/admin/empleado"><button class="admin-form__button admin-form__button--return" type="button">Regresar</button></a>
                         <div class="admin-form__buttons-action">

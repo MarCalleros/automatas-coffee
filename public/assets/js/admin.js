@@ -489,10 +489,61 @@ function validateDeliverymanForm() {
 
     return true;
 }
+const botonnfc = document.querySelector('#admin-nfc_id-button');
+const leernfc = document.querySelector('#admin-nfc_id-leer');
+if (botonnfc) {
+    const socket = io('https://scritp-nfc.onrender.com', {
+        transports: ['websocket']
+    });
+
+    socket.on('connect', () => {
+        console.log('Socket.IO conectado');
+    });
+
+    botonnfc.addEventListener('click', async (event) => {
+        const nfcId = document.querySelector('#nfc_id').value;
+        console.log("nfcId:", nfcId);
+
+        if (socket.connected) {
+            socket.emit('nfc_id',nfcId);
+        } else {
+            console.error('Socket.IO no está conectado');
+        }
+
+        socket.on('nfc_to_client', (data) => {
+        console.log('Datos recibidos del servidor:', data);
+        });
+    });
+    
+}
+if (leernfc) {
+    const socket = io('https://scritp-nfc.onrender.com', {
+        transports: ['websocket']
+    });
+
+    socket.on('connect', () => {
+        console.log('✅ Socket.IO conectado');
+    });
+
+    leernfc.addEventListener('click', () => {
+        console.log("🟢 Solicitando lectura de tarjeta...");
+        socket.emit('solicitar_lectura');
+    });
+
+    socket.on('lectura_terminada', (data) => {
+        console.log('📖 Datos leídos desde la tarjeta:', data);
+    });
+
+    socket.on('lectura_error', (error) => {
+        console.error('❌ Error al leer tarjeta:', error);
+    });
+}
+
 
 function validateUserForm() {
     // Mirar por el enlace y ver si contiene /edit
     const isEdit = window.location.href.includes('/edit');
+    const isemployee = window.location.href.includes('/empleado');
 
     let error = false;
 
@@ -501,8 +552,9 @@ function validateUserForm() {
     const email = document.querySelector('#email').value;
     const usuario = document.querySelector('#usuario').value;
     const password = document.querySelector('#password').value;
-    const tipoUsuario = document.querySelector('#id_tipo_usuario').value;
-
+    if (!isemployee) {
+        const tipoUsuario = document.querySelector('#id_tipo_usuario').value;
+    }
     const errorNombre = document.querySelector('#error-nombre');
     const errorEdad = document.querySelector('#error-edad');
     const errorEmail = document.querySelector('#error-email');
@@ -576,14 +628,16 @@ function validateUserForm() {
             }
         }
     }
-
-    if (!tipoUsuario) {
+    if (!isemployee) {
+        if (!tipoUsuario) {
         errorTipoUsuario.textContent = mensajeTipoUsuario;
         errorTipoUsuario.classList.add('admin-form__error--active');
         error = true;
-    } else {
-        errorTipoUsuario.classList.remove('admin-form__error--active');
+        } else {
+            errorTipoUsuario.classList.remove('admin-form__error--active');
+        }  
     }
+    
 
     if (error) {
         return false;
