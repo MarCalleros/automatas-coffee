@@ -52,6 +52,7 @@ class AdminPagesController {
 
             if ($repartidor->id_compra) {
                 $compra = Compra::where('id', $repartidor->id_compra);
+                $repartidor->compra = $compra[0] ?? null;
                 $repartidor->id_compra = $compra[0]->identificador;
             }
         }

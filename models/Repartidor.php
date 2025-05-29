@@ -22,6 +22,7 @@ class Repartidor {
 
     public $ubicacion; // Relacion con la tabla ubicacion
     public $usuario;
+    public $compra; // Relacion con la tabla compra
 
     public function __construct($args = []) {
         $this->id = $args['id'] ?? null;
