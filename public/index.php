@@ -150,6 +150,7 @@ $router->post('/api/mobile/data', [APIUsuario::class, 'getDeliverymanData']);
 $router->get('/api/mobile/details', [APIPedido::class, 'getDeliveryDetails']);
 $router->post('/api/mobile/logout', [APIUsuario::class, 'logoutDeliveryman']);
 $router->post('/api/mobile/complete', [APIUsuario::class, 'completeDelivery']);
+$router->post('/api/mobile/set', [APIPedido::class, 'setDelivery']);
 
 $router->testRoutes();
 ?>
