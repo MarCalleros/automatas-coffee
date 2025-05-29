@@ -317,5 +317,25 @@ class Repartidor {
             //mysqli_close($db);
         }
     }
+
+    public static function setStatusDelivering($id, $status) {
+        require __DIR__ . '/../includes/database.php';
+
+        try {
+            // Desactivar reporte de errores temporalmente
+            mysqli_report(MYSQLI_REPORT_OFF);
+        
+            $query = "UPDATE " . static::$tabla . " SET estatus_repartiendo = ? WHERE id = ?";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'ii', $status, $id);
+            $executed = mysqli_stmt_execute($stmt);
+            return $executed && mysqli_stmt_affected_rows($stmt) > 0;
+
+        } finally {
+            // Reactivar reporte de errores y cerrar la conexión
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            //mysqli_close($db);
+        }
+    }
 }
 ?>

@@ -280,6 +280,8 @@ class APIUsuario {
         $result = Usuario::verifyDeliverymanCredentials($data['username'], $data['password']);
 
         if ($result) {
+            $repartidor = Repartidor::getDeliverymanByUserId($result['id']);
+            Repartidor::setStatusDelivering($repartidor->id, 1);
             echo json_encode(['success' => true, 'status' => 'Autenticación correcta', 'id' => $result['id']]);
 
         } else {
@@ -322,6 +324,7 @@ class APIUsuario {
             return;
         }
 
+        Repartidor::setStatusDelivering($data['id'], 0);
         $repartidor = new \Model\Repartidor();
         $result = $repartidor->unasignDelivery($data['id']);
 

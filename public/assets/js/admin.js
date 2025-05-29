@@ -614,8 +614,9 @@ function validateUserForm() {
     const email = document.querySelector('#email').value;
     const usuario = document.querySelector('#usuario').value;
     const password = document.querySelector('#password').value;
+    let tipoUsuario = '';
     if (!isemployee) {
-        const tipoUsuario = document.querySelector('#id_tipo_usuario').value;
+        tipoUsuario = document.querySelector('#id_tipo_usuario').value;
     }
     const errorNombre = document.querySelector('#error-nombre');
     const errorEdad = document.querySelector('#error-edad');
