@@ -6,6 +6,7 @@ class HistoryRegister {
     private static $tabla = 'historial_registro'; 
 
     public $id_empleado;
+    public $nombre_empleado;
     public $fecha;
     public $hora_entrada;
     public $hora_salida;
@@ -13,6 +14,7 @@ class HistoryRegister {
 
     public function __construct($args = []) {
         $this->id_empleado = $args['id_empleado'] ?? null;
+        $this->nombre_empleado = $args['nombre_empleado'] ?? null;
         $this->fecha = $args['fecha'] ?? null;
         $this->hora_entrada = $args['hora_entrada'] ?? null;
         $this->hora_salida = $args['hora_salida'] ?? null;

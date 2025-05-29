@@ -14,7 +14,7 @@ import { createNotification } from './notification.js';
     const eyeIconPasswordLogin = document.querySelector('#login-eye-password');
     const slashIconPasswordLogin = document.querySelector('#login-slash-password');
 
-    const btnReporte = document.querySelector('#btn-reporte');
+    const btnReporte = document.querySelector('#aplicar-fechas');
     const btnPdf = document.querySelector('#btn-pdf');
 
     if (eyeContainerPasswordLogin) {
@@ -396,7 +396,7 @@ import { createNotification } from './notification.js';
                     subtitle.textContent = `Reporte de entregas del ${fechaInicio.split(' ')[0]} al ${fechaFin.split(' ')[0]}`;
                     let total = 0;
 
-                    const body = document.querySelector('.admin-table__body');
+                    const body = document.querySelector('.admin-table');
                     body.innerHTML = ''; // Limpiar la tabla antes de agregar los nuevos datos
                     data.deliveries.forEach(delivery => {
                         const row = document.createElement('tr');
@@ -427,21 +427,88 @@ import { createNotification } from './notification.js';
         });
     }
 
-    if (btnPdf) {
-        btnPdf.addEventListener('click', () => {
-            console.log('Generando PDF...');
-            const table = document.querySelector('#pdf-table');
-            const opciones = {
-                margin:       0.5,
-                filename:     'reporte.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2 },
-                jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
-            };
+if (btnReporte) {
+    btnReporte.addEventListener('click', async () => {
+        let fechaInicio = document.querySelector('#fecha_inicio').value;
+        let fechaFin = document.querySelector('#fecha_fin').value;
+        console.log('Generando reporte...');
+        console.log(`Fecha Inicio: ${fechaInicio}, Fecha Fin: ${fechaFin}`);
 
-            html2pdf().set(opciones).from(table).save();
+        if (!fechaInicio || !fechaFin) {
+            createNotification('error', 'Por favor, selecciona ambas fechas para generar el reporte');
+            return;
+        }
+
+        if (fechaInicio > fechaFin) {
+            createNotification('error', 'La fecha de inicio no puede ser mayor que la fecha de fin');
+            return;
+        }
+
+        const desde = fechaInicio + ' 00:00:00';
+        const hasta = fechaFin + ' 23:59:59';
+
+        const response = await fetch(`/api/purchase/between?desde=${desde}&hasta=${hasta}`, {
+            method: 'GET'
         });
-    }
+
+        if (response.ok) {
+            const data = await response.json();
+            if (data.status === 'success') {
+                createNotification('success', 'Reporte generado correctamente');
+
+                const subtitle = document.querySelector('.admin__subtitle');
+                if (subtitle) {
+                    subtitle.textContent = `Reporte de entregas del ${fechaInicio} al ${fechaFin}`;
+                }
+
+                const body = document.querySelector('#tablaRegistrosNFC');
+                body.innerHTML = ''; // Limpiar tabla
+
+                if (data.deliveries.length === 0) {
+                    const row = document.createElement('tr');
+                    row.classList.add('admin-table__row', 'admin-table__row--data');
+                    row.innerHTML = `<td colspan="5" style="text-align: center;">No hay datos disponibles</td>`;
+                    body.appendChild(row);
+                    return;
+                }
+
+                data.deliveries.forEach(registro => {
+                    const row = document.createElement('tr');
+                    row.classList.add('admin-table__row', 'admin-table__row--data');
+                    row.innerHTML = `
+                        <td class="admin-table__data">${registro.id_empleado}</td>
+                        <td class="admin-table__data">${registro.nombre_empleado}</td>
+                        <td class="admin-table__data">${registro.fecha}</td>
+                        <td class="admin-table__data">${registro.hora_entrada ?? '-'}</td>
+                        <td class="admin-table__data">${registro.hora_salida ?? '-'}</td>
+                    `;
+                    body.appendChild(row);
+                });
+            } else {
+                createNotification('error', data.message || 'Error al generar el reporte');
+            }
+        } else {
+            createNotification('error', 'Error al generar el reporte');
+        }
+    });
+}
+
+if (btnPdf) {
+    btnPdf.addEventListener('click', () => {
+        console.log('Generando PDF...');
+        const table = document.querySelector('.admin__table');
+        const opciones = {
+            margin: 0.5,
+            filename: 'reporte.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+        };
+
+        html2pdf().set(opciones).from(table).save();
+    });
+}
+
 })();
 
 function validateDeliverymanForm() {
