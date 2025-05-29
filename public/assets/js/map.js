@@ -186,6 +186,10 @@ socket.on("updateMap", (data) => {
     if (repartidor) {
         repartidor.setAttribute("data-lat", data.lat);
         repartidor.setAttribute("data-lng", data.lng);
+
+        const status = repartidor.querySelector(".map__deliveryman-status");
+        status.classList.remove("map__deliveryman-status--inactive");
+        status.classList.add("map__deliveryman-status--active");
     }
 
     const divFixed = document.querySelector(".map__deliverymen-container--fixed");
