@@ -37,23 +37,10 @@
                         </tr>
                     </thead>
                     <tbody class="admin-table__body" id="tablaRegistrosNFC">
-                        <td class="admin-table__data"> NFC1</td>
-                        <td class="admin-table__data">2025-10-01</td>
-                        <td class="admin-table__data">08:00</td>
-                        <td class="admin-table__data">17:00</td>
-                        <tr class="admin-table__row admin-table__row--data">
-                            <td class="admin-table__data"> NFC2</td>
-                            <td class="admin-table__data">2025-10-02</td>
-                            <td class="admin-table__data">08:00</td>
-                            <td class="admin-table__data">17:00</td>
-                            <tr class="admin-table__row admin-table__row--data">
-                            <td class="admin-table__data"> NFC3</td>
-                            <td class="admin-table__data">2025-12-22</td>
-                            <td class="admin-table__data">02:40</td>
-                            <td class="admin-table__data">12:50</td>
+                        <!-- Aquí se cargarán los registros -->
 
                         <?php if (empty($registros)): ?>
-                            <tr class="admin-table__row admin-table__row--data>
+                            <tr class="admin-table__row admin-table__row--data">
                                 <td colspan="4" style="text-align: center; padding: 20px;">
                                     <!--No se encontraron registros-->
                                 </td>
@@ -95,7 +82,6 @@
         <?php endif; ?>
     </main>
 </div>
-
-<script src="/historyregister.js"></script>
+<script type="module" src="/assets/js/historyregister.js"></script>
 </body>
 </html>

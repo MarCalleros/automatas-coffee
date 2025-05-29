@@ -160,7 +160,7 @@ logoutButton.addEventListener('click', function(event) {
 
                 socket.on('lectura_terminada', (nfcId) => {
                     console.log('📖 Datos leídos desde la tarjeta:', nfcId);
-                    fetch('/api/nfc/getNFClogout', {
+                        fetch('/api/nfc/registerLogout', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -170,11 +170,8 @@ logoutButton.addEventListener('click', function(event) {
                     .then(response => response.json())
                     .then((data) => {
                         if (data.status == "success") {
-                            createNotification("success", "Saliendo de la cuenta...");
-                            deleteAllCookies();
-                            setTimeout(() => {
-                                window.location.href = '/'; 
-                            }, 1000);
+                            createNotification("success", "Salida registrada correctamente.");
+                            // Redirigir o realizar otras acciones
                         } else {
                             createNotification("error", data.message);
                         }
@@ -183,12 +180,12 @@ logoutButton.addEventListener('click', function(event) {
                 });
             }
 
-        }else {
-            fetch('/api/user/logout', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        }
+    } else {
+        fetch('/api/user/logout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
         .then(response => response.json())
         .then(data => {

@@ -1,85 +1,126 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Cargar datos iniciales
-  cargarRegistros()
+import { createNotification } from './notification.js';
 
-  // Configurar eventos de filtros
-  document.getElementById("desde").addEventListener("change", cargarRegistros)
-  document.getElementById("hasta").addEventListener("change", cargarRegistros)
+document.addEventListener('DOMContentLoaded', function() {
+    // Variables globales
+    let selectedRow = null;
+    const tablaRegistros = document.getElementById('tablaRegistrosNFC');
+    const btnDelete = document.querySelector('.btn-delete');
+    const btnAplicarFechas = document.getElementById('aplicar-fechas');
+    const fechaInicio = document.getElementById('fecha_inicio');
+    const fechaFin = document.getElementById('fecha_fin');
+    
+    // Estilo para filas seleccionadas
+    const style = document.createElement('style');
+    style.textContent = `
+        .selected {
+            background-color: #f0f8ff !important;
+            outline: 2px solid #4a90e2;
+        }
+        .btn-delete {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn-delete:hover {
+            background-color: #c0392b;
+        }
+        .btn-delete:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+    `;
+    document.head.appendChild(style);
 
-  // Configurar evento del botón borrar
-  document.getElementById("borrarRegistro").addEventListener("click", () => {
-    // Aquí iría la lógica para borrar un registro
-    alert("Funcionalidad de borrar registro pendiente de implementar")
-  })
-})
+    // Selección de fila
+    if (tablaRegistros) {
+        tablaRegistros.addEventListener('click', function(e) {
+            const row = e.target.closest('tr[data-id]');
+            if (!row) return;
+            
+            // Deseleccionar fila anterior
+            if (selectedRow) {
+                selectedRow.classList.remove('selected');
+            }
+            
+            // Seleccionar nueva fila
+            row.classList.add('selected');
+            selectedRow = row;
+            
+            // Habilitar botón de borrar
+            btnDelete.disabled = false;
+        });
+    }
 
-// Función para cargar los registros desde el servidor
-function cargarRegistros() {
-  const desde = document.getElementById("desde").value
-  const hasta = document.getElementById("hasta").value
+    // Botón borrar registro
+    if (btnDelete) {
+        btnDelete.addEventListener('click', function() {
+            if (!selectedRow) {
+                createNotification('error', 'Por favor, seleccione un registro para borrar.');
+                return;
+            }
+            
+            const registroId = selectedRow.dataset.id;
+            if (confirm('¿Está seguro de que desea eliminar este registro?')) {
+                deleteRegistro(registroId);
+            }
+        });
+    }
 
-  // Aquí se haría una petición AJAX al servidor
-  // Por ahora, simularemos datos para mostrar
+    // Botón aplicar fechas
+    if (btnAplicarFechas) {
+        btnAplicarFechas.addEventListener('click', function() {
+            const desde = fechaInicio.value;
+            const hasta = fechaFin.value;
+            
+            if (!desde || !hasta) {
+                createNotification('error', 'Por favor, seleccione ambas fechas.');
+                return;
+            }
+            
+            // Recargar la página con los parámetros de fecha
+            window.location.href = window.location.pathname + '?desde=' + desde + '&hasta=' + hasta;
+        });
+    }
 
-  // Simulación de datos
-  const registrosSimulados = []
+    // Función para eliminar registro
+    function deleteRegistro(id) {
+        fetch(`/api/history/delete/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Eliminar la fila de la tabla
+                selectedRow.remove();
+                selectedRow = null;
+                
+                // Mostrar notificación usando tu función
+                createNotification('success', 'Registro eliminado correctamente');
+                
+                // Deshabilitar botón de borrar
+                btnDelete.disabled = true;
+            } else {
+                createNotification('error', data.message || 'Error al eliminar el registro');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            createNotification('error', 'Ocurrió un error al intentar eliminar el registro');
+        });
+    }
 
-  // Mostrar mensaje si no hay registros
-  const tablaBody = document.getElementById("tablaRegistrosNFC")
-
-  if (registrosSimulados.length === 0) {
-    tablaBody.innerHTML = `
-            <tr>
-                <td colspan="4" style="text-align: center; padding: 20px;">
-                    No hay registros disponibles
-                </td>
-            </tr>
-        `
-  } else {
-    // Aquí se mostrarían los registros reales cuando implemente la lógica
-    let html = ""
-    registrosSimulados.forEach((registro) => {
-      html += `
-                <tr>
-                    <td>${registro.empleado}</td>
-                    <td>${registro.fecha}</td>
-                    <td>${registro.horaEntrada}</td>
-                    <td>${registro.horaSalida}</td>
-                </tr>
-            `
-    })
-    tablaBody.innerHTML = html
-  }
-
-  // Generar paginación
-  generarPaginacion(1, 5) // Página actual, total de páginas
-}
-
-// Función para generar la paginación
-function generarPaginacion(paginaActual, totalPaginas) {
-  const paginacion = document.getElementById("paginacionRegistros")
-  let html = ""
-
-  // Botón anterior
-  html += `<button ${paginaActual === 1 ? "disabled" : ""}>«</button>`
-
-  // Números de página
-  for (let i = 1; i <= totalPaginas; i++) {
-    html += `<button class="${i === paginaActual ? "active" : ""}">${i}</button>`
-  }
-
-  // Botón siguiente
-  html += `<button ${paginaActual === totalPaginas ? "disabled" : ""}>»</button>`
-
-  paginacion.innerHTML = html
-
-  // Agregar eventos a los botones de paginación
-  const botones = paginacion.querySelectorAll("button")
-  botones.forEach((boton) => {
-    boton.addEventListener("click", () => {
-      // Aquí ira la lógica para cambiar de página
-      // Por ahora solo recargamos los registros
-      cargarRegistros()
-    })
-  })
-}
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('desde') || urlParams.has('hasta')) {
+        const fechaPersonalizada = document.getElementById('fecha-personalizada');
+        if (fechaPersonalizada) {
+            fechaPersonalizada.style.display = 'flex';
+        }
+    }
+});

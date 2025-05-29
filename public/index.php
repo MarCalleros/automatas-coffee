@@ -24,6 +24,8 @@ use Controller\APIHistoryregister;
 use Controller\APInfc;
 use Controller\EmployeeController;
 use Controller\APIProductSearch;
+use Controller\Historycontroller;
+use Controller\NfcController;
 
 $router = new Router();
 
@@ -81,6 +83,14 @@ $router->get('/admin/reporte', [AdminPagesController::class, 'reporte']);
 
 $router->post('/api/nfc/getNFClogin', [APInfc::class, 'getNFClogin']);
 $router->post('/api/nfc/getNFClogout', [APInfc::class, 'getNFClogout']);
+$router->post('/registerLogin', NfcController::class . ':registerLogin');
+$router->post('/registerLogout', NfcController::class . ':registerLogout');
+
+
+// Historial
+$router->get('/history', [HistoryController::class, 'index']);
+$router->post('/api/history/delete/{id}', [HistoryController::class, 'deleteRegistro']);
+
 // API Estadísticas
 $router->get('/api/estadisticas/productos_cantidad', [APIEstadisticas::class, 'productosVendidos']);
 $router->get('/api/estadisticas/productos_ingresos', [APIEstadisticas::class, 'productosIngresos']);

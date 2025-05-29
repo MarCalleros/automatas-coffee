@@ -577,4 +577,23 @@ class Usuario {
             return 0; // Error en la consulta
         }
     }
+
+     public static function findByNfcId($nfcId) {
+        try {
+            require __DIR__ . '/../includes/database.php';
+            $query = "SELECT * FROM " . self::$tabla . " WHERE nfc_id = ?";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 's', $nfcId);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            if ($result->num_rows > 0) {
+                return new Usuario(mysqli_fetch_assoc($result)); 
+            } else {
+                return null; 
+            }
+        } catch (\Exception $e) {
+            return null; 
+        }
+    }
+
 }

@@ -65,26 +65,23 @@ import { createNotification } from './notification.js';
             socket.emit('solicitar_lectura');
 
             socket.on('lectura_terminada', (nfcId) => {
-                fetch('/api/nfc/getNFClogin', {
+                fetch('/api/nfc/registerLogin', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({ nfcId: nfcId })
-                    
                 })
                 .then(response => response.json())
                 .then((data) => {
                     if (data.status == "success") {
-                    createNotification('success', 'Inicio de sesión exitoso');
-                    window.location.href = '/';
+                        createNotification('success', 'Inicio de sesión exitoso');
+                        window.location.href = '/';
                     } else {
-                    console.log("error", data.message)
+                        console.log("error", data.message);
                     }
-                })
-                
+                });
             });
-
             socket.on('lectura_error', (error) => {
                 console.error('❌ Error al leer tarjeta:', error);
             });
