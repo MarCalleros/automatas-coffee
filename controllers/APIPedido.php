@@ -252,5 +252,27 @@ class APIPedido {
             echo json_encode(['status' => 'error', 'message' => 'No se encontro la compra']);
         }
     }
+
+    public static function setDelivery() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
+            return;
+        }
+
+        $input = json_decode(file_get_contents("php://input"), true);
+
+        if (!isset($input['id']) || !isset($input['pedido'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Faltan datos requeridos']);
+            return;
+        }
+
+        $res = Repartidor::setDelivery($input['id'], $input['pedido']);
+
+        if ($res) {
+            echo json_encode(['status' => 'success', 'message' => 'Entrega asignada correctamente']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Ocurrio un error al asignar la entrega']);
+        }
+    }
 }
 ?>

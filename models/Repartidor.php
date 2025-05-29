@@ -337,5 +337,25 @@ class Repartidor {
             //mysqli_close($db);
         }
     }
+
+    public static function setDelivery($id, $id_compra) {
+        require __DIR__ . '/../includes/database.php';
+
+        try {
+            // Desactivar reporte de errores temporalmente
+            mysqli_report(MYSQLI_REPORT_OFF);
+        
+            $query = "UPDATE " . static::$tabla . " SET id_compra = ? WHERE id = ?";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'ii', $id_compra, $id);
+            $executed = mysqli_stmt_execute($stmt);
+            return $executed && mysqli_stmt_affected_rows($stmt) > 0;
+
+        } finally {
+            // Reactivar reporte de errores y cerrar la conexión
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            //mysqli_close($db);
+        }
+    }
 }
 ?>
