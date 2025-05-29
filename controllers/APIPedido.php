@@ -202,5 +202,55 @@ class APIPedido {
             echo json_encode(['status' => 'error', 'message' => 'No se encontraron entregas en el periodo especificado']);
         }
     }
+
+    public static function getDeliveryDetails($id) {
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+            echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
+            return;
+        }
+
+        if (!isset($_GET['id'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Faltan datos requeridos']);
+            return;
+        }
+
+        $compra = Compra::where('id', $_GET['id']);
+
+        if ($compra) {
+            $compra = $compra[0];
+            $compra->usuario = Usuario::where('id', $compra->id_usuario)->nombre;
+
+            if ($compra->id_repartidor) {
+                $repartidor = Repartidor::findById($compra->id_repartidor);
+                $compra->repartidor = $repartidor->nombre . " " . $repartidor->apellido1 . " " . $repartidor->apellido2;
+            } else {
+                $compra->repartidor = "No asignado";
+            }
+
+            if ($compra->estatus) {
+                $compra->estatus = "Entregado";
+            } else {
+                $compra->estatus = "Pendiente";
+            }
+
+            if ($compra->id_tarjeta == 9999) {
+                $compra->pago = "Efectivo";
+            } else {
+                $compra->pago = "Tarjeta";
+            }
+
+            // Obtener los detalles de la compra
+            $detalles = DetalleCompra::where('id_compra', $compra->id);
+
+            foreach ($detalles as $detalle) {
+                $detalle->producto = Producto::findById($detalle->id_producto);
+                $detalle->tamaño = Tamaño::where('id', $detalle->id_tamaño);
+            }
+
+            echo json_encode(['status' => 'success', 'purchase' => $compra, 'details' => $detalles]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'No se encontro la compra']);
+        }
+    }
 }
 ?>

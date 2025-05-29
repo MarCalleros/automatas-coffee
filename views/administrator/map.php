@@ -25,7 +25,7 @@
                 <div class="map__deliverymen">
                     <ul class="map__deliverymen-list">
                         <?php foreach ($repartidores as $repartidor) : ?>
-                            <li class="map__deliveryman" data-id="<?= $repartidor->id ?>" <?php if ($repartidor->ubicacion) : echo "data-lat=". $repartidor->ubicacion->latitud; endif ?> <?php if ($repartidor->ubicacion) : echo "data-lng=". $repartidor->ubicacion->longitud; endif ?>>
+                            <li class="map__deliveryman" data-delivery-lat="<?php echo $repartidor->compra->latitud ?? 'null' ?>" data-delivery-lng="<?php echo $repartidor->compra->longitud ?? 'null' ?>" data-delivery="<?php echo $repartidor->id_compra ?? 'null' ?>" data-id="<?= $repartidor->id ?>" <?php if ($repartidor->ubicacion) : echo "data-lat=". $repartidor->ubicacion->latitud; endif ?> <?php if ($repartidor->ubicacion) : echo "data-lng=". $repartidor->ubicacion->longitud; endif ?>>
                                 <div class="map__deliveryman-status <?= $repartidor->estatus_repartiendo ? 'map__deliveryman-status--active' : 'map__deliveryman-status--inactive' ?>"></div>
                                 <p class="map__deliveryman-name"><?= $repartidor->nombre . ' ' . $repartidor->apellido1 . ' ' . $repartidor->apellido2 . ' #' . $repartidor->id ?></p>
                             </li>

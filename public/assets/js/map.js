@@ -1,6 +1,8 @@
 const socket = io("https://automatas-coffee-api.onrender.com");
 let map;
 let markers = [];
+let directionsRenderer = null;
+let activeDeliveryman = null;
 
 function initMap() {
     const position = { lat: 25.814645319853593, lng: -108.97987255435451 };
@@ -72,8 +74,15 @@ document.addEventListener("DOMContentLoaded", () => {
             const id = parseInt(deliveryman.getAttribute("data-id"));
             const lat = parseFloat(deliveryman.getAttribute("data-lat"));
             const lng = parseFloat(deliveryman.getAttribute("data-lng"));
+            const delLat = parseFloat(deliveryman.getAttribute("data-delivery-lat"));
+            const delLng = parseFloat(deliveryman.getAttribute("data-delivery-lng"));
             const position = { lat: lat, lng: lng };
             const name = deliveryman.querySelector(".map__deliveryman-name").textContent;
+            let delivery = deliveryman.getAttribute("data-delivery");
+
+            if (delivery === "null") {
+                delivery = "No hay pedido asignado";
+            }
 
             if (lat && lng) {
                 deliveryman.classList.add("map__deliveryman--selected");
@@ -82,6 +91,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         dm.classList.remove("map__deliveryman--selected");
                     }
                 });
+
+                activeDeliveryman = {
+                    id,
+                    deliveryLat: delLat,
+                    deliveryLng: delLng
+                };
 
                 map.setCenter(position);
 
@@ -103,9 +118,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     const div = document.querySelector(".map__deliverymen-container--fixed");
                     let html = `
                         <span class="map__title map__title--without-margin">Siguiendo al repartidor:</span>
-                        <span class="map__title map__title--without-margin">Martin Calleros Camarillo</span>
+                        <span class="map__title map__title--without-margin">${name}</span>
                         <span class="map__title map__title--without-margin">Pedido actual del repartidor:</span>
-                        <span class="map__title map__title--without-margin">AAEDG9D7129C</span>
+                        <span class="map__title map__title--without-margin">${delivery}</span>
                         <button type="button" class="map__button">Dejar de seguir</button>
                     `;
                     div.innerHTML = html;
@@ -120,8 +135,37 @@ document.addEventListener("DOMContentLoaded", () => {
                             marker.marker.setMap(map); // Mostrar todos los marcadores
                         });
                         infoWindow.close(); // Cerrar la InfoWindow
+
+                        // En caso de que este la ruta en el mapa, eliminarla
+                        if (directionsRenderer) {
+                            directionsRenderer.setMap(null);
+                        }
+
                         createNotification('success', 'Dejaste de seguir al repartidor');
                     });
+
+                    if (delivery !== "No hay pedido asignado") {
+                        if (directionsRenderer) {
+                            directionsRenderer.setMap(null); // Limpiar la ruta anterior
+                        }
+                        directionsRenderer = new google.maps.DirectionsRenderer();
+                        const directionsService = new google.maps.DirectionsService();
+                        console.log("Latitud de entrega:", delLat, "Longitud de entrega:", delLng);
+
+                        directionsService.route({
+                            origin: position,
+                            destination: { lat: delLat, lng: delLng },
+                            travelMode: google.maps.TravelMode.DRIVING
+                        }, (response, status) => {
+                            if (status === "OK") {
+                                directionsRenderer.setDirections(response);
+                                directionsRenderer.setMap(map);
+                            } else {
+                                console.error("Error al calcular la ruta:", status);
+                                createNotification('error', 'Error al calcular la ruta');
+                            }
+                        });
+                    }
 
                     createNotification('success', `Repartidor ${name} fijado`);
                 }
@@ -150,6 +194,34 @@ socket.on("updateMap", (data) => {
     const existingMarker = markers.find(marker => marker.id === data.id);
     if (existingMarker) {
         existingMarker.marker.setPosition(position);
+
+        if (activeDeliveryman && data.id === activeDeliveryman.id) {
+        const directionsService = new google.maps.DirectionsService();
+
+        // Limpiar la ruta anterior si existe
+        if (directionsRenderer) {
+            directionsRenderer.setMap(null);
+        }
+
+        directionsRenderer = new google.maps.DirectionsRenderer();
+
+        directionsService.route({
+            origin: position,
+            destination: {
+                lat: activeDeliveryman.deliveryLat,
+                lng: activeDeliveryman.deliveryLng,
+            },
+            travelMode: google.maps.TravelMode.DRIVING
+        }, (response, status) => {
+            if (status === "OK") {
+                directionsRenderer.setDirections(response);
+                directionsRenderer.setMap(map);
+            } else {
+                console.error("Error al actualizar la ruta:", status);
+                createNotification('error', 'Error al actualizar la ruta');
+            }
+        });
+    }
     } else {
         const marker = new google.maps.Marker({
             position: position,

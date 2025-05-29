@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Model\Usuario;
+use Model\Repartidor;
 
 class APIUsuario {
     public static function logged() {
@@ -271,21 +272,88 @@ class APIUsuario {
         $data = json_decode(file_get_contents('php://input'), true);
 
         if (!isset($data['username'], $data['password'])) {
-            echo json_encode(['status' => 'error', 'message' => 'Faltan datos']);
+            echo json_encode(['success' => false, 'status' => 'Faltan datos']);
             return;
         }
 
         // Llama al método del modelo que verifica usuario, contraseña y tipo
         $result = Usuario::verifyDeliverymanCredentials($data['username'], $data['password']);
 
-        if ($result === true) {
-            echo json_encode(['success' => true, 'status' => 'Autenticación correcta']);
+        if ($result) {
+            echo json_encode(['success' => true, 'status' => 'Autenticación correcta', 'id' => $result['id']]);
 
         } else {
             echo json_encode(['success' => false, 'status' => 'Usuario o contraseña incorrectos']);
         }
     }
 
+    public static function getDeliverymanData() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
+            return;
+        }
+
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if (!isset($data['id'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Faltan datos requeridos']);
+            return;
+        }
+
+        $repartidor = Repartidor::getDeliverymanByUserId($data['id']);
+
+        if ($repartidor) {
+            echo json_encode(['status' => 'success', 'data' => $repartidor]);
+        } else {
+            echo json_encode(['status' => 'error', 'data' => null]);
+        }
+    }
+
+    public static function logoutDeliveryman() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
+            return;
+        }
+
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if (!isset($data['id'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Faltan datos requeridos']);
+            return;
+        }
+
+        $repartidor = new \Model\Repartidor();
+        $result = $repartidor->unasignDelivery($data['id']);
+
+        if ($result) {
+            echo json_encode(['status' => 'success', 'message' => 'Sesión de repartidor cerrada exitosamente']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Error al cerrar la sesión del repartidor']);
+        }
+    }
+
+    public static function completeDelivery() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['status' => 'error', 'message' => 'Metodo no permitido']);
+            return;
+        }
+
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if (!isset($data['id'])) {
+            echo json_encode(['status' => 'error', 'message' => 'Faltan datos requeridos']);
+            return;
+        }
+
+        $repartidor = new \Model\Repartidor();
+        $result = $repartidor->completeDelivery($data['id']);
+
+        if ($result) {
+            echo json_encode(['status' => 'success', 'message' => 'Entrega completada exitosamente']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Error al completar la entrega']);
+        }
+    }
 
 }
 ?>

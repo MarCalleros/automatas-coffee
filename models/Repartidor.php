@@ -16,11 +16,13 @@ class Repartidor {
     public $tipo_sangre;
     public $nss;
     public $vigencia_licencia;
+    public $id_compra;
     public $estatus_repartiendo;
     public $estatus;
 
     public $ubicacion; // Relacion con la tabla ubicacion
     public $usuario;
+    public $compra; // Relacion con la tabla compra
 
     public function __construct($args = []) {
         $this->id = $args['id'] ?? null;
@@ -34,6 +36,7 @@ class Repartidor {
         $this->tipo_sangre = $args['tipo_sangre'] ?? '';
         $this->nss = $args['nss'] ?? '';
         $this->vigencia_licencia = $args['vigencia_licencia'] ?? '';
+        $this->id_compra = $args['id_compra'] ?? null; // Relacion con la tabla compra
         $this->estatus_repartiendo = $args['estatus_repartiendo'] ?? 0;
         $this->estatus = $args['estatus'] ?? 1;
     }
@@ -245,6 +248,69 @@ class Repartidor {
             } else {
                 return null;
             }
+        } finally {
+            // Reactivar reporte de errores y cerrar la conexión
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            //mysqli_close($db);
+        }
+    }
+
+    // Funcion para buscar un repartidor por su id de usuario
+    public static function getDeliverymanByUserId($userId) {
+        require __DIR__ . '/../includes/database.php';
+
+        try {
+            $query = "SELECT * FROM repartidor WHERE id_usuario = ?";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'i', $userId);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+
+            if ($result->num_rows > 0) {
+                return new Repartidor(mysqli_fetch_assoc($result));
+            } else {
+                return null; // No se encontró el repartidor
+            }
+        } catch (\Exception $e) {
+            return null; // Error en la consulta
+        }
+    }
+
+
+    public function unasignDelivery($idRepartidor) {
+        require __DIR__ . '/../includes/database.php';
+
+        try {
+            // Desactivar reporte de errores temporalmente
+            mysqli_report(MYSQLI_REPORT_OFF);
+        
+            $query = "UPDATE compra SET id_repartidor = NULL WHERE id_repartidor = ?";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'i', $idRepartidor);
+            $executed = mysqli_stmt_execute($stmt);
+            return $executed && mysqli_stmt_affected_rows($stmt) > 0;
+
+        } finally {
+            // Reactivar reporte de errores y cerrar la conexión
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            //mysqli_close($db);
+        }
+
+    }
+
+    public function completeDelivery($id_compra) {
+        require __DIR__ . '/../includes/database.php';
+
+        try {
+            // Desactivar reporte de errores temporalmente
+            mysqli_report(MYSQLI_REPORT_OFF);
+        
+            $query = "UPDATE compra SET estatus = 1 WHERE id = ?";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 'i', $id_compra);
+            $executed = mysqli_stmt_execute($stmt);
+            return $executed && mysqli_stmt_affected_rows($stmt) > 0;
+
         } finally {
             // Reactivar reporte de errores y cerrar la conexión
             mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);

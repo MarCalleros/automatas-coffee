@@ -7,6 +7,7 @@ use Model\Usuario;
 use Model\Repartidor;
 use Model\Mensaje;
 use Model\Ubicacion;
+use Model\Compra;
 
 class AdminPagesController {
     public static function index(Router $router) {
@@ -47,6 +48,12 @@ class AdminPagesController {
                 $repartidor->ubicacion = $ubicacion;
             } else {
                 $repartidor->ubicacion = null;
+            }
+
+            if ($repartidor->id_compra) {
+                $compra = Compra::where('id', $repartidor->id_compra);
+                $repartidor->compra = $compra[0] ?? null;
+                $repartidor->id_compra = $compra[0]->identificador;
             }
         }
 
