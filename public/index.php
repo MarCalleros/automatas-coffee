@@ -21,6 +21,7 @@ use Controller\APIUbicacion;
 use Controller\APIEstadisticas;
 use Controller\RegisterController;
 use Controller\APIHistoryregister;
+use Controller\APInfc;
 use Controller\EmployeeController;
 use Controller\APIProductSearch;
 
@@ -78,6 +79,8 @@ $router->get('/admin/empleado/edit', [EmployeeController::class, 'edit']);
 $router->post('/admin/empleado/edit', [EmployeeController::class, 'edit']);
 $router->get('/admin/reporte', [AdminPagesController::class, 'reporte']);
 
+$router->post('/api/nfc/getNFClogin', [APInfc::class, 'getNFClogin']);
+$router->post('/api/nfc/getNFClogout', [APInfc::class, 'getNFClogout']);
 // API Estadísticas
 $router->get('/api/estadisticas/productos_cantidad', [APIEstadisticas::class, 'productosVendidos']);
 $router->get('/api/estadisticas/productos_ingresos', [APIEstadisticas::class, 'productosIngresos']);

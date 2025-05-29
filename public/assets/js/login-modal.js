@@ -1,4 +1,7 @@
+import { createNotification } from './notification.js';
+
 (function() {
+    
     const loginButton = document.querySelector('.navbar__button');
     const loginButtonMobile = document.querySelector('.user-icon');
 
@@ -30,6 +33,65 @@
     const loginForm = document.querySelector("#login-form");
     const registerForm = document.querySelector("#register-form");
     const profileButton = document.querySelector('#profile-button');
+
+    const nfcButton = document.querySelector('#modal-login-NFC');
+    const nfcModal = document.querySelector('#login-modal-nfc');
+    const backgroundLogin = document.querySelector('#background-login');
+    const closeNfcBtn = document.querySelector('#nfc-login-close');
+    const registrarentradabutton = document.querySelector('#nfc-modal-login-button');
+
+    if (nfcButton && nfcModal && backgroundLogin) {
+        nfcButton.addEventListener('click', () => {
+            loginModal.classList.remove('login-modal--active');
+            nfcModal.style.display = 'block';
+            backgroundLogin.style.display = 'block';
+        });
+    }
+    if (closeNfcBtn && nfcModal && backgroundLogin) {
+        closeNfcBtn.addEventListener('click', () => {
+            nfcModal.style.display = 'none';
+            backgroundLogin.style.display = 'none';
+        });
+    }
+    if (registrarentradabutton && nfcModal && backgroundLogin) {
+        registrarentradabutton.addEventListener('click', () => {
+            registrarentradabutton.textContent = 'Esperando lectura...';
+            const socket = io('https://scritp-nfc.onrender.com', { transports: ['websocket'] });
+
+            socket.on('connect', () => {
+                console.log('Socket.IO conectado');
+            });
+
+            socket.emit('solicitar_lectura');
+
+            socket.on('lectura_terminada', (nfcId) => {
+                fetch('/api/nfc/getNFClogin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ nfcId: nfcId })
+                    
+                })
+                .then(response => response.json())
+                .then((data) => {
+                    if (data.status == "success") {
+                    createNotification('success', 'Inicio de sesión exitoso');
+                    window.location.href = '/';
+                    } else {
+                    console.log("error", data.message)
+                    }
+                })
+                
+            });
+
+            socket.on('lectura_error', (error) => {
+                console.error('❌ Error al leer tarjeta:', error);
+            });
+        });
+    } 
+
+
 
     let scrollY = 0;
 

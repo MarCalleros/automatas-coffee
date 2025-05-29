@@ -155,7 +155,18 @@
     margin-top: 5px;
     font-size: 13px !important;
 }
-
+#login-modal-nfc {
+    display: none;
+}
+#login-modal-nfc.active {
+    display: block;
+}
+#background-login {
+    display: none;
+}
+#background-login.active {
+    display: block;
+}
 @media (min-width: 768px) {
     .login-modal__logo {
         width: 390px;

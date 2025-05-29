@@ -118,36 +118,108 @@ loginResetButton.addEventListener('click', function(event) {
 
 logoutButton.addEventListener('click', function(event) {
     event.preventDefault();
-
-    fetch('/api/user/logout', {
+    
+    fetch('/api/nfc/getNFClogout', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         }
     })
     .then(response => response.json())
-    .then(data => {
+    .then((data) => {
         if (data.status == "success") {
-            createNotification("success", data.message);
+        const nfclogout = data.message;
+        console.log(data.message);
+        if (nfclogout ) {
+            const nfcModal = document.querySelector('#logout-modal-nfc');
+            const backgroundLogin = document.querySelector('#background-login');
+            const closeNfcBtn = document.querySelector('#nfc-logout-close');
+            const profileModal = document.querySelector('.profile-modal');
+            const nfclogoutbutton = document.querySelector('#nfc-modal-logout-button');
+                profileModal.classList.remove('profile-modal--active');
+                nfcModal.style.display = 'block';
+                backgroundLogin.style.display = 'block';
 
-            setTimeout(() => {
-                const profileModal = document.querySelector('.profile-modal');
-                const backgroundShadow = document.querySelector('#background-login');
-        
-                if (profileModal) profileModal.classList.remove('profile-modal--active');
-                if (backgroundShadow) {
-                    backgroundShadow.classList.remove('background__shadow--active');
-                    backgroundShadow.classList.remove('background__blur--active');
-                }
-        
-                document.body.style.position = '';
-                document.body.style.top = '';
-                window.location.href = '/'; // Redirigir a la página de inicio
-            }, 1000);
-        } else {
-            createNotification("error", data.message);
+            if (closeNfcBtn && nfcModal && backgroundLogin) {
+                closeNfcBtn.addEventListener('click', () => {
+                    nfcModal.style.display = 'none';
+                    backgroundLogin.style.display = 'none';
+                });
+            }
+            if (nfclogoutbutton && nfcModal && backgroundLogin) {
+                nfclogoutbutton.addEventListener('click', () => {
+                nfclogoutbutton.textContent = 'Esperando lectura...';
+                    const socket = io('https://scritp-nfc.onrender.com', { transports: ['websocket'] });
+
+                socket.on('connect', () => {
+                console.log('✅ Socket.IO conectado');
+                });
+
+                console.log("🟢 Solicitando lectura de tarjeta...");
+                socket.emit('solicitar_lectura');
+
+                socket.on('lectura_terminada', (nfcId) => {
+                    console.log('📖 Datos leídos desde la tarjeta:', nfcId);
+                    fetch('/api/nfc/getNFClogout', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ nfcId: nfcId })
+                    })
+                    .then(response => response.json())
+                    .then((data) => {
+                        if (data.status == "success") {
+                            createNotification("success", "Saliendo de la cuenta...");
+                            deleteAllCookies();
+                            setTimeout(() => {
+                                window.location.href = '/'; 
+                            }, 1000);
+                        } else {
+                            createNotification("error", data.message);
+                        }
+                    });
+                });
+                });
+            }
+
+        }else {
+            fetch('/api/user/logout', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
         }
-    });
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status == "success") {
+                createNotification("success", data.message);
+
+                setTimeout(() => {
+                    const profileModal = document.querySelector('.profile-modal');
+                    const backgroundShadow = document.querySelector('#background-login');
+            
+                    if (profileModal) profileModal.classList.remove('profile-modal--active');
+                    if (backgroundShadow) {
+                        backgroundShadow.classList.remove('background__shadow--active');
+                        backgroundShadow.classList.remove('background__blur--active');
+                    }
+            
+                    document.body.style.position = '';
+                    document.body.style.top = '';
+                    window.location.href = '/'; // Redirigir a la página de inicio
+                }, 1000);
+            } else {
+                createNotification("error", data.message);
+            }
+        });
+        }
+
+        } else {
+        console.log("error", data.message)
+        }
+    })
+
 });
 
 registerButton.addEventListener('click', async function(event) {

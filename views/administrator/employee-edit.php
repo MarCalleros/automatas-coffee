@@ -79,7 +79,6 @@
                         <input class="admin-form__input" type="text" name="nfc_id" id="nfc_id" disabled value="<?php echo $usuarioBD->nfc_id; ?>">
                         <span id="error-usuario" class="admin-form__error">Error</span>
                         <button id="admin-nfc_id-button" class="admin-form__button admin-form__button--nfc_id" type="button">Guardar en tarjeta</button>
-                        <button id="admin-nfc_id-leer" class="admin-form__button admin-form__button--nfc_id" type="button">Leer</button>
                     </div>
                 </div>
 

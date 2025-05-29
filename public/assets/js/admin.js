@@ -573,7 +573,6 @@ function validateDeliverymanForm() {
     return true;
 }
 const botonnfc = document.querySelector('#admin-nfc_id-button');
-const leernfc = document.querySelector('#admin-nfc_id-leer');
 if (botonnfc) {
     const socket = io('https://scritp-nfc.onrender.com', {
         transports: ['websocket']
@@ -584,44 +583,24 @@ if (botonnfc) {
     });
 
     botonnfc.addEventListener('click', async (event) => {
+        botonnfc.textContent = 'Esperando tarjeta NFC...';
         const nfcId = document.querySelector('#nfc_id').value;
-        console.log("nfcId:", nfcId);
 
         if (socket.connected) {
+            console.log('Enviando NFC ID:', nfcId);
             socket.emit('nfc_id',nfcId);
         } else {
             console.error('Socket.IO no está conectado');
         }
 
-        socket.on('nfc_to_client', (data) => {
-        console.log('Datos recibidos del servidor:', data);
+        socket.on('escritura_terminada', (data) => { 
+            console.log('Escritura terminada:');
+            createNotification('success', 'NFC ID guardado correctamente');
+            botonnfc.textContent = 'NFC Guardado';
         });
     });
     
 }
-if (leernfc) {
-    const socket = io('https://scritp-nfc.onrender.com', {
-        transports: ['websocket']
-    });
-
-    socket.on('connect', () => {
-        console.log('✅ Socket.IO conectado');
-    });
-
-    leernfc.addEventListener('click', () => {
-        console.log("🟢 Solicitando lectura de tarjeta...");
-        socket.emit('solicitar_lectura');
-    });
-
-    socket.on('lectura_terminada', (data) => {
-        console.log('📖 Datos leídos desde la tarjeta:', data);
-    });
-
-    socket.on('lectura_error', (error) => {
-        console.error('❌ Error al leer tarjeta:', error);
-    });
-}
-
 
 function validateUserForm() {
     // Mirar por el enlace y ver si contiene /edit

@@ -357,6 +357,7 @@ class Usuario {
                     $_SESSION['estatus'] = $user->estatus;
                     $_SESSION['confirmado'] = $user->confirmado;
                     $_SESSION['login'] = true;
+                    $_SESSION['nfc'] = false; 
 
                     return true;
                 } else {
@@ -369,29 +370,24 @@ class Usuario {
             return false;
         }
     }
-    public function loginnfc() {
+    public  function loginnfc($nfcId) {
         try {
             require __DIR__ . '/../includes/database.php';
 
-            $query = "SELECT * FROM " . self::$tabla . " WHERE usuario = ? LIMIT 1";
+            $query = "SELECT * FROM usuario WHERE nfc_id = ? LIMIT 1";
             $stmt = mysqli_prepare($db, $query);
-            mysqli_stmt_bind_param($stmt, 's', $this->usuario);
+            mysqli_stmt_bind_param($stmt, 's', $nfcId);
             mysqli_stmt_execute($stmt);
             $result = mysqli_stmt_get_result($stmt);
-
             if ($result->num_rows > 0) {
                 $user = new Usuario(mysqli_fetch_assoc($result));
 
-                if ($user->confirmado == 0) {
-                    return false; // Usuario inactivo
-                }
-                
-                    if (password_verify($this->contraseña, $user->contraseña)) {
-                        // Crear la variable de sesión
+                if ($user->nfc_id = $nfcId) {
+                    // Crear la variable de sesión
                         if (!isset($_SESSION)) {
                             session_start();
                         }
-
+                    
                         // Guardar los datos del usuario en la sesión
                         $_SESSION['id'] = $user->id;
                         $_SESSION['nombre'] = $user->nombre;
@@ -402,11 +398,28 @@ class Usuario {
                         $_SESSION['estatus'] = $user->estatus;
                         $_SESSION['confirmado'] = $user->confirmado;
                         $_SESSION['login'] = true;
+                        $_SESSION['nfc'] = true;
+                }
+            } else {
+                return false;
+            }
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+    public  function logoutnfc() {
+        try {
+            require __DIR__ . '/../includes/database.php';
 
-                        return true;
-                    } else {
-                        return false;
-                    }
+            $query = "SELECT * FROM usuario WHERE nfc_id = ? LIMIT 1";
+            $stmt = mysqli_prepare($db, $query);
+            mysqli_stmt_bind_param($stmt, 's', $nfcId);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            if ($result->num_rows > 0) {
+                $user = new Usuario(mysqli_fetch_assoc($result));
+
+                
             } else {
                 return false;
             }
