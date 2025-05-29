@@ -203,11 +203,10 @@ socket.on("updateMap", (data) => {
         const directionsService = new google.maps.DirectionsService();
 
         // Limpiar la ruta anterior si existe
-        if (directionsRenderer) {
-            directionsRenderer.setMap(null);
+        if (!directionsRenderer) {
+            directionsRenderer = new google.maps.DirectionsRenderer();
+            directionsRenderer.setMap(map);
         }
-
-        directionsRenderer = new google.maps.DirectionsRenderer();
 
         directionsService.route({
             origin: position,
@@ -219,7 +218,6 @@ socket.on("updateMap", (data) => {
         }, (response, status) => {
             if (status === "OK") {
                 directionsRenderer.setDirections(response);
-                directionsRenderer.setMap(map);
             } else {
                 console.error("Error al actualizar la ruta:", status);
                 createNotification('error', 'Error al actualizar la ruta');
