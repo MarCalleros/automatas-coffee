@@ -259,12 +259,14 @@ class APIPedido {
             return;
         }
 
-        if (!isset($_POST['id']) || !isset($_POST['pedido'])) {
+        $input = json_decode(file_get_contents("php://input"), true);
+
+        if (!isset($input['id']) || !isset($input['pedido'])) {
             echo json_encode(['status' => 'error', 'message' => 'Faltan datos requeridos']);
             return;
         }
 
-        $res = Repartidor::setDelivery($_POST['id'], $_POST['pedido']);
+        $res = Repartidor::setDelivery($input['id'], $input['pedido']);
 
         if ($res) {
             echo json_encode(['status' => 'success', 'message' => 'Entrega asignada correctamente']);
