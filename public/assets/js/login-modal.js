@@ -65,7 +65,7 @@ import { createNotification } from './notification.js';
             socket.emit('solicitar_lectura');
 
             socket.on('lectura_terminada', (nfcId) => {
-                fetch('/api/nfc/registerLogin', {
+                fetch('/api/nfc/getNFClogin', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -75,8 +75,23 @@ import { createNotification } from './notification.js';
                 .then(response => response.json())
                 .then((data) => {
                     if (data.status == "success") {
+                        fetch('/api/nfc/registerLogin', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ nfcId: nfcId })
+                            })
+                            .then(response => response.json())
+                            .then((data) => {
+                                if (data.status == "success") {
+                                    console.log("✅ Salida registrada correctamente");
+                                } else {
+                                    console.log("error", data.message);
+                                }
+                            });
                         createNotification('success', 'Inicio de sesión exitoso');
-                        window.location.href = '/';
+                        //window.location.href = '/';
                     } else {
                         console.log("error", data.message);
                     }

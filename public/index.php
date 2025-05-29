@@ -81,15 +81,18 @@ $router->get('/admin/empleado/edit', [EmployeeController::class, 'edit']);
 $router->post('/admin/empleado/edit', [EmployeeController::class, 'edit']);
 $router->get('/admin/reporte', [AdminPagesController::class, 'reporte']);
 
+// NFC
 $router->post('/api/nfc/getNFClogin', [APInfc::class, 'getNFClogin']);
 $router->post('/api/nfc/getNFClogout', [APInfc::class, 'getNFClogout']);
-$router->post('/registerLogin', NfcController::class . ':registerLogin');
-$router->post('/registerLogout', NfcController::class . ':registerLogout');
+
 
 
 // Historial
 $router->get('/history', [HistoryController::class, 'index']);
 $router->post('/api/history/delete/{id}', [HistoryController::class, 'deleteRegistro']);
+$router->post('/api/nfc/registerLogin', [NfcController::class , 'registerLogin']);
+$router->post('/api/nfc/registerLogout', [NfcController::class , 'registerLogout']);
+
 
 // API Estadísticas
 $router->get('/api/estadisticas/productos_cantidad', [APIEstadisticas::class, 'productosVendidos']);

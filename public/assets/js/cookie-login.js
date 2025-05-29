@@ -160,7 +160,7 @@ logoutButton.addEventListener('click', function(event) {
 
                 socket.on('lectura_terminada', (nfcId) => {
                     console.log('📖 Datos leídos desde la tarjeta:', nfcId);
-                        fetch('/api/nfc/registerLogout', {
+                        fetch('/api/nfc/getNFClogout', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -170,8 +170,27 @@ logoutButton.addEventListener('click', function(event) {
                     .then(response => response.json())
                     .then((data) => {
                         if (data.status == "success") {
-                            createNotification("success", "Salida registrada correctamente.");
-                            // Redirigir o realizar otras acciones
+                            fetch('/api/nfc/registerLogout', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ nfcId: nfcId })
+                            })
+                            
+                            .then(response => response.json())
+                            .then((data) => {
+                                if (data.status == "success") {
+                                    console.log("✅ Salida registrada correctamente");
+                                } else {
+                                    console.log("error", data.message);
+                                }
+                            });
+                            createNotification("success", "Saliendo de la cuenta...");
+                            deleteAllCookies();
+                            setTimeout(() => {
+                                //window.location.href = '/'; 
+                            }, 1000);
                         } else {
                             createNotification("error", data.message);
                         }
