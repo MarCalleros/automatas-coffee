@@ -79,8 +79,9 @@
         <div class="login-modal__input-container">
             <label for="login-username" class="login-modal__label">Por favor, acerca tu tarjeta NFC al lector para registrar la tarjeta</label>
         </div>
-
-        <img src="/assets/img/NFC.png" alt="NFC	">
+        <div class="nfc-modal__logo-container">
+            <img src="/assets/img/NFC.png" alt="" class="nfc-modal__logo">
+        </div>
 
     </form>
 

@@ -1,3 +1,4 @@
+
 import { createNotification } from './notification.js';
 
 (function() {
@@ -91,14 +92,15 @@ import { createNotification } from './notification.js';
                                 }
                             });
                         createNotification('success', 'Inicio de sesión exitoso');
-                        //window.location.href = '/';
+                        window.location.href = '/';
                     } else {
                         console.log("error", data.message);
                     }
                 });
             });
             socket.on('lectura_error', (error) => {
-                console.error('❌ Error al leer tarjeta:', error);
+                createNotification("error", "Error al leer el NFC , intente de nuevo" ); 
+                registrarentradabutton.textContent = 'Intentar de nuevo';
             });
         });
     } 

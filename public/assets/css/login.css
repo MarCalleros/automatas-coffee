@@ -155,6 +155,9 @@
     margin-top: 5px;
     font-size: 13px !important;
 }
+.nfc-modal__logo-container{
+    text-align: center;
+}
 #login-modal-nfc {
     display: none;
 }

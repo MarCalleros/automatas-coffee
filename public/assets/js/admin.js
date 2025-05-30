@@ -665,6 +665,11 @@ if (botonnfc) {
             createNotification('success', 'NFC ID guardado correctamente');
             botonnfc.textContent = 'NFC Guardado';
         });
+        socket.on('escritura_error', (data) => {
+            console.error('Error al escribir NFC:', data);
+            createNotification('error', 'Error al guardar el NFC ID');
+            botonnfc.textContent = 'Volver a Intentar';
+        });
     });
     
 }

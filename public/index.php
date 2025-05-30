@@ -90,8 +90,9 @@ $router->post('/api/nfc/getNFClogout', [APInfc::class, 'getNFClogout']);
 // Historial
 $router->get('/history', [HistoryController::class, 'index']);
 $router->post('/api/history/delete/{id}', [HistoryController::class, 'deleteRegistro']);
-$router->post('/api/nfc/registerLogin', [NfcController::class , 'registerLogin']);
-$router->post('/api/nfc/registerLogout', [NfcController::class , 'registerLogout']);
+
+$router->post('/api/nfc/registerLogin', [APInfc::class , 'registerLogin']);
+$router->post('/api/nfc/registerLogout', [APInfc::class , 'registerLogout']);
 
 
 // API Estadísticas

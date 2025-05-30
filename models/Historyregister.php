@@ -26,13 +26,16 @@ class HistoryRegister {
         try {
             require __DIR__ . '/../includes/database.php';
 
-            $query = "INSERT INTO " . self::$tabla . " (id_empleado, fecha, hora_entrada, tipo_usuario) VALUES (?, ?, ?, ?)";
+            $query = "INSERT INTO historial_registro (id_empleado, nombre_empleado, fecha, hora_entrada) VALUES (?, ?, ?, ?)";
+
             $stmt = mysqli_prepare($db, $query);
-            mysqli_stmt_bind_param($stmt, 'isss', $this->id_empleado, $this->fecha, $this->hora_entrada, $this->tipo_usuario);
+            mysqli_stmt_bind_param($stmt, 'isss', $this->id_empleado, $this->nombre_empleado, $this->fecha, $this->hora_entrada);
+
             $result = mysqli_stmt_execute($stmt);
 
             return $result; 
         } catch (\Exception $e) {
+            error_log("Error al crear registro: " . $e->getMessage());
             return false; 
         }
     }

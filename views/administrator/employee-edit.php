@@ -85,7 +85,6 @@
                 <div class="admin-form__buttons-container">
                     <a href="/admin/empleado"><button class="admin-form__button admin-form__button--return" type="button">Regresar</button></a>
                     <div class="admin-form__buttons-action">
-                        <button id="admin-reset-button" class="admin-form__button admin-form__button--cancel" type="reset">Resetear</button>
                         <button id="admin-submit-button" class="admin-form__button admin-form__button--submit" type="submit">Guardar</button>
                     </div>
                 </div>

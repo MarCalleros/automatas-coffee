@@ -182,20 +182,26 @@ logoutButton.addEventListener('click', function(event) {
                             .then((data) => {
                                 if (data.status == "success") {
                                     console.log("✅ Salida registrada correctamente");
+                                    createNotification("success", "Salida registrada correctamente");
                                 } else {
                                     console.log("error", data.message);
+                                    createNotification("error", "Salida no registrada, intente de nuevo");
                                 }
                             });
                             createNotification("success", "Saliendo de la cuenta...");
                             deleteAllCookies();
                             setTimeout(() => {
-                                //window.location.href = '/'; 
+                                window.location.href = '/'; 
                             }, 1000);
                         } else {
                             createNotification("error", data.message);
                         }
                     });
                 });
+                socket.on('lectura_error', (error) => {
+                createNotification("error", "Error al leer el NFC , intente de nuevo" ); 
+                nfclogoutbutton.textContent = 'intentar de nuevo';
+            });
                 });
             }
 
