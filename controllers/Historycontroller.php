@@ -49,26 +49,40 @@ class HistoryController {
     }
     
     public static function deleteRegistro() {
-    header('Content-Type: application/json');
-    
-    $requestUri = $_SERVER['REQUEST_URI'];
-    $basePath = '/api/history/delete/';
-    
-    if (strpos($requestUri, $basePath) === 0) {
-        $id = substr($requestUri, strlen($basePath));
-    } else {
-        $id = null;
-    }
-    
-    if (!$id || !ctype_digit($id)) {
-        echo json_encode(['success' => false, 'message' => 'ID no válido']);
+        header('Content-Type: application/json');
+        
+        $input = json_decode(file_get_contents('php://input'), true);
+        $id = $input['id'] ?? null;
+
+        // Validar ID
+        if (!$id || !is_numeric($id) || $id <= 0) {
+            echo json_encode([
+                'success' => false, 
+                'message' => 'ID no válido'
+            ]);
+            exit;
+        }
+
+        try {
+            $result = HistoryRegister::delete($id);
+            
+            if ($result) {
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Registro eliminado correctamente'
+                ]);
+            } else {
+                echo json_encode([
+                    'success' => false, 
+                    'message' => 'Error al eliminar el registro'
+                ]);
+            }
+        } catch (Exception $e) {
+            echo json_encode([
+                'success' => false, 
+                'message' => 'Error en el servidor: ' . $e->getMessage()
+            ]);
+        }
         exit;
     }
-
-    if (HistoryRegister::delete($id)) {
-        echo json_encode(['success' => true]);
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Error al eliminar el registro']);
-    }
-}
 }

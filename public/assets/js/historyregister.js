@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const style = document.createElement('style');
     style.textContent = `
         .selected {
-            background-color: #f0f8ff !important;
-            outline: 2px solid #4a90e2;
+            background-color:rgb(255, 230, 202) !important;
+            outline: 2px solid #ff5100;
         }
         .btn-delete {
             background-color: #e74c3c;
@@ -87,32 +87,35 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Función para eliminar registro
-    function deleteRegistro(id) {
-        fetch(`/api/history/delete/${id}`, {
+   function deleteRegistro(id) {
+        fetch('/api/history/delete', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify({ id: id })
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la respuesta del servidor');
+            }
+            return response.json();
+        })
         .then(data => {
             if (data.success) {
-                // Eliminar la fila de la tabla
                 selectedRow.remove();
                 selectedRow = null;
-                
-                // Mostrar notificación usando tu función
                 createNotification('success', 'Registro eliminado correctamente');
-                
-                // Deshabilitar botón de borrar
-                btnDelete.disabled = true;
             } else {
                 createNotification('error', data.message || 'Error al eliminar el registro');
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            createNotification('error', 'Ocurrió un error al intentar eliminar el registro');
+            createNotification('error', 'Ocurrió un error al intentar eliminar el registro: ' + error.message);
+        })
+        .finally(() => {
+            btnDelete.disabled = true;
         });
     }
 

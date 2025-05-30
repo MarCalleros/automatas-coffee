@@ -2,7 +2,7 @@
 $host = "localhost";
 $port = "3306";
 $usuario = "root";
-$password = "kaze1234";
+$password = "Kevinator0224";
 $base_datos = "db_automatas_coffee";
 
 

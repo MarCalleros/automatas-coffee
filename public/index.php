@@ -89,7 +89,7 @@ $router->post('/api/nfc/getNFClogout', [APInfc::class, 'getNFClogout']);
 
 // Historial
 $router->get('/history', [HistoryController::class, 'index']);
-$router->post('/api/history/delete/{id}', [HistoryController::class, 'deleteRegistro']);
+$router->post('/api/history/delete', [HistoryController::class, 'deleteRegistro']);
 
 $router->post('/api/nfc/registerLogin', [APInfc::class , 'registerLogin']);
 $router->post('/api/nfc/registerLogout', [APInfc::class , 'registerLogout']);

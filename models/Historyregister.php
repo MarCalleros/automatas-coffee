@@ -5,6 +5,7 @@ namespace Model;
 class HistoryRegister {
     private static $tabla = 'historial_registro'; 
 
+    public $id; 
     public $id_empleado;
     public $nombre_empleado;
     public $fecha;
@@ -13,6 +14,7 @@ class HistoryRegister {
     public $tipo_usuario;
 
     public function __construct($args = []) {
+        $this->id = $args['id'] ?? null;
         $this->id_empleado = $args['id_empleado'] ?? null;
         $this->nombre_empleado = $args['nombre_empleado'] ?? null;
         $this->fecha = $args['fecha'] ?? null;
