@@ -21,11 +21,11 @@ class Email {
         try {
             $mail = new PHPMailer();
             $mail->isSMTP();
-            $mail->Host = 'smtp-relay.brevo.com';
+            $mail->Host = '';
             $mail->SMTPAuth = true;
-            $mail->Port = 587;
-            $mail->Username = 'alejandrocalleros86@gmail.com';
-            $mail->Password = 'xsmtpsib-3006b336805cfcfd8f3948b12d3a0194c985a442fd9ac997fefa461a93c0da3a-C7XIpK5VvqFO3a0B';
+            $mail->Port = ;
+            $mail->Username = '';
+            $mail->Password = '';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 
             $mail->setFrom('automatascoffee@contacto.com', 'Soporte Automatas Coffee');
