@@ -1,8 +1,8 @@
 <?php
 $host = "localhost";
 $port = "3306";
-$usuario = "root";
-$password = "Kevinator0224";
+$usuario = "";
+$password = "";
 $base_datos = "db_automatas_coffee";
 
 
