@@ -1,0 +1,131 @@
+h4 {
+    font-size: 18px;
+    margin: 20px;
+}
+
+.admin__subtitles {
+    margin: 20px;
+    padding: 0px;
+}
+
+.admin__subtitles a {
+    font-size: 22px;
+    background-color: #ffffff;
+    padding: 7px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.admin__products {
+    font-family: 'Montserrat';
+    font-size: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 30px 0px;
+    gap: 20px;
+}
+
+.admin__product {
+    color: #333333;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    background-color: #ffffff;
+    border-radius: 10px;
+    width: 250px;
+    height: 350px;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.admin__product p {
+    font-size: 14px;
+    font-weight: light;
+    margin: 5px;
+}
+
+/* CSS para que el texto de la descripción no se desborde */
+.admin__product__info p {
+    display: -webkit-box;
+    text-align: start;
+    overflow: hidden;
+    -webkit-line-clamp: 3; /* Se tienen que agregar esta y la de abajo por estándar */
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    padding: 0px 10px;
+}
+
+.admin__product__info img {
+    margin: 0px;
+    padding: 0px;
+}
+
+.admin__product__actions {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 5px;
+}
+
+.admin__product__actions a {
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    background-color: #ff5100;
+    border-radius: 10px;
+    width: 100%;
+    padding: 10px;
+    margin: 5px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.admin__product__actions a:hover {
+    background: orange;
+    color: white;
+}
+
+.admin__product img {
+    width: 100%;
+    height: 150px;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.status-btn {
+    border-radius: 10px;
+    width: 100%;
+    padding: 10px;
+    margin: 5px;
+    text-align: center;
+    display: block;
+    font-weight: bold;
+    transition: background 0.2s, color 0.2s;
+}
+
+.status-btn.activo {
+    background: #28a745; /* Verde */
+    color: #fff;
+}
+
+.status-btn.inactivo {
+    background: #333333;
+    color: #ffffff;
+}
+
+.buscador__contenedor {
+    margin: 20px;
+    height: 50px;
+}
+
+#buscador__productos {  
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    padding: 10px;
+    color: #333333;
+    border: 1px solid #ffffff;
+    border-radius: 10px;
+    height: 100%;
+    width: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}

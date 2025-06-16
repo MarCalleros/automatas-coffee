@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/css/variables.css">
     <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="shortcut icon" href="/assets/img/logo-coffee.png">
     <title>Nuestros Productos</title>
 </head>
 <body>
@@ -27,7 +28,7 @@
                     </svg>
                 </button>
 
-                <input type="text" class="search__input" placeholder="Buscar producto...">
+                <input type="text" class="search__input" placeholder="Buscar producto..." value="<?php echo $filters['search'] ?>">
 
                 <button class="search__button">
                     <svg class="search-icon" fill="#ffffff" height="200px" width="200px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 490.40 490.40" xml:space="preserve" stroke="#ffffff" stroke-width="0.004904">
@@ -53,8 +54,13 @@
                 </button>
             </div>
 
-            <?php include_once __DIR__ . "/../components/products-list.php"; ?>
-    
+            <div class="product-list">
+                
+            </div>
+
+            <div class="pagination">
+                
+            </div>
         </div>
     </div>
 
@@ -75,12 +81,10 @@
     </div>
 
     <script src="/assets/js/navbar.js"></script>
-    <script src="/assets/js/hamburguer.js"></script>
     <script src="/assets/js/list-view.js"></script>
     <script src="/assets/js/filter-modal.js"></script>
-    <script src="/assets/js/products.js"></script>
-    <script type="module" src="/assets/js/cookies-carrito.js"></script>
+    <script type="module" src="/assets/js/products.js"></script>
     <script type="module" src="/assets/js/carrito.js"></script>
-    <script src="/assets/js/configuration.js"></script>
+    <script type="module" src="/assets/js/configuration.js"></script>
 </body>
 </html>

@@ -7,10 +7,16 @@
             "email": "automatassoftware@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "ramsey/uuid": "^4.7",
+        "phpmailer/phpmailer": "^6.10"
+    },
     "autoload": {
         "psr-4": {
-            "App\\": "./classes"
+            "Model\\": "./models",
+            "Controller\\": "./controllers",
+            "Class\\": "./classes",
+            "App\\": "./"
         }
     }
 }

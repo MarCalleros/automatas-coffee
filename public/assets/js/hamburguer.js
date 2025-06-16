@@ -17,11 +17,11 @@
         }
         
         links.forEach(link => {
-            link.classList.toggle('navbar__link--active')
+            link.classList.toggle('navbar__link--active');
         });
 
-        loginButton.classList.toggle('navbar__button--active')
-        cartIcon.classList.toggle('cart-icon--active')
-        profileIcon.classList.toggle('profile-icon--active')
+        if (loginButton) loginButton.classList.toggle('navbar__button--active');
+        if (cartIcon) cartIcon.classList.toggle('cart-icon--active');
+        if (profileIcon) profileIcon.classList.toggle('profile-icon--active');
     });
 })();

@@ -1,0 +1,12 @@
+.confirmation__message {
+    width: 60%;
+    margin: 0 auto;
+}
+
+.confirmation__text {
+    font-family: 'Lato', sans-serif;
+    font-weight: bold;
+    font-size: 2rem;
+    color: var(--color-text);
+    text-align: center;
+}

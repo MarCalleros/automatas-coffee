@@ -92,6 +92,26 @@
 .login-modal__button--reset:hover {
     background-color: var(--gray);
 }
+.login-modal__button--NFC {
+    background-color: var(--white);
+    color: var(--color-text);
+    border: 1px solid var(--color-text);
+    height: 50px;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    gap: 5px; 
+    padding: 0 16px;
+}
+
+.login-modal__button--NFC:hover {
+    background-color: var(--gray);
+}
+
+.login-modal__button--NFC img{
+    width: 35px;
+    height: 35px;
+}
 
 .login-modal__footer {
     display: flex;
@@ -131,6 +151,25 @@
     font-style: italic;
 }
 
+.admin-form__button--nfc_id{
+    margin-top: 5px;
+    font-size: 13px !important;
+}
+.nfc-modal__logo-container{
+    text-align: center;
+}
+#login-modal-nfc {
+    display: none;
+}
+#login-modal-nfc.active {
+    display: block;
+}
+#background-login {
+    display: none;
+}
+#background-login.active {
+    display: block;
+}
 @media (min-width: 768px) {
     .login-modal__logo {
         width: 390px;

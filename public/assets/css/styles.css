@@ -6,15 +6,22 @@
 @import url(carousel.css);
 @import url(card.css);
 @import url(product.css);
+@import url(find.css);
 @import url(filter.css);
 @import url(category.css);
 @import url(search.css);
+@import url(pagination.css);
 @import url(login.css);
 @import url(register.css);
 @import url(profile.css);
-@import url(notification.css);
 @import url(carrito.css);
+@import url(delivery.css);
+@import url(information.css);
 @import url(admin.css);
+@import url(map.css	);
+@import url(confirmation.css);
+@import url(alert.css);
+@import url(notification.css);
 
 html {
     font-size: 62.5%;
@@ -31,13 +38,16 @@ body {
 }
 h2, h3 {
     font-family: 'Montserrat', sans-serif;
-    color: var(--black);
     font-size: 3.2rem;
     font-weight: 600;
     margin: 40px 0 40px 0;
     text-align: center;
 }
+h2{
+    color: var(--color-text);
+}
 h3 {
+    color: var(--black);
     text-align: left;
 }
 
@@ -104,6 +114,24 @@ h3 {
     height: 20px;
     width: 20px;
 }
+
+.page--full-height {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main--full-height {
+    flex: 1;
+}
+
+.imgerror  {
+    display: flex;
+    justify-content: center; 
+    align-items: center;      
+    min-height: 80vh;       
+}
+
 
 @media (min-width: 1024px) {
     body {

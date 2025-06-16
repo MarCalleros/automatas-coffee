@@ -40,16 +40,6 @@ if (getCookie('users') === null) {
     setCookie('users', JSON.stringify([]), 365);
 }
 
-if (getCookie('logged') === null && window.location.pathname !== '/login' && !document.cookie.includes('logged')) {
-    setCookie('logged', 'false', 365);
-} else if (getCookie('logged') === 'false') {
-    userIcons.style.display = 'none';
-    navbarLoginButtin.style.display = 'flex';
-} else {
-    userIcons.style.display = 'flex';
-    navbarLoginButtin.style.display = 'none';
-}
-
 const loginForm = document.querySelector("#login-form");
 const registerForm = document.querySelector("#register-form");
 
@@ -80,112 +70,215 @@ const profileUsername = document.querySelector('.profile-modal__user');
 loginButton.addEventListener('click', function(event) {
     event.preventDefault();
 
-    const currentLoggedValue = getCookie('logged');
-    if (currentLoggedValue && currentLoggedValue !== 'false') {
-        createNotification('error', 'Ya has iniciado sesión anteriormente');
-        return;
-    }
-
     let username = document.querySelector("#login-username").value;
     let password = document.querySelector("#login-password").value;
 
-    //Verificar credenciales
-    if (getCookie(username) === password) {
-        setCookie('logged', username, 365);
-        createNotification('success', 'Inicio de sesión exitoso');
-        
-        //Cerrar el modal con 1 segundo de retraso
-        setTimeout(() => {
-            const loginModal = document.querySelector('.login-modal');
-            const backgroundShadow = document.querySelector('#background-login');
-            
-            if (loginModal) loginModal.classList.remove('login-modal--active');
-            if (backgroundShadow) {
-                backgroundShadow.classList.remove('background__shadow--active');
-                backgroundShadow.classList.remove('background__blur--active');
-            }
-            
-            document.body.style.position = '';
-            document.body.style.top = '';
+    fetch('/api/user/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username: username,
+            password: password,
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status == "success") {
+            createNotification("success", data.message);
 
-            userIcons.style.display = 'flex';
-            navbarLoginButtin.style.display = 'none';
-            window.location.reload(); // Recargar la página para reflejar el cambio de estado de inicio de sesión
-        }, 1000);
-        
-        
-    } else {
-        createNotification('error', 'Usuario o contraseña incorrectos');
-    }
-});
+            // Cookies (Eliminar despues)
+            //setCookie('logged', username, 365);
 
-logoutButton.addEventListener('click', function(event) {
-    event.preventDefault();
-    setCookie('logged', 'false', 365);
-    createNotification('success', 'Sesión cerrada exitosamente');
-
-    //Cerrar el modal con 1 segundo de retraso
-    setTimeout(() => {
-        const profileModal = document.querySelector('.profile-modal');
-        const backgroundShadow = document.querySelector('#background-login');
-
-        if (profileModal) profileModal.classList.remove('profile-modal--active');
-        if (backgroundShadow) {
-            backgroundShadow.classList.remove('background__shadow--active');
-            backgroundShadow.classList.remove('background__blur--active');
+            setTimeout(() => {
+                const loginModal = document.querySelector('.login-modal');
+                const backgroundShadow = document.querySelector('#background-login');
+                
+                if (loginModal) loginModal.classList.remove('login-modal--active');
+                if (backgroundShadow) {
+                    backgroundShadow.classList.remove('background__shadow--active');
+                    backgroundShadow.classList.remove('background__blur--active');
+                }
+                
+                document.body.style.position = '';
+                document.body.style.top = '';
+                window.location.href = '/'; // Redirigir a la página de inicio
+            }, 1000);
+        } else {
+            createNotification("error", data.message);
         }
-
-        document.body.style.position = '';
-        document.body.style.top = '';
-
-        userIcons.style.display = 'none';
-        navbarLoginButtin.style.display = 'flex';
-        window.location.reload(); // Recargar la página para reflejar el cambio de estado de inicio de sesión
-    }, 1000);
+    });
 });
-ConfigurationButton.addEventListener('click', function(event) {
-    event.preventDefault();
 
-    //Cerrar el modal con 1 segundo de retraso
-    setTimeout(() => {
-        const profileModal = document.querySelector('.profile-modal');
-        const backgroundShadow = document.querySelector('#background-login');
-
-        if (profileModal) profileModal.classList.remove('profile-modal--active');
-        if (backgroundShadow) {
-            backgroundShadow.classList.remove('background__shadow--active');
-            backgroundShadow.classList.remove('background__blur--active');
-        }
-
-        document.body.style.position = '';
-        document.body.style.top = '';
-
-        userIcons.style.display = 'none';
-        navbarLoginButtin.style.display = 'flex';
-        window.open('/configuration', '_self'); // Redirigir a la página de configuración
-    }, 1000);
-});
 loginResetButton.addEventListener('click', function(event) {
     event.preventDefault();
     loginForm.reset();
 });
 
+logoutButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    fetch('/api/nfc/getNFClogout', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then((data) => {
+        if (data.status == "success") {
+        const nfclogout = data.message;
+        console.log(data.message);
+        if (nfclogout ) {
+            const nfcModal = document.querySelector('#logout-modal-nfc');
+            const backgroundLogin = document.querySelector('#background-login');
+            const closeNfcBtn = document.querySelector('#nfc-logout-close');
+            const profileModal = document.querySelector('.profile-modal');
+            const nfclogoutbutton = document.querySelector('#nfc-modal-logout-button');
+                profileModal.classList.remove('profile-modal--active');
+                nfcModal.style.display = 'block';
+                backgroundLogin.style.display = 'block';
+
+            if (closeNfcBtn && nfcModal && backgroundLogin) {
+                closeNfcBtn.addEventListener('click', () => {
+                    nfcModal.style.display = 'none';
+                    backgroundLogin.style.display = 'none';
+                });
+            }
+            if (nfclogoutbutton && nfcModal && backgroundLogin) {
+                nfclogoutbutton.addEventListener('click', () => {
+                nfclogoutbutton.textContent = 'Esperando lectura...';
+                    const socket = io('https://scritp-nfc.onrender.com', { transports: ['websocket'] });
+
+                socket.on('connect', () => {
+                console.log('✅ Socket.IO conectado');
+                });
+
+                console.log("🟢 Solicitando lectura de tarjeta...");
+                socket.emit('solicitar_lectura');
+
+                socket.on('lectura_terminada', (nfcId) => {
+                    console.log('📖 Datos leídos desde la tarjeta:', nfcId);
+                        fetch('/api/nfc/getNFClogout', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ nfcId: nfcId })
+                    })
+                    .then(response => response.json())
+                    .then((data) => {
+                        if (data.status == "success") {
+                            fetch('/api/nfc/registerLogout', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ nfcId: nfcId })
+                            })
+                            
+                            .then(response => response.json())
+                            .then((data) => {
+                                if (data.status == "success") {
+                                    console.log("✅ Salida registrada correctamente");
+                                    createNotification("success", "Salida registrada correctamente");
+                                } else {
+                                    console.log("error", data.message);
+                                    createNotification("error", "Salida no registrada, intente de nuevo");
+                                }
+                            });
+                            createNotification("success", "Saliendo de la cuenta...");
+                            deleteAllCookies();
+                            setTimeout(() => {
+                                window.location.href = '/'; 
+                            }, 1000);
+                        } else {
+                            createNotification("error", data.message);
+                        }
+                    });
+                });
+                socket.on('lectura_error', (error) => {
+                createNotification("error", "Error al leer el NFC , intente de nuevo" ); 
+                nfclogoutbutton.textContent = 'intentar de nuevo';
+            });
+                });
+            }
+
+    } else {
+        fetch('/api/user/logout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status == "success") {
+                createNotification("success", data.message);
+
+                setTimeout(() => {
+                    const profileModal = document.querySelector('.profile-modal');
+                    const backgroundShadow = document.querySelector('#background-login');
+            
+                    if (profileModal) profileModal.classList.remove('profile-modal--active');
+                    if (backgroundShadow) {
+                        backgroundShadow.classList.remove('background__shadow--active');
+                        backgroundShadow.classList.remove('background__blur--active');
+                    }
+            
+                    document.body.style.position = '';
+                    document.body.style.top = '';
+                    window.location.href = '/'; // Redirigir a la página de inicio
+                }, 1000);
+            } else {
+                createNotification("error", data.message);
+            }
+        });
+        }
+
+        } else {
+        console.log("error", data.message)
+        }
+    })
+
+});
+
 registerButton.addEventListener('click', async function(event) {
     event.preventDefault();
 
+    let name = document.querySelector("#register-name").value;
+    let age = document.querySelector("#register-age").value;
+    let email = document.querySelector("#register-email").value;
     let username = document.querySelector("#register-username").value;
     let password = document.querySelector("#register-password").value;
 
     if (validateInputs()) {
-        const encrpytedPassword = await encryptPassword(password);
-        
-        if (getCookie(username) === null) {
-            setCookie(username, password, 365);
-            addUserToUserCookie(username, password, encrpytedPassword);
-            createNotification("success", "Registro exitoso");
-        } else {
-            createNotification("error", "El usuario ya existe");
-        }
+        fetch('/api/user/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                age: age,
+                email: email,
+                username: username,
+                password: password,
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status == "success") {
+                createNotification("success", data.message);
+
+                // Cookies (Eliminar despues)
+                setCookie(username, password, 365);
+                addUserToUserCookie(username, password, password);
+            } else {
+                createNotification("error", data.message);
+            }
+        });
     }
 });
 
@@ -197,11 +290,6 @@ registerResetButton.addEventListener('click', function(event) {
     errorMessages.forEach((errorMessage) => {
         errorMessage.classList.remove("register-modal__error--active");
     });
-});
-
-profileButton.addEventListener('click', function() {
-    let username = getCookie('logged');
-    profileUsername.textContent = username;
 });
 
 function validateInputs() {
@@ -270,15 +358,6 @@ function quitError(input) {
     errorMessage.classList.remove("register-modal__error--active");
 }
 
-async function encryptPassword(password) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(password);
-    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
-    return hashHex;
-}
-
 const inputs = [nameInput, ageInput, emailInput, usernameInput, passwordInput, confirmInput]
 inputs.forEach((input, index) => {
     input.addEventListener("input", () => {
@@ -304,31 +383,3 @@ inputs.forEach((input, index) => {
         }
     })
 })
-
-/* Eliminar posteriormente */
-const deleteButton = document.querySelector('#register-delete');
-const showButton = document.querySelector('#register-show');
-
-deleteButton.addEventListener('click', function(event) {
-    event.preventDefault();
-    // Establecer la cookie logged a false para cerrar sesión
-    setCookie('logged', 'false', 365);
-    deleteAllCookies();
-});
-
-showButton.addEventListener('click', function(event) {
-    event.preventDefault();
-    const users = JSON.parse(getCookie('users')) || [];
-    
-    if (users.length === 0) {
-        alert("No hay usuarios registrados.");
-    } else {
-        let userList = "Usuarios registrados:\n";
-        users.forEach(user => {
-            userList += `Usuario: ${user.username}, Contraseña: ${user.password}, Contraseña Encriptada: ${user.encrpytedPassword}\n\n`;
-        });
-        alert(userList);
-    }
-});
-
-/* Eliminar posteriormente */

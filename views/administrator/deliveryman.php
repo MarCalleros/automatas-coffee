@@ -1,34 +1,10 @@
-<?php
-namespace App;
-use App\Repartidor;
-require __DIR__ . '/../../vendor/autoload.php';
-
-$repartidores = Repartidor::all();
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $repartidor = new Repartidor();
-    
-    $repartidor->id = $_POST['id'];
-    $repartidor->estatus = $_POST['estatus'];
-
-    if ($repartidor->changeStatus()) {
-        header('Content-Type: application/json');
-        echo json_encode(['success' => true]);
-        exit;
-    } else {
-        header('Content-Type: application/json');
-        echo json_encode(['success' => false, 'error' => 'Error en la base de datos']);
-        exit;
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="shortcut icon" href="/assets/img/logo-coffee.png">
     <title>Repartidores</title>
 </head>
 <body>
@@ -45,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <tr class="admin-table__row">
                                 <th class="admin-table__head">ID</th>
                                 <th class="admin-table__head">Nombre</th>
+                                <th class="admin-table__head">Usuario</th>
                                 <th class="admin-table__head">Teléfono</th>
                                 <th class="admin-table__head">CURP</th>
                                 <th class="admin-table__head">RFC</th>
@@ -61,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <tr class="admin-table__row admin-table__row--data">
                                     <td class="admin-table__data"><?= $repartidor->id ?></td>
                                     <td class="admin-table__data"><?= $repartidor->nombre . ' ' . $repartidor->apellido1 . ' ' . $repartidor->apellido2 ?></td>
+                                    <td class="admin-table__data"><?= $repartidor->usuario ?></td>
                                     <td class="admin-table__data"><?= $repartidor->telefono ?></td>
                                     <td class="admin-table__data"><?= $repartidor->curp ?></td>
                                     <td class="admin-table__data"><?= $repartidor->rfc ?></td>

@@ -1,67 +1,10 @@
-<?php
-namespace App;
-use App\Repartidor;
-require __DIR__ . '/../../vendor/autoload.php';
-
-if (!isset($_GET['id'])) {
-    header('Location: /admin/deliveryman');
-    exit;
-}
-
-$repartidorBD = new Repartidor();
-$repartidorBD = $repartidorBD::findById($_GET['id']);
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $repartidor = new Repartidor();
-    
-    $repartidor->id = $_POST['id'];
-    $repartidor->nombre = $_POST['nombre'];
-    $repartidor->apellido1 = $_POST['apellido1'];
-    $repartidor->apellido2 = $_POST['apellido2'];
-    $repartidor->telefono = $_POST['telefono'];
-    $repartidor->curp = $_POST['curp'];
-    $repartidor->rfc = $_POST['rfc'];
-    $repartidor->tipo_sangre = $_POST['tipo_sangre'];
-    $repartidor->nss = $_POST['nss'];
-    $repartidor->vigencia_licencia = $_POST['vigencia'];
-
-    $result = $repartidor->update();
-
-    if ($result === true) {
-        header('Content-Type: application/json');
-        echo json_encode([
-            'success' => true,
-            'updatedData' => [
-                'nombre' => $repartidor->nombre,
-                'apellido1' => $repartidor->apellido1,
-                'apellido2' => $repartidor->apellido2,
-                'telefono' => $repartidor->telefono,
-                'curp' => $repartidor->curp,
-                'rfc' => $repartidor->rfc,
-                'tipo_sangre' => $repartidor->tipo_sangre,
-                'nss' => $repartidor->nss,
-                'vigencia_licencia' => $repartidor->vigencia_licencia
-            ]
-        ]);
-        exit;
-    } else if ($result === false) {
-        header('Content-Type: application/json');
-        echo json_encode(['success' => false, 'error' => 'No se realizo ningun cambio']);
-        exit;
-    } else {
-        header('Content-Type: application/json');
-        echo json_encode(['success' => false, 'error' => "$result"]);
-        exit;
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="shortcut icon" href="/assets/img/logo-coffee.png">
     <title>Repartidores</title>
 </head>
 <body>
@@ -146,6 +89,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <label class="admin-form__label" for="vigencia">Fecha de Vigencia de Licencia</label>
                             <input class="admin-form__input" type="date" name="vigencia" id="vigencia" placeholder="Fecha de Vigencia de Licencia" min="<?php echo date('Y-m-d'); ?>" value="<?php echo $repartidorBD->vigencia_licencia; ?>">
                             <span id="error-vigencia" class="admin-form__error">Error</span>
+                        </div>
+                    </div>
+
+                    <div class="admin-form__group-container">
+                        <div class="admin-form__group">
+                            <label class="admin-form__label" for="id_usuario">Cuenta de Usuario</label>
+                            <div class="admin-form__select-container">
+                                <select class="admin-form__input" name="id_usuario" id="id_usuario">
+                                    <option value="" disabled selected>Seleccione un usuario</option>
+                                    <?php foreach ($users as $user): ?>
+                                        <option value="<?php echo $user->id; ?>" <?= $repartidorBD->id_usuario == $user->id ? 'selected' : '' ?> ><?php echo $user->usuario . " / " . $user->nombre ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <span id="error-usuario" class="admin-form__error">Error</span>
                         </div>
                     </div>
 

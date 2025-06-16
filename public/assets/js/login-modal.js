@@ -1,4 +1,8 @@
+
+import { createNotification } from './notification.js';
+
 (function() {
+    
     const loginButton = document.querySelector('.navbar__button');
     const loginButtonMobile = document.querySelector('.user-icon');
 
@@ -15,6 +19,10 @@
     const registerLink = document.querySelector('#modal-login-register');
     const loginLink = document.querySelector('#register-login');
 
+    const eyeContainerPasswordLogin = document.querySelector('#login-eye-container-password');
+    const eyeIconPasswordLogin = document.querySelector('#login-eye-password');
+    const slashIconPasswordLogin = document.querySelector('#login-slash-password');
+
     const eyeContainerPassword = document.querySelector('#register-eye-container-password');
     const eyeIconPassword = document.querySelector('#register-eye-password');
     const slashIconPassword = document.querySelector('#register-slash-password');
@@ -27,18 +35,92 @@
     const registerForm = document.querySelector("#register-form");
     const profileButton = document.querySelector('#profile-button');
 
+    const nfcButton = document.querySelector('#modal-login-NFC');
+    const nfcModal = document.querySelector('#login-modal-nfc');
+    const backgroundLogin = document.querySelector('#background-login');
+    const closeNfcBtn = document.querySelector('#nfc-login-close');
+    const registrarentradabutton = document.querySelector('#nfc-modal-login-button');
+
+    if (nfcButton && nfcModal && backgroundLogin) {
+        nfcButton.addEventListener('click', () => {
+            loginModal.classList.remove('login-modal--active');
+            nfcModal.style.display = 'block';
+            backgroundLogin.style.display = 'block';
+        });
+    }
+    if (closeNfcBtn && nfcModal && backgroundLogin) {
+        closeNfcBtn.addEventListener('click', () => {
+            nfcModal.style.display = 'none';
+            backgroundLogin.style.display = 'none';
+        });
+    }
+    if (registrarentradabutton && nfcModal && backgroundLogin) {
+        registrarentradabutton.addEventListener('click', () => {
+            registrarentradabutton.textContent = 'Esperando lectura...';
+            const socket = io('https://scritp-nfc.onrender.com', { transports: ['websocket'] });
+
+            socket.on('connect', () => {
+                console.log('Socket.IO conectado');
+            });
+
+            socket.emit('solicitar_lectura');
+
+            socket.on('lectura_terminada', (nfcId) => {
+                fetch('/api/nfc/getNFClogin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ nfcId: nfcId })
+                })
+                .then(response => response.json())
+                .then((data) => {
+                    if (data.status == "success") {
+                        fetch('/api/nfc/registerLogin', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ nfcId: nfcId })
+                            })
+                            .then(response => response.json())
+                            .then((data) => {
+                                if (data.status == "success") {
+                                    console.log("✅ Salida registrada correctamente");
+                                } else {
+                                    console.log("error", data.message);
+                                }
+                            });
+                        createNotification('success', 'Inicio de sesión exitoso');
+                        window.location.href = '/';
+                    } else {
+                        console.log("error", data.message);
+                    }
+                });
+            });
+            socket.on('lectura_error', (error) => {
+                createNotification("error", "Error al leer el NFC , intente de nuevo" ); 
+                registrarentradabutton.textContent = 'Intentar de nuevo';
+            });
+        });
+    } 
+
+
+
     let scrollY = 0;
 
-    loginButton.addEventListener('click', function() {
-        scrollY = window.scrollY;
-        loginModal.classList.add('login-modal--active');
-        backgroundShadow.classList.add('background__shadow--active');
-        backgroundShadow.classList.add('background__blur--active');
+    if (loginButton) {
+        loginButton.addEventListener('click', function() {
+            scrollY = window.scrollY;
+            loginModal.classList.add('login-modal--active');
+            backgroundShadow.classList.add('background__shadow--active');
+            backgroundShadow.classList.add('background__blur--active');
 
-        document.body.style.position = 'fixed';
-        document.body.style.top = `-${scrollY}px`;
-        document.body.style.width = '100%';
-    });
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.width = '100%';
+        });
+    }
 
     if (loginButtonMobile) {
         loginButtonMobile.addEventListener('click', function() {
@@ -110,6 +192,20 @@
         window.scrollTo(0, scrollY);
     });
 
+    eyeContainerPasswordLogin.addEventListener('click', function() {
+        const passwordInput = document.querySelector('#login-password');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIconPasswordLogin.style.display = 'none';
+            slashIconPasswordLogin.style.display = 'block';
+        } else {
+            passwordInput.type = 'password';
+            eyeIconPasswordLogin.style.display = 'block';
+            slashIconPasswordLogin.style.display = 'none';
+        }
+    });
+
     eyeContainerPassword.addEventListener('click', function() {
         const passwordInput = document.querySelector('#register-password');
 
@@ -138,14 +234,16 @@
         }
     });
 
-    profileButton.addEventListener('click', function() {
-        scrollY = window.scrollY;
-        profileModal.classList.add('profile-modal--active');
-        backgroundShadow.classList.add('background__shadow--active');
-        backgroundShadow.classList.add('background__blur--active');
+    if (profileButton) {
+        profileButton.addEventListener('click', function() {
+            scrollY = window.scrollY;
+            profileModal.classList.add('profile-modal--active');
+            backgroundShadow.classList.add('background__shadow--active');
+            backgroundShadow.classList.add('background__blur--active');
 
-        document.body.style.position = 'fixed';
-        document.body.style.top = `-${scrollY}px`;
-        document.body.style.width = '100%';
-    });
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.width = '100%';
+        });
+    }
 })();

@@ -1,32 +1,52 @@
 <?php 
 
-$uri = parse_url($_SERVER['REQUEST_URI'])['path'];
+namespace App;
 
-$routes = [
-    '/' => __DIR__ . '/views/pages/home.php',
-    '/products' => __DIR__ . '/views/pages/products.php',
-    '/views/pages/carrito' => __DIR__ . '/views/pages/carrito.php',
-    '/contact' => __DIR__ . '/views/pages/contact.php',
-    '/configuration' => __DIR__ . '/views/pages/configuration.php',
-    '/admin' => __DIR__ . '/views/administrator/admin.php',
-    '/admin/deliveryman' => __DIR__ . '/views/administrator/deliveryman.php',
-    '/admin/deliveryman/create' => __DIR__ . '/views/administrator/deliveryman-create.php',
-    '/admin/deliveryman/edit' => __DIR__ . '/views/administrator/deliveryman-edit.php',
-    '/admin/deliveries' => __DIR__ . '/views/administrator/deliveries.php'
-];
+class Router {
+    public array $getRoutes = [];
+    public array $postRoutes = [];
 
-routeView($uri, $routes);
-
-function routeView($uri, $routes) {
-    if (array_key_exists($uri, $routes)) {
-        require $routes[$uri];
-    } else {
-        notFound();
+    public function get($url, $fn){
+        $this->getRoutes[$url] = $fn;
     }
-}
 
-function notFound() {
-    http_response_code(404);
-    require __DIR__ . '/views/pages/404.php';
-    die();
+    public function post($url, $fn){
+        $this->postRoutes[$url] = $fn;
+    }
+
+    public function testRoutes() {
+        $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $method = $_SERVER['REQUEST_METHOD'];
+    
+        $routes = $method === 'GET' ? $this->getRoutes : $this->postRoutes;
+    
+        foreach ($routes as $route => $fn) {
+            // Ruta con parámetros tipo /informacion/:seccion
+            $routeRegex = preg_replace('#:([\w]+)#', '([^/]+)', $route);
+            $routeRegex = "#^" . $routeRegex . "$#";
+    
+            if (preg_match($routeRegex, $url, $matches)) {
+                array_shift($matches); // quitamos la coincidencia completa
+                return call_user_func_array($fn, array_merge([$this], $matches));
+            }
+        }
+    
+        // Mostrar la pagina 4040 en /views/pages/404.php
+        http_response_code(404);
+        include_once __DIR__ . "/views/pages/404.php";
+        exit;
+    }
+    
+
+    public function render($view, $data = []) {
+        foreach ($data as $key => $value) {
+            $$key = $value; 
+        }
+        
+        //ob_start(); 
+        include_once __DIR__ . "/views/$view.php";
+        //$content = ob_get_clean();
+
+        //echo $content;
+    }
 }

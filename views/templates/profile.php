@@ -13,14 +13,14 @@
         <img src="/assets/img/pfpcoffee.png" alt="Profile" class="profile-modal__pfp">
     </div>
 
-    <strong class="profile-modal__user">Lillia</strong>
+    <strong class="profile-modal__user"><?php echo $_SESSION['usuario']?></strong>
 
     <div class="profile-modal__buttons-container">
         <div class="profile-modal__button-container">
             <svg class="info-icon" width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M21.3442 3.66659C16.4657 -1.21795 8.55121 -1.2228 3.66661 3.65568C-1.21793 8.53428 -1.22285 16.4488 3.65575 21.3334C8.53424 26.218 16.4488 26.2228 21.3334 21.3443C26.2179 16.4658 26.2228 8.55113 21.3442 3.66659ZM14.2453 20.4318C14.2453 20.6247 14.089 20.7809 13.8963 20.7809H11.1038C10.911 20.7809 10.7547 20.6247 10.7547 20.4318V10.0655C10.7547 9.87266 10.911 9.71648 11.1038 9.71648H13.8963C14.089 9.71648 14.2453 9.8726 14.2453 10.0655V20.4318ZM12.5 8.26784C11.3838 8.26784 10.4756 7.35976 10.4756 6.24346C10.4756 5.12728 11.3837 4.21902 12.5 4.21902C13.6163 4.21902 14.5245 5.12722 14.5245 6.24346C14.5245 7.35976 13.6162 8.26784 12.5 8.26784Z" fill="#333333"/>
             </svg>
-            <button type="button" class="profile-modal__button profile-modal__button--extra">Información</button>
+            <a style="width: 100%;" href="/informacion"><button type="button" class="profile-modal__button profile-modal__button--extra">Información</button></a>
         </div>
         <div class="profile-modal__button-container">
             <svg class="config-icon" width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -34,8 +34,13 @@
                 </clipPath>
                 </defs>
             </svg>
-            <button type="button" class="profile-modal__button profile-modal__button--extra" id="configuration-profile">Configuración</button>
+            <a style="width: 100%;" href="/configuracion"><button type="button" class="profile-modal__button profile-modal__button--extra" id="configuration-profile">Configuración</button></a>
         </div>
+        <?php if (isAdmin()) : ?>
+            <div class="profile-modal__button-container">
+            <a style="width: 100%;" href="/admin"><button type="button" class="profile-modal__button profile-modal__button--extra" id="configuration-profile">Administrador</button></a>
+        </div>
+        <?php endif; ?>
         <div class="profile-modal__button-container">
             <svg class="exit-icon" width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <rect width="25" height="25" fill="url(#pattern0_80_7933)"/>
@@ -50,4 +55,30 @@
         </div>
         </div>
 </div>
-<script src="/assets/js/configuration.js"></script>
+<script type="module" src="/assets/js/configuration.js"></script>
+
+<div class="background__shadow background__blur" id="background-login"></div>
+
+<div class="login-modal" id="logout-modal-nfc" style="display: none;">
+    <button class="modal__close" id="nfc-logout-close">
+        <svg class="close-icon" width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M29.5762 0.547733C28.9254 -0.103151 27.87 -0.103151 27.2192 0.547733L15.0619 12.705L2.90463 0.547733C2.25376 -0.103151 1.19848 -0.103151 0.547611 0.547733C-0.103273 1.1986 -0.103273 2.25388 0.547611 2.90475L12.7049 15.062L0.547644 27.2192C-0.103239 27.8702 -0.103239 28.9254 0.547644 29.5764C1.19851 30.2272 2.25379 30.2272 2.90466 29.5764L15.0619 17.419L27.2192 29.5764C27.87 30.2272 28.9254 30.2272 29.5762 29.5764C30.227 28.9254 30.227 27.8702 29.5762 27.2194L17.4189 15.062L29.5762 2.90475C30.227 2.25388 30.227 1.1986 29.5762 0.547733Z" fill="black"/>
+        </svg>
+    </button>
+    <h2 class="login-modal__title">Nos vemos</h2>
+
+    <form class="login-modal__form" id="nfc-login-form" method="POST" action="/api/user/login">
+        <div class="login-modal__input-container">
+            <label for="login-username" class="login-modal__label">Por favor, acerca tu tarjeta NFC al lector para registrar la salida</label>
+        </div>
+
+        <div class="nfc-modal__logo-container">
+            <img src="/assets/img/NFC.png" alt="" class="nfc-modal__logo">
+        </div>
+    </form>
+
+    <div class="login-modal__button-container">
+            <button type="submit" class="login-modal__button login-modal__button--login" id="nfc-modal-logout-button">Registrar Salida</button>
+    </div>
+</div>
+<script type="module" src="/assets/js/configuration.js"></script> 

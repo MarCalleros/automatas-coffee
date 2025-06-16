@@ -1,3 +1,4 @@
+<body username="<?php echo getLoggedUsername(); ?>">
 <div class="register-modal">
     <button class="modal__close" id="register-close">
         <svg class="close-icon" width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -27,7 +28,7 @@
         <div class="register-modal__input-container">
             <label for="register-email" class="register-modal__label">Correo</label>
             <input type="text" name="register-email" class="register-modal__input" id="register-email">
-            <span class="register-modal__error">Formato válido (ejemplo@dominio.com)</span>
+            <span class="register-modal__error">Formato inválido (ejemplo@dominio.com)</span>
         </div>
 
         <div class="register-modal__input-container">
@@ -93,10 +94,6 @@
         <div class="register-modal__button-container">
             <button type="button" class="register-modal__button register-modal__button--register" id="register-button">Registrarse</button>
             <button type="button" class="register-modal__button register-modal__button--reset" id="register-reset">Resetear Campos</button>
-
-            <!-- Botones para eliminar cookies y listar usuarios (Eliminar despues) -->
-            <button type="button" class="register-modal__button register-modal__button--reset" id="register-delete">Eliminar Cookies</button>
-            <button class="register-modal__button register-modal__button--reset" id="register-show">Listar Usuarios</button>
         </div>
     </form>
 
@@ -109,4 +106,4 @@
 </div>
 
 <script type="module" src="/assets/js/cookie-login.js"></script>
-<script src="/assets/js/configuration.js"></script>
+<script type="module" src="/assets/js/configuration.js"></script>

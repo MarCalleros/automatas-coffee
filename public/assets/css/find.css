@@ -1,0 +1,96 @@
+.find__map-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.find__map {
+    height: 600px;
+    width: 100%;
+}
+
+.leaflet-top,
+.leaflet-bottom {
+    z-index: 500!important;
+}
+
+.leaflet-popup-content {
+    font-family: 'Lato', sans-serif!important;
+    font-size: 10px!important;
+    color: var(--black)!important;
+}
+
+.find__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+    margin: 0 auto;
+}
+
+.find__description {
+    font-family: 'Lato', sans-serif;
+    font-size: var(--text);
+    color: var(--color-text);
+}
+
+.find__cards-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.find__card {
+    background-color: var(--color-conteiner);
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 700px;
+}
+
+.find__card-images {
+    position: relative;
+    height: 300px;
+    width: 700px;
+    overflow: hidden;
+}
+
+.find__card-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 20px 20px 0 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.find__card-image--active {
+    opacity: 1;
+}
+
+.find__card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    margin-top: 10px;
+}
+
+.find__card-title {
+    font-size: var(--subtitle);
+    color: var(--color-text);
+    margin: 0;
+}
+
+.find__card-text {
+    font-family: 'Lato', sans-serif;
+    font-size: var(--text);
+    color: var(--color-text);
+    margin: 0;
+}

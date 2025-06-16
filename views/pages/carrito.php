@@ -7,17 +7,17 @@
     <link rel="stylesheet" href="/assets/css/carrito.css">
     <link rel="stylesheet" href="/assets/css/variables.css">
     <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="shortcut icon" href="/assets/img/logo-coffee.png">
 </head>
-<body>
+<body class="page--full-height">
 <?php include_once __DIR__ . "/../templates/navbar.php"; ?>
     <h2 class="title--page">Carrito Compras</h2>
     
-    <main>
+    <main class="main--full-height">
         <div class="container">            
             <div class="cart-container">
-                <!-- Aquí se cargarán dinámicamente los elementos del carrito -->
                 <div class="cart-items">
-                    <!-- El contenido del carrito se cargará mediante JavaScript -->
+                    
                 </div>
                 
                 <div class="order-summary">
@@ -30,8 +30,7 @@
     </main>
     
     <?php include_once __DIR__ . "/../templates/footer.php"; ?>   
-    <script type="module" src="/assets/js/cookies-carrito.js"></script>
     <script type="module" src="/assets/js/carrito.js"></script>    
-    <script src="/assets/js/configuration.js"></script> 
+    <script type="module" src="/assets/js/configuration.js"></script>
 </body>
 </html>

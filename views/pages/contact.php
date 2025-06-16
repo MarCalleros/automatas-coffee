@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/assets/css/styles.css">
     <link rel="stylesheet" href="/assets/css/contact.css">
     <link rel="stylesheet" href="/assets/css/variables.css">
-    
+    <link rel="shortcut icon" href="/assets/img/logo-coffee.png">
     <title>Contacto</title>
 </head>
 <body>
@@ -36,25 +36,25 @@
             <div class="titulo">
                 <h2 class="title--page">Contactanos</h2>
             </div>
-            <form method="post" autocomplete="off" class="formulario">
-                <div class="entradas">
+            <form method="post" autocomplete="off" class="formulario" id="formulario">
+                <div class="entradas"> 
                     <div class="grupocontacto">
                         <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="Nombre" class ="inputs" >
+                        <input type="text" id="nombre" name="Nombre" class ="inputs" disabled value="<?php if (isLogged()) echo $_SESSION['nombre'] ?>">
                     </div>
                     <div class="grupocontacto">
                         <label for="correo">Correo</label>
-                        <input type="email" id="correo" name="Correo" class="inputs" >
+                        <input type="email" id="correo" name="Correo" class="inputs" disabled value="<?php if (isLogged()) echo $_SESSION['correo'] ?>">
                     </div>
                 </div>
                 <div class="entradas mensaje">
                     <label for="mensaje">Mensaje</label>
-                    <textarea id="mensaje" name="Mensaje" cols="30" rows="10" ></textarea>
+                    <textarea id="mensaje" name="Mensaje" cols="30" rows="10" class="inputs" ></textarea>
     
                 </div>
                 <div class="botonescontacto">
-                    <input type="submit" name="contacto " value="Enviar mensaje" class="botoncontacto">
                     <input type="reset" name="resetear " value="Resetear campos" class="botonreseteo">
+                    <input type="submit" name="contacto " value="Enviar mensaje" class="botoncontacto">
                 </div>
             </form>
             
@@ -63,7 +63,7 @@
         <?php include_once __DIR__ . "/../templates/footer.php"; ?>
         
     </div>
-
-    <script src="/assets/js/configuration.js"></script>
+    <script type="module" src="/assets/js/contact.js"></script>
+    <script type="module" src="/assets/js/configuration.js"></script>
 </body>
 </html>

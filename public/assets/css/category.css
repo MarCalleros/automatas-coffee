@@ -57,7 +57,7 @@
     font-family: 'Montserrat', sans-serif;
     font-size: var(--subtitle);
     font-weight: bold;
-    color: var(--color-text);
+    color: var(--black);
     margin-bottom: 10px;
     margin-top: 0px;
     text-align: center;
@@ -71,7 +71,7 @@
 
 .information__button {
     font-family: 'Poppins', sans-serif;
-    color: var(--color-text-black);
+    color: var(--black);
     border: none;
     padding: 8px 15px;
     font-size: var(--text-small);

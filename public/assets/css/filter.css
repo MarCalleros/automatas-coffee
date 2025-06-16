@@ -146,6 +146,6 @@ input[type="checkbox"]:checked + label::after {
 
     .filter-container {
         display: block;
-        border-right: 2px solid var(--black-background-color);
+        border-right: 2px solid var(--color-text);
     }
 }
